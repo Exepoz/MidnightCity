@@ -152,7 +152,6 @@ CreateThread(function()
                 minute = math.floor((baseTime+timeOffset)%60)
                 second = 0
             end
-            print(hour,minute,second)
             NetworkOverrideClockTime(hour, minute, second)          --Send hour included seconds to network clock time
         else
             Wait(1000)

@@ -55,61 +55,80 @@ local colors = { -- https://www.spycolor.com/
 
 local logQueue = {}
 
-RegisterNetEvent('qb-log:server:CreateLog', function(name, title, color, message, tagEveryone)
-    local postData = {}
-    local tag = tagEveryone or false
-    if not Webhooks[name] then print('Tried to call a log that isn\'t configured with the name of ' ..name) return end
-    local webHook = Webhooks[name] ~= '' and Webhooks[name] or Webhooks['default']
-    local embedData = {
-        {
-            ['title'] = title,
-            ['color'] = colors[color] or colors['default'],
-            ['footer'] = {
-                ['text'] = os.date('%c'),
-            },
-            ['description'] = message,
-            ['author'] = {
-                ['name'] = 'QBCore Logs',
-                ['icon_url'] = 'https://raw.githubusercontent.com/GhzGarage/qb-media-kit/main/Display%20Pictures/Logo%20-%20Display%20Picture%20-%20Stylized%20-%20Red.png',
-            },
-        }
+RegisterNetEvent('qb-log:server:CreateLog', function(name, title, color, message, tagEveryone, img)
+    local player = source ~= "" and tonumber(source) > 0 and "player:"..GetPlayerName(source) or "player:server_log"
+    local sentDesc = {
+        title = title,
+        description = message,
+        image = img or nil
     }
-
-    if not logQueue[name] then logQueue[name] = {} end
-    logQueue[name][#logQueue[name] + 1] = {webhook = webHook, data = embedData}
-
-    if #logQueue[name] >= 10 then
-        if tag then
-            postData = {username = 'QB Logs', content = '@everyone', embeds = {}}
-        else
-            postData = {username = 'QB Logs', embeds = {}}
-        end
-        for i = 1, #logQueue[name] do postData.embeds[#postData.embeds + 1] = logQueue[name][i].data[1] end
-        PerformHttpRequest(logQueue[name][1].webhook, function() end, 'POST', json.encode(postData), { ['Content-Type'] = 'application/json' })
-        logQueue[name] = {}
+    if type(message) == "table" then
+        sentDesc.description = message.txt
+        sentDesc.Amount = message.amt
+        sentDesc.Player = message.ply
+        sentDesc.Item = message.item
+        sentDesc.status = message.status or "Info"
+        sentDesc.stash = message.stash
+        sentDesc.Plate = message.plate
     end
+    lib.logger(source or -1, name, sentDesc, player)
 end)
 
-Citizen.CreateThread(function()
-    local timer = 0
-    while true do
-        Wait(1000)
-        timer = timer + 1
-        if timer >= 60 then -- If 60 seconds have passed, post the logs
-            timer = 0
-            for name, queue in pairs(logQueue) do
-                if #queue > 0 then
-                    local postData = {username = 'QB Logs', embeds = {}}
-                    for i = 1, #queue do
-                        postData.embeds[#postData.embeds + 1] = queue[i].data[1]
-                    end
-                    PerformHttpRequest(queue[1].webhook, function() end, 'POST', json.encode(postData), {['Content-Type'] = 'application/json'})
-                    logQueue[name] = {}
-                end
-            end
-        end
-    end
-end)
+-- RegisterNetEvent('qb-log:server:CreateLog', function(name, title, color, message, tagEveryone)
+--     local postData = {}
+--     local tag = tagEveryone or false
+--     if not Webhooks[name] then print('Tried to call a log that isn\'t configured with the name of ' ..name) return end
+--     local webHook = Webhooks[name] ~= '' and Webhooks[name] or Webhooks['default']
+--     local embedData = {
+--         {
+--             ['title'] = title,
+--             ['color'] = colors[color] or colors['default'],
+--             ['footer'] = {
+--                 ['text'] = os.date('%c'),
+--             },
+--             ['description'] = message,
+--             ['author'] = {
+--                 ['name'] = 'QBCore Logs',
+--                 ['icon_url'] = 'https://raw.githubusercontent.com/GhzGarage/qb-media-kit/main/Display%20Pictures/Logo%20-%20Display%20Picture%20-%20Stylized%20-%20Red.png',
+--             },
+--         }
+--     }
+
+--     if not logQueue[name] then logQueue[name] = {} end
+--     logQueue[name][#logQueue[name] + 1] = {webhook = webHook, data = embedData}
+
+--     if #logQueue[name] >= 10 then
+--         if tag then
+--             postData = {username = 'QB Logs', content = '@everyone', embeds = {}}
+--         else
+--             postData = {username = 'QB Logs', embeds = {}}
+--         end
+--         for i = 1, #logQueue[name] do postData.embeds[#postData.embeds + 1] = logQueue[name][i].data[1] end
+--         PerformHttpRequest(logQueue[name][1].webhook, function() end, 'POST', json.encode(postData), { ['Content-Type'] = 'application/json' })
+--         logQueue[name] = {}
+--     end
+-- end)
+
+-- Citizen.CreateThread(function()
+--     local timer = 0
+--     while true do
+--         Wait(1000)
+--         timer = timer + 1
+--         if timer >= 60 then -- If 60 seconds have passed, post the logs
+--             timer = 0
+--             for name, queue in pairs(logQueue) do
+--                 if #queue > 0 then
+--                     local postData = {username = 'QB Logs', embeds = {}}
+--                     for i = 1, #queue do
+--                         postData.embeds[#postData.embeds + 1] = queue[i].data[1]
+--                     end
+--                     PerformHttpRequest(queue[1].webhook, function() end, 'POST', json.encode(postData), {['Content-Type'] = 'application/json'})
+--                     logQueue[name] = {}
+--                 end
+--             end
+--         end
+--     end
+-- end)
 
 QBCore.Commands.Add('testwebhook', 'Test Your Discord Webhook For Logs (God Only)', {}, false, function()
     TriggerEvent('qb-log:server:CreateLog', 'testwebhook', 'Test Webhook', 'default', 'Webhook setup successfully')

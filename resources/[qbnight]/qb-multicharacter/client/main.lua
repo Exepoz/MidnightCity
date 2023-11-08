@@ -144,10 +144,6 @@ RegisterNUICallback('selectCharacter', function(data, cb)
     cb("ok")
 end)
 
-RegisterCommand('fisherman', function()
-    TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_STAND_FISHING', 0, true)
-end)
-
 local RandomAnims = Config.Scenarios
 function UpdateAnim()
     local anims = {

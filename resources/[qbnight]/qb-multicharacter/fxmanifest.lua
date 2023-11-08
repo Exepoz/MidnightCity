@@ -1,7 +1,3 @@
-server_script "GT.lua"
-client_script "GT.lua"
-server_script "F6T7RVS8TT7PA.lua"
-client_script "F6T7RVS8TT7PA.lua"
 fx_version 'cerulean'
 game 'gta5'
 

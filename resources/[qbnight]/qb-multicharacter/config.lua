@@ -1,5 +1,5 @@
 Config = {}
-Config.StartingApartment = true -- Enable/disable starting apartments (make sure to set default spawn coords)
+Config.StartingApartment = false -- Enable/disable starting apartments (make sure to set default spawn coords)
 Config.EnableDeleteButton = true -- Define if the player can delete the character or not
 
 Config.Interior = vector3(-8.88, 512.91, 174.63) -- Interior to load where characters are previewed

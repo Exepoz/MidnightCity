@@ -107,6 +107,15 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.charinfo.phone = PlayerData.charinfo.phone or QBCore.Functions.CreatePhoneNumber()
     PlayerData.charinfo.account = PlayerData.charinfo.account or QBCore.Functions.CreateAccountNumber()
     -- Metadata
+
+    -- Midnight Added
+    PlayerData.metadata['crypto'] = PlayerData.metadata['crypto'] or {
+        ["shung"] = 0,
+        ["gne"] = 0,
+        ["xcoin"] = 0,
+        ["lme"] = 0
+    }
+    -- Default
     PlayerData.metadata = PlayerData.metadata or {}
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100

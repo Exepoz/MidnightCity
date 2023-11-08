@@ -30,19 +30,6 @@ end
 
 -- Events
 
-RegisterNetEvent('qb-spawn:client:openUI', function(value)
-    SetEntityVisible(PlayerPedId(), false)
-    DoScreenFadeOut(250)
-    Wait(1000)
-    DoScreenFadeIn(250)
-    QBCore.Functions.GetPlayerData(function(PlayerData)
-        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, -85.00, 0.00, 0.00, 100.00, false, 0)
-        SetCamActive(cam, true)
-        RenderScriptCams(true, false, 1, true, true)
-    end)
-    Wait(500)
-    SetDisplay(value)
-end)
 
 RegisterNetEvent('qb-houses:client:setHouseConfig', function(houseConfig)
     Houses = houseConfig
@@ -213,6 +200,47 @@ RegisterNUICallback('spawnplayer', function(data, cb)
     end
     cb('ok')
 end)
+
+RegisterNetEvent('qb-spawn:client:openUI', function(value)
+
+
+    local ped = PlayerPedId()
+    local PlayerData = QBCore.Functions.GetPlayerData()
+    local insideMeta = PlayerData.metadata["inside"]
+    PreSpawnPlayer()
+    QBCore.Functions.GetPlayerData(function(pd)
+        ped = PlayerPedId()
+        SetEntityCoords(ped, pd.position.x, pd.position.y, pd.position.z)
+        SetEntityHeading(ped, pd.position.a)
+        FreezeEntityPosition(ped, false)
+    end)
+
+    if insideMeta.house ~= nil then
+        local houseId = insideMeta.house
+        TriggerEvent('qb-houses:client:LastLocationHouse', houseId)
+    elseif insideMeta.apartment.apartmentType ~= nil or insideMeta.apartment.apartmentId ~= nil then
+        local apartmentType = insideMeta.apartment.apartmentType
+        local apartmentId = insideMeta.apartment.apartmentId
+        TriggerEvent('qb-apartments:client:LastLocationHouse', apartmentType, apartmentId)
+    end
+    TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
+    TriggerEvent('QBCore:Client:OnPlayerLoaded')
+    PostSpawnPlayer()
+
+
+    -- SetEntityVisible(PlayerPedId(), false)
+    -- DoScreenFadeOut(250)
+    -- Wait(1000)
+    -- DoScreenFadeIn(250)
+    -- QBCore.Functions.GetPlayerData(function(PlayerData)
+    --     cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, -85.00, 0.00, 0.00, 100.00, false, 0)
+    --     SetCamActive(cam, true)
+    --     RenderScriptCams(true, false, 1, true, true)
+    -- end)
+    -- Wait(500)
+    -- SetDisplay(value)
+end)
+
 
 -- Threads
 
