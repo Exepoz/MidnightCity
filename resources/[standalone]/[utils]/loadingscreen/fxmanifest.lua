@@ -10,7 +10,7 @@ files {
     'assets/**/**/*.*'
 }
 
-client_script 'client.lua'
+-- client_script 'client.lua'
 
 --loadscreen_manual_shutdown "yes"
 loadscreen 'index.html'
