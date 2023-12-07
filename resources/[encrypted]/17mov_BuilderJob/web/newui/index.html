@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="newui/style.css">
+</head>
+<body>
+
+    <div class="startJob" id="counter">
+        <div class="decoLine">
+            <div class="decorationLine">
+                <div class="text">Job Progress</div>
+                <img src="newui/assets/decoration.svg" height="17">
+            </div>
+            <div class="line"></div>
+        </div>
+
+        <div class="startBtn" id="counterValue"></div>
+    </div>
+
+    <div class="notifications"></div>
+
+    <div class="multiplayerMenu">
+        <div class="fixedSize">
+            <div class="jobTittle">
+                <div class="tittle">STONE SOBER</div>
+                <div class="description">GROUP JOB</div>
+            </div>
+    
+            <div class="header">
+                <div class="backgroundText">
+                    <div class="bgText">BUILDER LOBBY</div>
+                    <div class="content">
+                        <div class="decorationLine">
+                            <div class="text" id="headerDecoText">BUILDER LOBBY</div>
+                            <div class="decorationParent">
+                                <div class="fullHeight"></div>
+                                <img id="headerDeco" src="newui/assets/decoration.svg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="startJob" id="startJob">
+                <div class="gradient"></div>
+                <div class="decoLine">
+                    <div class="decorationLine">
+                        <div class="text startJobClipPath" style="clip-path: polygon(0% 0%, 0 51%, 26% 100%, 100% 99%, 100% 0);">Start</div>
+                        <img src="newui/assets/decoration.svg" height="17">
+                    </div>
+                    <div class="line"></div>
+                </div>
+
+                <div class="startBtn" onclick="startJob()">Start Job!</div>
+            </div>
+
+            <div class="mainScreen">
+                <div class="tabs">
+                    <div class="tab activeTab" id="mainMenu">
+                        <img src="newui/assets/home.svg">
+                        <div class="text">MAIN MENU</div>
+                    </div>
+                    <div class="tab" id="management">
+                        <img src="newui/assets/management.svg">
+                        <div class="text">MANAGEMENT</div>
+                    </div>
+                </div>
+    
+                <div class="tabsSlider">
+                    <div class="mainMenu slide" style="min-width: 410px">
+                        <div class="box" id="cloakroom">
+                            <div class="icon">
+                                <img src="newui/assets/clothingIcon.svg" height="50px">
+                                <img src="newui/assets/strokes.svg" height="40px">
+                            </div>
+                            <div class="content">
+                                <div class="topic">Select Clothes</div>
+                                <div class="value">Clothes #<span id="clothesId">1</span></div>
+                            </div>
+                
+                            <div class="switch">
+                                <div class="sliderParent">
+                                    <div class="fullHeight"></div>
+                                    <div class="activeSlider"></div>
+                                </div>
+                                <div class="switchFlex">
+                                    <div class="option" id="0">#1</div>
+                                    <div class="option" id="1">#2</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box" id="cashPercentage">
+                            <div class="icon">
+                                <img src="newui/assets/cash.svg" height="50px">
+                                <img src="newui/assets/strokes.svg" height="40px">
+                            </div>
+                            <div class="content">
+                                <div class="topic">Percentage of your salary</div>
+                                <div class="value">Boss set it to: <span class="salaryPercent">100%</span></div>
+                            </div>
+                        </div>
+                
+                        <div class="myTeamParent">
+                            <div class="decoLine">
+                                <div class="decorationLine">
+                                    <div class="text">YOUR TEAM</div>
+                                    <img src="newui/assets/decoration.svg" height="17">
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                
+                           <div class="myTeam"></div>
+                        </div>
+            
+                        <div class="nearbyPlayersParent">
+                            <div class="decoLine">
+                                <div class="decorationLine">
+                                    <div class="text">Nearby Players</div>
+                                    <img src="newui/assets/decoration.svg" height="17">
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                
+                            <div class="nearbyPlayers"></div>
+                        </div>
+                    </div>
+                    <div class="management slide">
+                        <div class="decoLine">
+                            <div class="decorationLine">
+                                <div class="text">MANAGE TEAM</div>
+                                <img src="newui/assets/decoration.svg" height="17">
+                            </div>
+                            <div class="line"></div>
+                        </div>
+            
+                        <div class="manageMyTeam"></div>
+        
+                        <div class="manageReward">
+                            <div class="decoLine">
+                                <div class="decorationLine">
+                                    <div class="text">MANAGE REWARD PERCENTS</div>
+                                    <img src="newui/assets/decoration.svg" height="17">
+                                </div>
+                                <div class="line"></div>
+                            </div>
+            
+                            <div class="teamRewards"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tutorialScreen" id="inviteScreen">
+                <div class="background">
+                    <div class="tittle">Invitation</div>
+                    <div class="text">You have received an invitation to join the builder team from <span class="inviterName"></span></div>
+                </div>
+
+                <div class="btns">
+                    <div class="btn closeTutorialBtn" onclick="reactInvite(true)">Accept Invite</div>
+                    <div class="btn dontShowTutorialBtn" onclick="reactInvite(false)">Deny Invite</div>
+                </div>
+            </div>
+
+            <div class="tutorialScreen" id="warningScreen">
+                <div class="background">
+                    <div class="tittle">WARNING</div>
+                    <div class="text">You are not in a company car, you can end your work, but you will be charged a penalty.</div>
+                </div>
+
+                <div class="btns">
+                    <div class="btn closeTutorialBtn" onclick="reactWarning(true)">Accept Penalty</div>
+                    <div class="btn dontShowTutorialBtn" onclick="reactWarning(false)">Cancel</div>
+                </div>
+            </div>
+
+            <div class="tutorialScreen" id="tutorialScreen">
+                <div class="background">
+                    <div class="tittle">Builder Job Tutorial</div>
+                    <div class="text"></div>
+                </div>
+                <div class="btns">
+                    <div class="btn closeTutorialBtn" onclick="closeTutorial(false)">Close Tutorial</div>
+                    <div class="btn dontShowTutorialBtn" onclick="closeTutorial(true)">Don't Show Again</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="newui/script.js"></script>
+</html>

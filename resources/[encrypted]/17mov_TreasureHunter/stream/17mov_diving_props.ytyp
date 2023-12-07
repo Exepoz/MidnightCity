@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CMapTypes>
+  <extensions/>
+  <archetypes>
+    <Item type="CBaseArchetypeDef">
+      <lodDist value="300.00000000"/>
+      <flags value="0"/>
+      <specialAttribute value="0"/>
+      <bbMin x="-0.07768825" y="-0.03843416" z="-0.10890120"/>
+      <bbMax x="0.07806713" y="0.03833046" z="0.10858550"/>
+      <bsCentre x="0.00018944" y="-0.00005185" z="-0.00015788"/>
+      <bsRadius value="0.13915190"/>
+      <hdTextureDist value="300.00000000"/>
+      <name>17mov_diving_gear_mask</name>
+      <textureDictionary>17mov_diving_gear_mask</textureDictionary>
+      <clipDictionary/>
+      <drawableDictionary/>
+      <physicsDictionary>17mov_diving_gear_mask</physicsDictionary>
+      <assetType>ASSET_TYPE_DRAWABLE</assetType>
+      <assetName>17mov_diving_gear_mask</assetName>
+      <extensions/>
+      </Item>
+      <Item type="CBaseArchetypeDef">
+        <lodDist value="100.00000000"/>
+        <flags value="537001984"/>
+        <specialAttribute value="0"/>
+        <bbMin x="-0.23715700" y="-0.41687000" z="-0.01003400"/>
+        <bbMax x="0.19985000" y="0.08050000" z="0.76067500"/>
+        <bsCentre x="-0.01865350" y="-0.16818500" z="0.37532050"/>
+        <bsRadius value="0.50802180"/>
+        <hdTextureDist value="5.00000000"/>
+        <name>17mov_diving_gear_tank</name>
+        <textureDictionary>p_scuba_gear</textureDictionary>
+        <clipDictionary/>
+        <drawableDictionary/>
+        <physicsDictionary>cutsobjects</physicsDictionary>
+        <assetType>ASSET_TYPE_DRAWABLE</assetType>
+        <assetName>17mov_diving_gear_tank</assetName>
+        <extensions/>
+      </Item>
+         </archetypes>
+        <name>0x0AD225D7</name>
+        <dependencies/>
+        <compositeEntityTypes/>
+      </CMapTypes>

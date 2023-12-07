@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+:root {
+    --layoutColor: rgb(128, 155, 255);
+    --themeColor: rgba(39, 39, 39, 0.9);
+    --btnsBackground: rgba(255, 255, 255, 0.15);
+    --btnsHoverColor: rgb(128, 155, 255);
+}
+
+* {
+    user-select: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    color:white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.counter {
+    display: none;
+    position: absolute;
+    top: 97%;
+    left: 28%;
+    transform: translateY(-50%) translateX(-50%);
+    text-align: center;
+    font-size: 2vh;
+    background-color: rgba(0,0,0, 0.65);
+    padding: 1vh 0.5vw;
+    border-radius: 5px;
+    border-bottom: 3px solid var(--layoutColor);
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 11.5%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 21vw;
+    background-color: var(--themeColor);
+    border: 3px solid var(--layoutColor);
+    box-shadow: 0px 7px 75.6px 8.4px rgba(128, 155, 255, 0.25);
+    text-align: center;
+    border-radius: 5px;
+    font-size: 1.3vh;
+    line-height: 1.3vh;
+}
+
+.containerInside {
+    padding: 1vh 0.5vw 1vh 0.5vw;
+}
+
+.containerTittle {
+    height: 3vh;
+    max-height: 3vh;
+    overflow: hidden;
+    line-height: 3vh;
+    font-size: 2vh;
+    width: 100%;
+    background: var(--layoutColor);
+    text-transform: uppercase;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+}
+
+.flex2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.partyChild {
+    max-width: 33%;
+    min-width: 33%;
+}
+
+.partyHost {
+    background-color: var(--btnsBackground);
+    height: 2.6vh;
+    line-height: 2.6vh;
+    width: fit-content;
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin-top: .5vh;
+    /* overflow: hidden; */
+}
+
+.childHost {
+    max-width: 70%;
+    overflow: hidden;
+}
+
+.partyHost i {
+    margin-right: 1vw;
+}
+
+.partyContainer {
+    display: flex;
+    margin: 1vh 5% .5vh 5%;
+    width: 90%;
+    text-align: center;
+    height: 8vh;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.xmark {
+    margin-bottom: .3vh;
+    cursor: pointer
+}
+
+
+.busySlot {
+    line-height: 1.5vh;
+}
+
+.freeSlot {
+    font-size: 2vh;
+}
+
+.freeSlot i {
+    background-color: var(--btnsBackground);
+    width: 3vw;
+    height: 3vw;
+    line-height: 3vw;
+    border-radius: 100%;    
+}
+
+.freeSlot i:hover {
+    transition: 0.2s;
+    background-color: var(--btnsHoverColor);
+}
+
+.button {
+    padding: .7vw 1vw;
+    text-align: center;
+    width: 80%;
+    background-color: var(--btnsBackground);
+    margin-bottom: 1vh;
+    border-radius: 5px;
+    font-size: 2vh;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+.button:hover {
+    transition: 0.2s;
+    background-color: var(--btnsHoverColor);
+}
+
+.inviteBox .container {
+    border: 1.5px solid var(--layoutColor);
+    top: 50%;
+    left: 50%;
+}
+
+.warningBox .flex3 {
+    margin-top: 1.5vh;
+}
+
+.warningBox .container {
+    border: 1.5px solid var(--layoutColor);
+    top: 50%;
+    left: 50%;
+    line-height: 1.9vh;
+}
+
+.inviteBox .partyHost {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.tutorial .container {
+    border: 1.5px solid var(--layoutColor);
+    top: 50%;
+    left: 50%;
+    font-size: 1.4vh;
+    line-height: 1.9vh;
+}
+
+.flex3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.button2 {
+    padding: .45vw 1vw;
+    background-color: var(--btnsBackground);
+    margin-bottom: 1vh;
+    border-radius: 5px;
+    font-size: 1.5vh;
+    text-transform: uppercase;
+}
+
+.button2:hover {
+    background-color: var(--btnsHoverColor);
+    transition: 0.2s;
+}
+
+.WorkMenu {
+    display: none;
+}
+
+.cloakroomMenu {
+    display: none;
+}
+
+.closestPlayers {
+    display:  none;
+}
+
+.inviteBox {
+    display: none;
+}
+
+.tutorial {
+    display: none;
+}
+
+.warningBox {
+    display: none;
+}

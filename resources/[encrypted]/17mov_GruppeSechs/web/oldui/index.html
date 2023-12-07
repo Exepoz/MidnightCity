@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head> 
+    <link rel="stylesheet" href="oldui/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="tabletHider">
+        <div class="tabletParent">
+            <div class="crimeTablet">
+                <div class="loginParent">
+                    <div class="loginPage">
+                        <i class="fa-regular fa-user"></i>
+                        <input onkeydown="check(this)" type="password" placeholder="Enter Password">
+                    </div>
+                </div>
+    
+                <div class="inviteParent">
+                    <div class="inviteMenu">
+                        <div class="menu">
+                            <div class="header">NEARBY PLAYERS</div>
+                            <div class="crimePlayers"></div>
+                            <div class="footer">Click on person to invite</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="confirmParent">
+                    <div class="heistConfirm">
+                        Would u like to start the heist now?<br>
+                        <i class="fa-regular fa-circle-check"></i>
+                        <div class="buttons">
+                            <div class="btn" onclick="crimeBack()">Back</div>
+                            <div class="btn" onclick="crimeStartHeist()">Confirm</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigationParent">
+                    <div class="navigation">
+                        <div class="loginStatus">
+                            <i class="fa-regular fa-user"></i>
+                            <span id="loggedText">Logged in as<br></span><span id="tabletName">17mov.pro</span>
+                            <div class="navButton logout" onclick="Logout()">LOGOUT</div>
+                        </div>
+                        <div class="mainButtons">
+                            <div id="dashboardNavBtn" class="navButton" onclick="dashboard()">DASHBORAD</div>
+                            <div id="myTeamNavBtn" class="navButton" onclick="myTeam()">YOUR TEAM</div>
+                            <div id="transportsNavBtn" class="navButton" onclick="transports()">CURRENT TRANSPORTS</div>
+                            <div id="chatNavBtn" class="navButton" onclick="chat()">CRIME CHAT</div>
+                            <div style="display: none;" id="yourHeistNavBtn" class="navButton" onclick="yourHeist()">YOUR HEIST</div>
+                            <div id="closeTabletNavBtn" class="navButton closeButton" onclick="closeTablet()">CLOSE TABLET</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="dashboardParent">
+                    <div class="dashboard page">
+                        <div class="dashboradBox">
+                            <div class="tittle" id="loggedInValue">0</div>
+                            <div class="description">LOGGED IN USERS</div>
+                        </div>
+                        <div class="dashboradBox">
+                            <div class="tittle" id="transportsValue">0</div>
+                            <div class="description" style="margin-top: -35px">CURRENT TRANSPORTS</div>
+                        </div>
+                        <div class="dashboradBox">
+                            <div class="description" style="margin-top: 5px;">LAST CHAT MESSAGES</div>
+                            <div class="chatMessages"></div>
+                        </div>
+                        <div class="dashboradBox">
+                            <div class="imgInDashboardBox">
+                                <img src="oldui/imgs/stockade1.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="myTeamParent">
+                    <div class="myTeam page">
+                        <div id="slot1">
+                            <div class="myTeamBox">
+                                <i class="fa-solid fa-user"></i>
+                                <div class="name">COCO BOLO</div>
+                                <div class="role">LEADER</div>
+                            </div>
+                        </div>
+
+                        <div id="slot2">
+                            <div class="myTeamBox" onclick="crimeInvite()">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <div class="name">EMPTY SLOT</div>
+                                <div class="role">CLICK TO INVITE</div>
+                            </div>
+                        </div>
+                        
+                        <div id="slot3">
+                            <div class="myTeamBox" onclick="crimeInvite()">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <div class="name">EMPTY SLOT</div>
+                                <div class="role">CLICK TO INVITE</div>
+                            </div>
+                        </div>
+
+                        <div id="slot4">
+                            <div class="myTeamBox" onclick="crimeInvite()">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <div class="name">EMPTY SLOT</div>
+                                <div class="role">CLICK TO INVITE</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heistPageParent">
+                    <div class="heistPage page">
+                        <div class="heistBox">
+                            <div class="bigText">CURRENT TASK</div>
+                            <div id="currentTask" class="smallText"></div>
+                            <div class="bigText">NEXT STEPS</div>
+                            <div class="nextSteps"></div>
+                        </div>
+                        <div class="heistBox">
+                            <div class="bigText" style="margin-bottom: 20px;">CONTROL PANEL</div>
+                            <div class="navButton" onclick="blockEngine()" id="blockEngine">BLOCK ENGINE</div>
+                            <div class="navButton" onclick="openBackDoors()" id="openDoors">OPEN BACK DOORS</div>
+                            <div class="navButton green" onclick="cancelHeist()">CANCEL HEIST</div>
+                        </div>
+                        <div class="heistBar">
+                            <div class="bigText">YOUR TARGET</div>
+                            <div class="heistTarget">
+                                <div class="target">
+                                    <div class="info">
+                                        <div class="tag">TEAM LEADER</div>
+                                        <div class="answer">DONALD TRUMP</div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="tag">POTENTIAL LOOT</div>
+                                        <div class="answer">$25000</div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="tag">DESTINATION</div>
+                                        <div class="answer">LEGION SQUARE</div>
+                                    </div>
+                                    <img src="oldui/imgs/stockade2.png"></img>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="chatParent">
+                    <div class="chat page">
+                        <div class="messages"></div>
+                        <div class="input">
+                            <input onkeydown="sendMessage(this)" type="text" placeholder="ENTER YOUR MESSAGE">
+                            <div class="sendBtn">SEND MESSAGE</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="transportsParent">
+                    <div id="zeroTranports">Currently, there is no any cash transportation</div>
+                    <div class="transports page">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="WorkMenu">
+        <div class="container">
+            <div class="containerTittle">MULTIPLAYER GRUPPE SECHS</div>
+            <div class="containerInside">
+                <div class="flex">
+                    <div class="partyChild childHost" id="0" plyId="0" onclick="Kick()"><div class="partyHost"><i class="fa-regular fa-user"></i></div></div>    
+                </div>
+
+                <div class="partyContainer">
+                    <div class="partyChild" onclick="Invite()"><div class="freeSlot"><i class="fa-solid fa-user-plus"></i></div></div>
+                    <div class="partyChild" onclick="Invite()"><div class="freeSlot"><i class="fa-solid fa-user-plus"></i></div></div>
+                    <div class="partyChild" onclick="Invite()"><div class="freeSlot"><i class="fa-solid fa-user-plus"></i></div></div>
+                </div>
+
+                <div class="flex2">
+                    <div class="button" onclick="startJob()" id="startWorkingBtn">Start Working</div>
+                </div>
+            </div>
+            <div class="footerText">This work can be dangerous. We recommend you to equip yourself with a firearm</div>
+        </div>
+    </div>
+    
+    <div class="closestPlayers">
+        <div class="container">
+            <div class="containerTittle">NEARBY PLAYERS</div>
+            <div class="containerInside">
+                <div class="flex2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inviteBox">
+        <div class="container">
+            <div class="containerInside">
+                You have received an invitation to join the team from
+                <div class="flex">
+                    <div class="partyHost"><i class="fa-regular fa-user"></i><span id="inviteUser"></span></div>
+                </div>
+    
+                <div class="flex3">
+                    <div class="button2" onclick="reactRequest(true)">Accept</div>
+                    <div class="button2"onclick="reactRequest(false)">Decline</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="crimeInviteBox">
+        <div class="container darkTheme">
+            <div class="containerInside">
+                You have received an invitation to join the heist team from
+                <div class="flex">
+                    <div class="partyHost"><i class="fa-regular fa-user"></i><span id="crimeInviteUser"></span></div>
+                </div>
+    
+                <div class="flex3">
+                    <div class="button2 btnDarkTheme" onclick="reactCrimeRequest(true)">Accept</div>
+                    <div class="button2 btnDarkTheme"onclick="reactCrimeRequest(false)">Decline</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="warningBox">
+        <div class="container">
+            <div class="containerInside">
+                <div class="text"></div>
+                <div class="flex3">
+                    <div class="button2" onclick="reactWarning(true)">Accept</div>
+                    <div class="button2"onclick="reactWarning(false)">Decline</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tutorial">
+        <div class="container">
+            <div class="containerInside">
+                <label></label>
+                <div class="flex" style="margin-top: 1vh;">
+                    <div class="button2" onclick="CloseTutorial()">Confirm</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="oldui/script.js"></script>
+</html>

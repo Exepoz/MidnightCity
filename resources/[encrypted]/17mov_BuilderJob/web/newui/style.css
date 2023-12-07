@@ -1,0 +1,782 @@
+:root {
+    --themeColor: rgba(174, 105, 224, 0.973);
+    --gradientfirstColor: #636363;
+    --gradientSecondColor: #553969a2;
+}
+
+* {
+    user-select: none;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: white;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: GilroyBold;
+    src: url(assets/Gilroy-Bold.ttf);
+}
+
+@font-face {
+    font-family: GilroyLight;
+    src: url(assets//Gilroy-Light.ttf);
+}
+
+@font-face {
+    font-family: GilroyMedium;
+    src: url(assets//Gilroy-Medium.ttf);
+}
+
+@font-face {
+    font-family: GilroyThin;
+    src: url(assets//Gilroy-Thin.ttf);
+}
+
+@font-face {
+    font-family: MorganiteMedium;
+    src: url(assets//Morganite-Medium.ttf);
+}
+
+@font-face {
+    font-family: MontserratBold;
+    src: url(assets//Montserrat-Bold.ttf);
+}
+
+@font-face {
+    font-family: MontserratRegular;
+    src: url(assets//Montserrat-Regular.ttf);
+}
+
+.multiplayerMenu {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.99) 0%, #553969a2);
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.fixedSize {
+    width: 390px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.fixedSize::-webkit-scrollbar {
+    display: none;
+}
+
+.jobTittle .tittle {
+    font-family: GilroyBold;
+    font-size: 40px;
+    color: var(--themeColor);
+}
+
+.jobTittle .description {
+    font-family: 'GilroyMedium';
+    font-size: 16px;
+    letter-spacing: 0.55em;
+    color: #FFFFFF;
+}
+
+.header {
+    margin-top: 10px;
+}
+
+.decorationLine {
+    display: flex;
+    align-items: center;
+    font-family: MontserratBold;
+    font-size: 32px;
+    z-index: 2;
+    margin-left: 24px;
+    position: relative;
+}
+
+.decorationLine .text {
+    clip-path: polygon(0 46%, 7.5% 100%, 100% 100%, 100% 0%, 0 0);
+}
+
+.decorationParent img {
+    position: absolute;
+    left: -13px;
+    top: 5px;
+}
+
+.backgroundText {
+    position: relative;
+}
+
+.backgroundText .bgText {
+    position: absolute;
+    font-family: MorganiteMedium;
+    font-size: 90px;
+    letter-spacing: 0.13em;
+    color: rgba(255, 255, 255, 0.03);
+    margin-left: -1px;
+}
+
+.backgroundText .content {
+    height: 90px;
+    display: flex;
+    align-items: center;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tabs .tab {
+    background-color: linear-gradient(270deg, rgba(255, 255, 255, 0.036) 0%, rgba(255, 255, 255, 0) 100%);
+    padding: 15px;
+    padding-left: 23px;
+    padding-right: 23px;
+    margin-right: 8px;
+    border: 1px transparent solid;
+    font-family: MontserratBold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+}
+
+.tabs .tab::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    padding: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.036) 0%, rgba(255, 255, 255, 0) 100%); 
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude; 
+}
+
+
+.tabs .tab:hover {
+    transition: 0.3s;
+    border-radius: 5px; 
+    border: 1px solid var(--themeColor);
+    background: linear-gradient(225.41deg, var(--gradientfirstColor) 25.18%, var(--gradientSecondColor) 74.83%);
+}
+
+.tabs .activeTab {
+    border: 1px solid var(--themeColor);
+    border-radius: 5px; 
+    background: linear-gradient(225.41deg, var(--gradientfirstColor) 25.18%, var(--gradientSecondColor) 74.83%);
+}
+
+.tabs .tab .text {
+    margin-left: 10px;
+}
+
+.box {
+    height: 80px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.036) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 5px;
+    margin-top: 6px;
+    display: flex;
+    gap: 45px;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    position: relative;
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.inviteBtn, .kickBtn, .boxInput{
+    z-index: 10;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.box::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    padding: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.036) 0%, rgba(255, 255, 255, 0) 100%); 
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude; 
+}
+
+.box .icon {
+    display: flex;
+
+    align-items: center;
+    margin-right: 10px;
+}
+
+.box .content {
+    display: flex;
+    flex-direction: column;
+    margin-left: -35px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.box .content .topic {
+    font-family: GilroyMedium;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.38);
+}
+
+.box .content .value {
+    font-family: GilroyMedium;
+    font-size: 19px;
+    color: #FFFFFF;
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.box .switch {
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    border: 1px rgba(255, 255, 255, 0.15) solid;
+    border-radius: 6px;
+    font-family: GilroyMedium;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.box .switch .option:hover {
+    transition: 0.3s;
+    color: var(--themeColor);
+}
+
+.switchFlex {
+    display: flex;
+    justify-content: space-around;
+    z-index: 2;
+}
+
+.box .switch .option {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.switch .sliderParent {
+    position: relative;
+    height: auto;
+    margin-top: -25px;
+}
+
+.switch .activeSlider {
+    width: 30px;
+    height: 24px;
+    padding: 0;
+    background: linear-gradient(295.75deg, var(--gradientfirstColor) 0%, var(--gradientSecondColor) 100%);
+    border: 1px solid var(--themeColor);
+    border-radius: 6px;
+    transition: .4s;
+    /* margin-left: 34px; */
+}
+
+.box .boxInput {
+    outline: none;
+    border: none;
+    width: 84px;
+    height: 41px;
+    color: #80FF00;
+    border: 1px rgba(255, 255, 255, 0.15) solid;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 6px;
+    position: relative;
+    text-align: center;
+    font-family: GilroyMedium;
+    font-size: 16px;
+    margin-left: -35px;
+}
+
+.decoLine {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.decoLine .decorationLine {
+    margin-left: 18px;
+}
+
+.decoLine .decorationLine img {
+    position: absolute;
+    left: -14px;
+    top: 2.5px;
+}
+
+.decoLine .text {
+    font-family: MontserratBold;
+    font-size: 17px;
+    margin-left: -10px;
+    white-space: nowrap;
+    margin-right: 10px;
+    clip-path: polygon(0% 0%, 0 51%, 10% 100%, 100% 99%, 100% 0);
+}
+
+.decoLine .line {
+    width: 63%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)
+}
+
+.nearbyPlayersParent {
+    display: none;
+}
+
+.nearbyPlayers {
+    max-height: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 30px;
+}
+
+.nearbyPlayers::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+}
+
+.nearbyPlayers::-webkit-scrollbar-track {
+    border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.nearbyPlayers::-webkit-scrollbar-thumb {
+    background-color: var(--themeColor);
+    border-radius: 5px;
+}
+
+.mainMenu {
+    transition: 0.5s;
+}
+
+.management {
+    transition: 0.5s;
+}
+
+.slide {
+    width: 100%;
+}
+
+.manageReward {
+    margin-bottom: 30px;
+}
+
+.tabsSlider {
+    display: flex;
+    scroll-behavior: smooth;
+    overflow: scroll;
+}
+
+.tabsSlider::-webkit-scrollbar {
+    display: none;
+}
+
+.startJob {
+    display: none;
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+    width: 225px;
+}
+
+.gradient {
+    z-index: -10;
+    position: absolute;
+    width: 1200px;
+    height: 1200px;
+    bottom: -800px;
+    right: -700px;
+    background: radial-gradient(circle, rgba(0,0,0,255) 0%, rgba(0,0,0,0) 80%);
+}
+
+.startBtn {
+    font-family: MontserratBold;
+    background: linear-gradient(225.41deg, var(--gradientfirstColor) 25.18%, var(--gradientSecondColor) 74.83%);
+    border: 1px solid var(--themeColor);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 17px;
+}
+
+.startBtn:hover {
+    transition: 0.5s;
+    background-color: var(--gradientSecondColor);
+}
+
+.notifications {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    max-height: 640px;
+    overflow: hidden;
+}
+
+.notification {
+    display: flex;
+    flex-direction: column;
+    font-family: GilroyMedium;
+    margin-bottom: 10px;
+    transition: 0.5s;
+    max-width: 420px;
+}
+
+.notification .flexBox {
+    display: flex;
+}
+
+
+.notification .flexBox .icon {
+    width: 93px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(123, 144, 183, 0.2);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notification .flexBox .text {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 4px;
+    border: 2px solid rgba(123, 144, 183, 0.2);
+    padding: 10px;
+}
+
+.shortNotify {
+    width: 296px;
+    margin-left: 3px;
+    height: 80px;
+}
+
+.longNotify {
+    width: 100%;
+    height: auto;
+}
+
+
+.notification .flexBox .text .wrongTittle {
+    font-size: 20px;
+    color: #FF002E;
+}
+
+.notification .flexBox .text .tittle {
+    font-size: 20px;
+    color: var(--themeColor);
+}
+
+.notification .flexBox .text .content {
+    font-family: MontserratBold;
+    font-size: 14px;
+    margin-top: 2px;
+    color: #FFFFFF;
+}
+
+.progressbar {
+    height: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(123, 144, 183, 0.2);
+    border-radius: 4px;
+    margin-top: 3px;
+    padding: 5px;
+    padding-bottom: 0px;
+    position: relative;
+}
+
+.progressbar .track {
+    margin-top: 2.5px;
+    width: 97.5%;
+    height: 5px;
+    background-color: rgba(123, 144, 183, 0.2);
+    border-radius: 4px;
+    position: absolute;
+}
+
+.progressbar .rdyTrack {
+    width: 0%;
+    height: 5px;
+    background-color: var(--themeColor);
+    border-radius: 4px;
+}
+
+.progressbar .wrongRdyTrack {
+    width: 0%;
+    height: 5px;
+    background-color: #FF002E;
+    border-radius: 4px;
+}
+
+.mainScreen {
+    display: none;
+}
+
+.tutorialScreen {
+    display: none;
+    border-radius: 5px;
+    font-family: GilroyLight;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+
+.tutorialScreen .background {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.036) 0%, rgba(255, 255, 255, 0) 100%);
+    padding: 20px;
+    position: relative;
+}
+
+.tutorialScreen .background::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    padding: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.036) 0%, rgba(255, 255, 255, 0) 100%); 
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude; 
+}
+
+.tutorialScreen .background .tittle {
+    color: var(--themeColor);
+    margin-bottom: 8px;   
+}
+
+.tutorialScreen .btns {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.tutorialScreen .btns .btn {
+    border-radius: 5px;
+    font-family: MontserratRegular;
+    font-weight: 700;
+    font-size: 14px;
+    width: 150px;
+    text-align: center;
+    padding: 15px;
+    margin-right: 20px;
+}
+
+.closeTutorialBtn {
+    background: linear-gradient(225.41deg, var(--gradientfirstColor) 25.18%, var(--gradientSecondColor) 74.83%);
+    border: 1px solid var(--themeColor);
+}
+
+.dontShowTutorialBtn {
+    background: linear-gradient(225.41deg, rgba(255, 0, 46, 0) 25.18%, rgba(255, 0, 46, 0.24) 74.83%);
+    border: 1px solid #FF002E;
+}
+
+.dontShowTutorialBtn:hover {
+    transition: 0.5s;
+    background-color: rgba(255, 0, 46, 0.24);
+}
+
+.closeTutorialBtn:hover {
+    transition: 0.5s;
+    background-color: var(--gradientSecondColor);
+}
+
+#cashPercentage .content {
+    max-width: 190px;
+}
+
+.salaryPercent {
+    color: #67c27e;
+}
+
+#counter {
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+}
+
+
+#counter .startBtn {
+    background: rgba(255, 199, 0, 0.3);
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+@media screen and (max-height: 650px) {
+    .jobTittle .tittle {
+        font-size: 30px;
+    }
+
+    .jobTittle .description { 
+        font-size: 11px;
+        letter-spacing: 0.65em;
+    }
+
+    .backgroundText .bgText {
+        font-size: 60px;
+    }
+
+    .decorationLine { 
+        font-size: 22px;
+    }
+
+    .backgroundText .content {
+        height: 60px;
+    }
+    
+    .decorationParent img {
+        height: 24px;
+        margin-left: 6px;
+        margin-top: -6px;
+    }
+
+    .tabs .tab {
+        padding: 10px;
+        padding-left: 15.5px;
+        padding-right: 15.5px;
+        font-size: 8px;
+    }
+
+    .tabs .tab img {
+        height: 22px;
+    }
+
+    .box {
+        height: 50px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 360px;
+    }
+
+    .box img {
+        height: 30px;
+    }
+
+    .box .content .topic { 
+        font-size: 11px;
+    }
+
+    .box .content .value { 
+        font-size: 13px;
+    }
+
+    .box .content .switch { 
+        width: 100%;
+        height: 100%;
+    }
+
+    .box .option {
+        font-size: 10px;
+    }
+
+    #headerDecoText {
+        font-size: 22px;
+    }
+
+    #headerDeco {
+        margin-left: 6PX;
+        margin-top: -1px;
+    }
+
+    .decoLine .decorationLine img {
+        top: 1px;
+        left: -15px;
+    }
+
+    .inviteBtn img, .kickBtn img, .boxInput img{
+        height: 15px;
+    }
+
+    .startBtn {
+        padding: 13px;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: 12px;
+    }
+
+    .notification {
+        width: 300px;
+    }
+
+    .notification .flexBox .text .wrongTittle {
+        font-size: 14px;
+    }
+    
+    .notification .flexBox .text .tittle {
+        font-size: 14px;
+    }
+    
+    .notification .flexBox .text .content {
+        font-size: 12px;
+    }
+
+    .notification .flexBox .icon {
+        display: none;
+    }
+
+    .notification .progressbar {
+        display: none;
+    }
+
+    .shortNotify {
+        width: 100%;
+        height: auto;
+    }
+
+    .tutorialScreen { 
+        font-size: 12px;
+    }
+
+    .tutorialScreen .btns .btn {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .box .boxInput { 
+        height: 27px;
+        width: 56px;
+        font-size: 12px;
+    }
+
+    .multiplayerMenu {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.99) 0%, rgba(0, 0, 0, 0.2) 80%);
+    }
+
+    .notifications {
+        max-height: 300px;
+    }
+}

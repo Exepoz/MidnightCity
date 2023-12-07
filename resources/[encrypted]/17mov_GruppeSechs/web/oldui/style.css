@@ -1,0 +1,965 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --layoutColor: rgb(128, 155, 255);
+    --themeColor: rgba(39, 39, 39, 0.9);
+    --btnsBackground: rgba(255, 255, 255, 0.15);
+    --btnsHoverColor: rgb(128, 155, 255);
+
+
+    --tabletBackgroundColor: #2C2C2C;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+
+body {
+    color:white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.tabletParent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabletHider {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+.heistPageParent, .loginParent, .navigationParent, .dashboardParent, .myTeamParent, .inviteParent, .transportsParent, .chatParent {
+    height: 95%;
+    width: 77.5%;
+    display: none;
+    float: right;
+}
+
+
+.inviteParent {
+    position: absolute;
+}
+
+.loginParent {
+    width: 100%;
+    height: 100%;
+}
+
+.navigationParent {
+    float: left;
+    width: 20%;
+}
+
+.heistPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.heistBox {
+    width: 49%;
+    height: 50%;
+    background-color: #363636;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.heistBox .bigText {
+    font-weight: 800;
+    font-size: 30px;
+}
+
+.heistBox .smallText {
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.nextSteps {
+    font-weight: 400;
+    font-size: 20px;
+    color: #686868;
+}
+
+#currentTask {
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.heistBar {
+    width: 99%;
+    height: 45%;
+    background-color: #363636;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.target {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.crimeTablet {
+    background-color: var(--tabletBackgroundColor);
+    width: 1200px;
+    height: 700px;
+    max-height: 700px;
+    color: white;
+}
+
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.loginStatus .fa-user {
+    text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+    font-size: 146px;
+    color: #9C9C9C;
+}
+
+.loginPage .fa-user {
+    text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+    font-size: 200px;
+    color: #9C9C9C;
+}
+
+.loginPage input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #FFFFFF;
+}
+
+.loginPage input {
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+    outline: 0;
+    border: 0;
+    background: #525252;
+    border: 1px solid #727272;
+    margin-top: 22px;
+    text-align: center;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+.navigation {
+    float: left;
+    width: 100%;
+    height: 715px;
+}
+
+.loginStatus {
+    background: #242424;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 400;
+}
+
+.loginStatus i {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.navButton {
+    font-weight: 600;
+    padding: 5px 10px;
+    background: #525252;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    margin-bottom: 6px;
+    width: 80%;
+}
+
+.navButton:hover {
+    background: #474747;
+    transition: 0.2s;
+}
+
+.navBtnActive {
+    background: #363636;
+}
+
+.green {
+    background-color: #3C973C;
+}
+
+.green:hover {
+    background: #45ac45;
+    transition: 0.2s;
+}
+
+.closeButton {
+    margin-top: 215px;
+}
+
+.closeButtonAll {
+    margin-top: 180px;
+}
+
+.mainButtons {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 60%;
+    background-color: #1f1f1f;
+}
+
+.page {
+    margin-top: 6px;
+    margin-right: 6px;
+    width: 100%;
+    height: 100%;
+    float: right;
+    padding: 10px;
+}
+
+.logout {
+    width: fit-content;
+    margin-bottom: 10px;
+}  
+
+.myTeam {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#slot1, #slot2, #slot3, #slot4 {
+    width: 49.5%;
+    height: 48.5%;
+}
+
+.myTeamBox {
+    width: 100%;
+    height: 100%;
+    background: #474747;
+    box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.myTeamBox:hover {
+    background: #3f3f3f;
+    transition: 0.2s;
+}
+
+.myTeamBox i {
+    color: rgb(26, 26, 26);
+    text-shadow: 8px 8px 8px rgb(0 0 0 / 25%);
+    font-size: 145px;
+    margin-bottom: 20px;
+}
+
+.myTeamBox .name {
+    font-size: 40px;
+}
+
+.myTeamBox .role {
+    color: #222222;
+    font-size: 25px;
+}
+
+.inviteMenu {
+    width: 1200px;
+    height: 700px;
+    background-color: rgba(0, 0, 0, 0.836);
+    clear: both;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu {
+    width: 350px;
+    height: 490px;
+    background: #242424;
+}
+
+.menu .header {
+    background: #333333;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.crimePlayers {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    max-height: 420px;
+    height: 420px;
+    overflow-y: scroll;
+}
+
+.menu .footer {
+    font-weight: 300;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    color: #525252;
+}
+
+.crimePlayers::-webkit-scrollbar {
+    display: none;
+}
+
+.crimePlayer {
+    width: 100%;
+    background: #333333;
+    height: 45px;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 45px;
+}
+
+.crimePlayer:hover {
+    transition: 0.2s;
+    background: #272727;
+}
+
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboradBox {
+    width: 49.5%;
+    height: 48.5%;
+    background: #474747;
+    box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.dashboradBox .tittle {
+    font-size: 200px;
+    font-weight: bold;
+    margin-top: -20px;
+}
+
+.dashboradBox .description {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: -40px;
+}
+
+.imgInDashboardBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatMessages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    height: 240px;
+    max-height: 240px;
+    overflow-y: scroll;
+}
+
+
+.chatMessages::-webkit-scrollbar {
+    display: none;
+}
+
+.chatMessage {
+    display: flex;
+    margin-top: 5px;
+}
+
+.pfp {
+    background-color: #333333;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.message {
+    background-color: #2C2C2C;
+    padding: 10px;
+    width: 340px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    word-break: break-all;
+}
+
+.transports {
+    max-height: 95%;
+    overflow-y: scroll;
+}
+
+.transports::-webkit-scrollbar {
+    display: none;
+}
+
+#zeroTranports {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transport {
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #363636;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.transport:hover {
+    background: #333333;
+    transition: 0.15s;
+}
+
+.info .tag {
+    color: #7E7E7E;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.info .answer {
+    font-size: 25px;
+    max-width: 250px;
+}
+
+.transport img {
+    margin-top: 20px;
+}
+
+.confirmParent {
+    width: 1200px;
+    height: 700px;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.heistConfirm {
+    width: 350px;
+    background-color: #2C2C2C;
+    text-align: center;
+    border-radius: 1vh;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.heistConfirm i {
+    font-size: 180px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.heistConfirm .buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.heistConfirm .btn {
+    background-color: #545454;
+    padding: 10px;
+    width: 40%;
+    font-size: 20px;
+    border-radius: 1vh;
+}
+
+.heistConfirm .btn:hover {
+    background-color: #424242;
+    transition: 0.2s;
+}
+
+
+.chat {
+    background: #444444;
+}
+
+.chat .messages {
+    height: 95%;
+    max-height: 95%;
+    overflow-y: scroll;
+}
+
+.chat .messages::-webkit-scrollbar {
+    display: none;
+}
+
+.chat .input {
+    display: flex;
+    margin-top: 5px;
+}
+
+.chat .input input {
+    background: #545454;
+    color: white;
+    font-family: 'Poppins' sans-serif;
+    border: 0;
+    outline: 0;
+    width: 85%;
+    padding: 5px;
+}
+
+.messages .message {
+    width: auto;
+    max-width: 75%;
+}
+
+.chat .input .sendBtn {
+    padding: 5px;
+    background-color: #9E9E9E;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 11.5%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 21vw;
+    background-color: var(--themeColor);
+    border: 3px solid var(--layoutColor);
+    box-shadow: 0px 7px 75.6px 8.4px rgba(128, 155, 255, 0.25);
+    text-align: center;
+    border-radius: 5px;
+    font-size: 1.3vh;
+    line-height: 1.3vh;
+}
+
+.darkTheme {
+    background-color: rgb(14, 14, 14);
+    border: 3px solid rgba(255, 255, 255, 0.15);  
+}
+
+.containerInside {
+    padding: 1vh 0.5vw 1vh 0.5vw;
+}
+
+.containerTittle {
+    height: 3vh;
+    max-height: 3vh;
+    overflow: hidden;
+    line-height: 3vh;
+    font-size: 2vh;
+    width: 100%;
+    background: var(--layoutColor);
+    text-transform: uppercase;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+}
+
+.flex2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#startWorkingBtn {
+    margin-top: .2vh;
+    margin-bottom: .2vh;
+}
+
+.partyChild {
+    max-width: 33%;
+    min-width: 33%;
+}
+
+.partyHost {
+    background-color: var(--btnsBackground);
+    height: 2.6vh;
+    line-height: 2.6vh;
+    width: fit-content;
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin-top: .5vh;
+    /* overflow: hidden; */
+}
+
+.childHost {
+    max-width: 70%;
+    overflow: hidden;
+}
+
+.partyHost i {
+    margin-right: 1vw;
+}
+
+.partyContainer {
+    display: flex;
+    margin: 1vh 5% .5vh 5%;
+    width: 90%;
+    text-align: center;
+    height: 8vh;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.xmark {
+    margin-bottom: .3vh;
+    cursor: pointer
+}
+
+
+.busySlot {
+    line-height: 1.5vh;
+}
+
+.freeSlot {
+    font-size: 2vh;
+}
+
+.freeSlot i {
+    background-color: var(--btnsBackground);
+    width: 3vw;
+    height: 3vw;
+    line-height: 3vw;
+    border-radius: 100%;    
+}
+
+.freeSlot i:hover {
+    transition: 0.2s;
+    background-color: var(--btnsHoverColor);
+}
+
+.button {
+    padding: .7vw 1vw;
+    text-align: center;
+    width: 80%;
+    background-color: var(--btnsBackground);
+    margin-bottom: 1vh;
+    border-radius: 5px;
+    font-size: 2vh;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+.button:hover {
+    transition: 0.2s;
+    background-color: var(--btnsHoverColor);
+}
+
+
+.crimeInviteBox .container {
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    top: 50%;
+    left: 50%;
+}
+
+.crimeInviteBox .partyHost {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.inviteBox .container {
+    border: 1.5px solid var(--layoutColor);
+    top: 50%;
+    left: 50%;
+}
+
+.warningBox .flex3 {
+    margin-top: 1.5vh;
+}
+
+.warningBox .container {
+    border: 1.5px solid var(--layoutColor);
+    top: 50%;
+    left: 50%;
+    line-height: 1.9vh;
+}
+
+.inviteBox .partyHost {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.tutorial .container {
+    border: 1.5px solid var(--layoutColor);
+    top: 50%;
+    left: 50%;
+    font-size: 1.4vh;
+    line-height: 1.9vh;
+}
+
+.flex3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.button2 {
+    padding: .45vw 1vw;
+    background-color: var(--btnsBackground);
+    margin-bottom: 1vh;
+    border-radius: 5px;
+    font-size: 1.5vh;
+    text-transform: uppercase;
+}
+
+.button2:hover {
+    background-color: var(--btnsHoverColor);
+    transition: 0.2s;
+}
+
+.btnDarkTheme {
+    background-color: transparent;
+    border: 3px solid rgba(255, 255, 255, 0.15);  
+}
+
+.btnDarkTheme:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 3px solid transparent;
+    transition: 0.2s;
+}
+
+.footerText {
+    opacity: 0.5;
+    font-size: 12px;
+    padding: 6px;
+    line-height: 14px;
+    font-weight: 400;
+}
+
+.WorkMenu {
+    display: none;
+}
+
+.closestPlayers {
+    display:  none;
+}
+
+.inviteBox {
+    display: none;
+}
+
+.crimeInviteBox {
+    display: none;
+}
+
+.tutorial {
+    display: none;
+}
+
+.warningBox {
+    display: none;
+}
+
+@media only screen and (max-width: 1250px) {
+    .inviteMenu {
+        width: 700px;
+        height: 500px;
+    }
+
+    .confirmParent {
+        width: 700px;
+        height: 500px;
+    }
+
+    .crimeTablet {
+        width: 700px;
+        height: 500px;
+        max-height: 500px;
+    }
+    
+    .loginStatus .fa-user {
+        font-size: 80px;
+    }
+
+    .closeButton {
+        margin-top: 0;
+    }
+
+    .closeButtonAll {
+        margin-top: 60px;
+    }
+
+    .navButton {
+        padding: 5px;
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .navigation {
+        height: 500px;
+        max-height: 500px;
+    }
+
+    #loggedText {
+        display: none;
+    }
+
+    .mainButtons {
+        height: 64.3%;
+    }
+
+    .dashboradBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .dashboradBox .tittle  {
+        font-size: 100px;
+    }
+
+    .dashboradBox .description {
+        font-size: 20px;
+    }
+
+    .imgInDashboardBox img {
+        width: 70%;
+    }
+
+    .myTeamBox i {
+        font-size: 75px;
+        margin-bottom: 10px;
+    }
+
+    .myTeamBox .name {
+        font-size: 20px;
+    }
+
+    .myTeamBox .role {
+        font-size: 15px;
+    }
+
+    .page {
+        width: 98%;
+        height: 97%;
+    }
+
+    .chat .messages {
+        height: 92%;
+        max-height: 92%;
+    }
+
+    .chat .input input {
+        width: 75%;
+    }
+
+    .chat .input .sendBtn {
+        font-size: 15px;
+    }
+
+    .heistBox {
+        width: 48%;
+    }
+    
+    .heistBox .bigText {
+        font-size: 20px;
+    }
+
+    .heistBox .smallText {
+        font-size: 15px;
+    }
+
+    #currentTask {
+        margin-bottom: 5px;
+    }
+
+    .nextSteps {
+        font-size: 15px;
+        max-height: 50%;
+        overflow-y: scroll;
+    }
+
+    .heistBar {
+        width: 94%;
+        height: 43%;
+    }
+
+    .heistBar .bigText {
+        font-size: 20px;
+    }
+    
+    
+    .info .answer {
+        font-size: 15px;
+        max-width: 250px;
+    }
+
+    .info .tag {
+        font-size: 13px;
+    }
+
+    .transport img {
+        width: 20%;
+    }
+
+    .target img {
+        width: 20%;
+    }
+
+    .pfp {
+        height: 40px;
+        width: 40px;
+    }
+
+    .message {
+        padding: 7px;
+        font-size: 13px;
+        width: 200px;
+    }
+
+    .pfp i {
+        font-size: 20px;
+    }
+}
+
+.nextSteps::-webkit-scrollbar {
+    display: none;
+}

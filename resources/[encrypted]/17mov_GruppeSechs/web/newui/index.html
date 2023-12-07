@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="newui/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="notifications"></div>
+
+    <div class="crimeInviteBox">
+        <div class="container darkTheme">
+            <div class="containerInside">
+                You have received an invitation to join the heist team from
+                <div class="flex">
+                    <div class="partyHost"><i class="fa-regular fa-user"></i><span id="crimeInviteUser"></span></div>
+                </div>
+    
+                <div class="flex3">
+                    <div class="button2 btnDarkTheme" onclick="reactCrimeRequest(true)">Accept</div>
+                    <div class="button2 btnDarkTheme"onclick="reactCrimeRequest(false)">Decline</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="multiplayerMenu">
+        <div class="fixedSize">
+            <div class="jobTittle">
+                <div class="tittle">GRUPPE SECHS</div>
+                <div class="description">GROUP JOB</div>
+            </div>
+    
+            <div class="header">
+                <div class="backgroundText">
+                    <div class="bgText">GROUP LOBBY</div>
+                    <div class="content">
+                        <div class="decorationLine">
+                            <div class="text" id="headerDecoText">GROUP LOBBY</div>
+                            <div class="decorationParent">
+                                <div class="fullHeight"></div>
+                                <img id="headerDeco" src="newui/assets/decoration.svg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="startJob" id="startJob">
+                <div class="gradient"></div>
+                <div class="decoLine">
+                    <div class="decorationLine">
+                        <div class="text startJobClipPath" style="clip-path: polygon(0% 0%, 0 51%, 26% 100%, 100% 99%, 100% 0);">Start</div>
+                        <img src="newui/assets/decoration.svg" height="17">
+                    </div>
+                    <div class="line"></div>
+                </div>
+
+                <div class="startBtn" onclick="startJob()">Start Job!</div>
+            </div>
+
+            <div class="mainScreen">
+                <div class="tabs">
+                    <div class="tab activeTab" id="mainMenu">
+                        <img src="newui/assets/home.svg">
+                        <div class="text">MAIN MENU</div>
+                    </div>
+                    <div class="tab" id="management">
+                        <img src="newui/assets/management.svg">
+                        <div class="text">MANAGEMENT</div>
+                    </div>
+                </div>
+    
+                <div class="tabsSlider">
+                    <div class="mainMenu slide" style="min-width: 410px">
+                        <!-- <div class="box" id="cloakroom">
+                            <div class="icon">
+                                <img src="newui/assets/clothingIcon.svg" height="50px">
+                                <img src="newui/assets/strokes.svg" height="40px">
+                            </div>
+                            <div class="content">
+                                <div class="topic">Select Clothes</div>
+                                <div class="value">Clothes #<span id="clothesId">1</span></div>
+                            </div>
+                
+                            <div class="switch">
+                                <div class="sliderParent">
+                                    <div class="fullHeight"></div>
+                                    <div class="activeSlider"></div>
+                                </div>
+                                <div class="switchFlex">
+                                    <div class="option" id="0">#1</div>
+                                    <div class="option" id="1">#2</div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="box" id="cashPercentage">
+                            <div class="icon">
+                                <img src="newui/assets/cash.svg" height="50px">
+                                <img src="newui/assets/strokes.svg" height="40px">
+                            </div>
+                            <div class="content">
+                                <div class="topic">Percentage of your salary</div>
+                                <div class="value">Boss set it to: <span class="salaryPercent">100%</span></div>
+                            </div>
+                        </div>
+                
+                        <div class="myLegalTeamParent">
+                            <div class="decoLine">
+                                <div class="decorationLine">
+                                    <div class="text">YOUR TEAM</div>
+                                    <img src="newui/assets/decoration.svg" height="17">
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                
+                           <div class="myLegalTeam"></div>
+                        </div>
+            
+                        <div class="nearbyPlayersParent">
+                            <div class="decoLine">
+                                <div class="decorationLine">
+                                    <div class="text">Nearby Players</div>
+                                    <img src="newui/assets/decoration.svg" height="17">
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                
+                            <div class="nearbyPlayers"></div>
+                        </div>
+                    </div>
+                    <div class="management slide">
+                        <div class="decoLine">
+                            <div class="decorationLine">
+                                <div class="text">MANAGE TEAM</div>
+                                <img src="newui/assets/decoration.svg" height="17">
+                            </div>
+                            <div class="line"></div>
+                        </div>
+            
+                        <div class="manageMyTeam"></div>
+        
+                        <div class="manageReward">
+                            <div class="decoLine">
+                                <div class="decorationLine">
+                                    <div class="text">MANAGE REWARD PERCENTS</div>
+                                    <img src="newui/assets/decoration.svg" height="17">
+                                </div>
+                                <div class="line"></div>
+                            </div>
+            
+                            <div class="teamRewards"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tutorialScreen" id="inviteScreen">
+                <div class="background">
+                    <div class="tittle">Invitation</div>
+                    <div class="text">You have received an invitation to join the gruppe sechs team from <span class="inviterName"></span></div>
+                </div>
+
+                <div class="btns">
+                    <div class="btn closeTutorialBtn" onclick="reactInvite(true)">Accept Invite</div>
+                    <div class="btn dontShowTutorialBtn" onclick="reactInvite(false)">Deny Invite</div>
+                </div>
+            </div>
+
+            <div class="tutorialScreen" id="warningScreen">
+                <div class="background">
+                    <div class="tittle">WARNING</div>
+                    <div class="text">You are not in a company car, you can end your work, but you will be charged a penalty.</div>
+                </div>
+
+                <div class="btns">
+                    <div class="btn closeTutorialBtn" onclick="reactWarning(true)">Accept Penalty</div>
+                    <div class="btn dontShowTutorialBtn" onclick="reactWarning(false)">Cancel</div>
+                </div>
+            </div>
+
+            <div class="tutorialScreen" id="tutorialScreen">
+                <div class="background">
+                    <div class="tittle">Gruppe Sechs Job Tutorial</div>
+                    <div class="text"></div>
+                </div>
+                <div class="btns">
+                    <div class="btn closeTutorialBtn" onclick="closeTutorial(false)">Close Tutorial</div>
+                    <div class="btn dontShowTutorialBtn" onclick="closeTutorial(true)">Don't Show Again</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabletHider">
+        <div class="tabletParent">
+            <div class="crimeTablet">
+                <div class="loginParent">
+                    <div class="loginPage">
+                        <i class="fa-regular fa-user"></i>
+                        <input onkeydown="check(this)" type="password" placeholder="Enter Password">
+                    </div>
+                </div>
+    
+                <div class="inviteParent">
+                    <div class="inviteMenu">
+                        <div class="menu">
+                            <div class="header">NEARBY PLAYERS</div>
+                            <div class="crimePlayers"></div>
+                            <div class="footer">Click on person to invite</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="confirmParent">
+                    <div class="heistConfirm">
+                        Would u like to start the heist now?<br>
+                        <i class="fa-regular fa-circle-check"></i>
+                        <div class="buttons">
+                            <div class="btn" onclick="crimeBack()">Back</div>
+                            <div class="btn" onclick="crimeStartHeist()">Confirm</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigationParent">
+                    <div class="navigation">
+                        <div class="loginStatus">
+                            <i class="fa-regular fa-user"></i>
+                            <span id="loggedText">Logged in as<br></span><span id="tabletName">17mov.pro</span>
+                            <div class="navButton logout" onclick="Logout()">LOGOUT</div>
+                        </div>
+                        <div class="mainButtons">
+                            <div id="dashboardNavBtn" class="navButton" onclick="dashboard()">DASHBORAD</div>
+                            <div id="myTeamNavBtn" class="navButton" onclick="myTeam()">YOUR TEAM</div>
+                            <div id="transportsNavBtn" class="navButton" onclick="transports()">CURRENT TRANSPORTS</div>
+                            <div id="chatNavBtn" class="navButton" onclick="chat()">CRIME CHAT</div>
+                            <div style="display: none;" id="yourHeistNavBtn" class="navButton" onclick="yourHeist()">YOUR HEIST</div>
+                            <div id="closeTabletNavBtn" class="navButton closeButton" onclick="closeTablet()">CLOSE TABLET</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="dashboardParent">
+                    <div class="dashboard page">
+                        <div class="dashboradBox">
+                            <div class="tittle" id="loggedInValue">0</div>
+                            <div class="description">LOGGED IN USERS</div>
+                        </div>
+                        <div class="dashboradBox">
+                            <div class="tittle" id="transportsValue">0</div>
+                            <div class="description" style="margin-top: -35px">CURRENT TRANSPORTS</div>
+                        </div>
+                        <div class="dashboradBox">
+                            <div class="description" style="margin-top: 5px;">LAST CHAT MESSAGES</div>
+                            <div class="chatMessages"></div>
+                        </div>
+                        <div class="dashboradBox">
+                            <div class="imgInDashboardBox">
+                                <img src="newui/assets/imgs/stockade1.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="myTeamParent">
+                    <div class="myTeam page">
+                        <div id="slot1">
+                            <div class="myTeamBox">
+                                <i class="fa-solid fa-user"></i>
+                                <div class="name">COCO BOLO</div>
+                                <div class="role">LEADER</div>
+                            </div>
+                        </div>
+
+                        <div id="slot2">
+                            <div class="myTeamBox" onclick="crimeInvite()">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <div class="name">EMPTY SLOT</div>
+                                <div class="role">CLICK TO INVITE</div>
+                            </div>
+                        </div>
+                        
+                        <div id="slot3">
+                            <div class="myTeamBox" onclick="crimeInvite()">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <div class="name">EMPTY SLOT</div>
+                                <div class="role">CLICK TO INVITE</div>
+                            </div>
+                        </div>
+
+                        <div id="slot4">
+                            <div class="myTeamBox" onclick="crimeInvite()">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <div class="name">EMPTY SLOT</div>
+                                <div class="role">CLICK TO INVITE</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heistPageParent">
+                    <div class="heistPage page">
+                        <div class="heistBox">
+                            <div class="bigText">CURRENT TASK</div>
+                            <div id="currentTask" class="smallText"></div>
+                            <div class="bigText">NEXT STEPS</div>
+                            <div class="nextSteps"></div>
+                        </div>
+                        <div class="heistBox">
+                            <div class="bigText" style="margin-bottom: 20px;">CONTROL PANEL</div>
+                            <div class="navButton" onclick="blockEngine()" id="blockEngine">BLOCK ENGINE</div>
+                            <div class="navButton" onclick="openBackDoors()" id="openDoors">OPEN BACK DOORS</div>
+                            <div class="navButton green" onclick="cancelHeist()">CANCEL HEIST</div>
+                        </div>
+                        <div class="heistBar">
+                            <div class="bigText">YOUR TARGET</div>
+                            <div class="heistTarget">
+                                <div class="target">
+                                    <div class="info">
+                                        <div class="tag">TEAM LEADER</div>
+                                        <div class="answer">DONALD TRUMP</div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="tag">POTENTIAL LOOT</div>
+                                        <div class="answer">$25000</div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="tag">DESTINATION</div>
+                                        <div class="answer">LEGION SQUARE</div>
+                                    </div>
+                                    <img src="newui/assets/imgs/stockade2.png"></img>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="chatParent">
+                    <div class="chat page">
+                        <div class="messages"></div>
+                        <div class="input">
+                            <input onkeydown="sendMessage(this)" type="text" placeholder="ENTER YOUR MESSAGE">
+                            <div class="sendBtn">SEND MESSAGE</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="transportsParent">
+                    <div id="zeroTranports">Currently, there is no any cash transportation</div>
+                    <div class="transports page">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="newui/script.js"></script>
+</html>
