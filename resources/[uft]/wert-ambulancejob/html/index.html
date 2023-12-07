@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Wert ambulancejob</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: transparent !important";>
+    <div id="kankart">
+        <div id="csn"><i class="fa-solid fa-id-card-clip"></i><span style="padding: 1.3vh;">Csn : 101010WERT</span></div>
+        <div id="firstname"><i class="fa-solid fa-user"></i><span style="padding: 2vh;">Firstname : Wert</span></div>
+        <div id="lastname"><i class="fa-solid fa-user-pen"></i><span style="padding: 1.3vh;">Lastname : Test</span></div>
+        <div id="birthdate"><i class="fa-solid fa-cake-candles"></i><span style="padding: 2vh;">Birthdate : 10/10/1995</span></div>
+        <div id="kangrub">B+</div>
+    </div>
+
+    <div id="popup">
+        <div class="popupclass">
+            <div id="close"></div>
+        </div>
+    </div>
+
+    <div id="system">
+        <div id="baglantı">
+            <div id="url">
+                <i class="fa-solid fa-circle-info"></i>
+                <span id="urltext">www.lsms/system.com</span>
+            </div>
+        </div>
+
+        <div id="butonlar">
+            <input id="buton" type="button" value="New patient record" onclick="newpatient()">
+            <input id="buton" type="button" value="Patient database " onclick="database()">
+            <input id="buton" type="button" value="Blood bank information" onclick="openbank()">
+            <input id="buton" type="button" value="Active units" onclick="activeunits()">
+        </div>
+
+        <div id="main"></div>
+        <div id="ekmenu"></div>
+    </div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

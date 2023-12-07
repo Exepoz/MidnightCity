@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Source+Sans+Pro:wght@200;400&display=swap');
+
+/*Kan grubu kartı*/
+#kankart {
+    position: absolute;
+    display: none;
+    background-color: wheat;
+    width: 44vh;
+    height: 27vh;
+    top: 6vh;
+    left: 6vh;
+    border-radius: 1vh;
+    background-image: url(/html/images/emslogo.png);
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-size: 44%;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 300;
+    overflow: hidden;
+    padding: 1vh;
+}
+
+#csn, #firstname, #lastname, #birthdate {
+    color: black;
+    font-weight: 900;
+    font-size: 1.3rem;
+    padding: 5px;
+}
+
+#kangrub {
+    color: black;
+    font-weight: 600;
+    font-size: 3.5rem;
+    font-family: 'Anton', sans-serif;
+    text-align: center;
+    padding: 5px;
+}
+
+/*Fotoğraf ui*/
+#popup {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
+.popupclass {
+    margin:0px auto;
+    margin-top:120px;
+    position:relative;
+    padding:10px;
+    width:100vh;
+    min-height:250px;
+    border-radius:4px;
+    box-shadow: 0 2px 5px #666666;
+}
+
+/*Kayıt*/
+#system {
+    position: absolute;
+    display: none;
+    width: 80vh;
+    height: 70vh;
+    background-color: #ffffffcc;
+    border-radius: 0.7vh;
+    left: 45vh;
+    top: 10vh;
+
+    background-image: url(/html/images/emslogo.png);
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-size: 44%;
+}
+
+#baglantı {
+    position: absolute;
+    background: #808080b8;
+    width: 80vh;
+    height: 3.4vh;
+    border-radius: 0.7vh 0.7vh 0vh 0vh;
+}
+
+#url {
+    color: white;
+    font-weight: 900;
+    font-size: 1.3rem;
+    padding: 5px 5px 5px 27px;
+}
+
+#urltext {padding: 0px 0px 0px 15px;}
+
+#butonlar {
+    position: absolute;
+    width: 80vh;
+    height: 4vh;
+    top: 5vh;
+}
+
+#buton {
+    border: none;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 0.1vh;
+    font-size: 0.9rem;
+    background-color: #4CAF50;
+    font-family: 'Source Sans Pro', sans-serif;
+    border-radius: 5px;
+    padding: 2px;
+    border: 1px solid black;
+    margin-top: 0.7vh;
+    margin-left: 5vh;
+}
+
+#buton:hover {cursor: pointer; background-color: rgb(0, 0, 0, 0.863);}
+
+#main {
+    position: absolute;
+    display: none;
+    width: 80vh;
+    height: 55vh;
+    top: 13vh;
+    overflow: auto;
+}
+
+/*Ek menu*/
+
+#ekmenu {
+    position: absolute;
+    display: none;
+    background-color: rgb(62 55 55);
+    width: 51vh;
+    height: 55vh;
+    top: 11vh;
+    border-radius: 1vh;
+    left: 14vh;
+    border: 2px solid black;
+}
+
+#closeekmenu {
+    color: white;
+    font-size: 1.3rem;
+    float: right;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#nameinfo {
+    position: absolute;
+    top: 6vh;
+    left: 17vh;
+    border: none;
+    height: 2.5vh;
+    font-weight: bolder;
+    background: #ffffff0d;
+    color: white;
+}
+
+#aciklama {
+    position: absolute;
+    top: 12vh;
+    left: 6vh;
+    border: none;
+    height: 36.5vh;
+    font-weight: bolder;
+    font-size: 0.9rem;
+    background: #ffffff0d;
+    color: white;
+}
+
+#onayla {
+    position: absolute;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 0.1vh;
+    font-size: 0.9rem;
+    background-color: #4CAF50;
+    font-family: 'Source Sans Pro', sans-serif;
+    border-radius: 5px;
+    padding: 5px 20px 5px 20px;
+    border: 1px solid black;
+    top: 51vh;
+    left: 21vh;
+}
+
+/**/
+#hastasatır {
+    color: white;
+    font-size: 1.3rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 15px 5px 15px 27px;
+    background-color: rgba(62, 55, 55, 0.863);
+    border-radius: 0.7vh;
+    max-width: 62.5vh;
+    margin-left: 5vh;
+    margin-bottom: 1vh;
+}
+
+#hastasatır:hover { cursor: pointer; background-color: rgb(0, 0, 0, 0.863);}
+
+/**/
+#unitsatır {
+    color: white;
+    font-size: 1.3rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 15px 5px 15px 27px;
+    background-color: rgb(32 35 119 / 83%);
+    border-radius: 0.7vh;
+    max-width: 62.5vh;
+    margin-left: 5vh;
+    margin-bottom: 1vh;
+}
+
+#hastainfos {
+    position: absolute;
+    width: 42vh;
+    height: 46vh;
+    top: 5vh;
+    left: 4.5vh;
+    color: white;
+    font-size: 1.3rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    word-wrap: break-word;
+}
+
+#hastainfotext {padding: 0.7vh;}
+
+/**/
+#kansatır {
+    color: white;
+    font-size: 1.3rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 15px 5px 15px 27px;
+    border-radius: 0.7vh;
+    max-width: 62.5vh;
+    margin-left: 5vh;
+    margin-bottom: 1vh;
+}
+
+#kanyazi {
+    position: absolute;
+    left: 13.5vh;
+}
