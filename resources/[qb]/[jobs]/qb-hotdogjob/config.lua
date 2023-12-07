@@ -9,7 +9,7 @@ Config.MaxReputation = 200
 
 Config.Locations = {
     ["take"] = {
-        coords = vector4(39.31, -1005.54, 29.48, 240.57),
+        coords = vector4(39.11, -1005.54, 28.28, 239.57),
     },
     ["spawn"] = {
         coords = vector4(38.15, -1001.65, 29.44, 342.5),

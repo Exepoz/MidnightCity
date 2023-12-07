@@ -1,7 +1,3 @@
-server_script "3O6ZZ57.lua"
-client_script "3O6ZZ57.lua"
-server_script "Q9BUQDWW0DGTC9.lua"
-client_script "Q9BUQDWW0DGTC9.lua"
 fx_version 'cerulean'
 game 'gta5'
 
@@ -10,6 +6,7 @@ version '2.1.0'
 
 shared_scripts {
     'config.lua',
+    '@ox_lib/init.lua',
     '@qb-core/shared/locale.lua',
     'locales/en.lua',
     'locales/*.lua'

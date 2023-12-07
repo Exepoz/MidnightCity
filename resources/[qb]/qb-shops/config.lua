@@ -83,6 +83,23 @@ Config.Products = {
 
 Config.Locations = {
     -- 24/7 Locations
+
+    ['tradejoe'] = {
+        ['label'] = 'Trade Joe\'s',
+        ['coords'] = vector4(1017.01, -2338.20, 30.74, 2.71),
+        ['ped'] = 'mp_m_shopkeep_01',
+        ['scenario'] = 'WORLD_HUMAN_STAND_MOBILE',
+        ['radius'] = 1.5,
+        ['targetIcon'] = 'fas fa-shopping-basket',
+        ['targetLabel'] = 'Open Shop',
+        ['products'] = Config.Products['normal'],
+        ['showblip'] = true,
+        ['blipsprite'] = 52,
+        ['blipscale'] = 0.6,
+        ['blipcolor'] = 0,
+        ['delivery'] = vector4(1015.83, -2341.27, 31.36, 190.99)
+    },
+
     ['247supermarket'] = {
         ['label'] = '24/7 Supermarket',
         ['coords'] = vector4(24.47, -1346.62, 29.5, 271.66),
@@ -439,6 +456,24 @@ Config.Locations = {
     },
 
     -- Ammunation Locations
+
+    ['ammunation_thedistrict'] = {
+        ['label'] = 'Ammunation',
+        ['type'] = 'weapon',
+        ['coords'] = vector4(939.42, -2265.78, 30.59, 80.59),
+        ['ped'] = 's_m_y_ammucity_01',
+        ['scenario'] = 'WORLD_HUMAN_COP_IDLES',
+        ['radius'] = 1.5,
+        ['targetIcon'] = 'fas fa-gun',
+        ['targetLabel'] = 'Open Ammunation',
+        ['products'] = Config.Products['weapons'],
+        ['showblip'] = true,
+        ['blipsprite'] = 110,
+        ['blipscale'] = 0.6,
+        ['blipcolor'] = 0,
+        ['delivery'] = vector4(930.59, -2274.31, 30.51, 178.06)
+    },
+
     ['ammunation'] = {
         ['label'] = 'Ammunation',
         ['type'] = 'weapon',

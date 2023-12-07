@@ -7,9 +7,36 @@ Config.UseKeyfob = false -- you can set this true if you dont need ui
 -- Lockpick Settings
 Config.RemoveLockpickNormal = 0.5 -- Chance to remove lockpick on fail
 Config.RemoveLockpickAdvanced = 0.2 -- Chance to remove advanced lockpick on fail
-Config.LockPickDoorEvent = function() -- This function is called when a player attempts to lock pick a vehicle
-    TriggerEvent('qb-lockpick:client:openLockpick', LockpickFinishCallback)
+Config.LockPickDoorEvent = function(item) -- This function is called when a player attempts to lock pick a vehicle
+    local attempts = 2
+    if item == 'advanced-lockpick' then attempts = 3 end
+    local s = exports["t3_lockpick"]:startLockpick(item, 1, 3, attempts)
+    LockpickFinishCallback(s)
 end
+
+local buildDiff = function(item)
+    local ran = math.random(3,6)
+    local arr = {}
+    for i = 1, ran do
+        local c = math.random(100)
+        if item == 'lockpick' and c < 60 then
+            table.insert(arr, 'easy')
+        elseif item == 'advanced-lockpick' then
+            table.insert(arr, 'easy')
+        else
+            table.insert(arr, 'medium')
+        end
+    end
+    return arr
+end
+
+Config.LockPickEngineEvent = function(item) -- This function is called when a player attempts to lock pick a vehicle
+    Wait(500)
+    local diff = buildDiff(item)
+    local s = lib.skillCheck(diff, {'w', 'a', 's', 'd'})
+    LockpickFinishCallback(s)
+end
+
 
 -- Carjack Settings
 Config.CarJackEnable = true -- True allows for the ability to car jack peds.

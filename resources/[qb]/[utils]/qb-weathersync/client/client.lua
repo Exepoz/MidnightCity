@@ -9,6 +9,7 @@ local blackoutVehicle = Config.BlackoutVehicle
 local disable = Config.Disabled
 local freezeTimer, freezeWeather, freezeRain = {18, 0, 0}, 'CLEAR', 0.0
 local pause = false
+local waitTime = 15.0
 
 
 RegisterCommand('getms', function()
@@ -25,6 +26,7 @@ end
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     disable = false
+    waitTime = 30.0
     TriggerServerEvent('qb-weathersync:server:RequestStateSync')
 end)
 
@@ -95,8 +97,8 @@ CreateThread(function()
         if not disable then
             if lastWeather ~= CurrentWeather then
                 lastWeather = CurrentWeather
-                SetWeatherTypeOverTime(CurrentWeather, 15.0)
-                Wait(15000)
+                SetWeatherTypeOverTime(CurrentWeather, waitTime)
+                Wait(waitTime*1000)
             end
             Wait(100) -- Wait 0 seconds to prevent crashing.
             SetArtificialLightsState(blackout)

@@ -13,7 +13,7 @@
   position: absolute;
   height: fit-content;
   width: 40vh;
-  background-color: rgb(23 23 23 / 80%);
+  background-color: #636363;
   right: 3vh;
   top: 30vh;
   margin: 1vh;
@@ -25,7 +25,7 @@
   width: 92%;
   height: 5vh;
   margin: 1.7vh 1.3vh 0vh 1.7vh;
-  background: #dc143c;
+  background: #553969a2;
 }
 
 .scoreboard-header > p {

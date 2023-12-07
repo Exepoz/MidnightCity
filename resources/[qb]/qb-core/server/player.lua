@@ -107,8 +107,11 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.charinfo.phone = PlayerData.charinfo.phone or QBCore.Functions.CreatePhoneNumber()
     PlayerData.charinfo.account = PlayerData.charinfo.account or QBCore.Functions.CreateAccountNumber()
     -- Metadata
-
+    PlayerData.metadata = PlayerData.metadata or {}
     -- Midnight Added
+    PlayerData.metadata['house_robbery_rep'] = PlayerData.metadata['house_robbery_rep'] or 0
+    PlayerData.metadata['bountyPoints'] = PlayerData.metadata['bountyPoints'] or 0
+    PlayerData.metadata['bloodyPrey'] = PlayerData.metadata['bloodyPrey'] or false
     PlayerData.metadata['crypto'] = PlayerData.metadata['crypto'] or {
         ["shung"] = 0,
         ["gne"] = 0,
@@ -116,7 +119,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ["lme"] = 0
     }
     -- Default
-    PlayerData.metadata = PlayerData.metadata or {}
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['stress'] = PlayerData.metadata['stress'] or 0
@@ -144,6 +146,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['callsign'] = PlayerData.metadata['callsign'] or 'NO CALLSIGN'
     PlayerData.metadata['fingerprint'] = PlayerData.metadata['fingerprint'] or QBCore.Player.CreateFingerId()
     PlayerData.metadata['walletid'] = PlayerData.metadata['walletid'] or QBCore.Player.CreateWalletId()
+    PlayerData.metadata["communityservice"] = PlayerData.metadata["communityservice"] ~= nil and PlayerData.metadata["communityservice"] or 0
     PlayerData.metadata['criminalrecord'] = PlayerData.metadata['criminalrecord'] or {
         ['hasRecord'] = false,
         ['date'] = nil

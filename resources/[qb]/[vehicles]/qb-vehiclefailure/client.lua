@@ -41,13 +41,7 @@ local DamageComponents = {
 -- Functions
 
 local function DamageRandomComponent()
-    if cfg.degradeRandomComponents == false then
-        return
-    end
-    local dmgFctr = math.random() + math.random(0, 2)
-    local randomComponent = DamageComponents[math.random(1, #DamageComponents)]
-    local randomDamage = (math.random() + math.random(0, 1)) * dmgFctr
-    exports['qb-mechanicjob']:SetVehicleStatus(QBCore.Functions.GetPlate(vehicle), randomComponent, exports['qb-mechanicjob']:GetVehicleStatus(QBCore.Functions.GetPlate(vehicle), randomComponent) - randomDamage)
+    exports['jim-mechanic']:DamageRandomComponent(QBCore.Functions.GetPlate(vehicle))
 end
 
 local function CleanVehicle(veh)

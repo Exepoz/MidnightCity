@@ -5,6 +5,8 @@ local timeOffset = Config.TimeOffset
 local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
 local newWeatherTimer = Config.NewWeatherTimer
+local nightTime = false
+local pre = false
 
 --- Is the source a client or the server
 --- @param src string | number - source to check
@@ -40,7 +42,7 @@ end
 
 --- Triggers event to switch weather to next stage
 local function nextWeatherStage()
-    print("Updating Weather")
+    --print("Updating Weather")
     if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then
         CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
     elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
@@ -56,7 +58,7 @@ local function nextWeatherStage()
     elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then CurrentWeather = "CLEAR"
     else CurrentWeather = "CLEAR"
     end
-    print(CurrentWeather)
+    --print(CurrentWeather)
     TriggerEvent("qb-weathersync:server:RequestStateSync")
 end
 
@@ -270,6 +272,7 @@ CreateThread(function()
     local previous = 0
     while true do
         Wait(0)
+        -- The number after the / reprensent the IRL seconds for in game minutes client equivalent
         local newBaseTime = os.time(os.date("!*t")) / 10 + 360 --Set the server time depending of OS time ---- 1 min = 20 m
         if (newBaseTime % 60) ~= previous then --Check if a new minute is passed
             previous = newBaseTime % 60 --Only update time with plain minutes, seconds are handled in the client
@@ -305,9 +308,19 @@ end)
 CreateThread(function()
     while true do
         Wait(1000)--Change to send every minute in game sync
-        -- print(os.time(os.date("!*t")))
-        -- print(baseTime)
         TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
+    end
+end)
+
+CreateThread(function()
+    while true do
+        Wait(30000)
+        local isDay = nightTime
+        local hour = math.floor(((baseTime+timeOffset)/60)%24)
+        if hour == 18 and not pre then exports['mdn-nighttime']:ToggleDayNight(nightTime, true) pre = true end
+        if hour < 7 or hour >= 19 then nightTime = true pre = false
+        else nightTime = false end
+        if isDay ~= nightTime then exports['mdn-nighttime']:ToggleDayNight(nightTime) end
     end
 end)
 
@@ -318,18 +331,25 @@ CreateThread(function()
     end
 end)
 
-CreateThread(function()
-    while true do
-        newWeatherTimer = newWeatherTimer - 1
-        Wait((1000 * 60) * Config.NewWeatherTimer)
-        if newWeatherTimer == 0 then
-            if Config.DynamicWeather then
-                nextWeatherStage()
-            end
-            newWeatherTimer = Config.NewWeatherTimer
-        end
-    end
+if Config.DynamicWeather then lib.cron.new("*/30 * * * *", function() nextWeatherStage() end) end
+
+AddEventHandler('txAdmin:events:scheduledRestart', function(eventData)
+    if eventData.secondsRemaining == 900 then setWeather('RAIN')
+    elseif eventData.secondsRemaining == 180 then setWeather('THUNDER') end
 end)
+
+-- CreateThread(function()
+--     while true do
+--         newWeatherTimer = newWeatherTimer - 1
+--         Wait((1000 * 60) * Config.NewWeatherTimer)
+--         if newWeatherTimer == 0 then
+--             if Config.DynamicWeather then
+--                 nextWeatherStage()
+--             end
+--             newWeatherTimer = Config.NewWeatherTimer
+--         end
+--     end
+-- end)
 
 -- EXPORTS
 exports('nextWeatherStage', nextWeatherStage)

@@ -552,8 +552,14 @@ function LockpickDoor(isAdvanced)
     if #(pos - GetEntityCoords(vehicle)) > 2.5 then return end
     if GetVehicleDoorLockStatus(vehicle) <= 0 then return end
 
-    usingAdvanced = isAdvanced
-    Config.LockPickDoorEvent()
+    local lp = isAdvanced and 'advanced-lockpick' or 'lockpick'
+    --usingAdvanced = isAdvanced and 'advanced-lockpick' or 'lockpick'
+
+    if GetPedInVehicleSeat(vehicle, -1) == PlayerPedId() then
+        Config.LockPickEngineEvent(lp)
+    else
+        Config.LockPickDoorEvent(lp)
+    end
 end
 
 function LockpickFinishCallback(success)

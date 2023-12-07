@@ -618,7 +618,7 @@ local function SellToPed(ped)
                         zoneMade = true
                         exports['qb-target']:AddEntityZone('sellingDogPed', ped, {
                             name = 'sellingDogPed',
-                            debugPoly = false,
+                            debugPoly = true,
                         }, {
                             options = {
                                 {
@@ -857,7 +857,7 @@ CreateThread(function()
     if Config.UseTarget then
         exports['qb-target']:AddBoxZone('hotdog_start', vector3(Config.Locations["take"].coords.x, Config.Locations["take"].coords.y, Config.Locations["take"].coords.z), 1, 1, {
             name = 'hotdog_start',
-            debugPoly = false,
+            debugPoly = true,
             heading = Config.Locations["take"].coords.w,
             minZ = Config.Locations["take"].coords.z - 1,
             maxZ = Config.Locations["take"].coords.z + 1,
@@ -882,7 +882,7 @@ CreateThread(function()
         local inZone = false
         local hotdogStart = BoxZone:Create(vector3(Config.Locations["take"].coords.x, Config.Locations["take"].coords.y, Config.Locations["take"].coords.z), 1.0, 1.0, {
             name="hotdog_start",
-            debugPoly = false,
+            debugPoly = true,
             minZ = Config.Locations["take"].coords.z - 1,
             maxZ = Config.Locations["take"].coords.z + 1,
         })

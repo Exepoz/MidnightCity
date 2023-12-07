@@ -56,6 +56,7 @@ local colors = { -- https://www.spycolor.com/
 local logQueue = {}
 
 RegisterNetEvent('qb-log:server:CreateLog', function(name, title, color, message, tagEveryone, img)
+
     local player = source ~= "" and tonumber(source) > 0 and "player:"..GetPlayerName(source) or "player:server_log"
     local sentDesc = {
         title = title,

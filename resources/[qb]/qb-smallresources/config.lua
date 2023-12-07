@@ -1,7 +1,7 @@
 Config = {}
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
-Config.PauseMapText = '' -- Text shown above the map when ESC is pressed. If left empty 'FiveM' will appear
+Config.PauseMapText = 'Midnight City Roleplay' -- Text shown above the map when ESC is pressed. If left empty 'FiveM' will appear
 Config.HarnessUses = 20
 Config.DamageNeeded = 100.0 -- amount of damage till you can push your vehicle. 0-1000
 
@@ -15,16 +15,6 @@ Config.AFK = {
     kickInCharMenu = false -- Set to true if you want to kick players for being AFK even when they are in the character menu.
 }
 
-Config.HandsUp = {
-    command = 'hu',
-    keybind = 'X',
-    controls = {24, 25, 47, 58, 59, 63, 64, 71, 72, 75, 140, 141, 142, 143, 257, 263, 264}
-}
-
-Config.Binoculars = {
-    zoomSpeed = 10.0, -- camera zoom speed
-    storeBinocularsKey = 177 -- backspace by default
-}
 
 Config.AIResponse = {
     wantedLevels = false, -- if true, you will recieve wanted levels
@@ -72,10 +62,10 @@ Config.Discord = {
 
 Config.Density = {
     parked = 0.8,
-    vehicle = 0.8,
-    multiplier = 0.8,
-    peds = 0.8,
-    scenario = 0.8
+    vehicle = 0.5,
+    multiplier = 0.5,
+    peds = 0.5,
+    scenario = 0.4
 }
 
 Config.Disable = {
@@ -173,7 +163,7 @@ Config.BlacklistedVehs = {
     [`titan`] = true,
     [`rhino`] = true,
     [`firetruck`] = true,
-    [`mule`] = true,
+    --[`mule`] = true,
     [`maverick`] = true,
     [`blimp`] = true,
     [`airtug`] = true,
@@ -239,10 +229,19 @@ Config.WeapDraw = {
     }
 }
 
+-- Removing Entities
 Config.Objects = { -- for object removal
     {coords = vector3(266.09, -349.35, 44.74), heading = 0, length = 200, width = 200, model = 'prop_sec_barier_02b'},
     {coords = vector3(285.28, -355.78, 45.13), heading = 0, length = 200, width = 200, model = 'prop_sec_barier_02a'},
 }
+
+Config.Coffees = {
+    ['coffee'] = 20,
+    ['macchiato'] = 20,
+  }
+
+
+
 
 -- You may add more than 2 selections and it will bring up a menu for the player to select which floor be sure to label each section though
 Config.Teleports = {
@@ -270,17 +269,5 @@ Config.Teleports = {
             allowVeh = false,
             label = '[E] Leave'
         }
-    }
-}
-
-Config.CarWash = {
-    dirtLevel = 0.1, -- threshold for the dirt level to be counted as dirty
-    defaultPrice = 20, -- default price for the carwash
-    locations = {
-        [1] = {coords = vector3(174.81, -1736.77, 28.87), length = 7.0, width = 8.8, heading = 359}, -- South Los Santos Carson Avenue
-        [2] = {coords = vector3(25.2, -1391.98, 28.91), length = 6.6, width = 8.2, heading = 0}, -- South Los Santos Innocence Boulevard
-        [3] = {coords = vector3(-74.27, 6427.72, 31.02), length = 9.4, width = 8, heading = 315}, -- Paleto Bay Boulevard
-        [4] = {coords = vector3(1362.69, 3591.81, 34.5), length = 6.4, width = 8, heading = 21}, -- Sandy Shores
-        [5] = {coords = vector3(-699.84, -932.68, 18.59), length = 11.8, width = 5.2, heading = 0} -- Little Seoul Gas Station
     }
 }

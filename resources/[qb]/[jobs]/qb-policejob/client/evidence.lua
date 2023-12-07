@@ -20,8 +20,8 @@ local StatusList = {
     ['handbleed'] = Lang:t('evidence.handbleed'),
     ['confused'] = Lang:t('evidence.confused'),
     ['alcohol'] = Lang:t('evidence.alcohol'),
-    ['heavyalcohol'] = Lang:t('evidence.heavy_alcohol'),
-    ['agitated'] = Lang:t('evidence.agitated')
+    ["heavyalcohol"] = Lang:t('evidence.heavy_alcohol'),
+    ["agitated"] = Lang:t('evidence.agitated')
 }
 
 local WhitelistedWeapons = {
@@ -39,18 +39,18 @@ local function DrawText3D(x, y, z, text)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
-    BeginTextCommandDisplayText('STRING')
+    SetTextEntry('STRING')
     SetTextCentre(true)
-    AddTextComponentSubstringPlayerName(text)
-    SetDrawOrigin(x, y, z, 0)
-    EndTextCommandDisplayText(0.0, 0.0)
+    AddTextComponentString(text)
+    SetDrawOrigin(x,y,z, 0)
+    DrawText(0.0, 0.0)
     local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0 + 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75)
+    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
     ClearDrawOrigin()
 end
 
 local function WhitelistedWeapon(weapon)
-    for i = 1, #WhitelistedWeapons do
+    for i=1, #WhitelistedWeapons do
         if WhitelistedWeapons[i] == weapon then
             return true
         end
@@ -126,7 +126,7 @@ end)
 RegisterNetEvent('evidence:client:ClearBlooddropsInArea', function()
     local pos = GetEntityCoords(PlayerPedId())
     local blooddropList = {}
-    QBCore.Functions.Progressbar('clear_blooddrops', Lang:t('progressbar.blood_clear'), 5000, false, true, {
+    QBCore.Functions.Progressbar('clear_blooddrops', Lang:t("progressbar.blood_clear"), 5000, false, true, {
         disableMovement = false,
         disableCarMovement = false,
         disableMouse = false,
@@ -135,16 +135,16 @@ RegisterNetEvent('evidence:client:ClearBlooddropsInArea', function()
         if Blooddrops and next(Blooddrops) then
             for bloodId, _ in pairs(Blooddrops) do
                 if #(pos -
-                        vector3(Blooddrops[bloodId].coords.x, Blooddrops[bloodId].coords.y, Blooddrops[bloodId].coords.z)) <
+                    vector3(Blooddrops[bloodId].coords.x, Blooddrops[bloodId].coords.y, Blooddrops[bloodId].coords.z)) <
                     10.0 then
-                    blooddropList[#blooddropList + 1] = bloodId
+                    blooddropList[#blooddropList+1] = bloodId
                 end
             end
             TriggerServerEvent('evidence:server:ClearBlooddrops', blooddropList)
-            QBCore.Functions.Notify(Lang:t('success.blood_clear'), 'success')
+            QBCore.Functions.Notify(Lang:t("success.blood_clear"), "success")
         end
     end, function() -- Cancel
-        QBCore.Functions.Notify(Lang:t('error.blood_not_cleared'), 'error')
+        QBCore.Functions.Notify(Lang:t("error.blood_not_cleared"), "error")
     end)
 end)
 
@@ -168,7 +168,7 @@ end)
 RegisterNetEvent('evidence:client:ClearCasingsInArea', function()
     local pos = GetEntityCoords(PlayerPedId())
     local casingList = {}
-    QBCore.Functions.Progressbar('clear_casings', Lang:t('progressbar.bullet_casing'), 5000, false, true, {
+    QBCore.Functions.Progressbar('clear_casings', Lang:t("progressbar.bullet_casing"), 5000, false, true, {
         disableMovement = false,
         disableCarMovement = false,
         disableMouse = false,
@@ -178,15 +178,114 @@ RegisterNetEvent('evidence:client:ClearCasingsInArea', function()
             for casingId, _ in pairs(Casings) do
                 if #(pos - vector3(Casings[casingId].coords.x, Casings[casingId].coords.y, Casings[casingId].coords.z)) <
                     10.0 then
-                    casingList[#casingList + 1] = casingId
+                    casingList[#casingList+1] = casingId
                 end
             end
             TriggerServerEvent('evidence:server:ClearCasings', casingList)
-            QBCore.Functions.Notify(Lang:t('success.bullet_casing_removed'), 'success')
+            QBCore.Functions.Notify(Lang:t("success.bullet_casing_removed"), "success")
+            
         end
     end, function() -- Cancel
-        QBCore.Functions.Notify(Lang:t('error.bullet_casing_not_removed'), 'error')
+        QBCore.Functions.Notify(Lang:t("error.bullet_casing_not_removed"), "error")
     end)
+end)
+
+RegisterNetEvent('evidence:client:writeEvidenceNot', function(item)
+    local dialog = exports['qb-input']:ShowInput({
+        header = 'Write evidence note', submitText = 'Write',
+        inputs = {{text = 'Note', name = 'evidencebagnote', type = 'text', isRequired = true}}
+    })
+
+    if dialog then
+        if dialog.evidencebagnote and dialog.evidencebagnote ~= '' then
+            TriggerServerEvent('police:server:setEvidenceBagNote', item, dialog.evidencebagnote)
+        end
+    else return end
+end)
+
+AddEventHandler("CEventGunShot", function(witnesses, ped)
+    if PlayerPedId() ~= ped then return end
+    -- if witnesses[1] ~= ped then return end
+    local weapon = GetSelectedPedWeapon(ped)
+    if not WhitelistedWeapon(weapon) then
+        shotAmount = shotAmount + 1
+        if shotAmount > 5 and (CurrentStatusList == nil or CurrentStatusList['gunpowder'] == nil) then
+            if math.random(1, 10) <= 7 then
+                TriggerEvent('evidence:client:SetStatus', 'gunpowder', 200)
+            end
+        end
+        if PlayerJob.type ~= 'leo' then DropBulletCasing(weapon, ped) end
+    end
+end)
+
+RegisterNetEvent('police:client:FindEvidenceBag', function()
+    local PlayerData = QBCore.Functions.GetPlayerData()
+    local FindEvidence = {}
+    FindEvidence[#FindEvidence+1] = {opthead = Lang:t('evidence.examine_menu_blood_h'), optdesc = Lang:t('evidence.examine_menu_blood_b'), opticon = 'droplet',
+        optparams = {
+            event = 'police:client:SelectEvidence',
+            args = {type = 'blood', label = 'Blood', icon = 'droplet'}
+        }}
+    FindEvidence[#FindEvidence+1] = {opthead = Lang:t('evidence.examine_menu_casing_h'), optdesc = Lang:t('evidence.examine_menu_casing_b'), opticon = 'joint',
+        optparams = {
+            event = 'police:client:SelectEvidence',
+            args = {type = 'casing', label = 'Bullet casing', icon = 'joint'}
+        }}
+    FindEvidence[#FindEvidence+1] = {opthead = Lang:t('evidence.examine_menu_fingerprint_b'),optdesc = Lang:t('evidence.examine_menu_fingerprint_h'), opticon = 'fingerprint',
+        optparams = {
+            event = 'police:client:SelectEvidence',
+            args = {type = 'fingerprint', label = 'Fingerprint', icon = 'fingerprint',}
+        }}
+    FindEvidence[#FindEvidence+1] = {opthead = Lang:t('menu.close_x'), opticon = 'xmark', optparams = {event = ''}}
+
+    local header = {
+        disabled = true,
+        header = PlayerData.job.label,
+        headerid = 'police_evidencebags_menu', -- unique
+        desc = '',
+        icon = 'microscope'
+    }
+    ContextSystem.Open(header, FindEvidence)
+end)
+
+RegisterNetEvent('police:client:SelectEvidence', function(Data)
+    QBCore.Debug(Data)
+    QBCore.Functions.TriggerCallback('police:server:GetEvidenceByType', function(List)
+        if List == nil then
+            QBCore.Functions.Notify(Lang:t('error.dont_have_evidence_bag'), 'error')
+        else
+            local EvidenceBagsMenu = {}
+
+            for _, n in pairs(List) do
+                EvidenceBagsMenu[#EvidenceBagsMenu+1] = {opthead = n.label, optdesc = Lang:t('info.select_for_examine_b', {street = n.info.street, label= n.info.label, slot=n.slot}), opticon = 'caret-right',
+                    optparams  = {
+                        event = 'police:client:ExamineEvidenceBag',
+                        args = {Item = n,slot = n.slot}
+                    }}
+            end
+
+            EvidenceBagsMenu[#EvidenceBagsMenu+1] = {opthead = Lang:t('menu.close_x'),opticon = 'fa-solid fa-xmark', optparams= {event=''}}
+            local header = {
+                disabled = true,
+                header = Data.label..' evidences',
+                headerid = 'police_evidencebags_menu', -- unique
+                desc = '',
+                icon = Data.icon
+            }
+            ContextSystem.Open(header, EvidenceBagsMenu)
+        end
+    end, Data.type)
+end)
+
+RegisterNetEvent('police:client:ExamineEvidenceBag', function(Data)
+    QBCore.Functions.Progressbar('examine_evidence_bag', Lang:t('progressbar.examining', {label = Data.Item.info.label}), 5000, false, false, {
+        disableMovement = true,
+        disableCarMovement = false,
+        disableMouse = false,
+        disableCombat = true
+    }, {}, {}, {}, function() -- Done
+        TriggerServerEvent('police:server:UpdateEvidenceBag', Data.Item, Data.slot)
+    end, function() end)
 end)
 
 -- Threads
@@ -212,32 +311,13 @@ CreateThread(function()
     end
 end)
 
-CreateThread(function() -- Gunpowder Status when shooting
-    while true do
-        Wait(1)
-        local ped = PlayerPedId()
-        if IsPedShooting(ped) then
-            local weapon = GetSelectedPedWeapon(ped)
-            if not WhitelistedWeapon(weapon) then
-                shotAmount = shotAmount + 1
-                if shotAmount > 5 and (CurrentStatusList == nil or CurrentStatusList['gunpowder'] == nil) then
-                    if math.random(1, 10) <= 7 then
-                        TriggerEvent('evidence:client:SetStatus', 'gunpowder', 200)
-                    end
-                end
-                DropBulletCasing(weapon, ped)
-            end
-        end
-    end
-end)
-
 CreateThread(function()
     while true do
         Wait(1)
         if CurrentCasing and CurrentCasing ~= 0 then
             local pos = GetEntityCoords(PlayerPedId())
-            if #(pos - vector3(Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z)) < 1.5 then
-                DrawText3D(Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z, Lang:t('info.bullet_casing', { value = Casings[CurrentCasing].type }))
+            if #(pos -vector3(Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z)) < 1.5 then
+                DrawText3D(Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z, Lang:t('info.bullet_casing', {value = Casings[CurrentCasing].type}))
                 if IsControlJustReleased(0, 47) then
                     local s1, s2 = GetStreetNameAtCoord(Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z)
                     local street1 = GetStreetNameFromHashKey(s1)
@@ -249,10 +329,12 @@ CreateThread(function()
                     local info = {
                         label = Lang:t('info.casing'),
                         type = 'casing',
-                        street = streetLabel:gsub("%'", ''),
+                        street = streetLabel:gsub("%'", ""),
                         ammolabel = Config.AmmoLabels[QBCore.Shared.Weapons[Casings[CurrentCasing].type]['ammotype']],
-                        ammotype = Casings[CurrentCasing].type,
-                        serie = Casings[CurrentCasing].serie
+                        ammotype = Lang:t('info.unknown'),
+                        ammotype2 = Casings[CurrentCasing].type,
+                        serie = Lang:t('info.unknown'),
+                        serie2 = Casings[CurrentCasing].serie
                     }
                     TriggerServerEvent('evidence:server:AddCasingToInventory', CurrentCasing, info)
                 end
@@ -262,8 +344,8 @@ CreateThread(function()
         if CurrentBlooddrop and CurrentBlooddrop ~= 0 then
             local pos = GetEntityCoords(PlayerPedId())
             if #(pos - vector3(Blooddrops[CurrentBlooddrop].coords.x, Blooddrops[CurrentBlooddrop].coords.y,
-                    Blooddrops[CurrentBlooddrop].coords.z)) < 1.5 then
-                DrawText3D(Blooddrops[CurrentBlooddrop].coords.x, Blooddrops[CurrentBlooddrop].coords.y, Blooddrops[CurrentBlooddrop].coords.z, Lang:t('info.blood_text', { value = DnaHash(Blooddrops[CurrentBlooddrop].citizenid) }))
+                Blooddrops[CurrentBlooddrop].coords.z)) < 1.5 then
+                DrawText3D(Blooddrops[CurrentBlooddrop].coords.x, Blooddrops[CurrentBlooddrop].coords.y, Blooddrops[CurrentBlooddrop].coords.z, Lang:t('info.blood_text', {value = DnaHash(Blooddrops[CurrentBlooddrop].citizenid)}))
                 if IsControlJustReleased(0, 47) then
                     local s1, s2 = GetStreetNameAtCoord(Blooddrops[CurrentBlooddrop].coords.x, Blooddrops[CurrentBlooddrop].coords.y, Blooddrops[CurrentBlooddrop].coords.z)
                     local street1 = GetStreetNameFromHashKey(s1)
@@ -275,9 +357,11 @@ CreateThread(function()
                     local info = {
                         label = Lang:t('info.blood'),
                         type = 'blood',
-                        street = streetLabel:gsub("%'", ''),
-                        dnalabel = DnaHash(Blooddrops[CurrentBlooddrop].citizenid),
-                        bloodtype = Blooddrops[CurrentBlooddrop].bloodtype
+                        street = streetLabel:gsub("%'", ""),
+                        dnalabel = Lang:t('info.unknown'),
+                        dnalabel2 = DnaHash(Blooddrops[CurrentBlooddrop].citizenid),
+                        bloodtype = Lang:t('info.unknown'),
+                        bloodtype2 = Blooddrops[CurrentBlooddrop].bloodtype
                     }
                     TriggerServerEvent('evidence:server:AddBlooddropToInventory', CurrentBlooddrop, info)
                 end
@@ -287,10 +371,10 @@ CreateThread(function()
         if CurrentFingerprint and CurrentFingerprint ~= 0 then
             local pos = GetEntityCoords(PlayerPedId())
             if #(pos - vector3(Fingerprints[CurrentFingerprint].coords.x, Fingerprints[CurrentFingerprint].coords.y,
-                    Fingerprints[CurrentFingerprint].coords.z)) < 1.5 then
+                Fingerprints[CurrentFingerprint].coords.z)) < 1.5 then
                 DrawText3D(Fingerprints[CurrentFingerprint].coords.x, Fingerprints[CurrentFingerprint].coords.y, Fingerprints[CurrentFingerprint].coords.z, Lang:t('info.fingerprint_text'))
                 if IsControlJustReleased(0, 47) then
-                    local s1, s2 = GetStreetNameAtCoord(Fingerprints[CurrentFingerprint].coords.x, Fingerprints[CurrentFingerprint].coords.y, Fingerprints[CurrentFingerprint].coords.z)
+                    local s1, s2 = GetStreetNameAtCoord(Fingerprints[CurrentFingerprint].coords.x,Fingerprints[CurrentFingerprint].coords.y, Fingerprints[CurrentFingerprint].coords.z)
                     local street1 = GetStreetNameFromHashKey(s1)
                     local street2 = GetStreetNameFromHashKey(s2)
                     local streetLabel = street1
@@ -300,8 +384,9 @@ CreateThread(function()
                     local info = {
                         label = Lang:t('info.fingerprint'),
                         type = 'fingerprint',
-                        street = streetLabel:gsub("%'", ''),
-                        fingerprint = Fingerprints[CurrentFingerprint].fingerprint
+                        street = streetLabel:gsub("%'", ""),
+                        fingerprint = Lang:t('info.unknown'),
+                        fingerprint2 = Fingerprints[CurrentFingerprint].fingerprint
                     }
                     TriggerServerEvent('evidence:server:AddFingerprintToInventory', CurrentFingerprint, info)
                 end
