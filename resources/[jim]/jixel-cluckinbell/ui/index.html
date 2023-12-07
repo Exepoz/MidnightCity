@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Restaurant Menu</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <style>
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
+            #imgcontainer {
+                max-width: 60%;
+                height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display: flex; justify-content: center;">
+            <div id="imgcontainer">
+                <img>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                function display(bool) {
+                    if (bool) {
+                        $("#showImage").show();
+                    } else {
+                        $("#showImage").hide();
+                    }
+                }
+
+                display(false)
+
+                window.addEventListener('message', function(event) {
+                    var item = event.data;
+                    display(false)
+                    if (item.type === "showImage") {
+                        if (item.status == true) {
+                            console.log("Turning OON")
+                            display(true)
+                            document.getElementById("imgcontainer").innerHTML = '<img id="showImage" style="width: 100%" src="'+item.image+'" alt="'+item.image+'"></img>';
+                        } else {
+                            console.log("Turning OFF")
+                            display(false)
+                        }
+                    }
+                })
+
+                document.onkeyup = function (data) {
+                    if (data.which == 27) {
+                        $.post(`https://jixel-cluckinbell/ToggleImage-callback`, JSON.stringify({}));
+                        return
+                    }
+                };
+
+                $("#showImageClose").click(function () {
+                    $.post(`https://jixel-cluckinbell/ToggleImage-callback`, JSON.stringify({}));
+                    return
+                })
+            })
+        </script>
+    </body>
+</html>

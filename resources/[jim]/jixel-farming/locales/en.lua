@@ -1,0 +1,153 @@
+Loc["en"] = {
+    error = {
+		["cancel"] = "Cancelled",
+		["full"] = "Your Pockets are Too Heavy..",
+		["noitem"] = "You don't have the correct items..",
+		["noknife"] = "You don't have a knife to do this!",
+		["donthave"] = "You don't have anything to sell..",
+		["nope"] = "You Cannot Do This Right Now...",
+		["nobucket"] = "You need a Bucket...",
+		["busy"] = "Already Doing That!",
+		["wait"] = "You must wait to do this again!",
+		["notinveh"] = "You're not in a tractor!",
+		["nochicken"] = "You don't have a Chicken!",
+		["in_way"] = "Theres something in the way!",
+		["minigame_fail"] = "You've failed!",
+		["notonwheat"] = "Go to a patch of wheat silly!",
+		["wrongrake"] = "Wrong rake type attached",
+		["norake"] = "No rake trailer attached",
+		["notractor"] = "Go rent a tractor from the farmer",
+		["nomoney"] = "You need $"..WheatZone.TractorOptions.TractorRent.."to Rent a Tractor",
+		["no_catch"] = "It Slipped Away!",
+		["no_animal"] = "You don't have an animal to slaughter!",
+	},
+	success = {
+		["gathered_milk"] = "You filled your bucket with Milk!",
+		["defeathered"] = "You successfully De-Feathered a Chicken!",
+		["gathered"] = "You Gathered ",
+		["hired"] = "You were hired on as a Farmer!",
+		["quit"] = "You Successfully Quit!",
+		["retrieved"] = "You received A ",
+		["returned_veh"] = "You returned your tractor!",
+		["minigame_success"] = "You were successful!",
+		["depositreturned"] = "You got your money back!",
+		["rentedcash"] = "You paid $"..WheatZone.TractorOptions.TractorRent.."in cash to Rent a Tractor",
+		["rentedbank"] = "You paid $"..WheatZone.TractorOptions.TractorRent.."from the bank Rent a Tractor",
+		["catch_success"] = "You caught ",
+		["kill_success"] = "You got some ",
+	},
+	notification = {
+		["broke"] = "Looks like your knife broke!",
+		["startfarming"] = "Head to the Wheat Field",
+		["completedharvest"] = "Harvest Complete.",
+		["attachtrailer"] = "Attach trailer before harvesting wheat",
+	},
+    target = {
+		["milk_cow"] = "Milk the Cow",
+		["kill_cow"] = "Kill the Cow",
+		["collect_egg"] = "Collect the EGGU",
+		["kill_chicken"] = "Kill the Chicken",
+		["kill_pig"] = "Kill the Pig",
+		["milkprocessor"] = "Process your Raw Milk",
+		["meatprocessor"] = "Process Your Raw Meat",
+		["chickenprep"] = "Prep Your Chicken",
+		["chickenprocessor"] = "Process your Raw Chicken",
+		["pestle"] = "Use the Pestle",
+		["processor"] = "Use the Food Processor ",
+		["juicer"] = "Use the Juicer ",
+		["getjob"] = "Farm Job Menu",
+		["grab_bucket"] = "Grab Bucket",
+		["drying"] = "Dry Items",
+		["curing"] = "Cure Items",
+		["slaughter_cow"] = "Slaughter the Cow",
+		["slaughter_pig"] = "Slaughter the Pig",
+    },
+    progress = {
+		["progress_picking"] = "Picking ",
+		["progress_making"] = "Making ",
+		["progress_harvesting"] = "Harvesting ",
+		["progress_milking"] = "Milking the Cow ",
+		["progress_killing"] = "Killing ",
+		["prepare_chicken"] = "Preparing Chicken",
+		["progress_eggcollect"] = "Collecting Eggs",
+    },
+	header = {
+		["header_juicer"] = "Juicer Menu",
+		["header_pestle"] = "Pestle Menu",
+		["header_processor"] = "Food Processor Menu",
+		["header_milkprocessor"] = "Milk Processor Menu",
+		["header_meatprocessor"] = "Meat Processor  Menu",
+		["header_chickenprocessor"] = "Chicken Processor Menu",
+	},
+	menu = {
+		["header_farm"] = "Farm Menu",
+		["header_joboptions"] = "Pick Job",
+		["close"] = "Close",
+		["Farm_Buyer"] = "Sell your Farming bounty to Jol",
+		["getjob"] = "Get Hired",
+		["duty"] = "Clock On/Off",
+		["quit"] = "Quit Job",
+		["out_of_garage"] = "Vehicle out of Garage",
+		["garage_vehicle"] = "Tractor: ",
+		["vehicle_plate"] = " Plate - ",
+		["remove_vehicle"] = "Remove Vehicle",
+		["job_size"] = "Job Size",
+		["start_job"] = "Start Job",
+		["job_header"] = "Job Menu",
+		["time_remaining"] = "Time Remaing: ",
+		["time_finished"] = "Time Finished! ⏰",
+		["start_drying"] = "Start Drying",
+		["drying_header"] = "Drying Menu",
+		["curing_header"] = "Curing Menu",
+
+	},
+	drawtext = {
+		["pick"] = "Pick ",
+		["starttobbacoharvest"] = "Head to Field: ",
+	},
+	menutxt = {
+		["farmer_help"] = "Press to get hired as a farmer!",
+		["duty"] = "Clock on and off",
+		["farmer_quit"] = "Quit being a farmer!",
+	},
+	info = {
+		["see_options"] = "See More Options",
+		["sell_all"] = "Sell ALL at $",
+		["sell_each"] = "each",
+		["return"] = "Go Back ",
+		["vehicle_map"] = "Go find your tractor!",
+		["start_game"] = "Proceed along the route",
+	},
+	game = {
+		["catch"] = " To Catch the ",
+		["collect_egg"] = "Collect Eggs",
+		["finished"] = "You Caught All Animals",
+		["failed"] = "You Failed",
+	},
+	discord = {
+		["slaughterrun"] = "Slaughter Run Report",
+		["slaughter_started"] = "A Slaughter Run was started by ",
+		["animal_type"] = "Animal Type: ",
+		["craftingLog"] = "Crafting Log",
+		["crafted"] = "Crafted ",
+		["slaughterLog"] = "Slaughter Log",
+		["slaughtered"] = "Slaughtered ",
+		["slaughter_info"] = "Slaughter Info",
+		["crafting_info"] = "Crafting Info",
+	},
+	targeticon = {},
+}
+CreateThread(function()
+	for i, tree in ipairs(Zones.Trees) do
+		local targetName = "pick_trees" .. i
+		Loc["en"].target[targetName] = "Pick " .. tree.ItemLabel
+		Loc["en"].progress["progress_" .. targetName] = "Picking " .. tree.ItemLabel
+		Loc["en"].targeticon["trees_" .. i .. "icon"] = tree.TargetIcon
+	end
+	for i, plant in ipairs(Zones.Plants) do
+		local targetName = "pick_plants" .. i
+		Loc["en"].target[targetName] = "Pick " .. plant.ItemLabel
+		Loc["en"].progress["progress_" .. targetName] = "Picking " .. plant.ItemLabel
+		Loc["en"].targeticon["plants_" .. i .. "icon"] = plant.TargetIcon
+	end
+end)

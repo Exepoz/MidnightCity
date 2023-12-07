@@ -1,0 +1,149 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+AddEventHandler('onResourceStart', function(r) if GetCurrentResourceName() ~= r then return end
+	if Config.Inv == "qb" then
+		for _, Location in ipairs(Config.Locations) do
+				for _, v in pairs(Crafting) do
+					for i = 1, #v do
+						for l, b in pairs(v[i]) do
+							if not QBCore.Shared.Items[l] and l ~= "amount" then print("Crafting: Missing Item from QBCore.Shared.Items: '"..l.."'") end
+							if type(b) == "table" then
+								for j in pairs(b) do if not QBCore.Shared.Items[j] then print("Crafting: Missing Item from QBCore.Shared.Items: '"..j.."'") 
+								else 
+								end 
+							end 
+						end 
+					end 
+				end 
+			end
+			for _, stores in pairs(Location.Items) do
+				for _, item in ipairs(stores.items) do
+					if not QBCore.Shared.Items[item.name] then
+						print(string.format("^1Error^0: ^2Missing Item from QBCore.Shared.Items^0 `%s`", item.name))
+					end
+				end
+			end
+			if not QBCore.Shared.Jobs["cluckinbell"] then print("Error: Job role not found - 'cluckinbell'") end
+		end
+	elseif Config.Inv == "ox" then
+		local items =  {}
+		for _, v in pairs(exports.ox_inventory:Items()) do
+			items[v.name] = v
+		end
+		for _, Location in ipairs(Config.Locations) do
+			for _, v in pairs(Crafting) do
+				for i = 1, #v do
+					for l, b in pairs(v[i]) do
+						if not items[l] and l ~= "amount" then print("Crafting: Missing Item from QBCore.Shared.Items: '"..l.."'") end
+						if type(b) == "table" then
+							for j in pairs(b) do if not items[j] then print("Crafting: Missing Item from QBCore.Shared.Items: '"..j.."'") 
+								else 
+								end 
+							end 
+						end 
+					end 
+				end 
+			end
+		end
+	end
+end)
+
+if not Config.JimConsumables then
+	CreateThread(function()
+		local drinks = { "cbcoke", "cborangesoda", "cblemonlimesoda", "cbrootbeer", "cbcoffee"}
+		for _, v in pairs(drinks) do  QBCore.Functions.CreateUseableItem(v, function(source, item) TriggerClientEvent('jixel-cluckinbell:client:Consume', source, item.name) end) end
+		local food = { "fowlburger", "cluckfries", "clucknuggets", "cluckrings", "csalad", "meatfree", "mightyclucker", "cbchickenwrap", "cbucket", "chocolatecone", "strawberrycone", "vanillacone","cbdonut" }
+		for _, v in pairs(food) do QBCore.Functions.CreateUseableItem(v, function(source, item) TriggerClientEvent('jixel-cluckinbell:client:Consume', source, item.name) end) end
+	end)
+end
+
+CreateThread(function()
+	QBCore.Functions.CreateUseableItem("clucktoy", function(source, item) TriggerClientEvent('jixel-cluckinbell:client:Open', source, item.name) end)
+	QBCore.Functions.CreateUseableItem("littleclucker", function(source, item) TriggerClientEvent('jixel-cluckinbell:Stash', source, {}, item.info["id"], true) end)
+	QBCore.Functions.CreateUseableItem("cluckmenu", function(source, item) TriggerClientEvent('jixel-cluckinbell:showMenu', source, Config.MenuImg) end)
+end)
+
+RegisterServerEvent("jixel-cluckinbell:server:GrabBag", function()
+	local src = source local Player = QBCore.Functions.GetPlayer(src)
+	TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["littleclucker"], "add", 1)
+	Player.Functions.AddItem("littleclucker", 1, false, { ["id"] = math.random(1, 9999999) })
+end)
+
+---Crafting
+
+RegisterServerEvent('jixel-cluckinbell:Crafting:GetItem', function(ItemMake, craftable)
+	local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+	--This grabs the table from client and removes the item requirements
+	local amount = 1
+	if craftable then
+		if craftable["amount"] then amount = craftable["amount"] end
+		for k, v in pairs(craftable[ItemMake]) do TriggerEvent("jixel-cluckinbell:server:toggleItem", false, tostring(k), v, src) end
+	end
+	--This should give the item, while the rest removes the requirements
+	TriggerEvent("jixel-cluckinbell:server:toggleItem", true, ItemMake, amount, src)
+end)
+
+RegisterNetEvent('jixel-cluckinbell:server:toggleItem', function(give, item, amount, newsrc)
+	local src = newsrc or source
+	local amount = amount or 1
+	local remamount = amount
+	if not give then
+		if HasItem(src, item, amount) then -- check if you still have the item
+			if QBCore.Functions.GetPlayer(src).Functions.GetItemByName(item).unique then -- If unique item, keep removing until gone
+				while remamount > 0 do
+					QBCore.Functions.GetPlayer(src).Functions.RemoveItem(item, 1)
+					remamount -= 1
+				end
+				TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "remove", amount) -- Show removal item box when all are removed
+				return
+			end
+			if QBCore.Functions.GetPlayer(src).Functions.RemoveItem(item, amount) then
+				if Config.Debug then print("^5Debug^7: ^1Removing ^2from Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
+				TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "remove", amount)
+			end
+		else TriggerEvent("jixel-cluckinbell:server:DupeWarn", item, src) end -- if not boot the player
+	elseif give then
+		if QBCore.Functions.GetPlayer(src).Functions.AddItem(item, amount) then
+			if Config.Debug then print("^5Debug^7: ^4Giving ^2Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
+			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add", amount)
+		end
+	end
+end)
+
+RegisterNetEvent("jixel-cluckinbell:server:DupeWarn", function(item, newsrc)
+	local src = newsrc or source
+	local P = QBCore.Functions.GetPlayer(src)
+	print("^5DupeWarn: ^1"..P.PlayerData.charinfo.firstname.." "..P.PlayerData.charinfo.lastname.."^7(^1"..tostring(src).."^7) ^2Tried to remove item ^7('^3"..item.."^7')^2 but it wasn't there^7")
+	DropPlayer(src, "Kicked for attempting to duplicate items")
+	print("^5DupeWarn: ^1"..P.PlayerData.charinfo.firstname.." "..P.PlayerData.charinfo.lastname.."^7(^1"..tostring(src).."^7) ^2Dropped from server for item duplicating^7")
+end)
+
+
+if Config.Inv == "ox" then
+	RegisterNetEvent("jixel-cluckinbell:makeOXShop", function(id, label, items)
+        exports.ox_inventory:RegisterShop(id, { name = label, inventory = items})
+		if Config.Debug then print("^5Debug^7: ^3Registering ^Shop^7: ^3", id, label) end
+    end)
+    RegisterNetEvent("jixel-cluckinbell:makeOXStash", function(id, label)
+        exports.ox_inventory:RegisterStash(id, label, 20, 400000, nil)
+       if Config.Debug then print("^5Debug^7: ^3Registering ^2Stash^7: ^3", id, label) end
+    end)
+	function HasItem(src, items, amount) local count = exports.ox_inventory:Search(src, 'count', items)
+		if exports.ox_inventory:Search(src, 'count', items) >= (amount or 1) then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^5FOUND^7 x^3"..count.."^7 ^3"..tostring(items)) end return true
+        else if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end return false end
+	end
+else
+	function HasItem(source, items, amount)
+		local amount, count = amount or 1, 0
+		local Player = QBCore.Functions.GetPlayer(source)
+		if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+		for _, itemData in pairs(Player.PlayerData.items) do
+			if itemData and (itemData.name == items) then
+				if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+				count += itemData.amount
+			end
+		end
+		if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+		if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end	return false
+	end
+end
