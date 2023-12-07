@@ -5161,7 +5161,7 @@ RP.AnimalEmotes = {
                 0.0000,
               -90.0000,
               120.0000,
-                0.000,  
+                0.000,
             },
             EmoteLoop = true,
             EmoteMoving = true
@@ -5499,7 +5499,7 @@ RP.Emotes = {
         "WORLD_HUMAN_YOGA",
         "Yoga"
     },
-    
+
 ---------- END OF SCENARIOS --------------
 
     ["dispenser"] = {
@@ -5917,41 +5917,41 @@ RP.Emotes = {
         }
     },
     ["argue3"] = {
-        "missheistdockssetup1leadinoutig_1", 
-        "lsdh_ig_1_argue_wade", 
-        "Argue 3", 
+        "missheistdockssetup1leadinoutig_1",
+        "lsdh_ig_1_argue_wade",
+        "Argue 3",
         AnimationOptions = {
             EmoteLoop = true,
             EmoteMoving = true
         }
-    }, 
+    },
     ["argue4"] = {
-        "car_2_mcs_1-6", 
-        "cs_devin_dual-6", 
-        "Argue 4", 
-        AnimationOptions = {            
+        "car_2_mcs_1-6",
+        "cs_devin_dual-6",
+        "Argue 4",
+        AnimationOptions = {
             EmoteDuration = 6000,
             EmoteMoving = true
         }
-    }, 
+    },
     ["argue5"] = {
-        "anim@amb@casino@brawl@fights@argue@", 
-        "arguement_loop_mp_m_brawler_01", 
-        "Argue Angry 1", 
+        "anim@amb@casino@brawl@fights@argue@",
+        "arguement_loop_mp_m_brawler_01",
+        "Argue Angry 1",
         AnimationOptions = {
             EmoteLoop = true,
             EmoteMoving = true
         }
-    }, 
+    },
     ["argue6"] = {
-        "anim@amb@casino@brawl@fights@argue@", 
-        "arguement_loop_mp_m_brawler_02", 
-        "Argue Angry 2", 
+        "anim@amb@casino@brawl@fights@argue@",
+        "arguement_loop_mp_m_brawler_02",
+        "Argue Angry 2",
         AnimationOptions = {
             EmoteLoop = true,
             EmoteMoving = true
         }
-    },  
+    },
     ["bartender"] = {
         "anim@amb@clubhouse@bar@drink@idle_a",
         "idle_a_bartender",
@@ -6518,7 +6518,7 @@ RP.Emotes = {
             ExitEmoteType = "Exits"
         }
     },
-    ["kneelbored"] = { --- Custom Emote By Chocoholic Animations 
+    ["kneelbored"] = { --- Custom Emote By Chocoholic Animations
         "chocoholic@duo17",
         "duo17_clip",
         "Kneel Bored Pose",
@@ -6529,7 +6529,7 @@ RP.Emotes = {
             ExitEmoteType = "Exits"
         }
     },
-    ["kneelpeace"] = { --- Custom Emote By Chocoholic Animations 
+    ["kneelpeace"] = { --- Custom Emote By Chocoholic Animations
         "chocoholic@duo18",
         "duo18_clip",
         "Kneel Peace Sign Pose",
@@ -7177,7 +7177,7 @@ RP.Emotes = {
             EmoteLoop = true
         }
     },
-    ["elbow2"] = { -- Custom Emote By Chocoholic Animations 
+    ["elbow2"] = { -- Custom Emote By Chocoholic Animations
         "chocoholic@single47",
         "single47_clip",
         "Window Elbow 2",
@@ -8984,18 +8984,18 @@ RP.Emotes = {
         }
     },
     ["snot"] = {
-        "move_p_m_two_idles@generic", 
-        "fidget_blow_snot", 
-        "Blow Snot", 
+        "move_p_m_two_idles@generic",
+        "fidget_blow_snot",
+        "Blow Snot",
         AnimationOptions = {
             EmoteMoving = true,
             EmoteDuration = 4500,
         }
-    }, 
+    },
     ["scratch"] = {
-        "move_p_m_two_idles@generic", 
-        "fidget_scratch_balls", 
-        "Scratch Balls", 
+        "move_p_m_two_idles@generic",
+        "fidget_scratch_balls",
+        "Scratch Balls",
         AnimationOptions = {
             EmoteMoving = false,
             EmoteDuration = 4000,
@@ -9238,11 +9238,11 @@ RP.Emotes = {
             ExitEmoteType = "Exits"
         }
     },
-    
-    
+
+
     -- CASINO DLC EMOTES (Requires gamebuild 2060 or higher)
-    
-    
+
+
     ["karate"] = {
         "anim@mp_player_intcelebrationfemale@karate_chops",
         "karate_chops",
@@ -9784,9 +9784,9 @@ RP.Emotes = {
             EmoteDuration = 1480
         }
     },
-    ["hidegun"] = { -- CREDIT TO DARKS ANIMATIONS FOR THIS EXCLUSIVE RPEMOTES ANIMATION 
-        "pistol_b_b@dark", -- CREDIT TO DARKS ANIMATIONS FOR THIS EXCLUSIVE RPEMOTES ANIMATION 
-        "pistol_b_b_clip", -- CREDIT TO DARKS ANIMATIONS FOR THIS EXCLUSIVE RPEMOTES ANIMATION 
+    ["hidegun"] = { -- CREDIT TO DARKS ANIMATIONS FOR THIS EXCLUSIVE RPEMOTES ANIMATION
+        "pistol_b_b@dark", -- CREDIT TO DARKS ANIMATIONS FOR THIS EXCLUSIVE RPEMOTES ANIMATION
+        "pistol_b_b_clip", -- CREDIT TO DARKS ANIMATIONS FOR THIS EXCLUSIVE RPEMOTES ANIMATION
         "Hide a gun",
         AnimationOptions = {
             EmoteMoving = true,
@@ -10063,8 +10063,8 @@ RP.Emotes = {
         EmoteMoving = false,
         }
     },
-    
-    
+
+
 }
 
 --- PROP EMOTES GO HERE. CURRENTLY SUPPORTS UP TO ONE OR TWO PROPS  ---
@@ -10274,7 +10274,7 @@ RP.PropEmotes = {
             },
             PtfxInfo = Config.Languages[Config.MenuLanguage]['cut'],
             PtfxWait = 0.8,
-            PtfxCanHold = false -- we set this to false, but yet it allows us to hold, which is the OPPOSITE of what it claims to do!? HUH!?? AVANOX!! 
+            PtfxCanHold = false -- we set this to false, but yet it allows us to hold, which is the OPPOSITE of what it claims to do!? HUH!?? AVANOX!!
         }
     },
 	["carryextinguisher"] = {
@@ -18041,7 +18041,7 @@ RP.PropEmotes = {
             PtfxWait = 200
         }
     },
-    ["selfiesit3"] = { -- Emote by Chocoholic Animations 
+    ["selfiesit3"] = { -- Emote by Chocoholic Animations
         "chocoholic@single77",
         "single77_clip",
         "Selfie Sitting 3",
@@ -19093,7 +19093,7 @@ RP.PropEmotes = {
             PtfxWait = 200
         }
     },
-    ["selfiemeh"] = { -- Custom Animation By Chocoholic Animations 
+    ["selfiemeh"] = { -- Custom Animation By Chocoholic Animations
         "chocoholic@single81",
         "single81_clip",
         "Selfie Meh",
@@ -20022,7 +20022,7 @@ RP.PropEmotes = {
         }
     },
     ["idcard"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 1",
         AnimationOptions = {
@@ -20062,7 +20062,7 @@ RP.PropEmotes = {
         }
     },
     ["idcardc"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 3",
         AnimationOptions = {
@@ -20082,7 +20082,7 @@ RP.PropEmotes = {
         }
     },
     ["idcardd"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 4",
         AnimationOptions = {
@@ -20102,7 +20102,7 @@ RP.PropEmotes = {
         }
     },
     ["idcarde"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 5",
         AnimationOptions = {
@@ -20122,7 +20122,7 @@ RP.PropEmotes = {
         }
     },
     ["idcardf"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 6",
         AnimationOptions = {
@@ -20142,7 +20142,7 @@ RP.PropEmotes = {
         }
     },
     ["idcardg"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 7",
         AnimationOptions = {
@@ -20162,7 +20162,7 @@ RP.PropEmotes = {
         }
     },
     ["idcardh"] = {
-        "cop_badge_1@dad", --- Custom Animation by Darks Animations 
+        "cop_badge_1@dad", --- Custom Animation by Darks Animations
         "cop_badge_1_clip",
         "ID Card 8 - Cop Badge",
         AnimationOptions = {
@@ -21618,7 +21618,7 @@ RP.PropEmotes = {
             EmoteMoving = true
         }
     },
-    ["airportbag2"] = { -- Custom Emote By Dark Animations exclusive to RPEmotes 
+    ["airportbag2"] = { -- Custom Emote By Dark Animations exclusive to RPEmotes
         "suitcase_phone@dark",
         "suitcase_phone_clip",
         "Airport Bag 2 - Phone",
@@ -23241,7 +23241,7 @@ RP.PropEmotes = {
         EmoteMoving = true
         },
    },
-    ["raiseglass"] = { -- Custom Animation by Chocoholic Animations 
+    ["raiseglass"] = { -- Custom Animation by Chocoholic Animations
     "chocoholic@duo32",
     "duo32_clip",
     "Raise Your Glass",
@@ -23260,7 +23260,7 @@ RP.PropEmotes = {
         EmoteMoving = true
         },
     },
-    ["raiseglass2"] = { -- Custom Animation by Chocoholic Animations 
+    ["raiseglass2"] = { -- Custom Animation by Chocoholic Animations
     "chocoholic@duo34",
     "duo34_clip",
     "Raise Your Glass 2",

@@ -617,12 +617,32 @@ CustomDP.PropEmotes = {
    ["foodbowl"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "bowl", AnimationOptions =
    {    Prop = "prop_cs_bowl_01", PropBone = 28422, PropPlacement = {0.0, 0.0, 0.050, 0.0, 0.0, 0.0},
         EmoteMoving = true, EmoteLoop = true, }},
-    ["stab"] = {"melee@hatchet@streamed_core_fps", "plyr_front_takedown_b", "Stab", AnimationOptions =
-    {   Prop = 'prop_knife', PropBone = 57005, PropPlacement = {0.1, 0.10, 0.10, 240.0, -60.0},
-            EmoteMoving = true, EmoteLoop = true, }},
     ["joint"] = {"timetable@gardener@smoking_joint", "smoke_idle", "Drug", AnimationOptions =
 	{   Prop = "prop_sh_joint_01", PropBone = 57005, PropPlacement = {0.12, 0.03, -0.05, 240.0, -60.0},
 		EmoteMoving = true, EmoteLoop = true, }},
+    ['stab'] = {'melee@hatchet@streamed_core_fps', 'plyr_front_takedown_b', 'Stab With Knife', AnimationOptions =
+    {   Prop = 'prop_knife', PropBone = 57005, PropPlacement = {0.16, 0.1, -0.01, 0.0, 0.0, -45.0 },
+        EmoteLoop = false, EmoteMoving = false, }},
+
+        ["readblueprint"] = {
+            "amb@world_human_clipboard@male@base",
+            "base",
+            "Read Blueprint",
+            AnimationOptions = {
+                Prop = 'p_blueprints_01_s',
+                PropBone = 60309,
+                PropPlacement = {
+                    0.2500,
+                    -0.07,
+                    0.0350,
+                    0.0,
+                    0.0,--179.2527,
+                    -13.8804
+                },
+                EmoteMoving = true,
+                EmoteLoop = true
+            }
+        },
 }
 
 

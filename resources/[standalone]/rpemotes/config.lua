@@ -89,7 +89,7 @@ Config = {
     -- If turned off, opening the menu and playing an emote will not be possible while swimming
     AllowInWater = true,
     -- If set to true, the /binoculars command will be enabled.
-    BinocularsEnabled = false,
+    BinocularsEnabled = true,
     -- If set to true, you'll be able to toggle between different vision modes in the binoculars
     AllowVisionsToggling = false,
     -- If set to true, the /newscam command will be enabled.

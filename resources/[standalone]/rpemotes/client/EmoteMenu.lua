@@ -165,7 +165,7 @@ function AddEmoteMenu(menu)
             table.insert(ShareTable, a)
         end
     end
-
+    
     for a, b in pairsByKeys(RP.PropEmotes) do
         x, y, z = table.unpack(b)
 
@@ -478,7 +478,7 @@ function AddInfoMenu(menu)
     --     infomenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['infoupdateav'],
     --         Config.Languages[lang]['infoupdateavtext'], "", Menuthing, Menuthing)
     -- end
- 
+
     infomenu:AddItem(NativeUI.CreateItem("Join the <font color=\"#00ceff\"><b>Official Discord 💬<b></font>",
         "Join our official discord! 💬 <font color=\"#00ceff\"><b>https://discord.gg/sw3NwDq6C8<b></font>"))
     infomenu:AddItem(NativeUI.CreateItem("Download <font color=\"#FF25B1\"><b>RPEmotes<b></font> from 💾",
@@ -562,9 +562,9 @@ function AddInfoMenu(menu)
         "<font color=\"#ff451d\">DRX Animations 👑</font> for the custom animations"))
 	infomenu:AddItem(NativeUI.CreateItem("Thanks <font color=\"#12ab0a\">Radial 🫡</font>",
        "<font color=\"#12ab0a\">Radial</font> on discord for contributing animations code"))
-        
+
   infomenu:AddItem(NativeUI.CreateItem("<b>Thanks to the community<b>", "Translations, bug reports and moral support 🌐"))
-    
+
 end
 
 function OpenEmoteMenu()
