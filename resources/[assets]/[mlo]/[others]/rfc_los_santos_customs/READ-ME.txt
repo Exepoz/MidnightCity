@@ -1,0 +1,34 @@
+Hey thanks for buying this map, bellow i give you some important informations for your new map.
+
+This map uses customs doors, so i have some files for tuning and sound. 
+If you allready have some map with tuning doors probably you need to combine the files to work for all.
+This is an simple step.
+Choose one file doortuning ymt, open with (Notpad++/Visual Studio Code) and add all customs doors you have on your server.
+In gta5 file you can look the line (1133), this line tells the game where is lockated the doortuning file, if you change the location you need to edit the line.
+Is very important to not change the name of the resource file, if you do that you need to edit the line 1133.
+
+Doors Hash
+
+Main Doors:
+rfc_los_santos_customs_gate2 - 718507040
+
+Reception:
+rfc_los_santos_customs_desk_door - 4256823717
+
+Warehouse Racks:
+rfc_los_santos_customs_rack_door_l - 2134335554
+rfc_los_santos_customs_rack_door_r - 758463511
+
+Secret Spot:
+rfc_los_santos_customs_elec_door - 1546389727
+rfc_los_santos_customs_elec_door2 - 1278022473
+
+Store Room:
+v_ilev_ct_door03 - 2568635511
+
+Main Store:
+v_ilev_gasdoor - 3426294393
+
+
+
+
