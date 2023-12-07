@@ -1,0 +1,59 @@
+Hey! Thank you very much for purchasing our Fiv3Devs' Black Market MLO! 
+
+If you need help, you will find us here: discord.gg/fiv3devs
+
+The goal of this map is to create a secret, sketchy black market in an uncommon area still close to the city that you can use for more realistic RP for you and your players.
+
+Here's a list of doorlocks you might need for your favorite doorlock script:
+
+
+Main gate:
+
+- prop_5d_fnclink_03gate2 | 0x453FF035 | X:-285.5595 Y:-2205.952 Z:9.083438
+
+Second gate ("Seatsbelts required beyond this point..."):
+
+- prop_gate_docks_ld | 0x4CACCA75 | X:-182.6718 Y:-2202.54 Z:9.29842
+
+Third gate ("Seatsbelts required beyond this point..."):
+
+- prop_gate_docks_ld | 0x4CACCA75 | X:-127.5669 Y:-2185.304 Z:9.29842 
+
+Closing this three gates will make sure no vehicles get into the black market area. 
+
+"Open" storage area, left door:
+
+- prop_fnclink_02gate6_l | 0x5AFD248C | X:-295.6935 Y:-2210.148 Z:10.25095
+
+"Open" storage area, right door:
+
+- prop_fnclink_09gate1 | 0x6C4D5AF4 | X:-293.4203 Y:-2206.888 Z:10.24573
+
+Main door:
+
+- prop_pris_door_02 | 0xB8389439 | X:-284.3361 Y:-2212.265 Z:10.18063
+
+Market door (the one with the number pad on the right):
+
+- 5d_methtraildoor | 0x38DF2B85 | X:-275.4777 Y:-2207.386 Z:10.22339
+
+Green "No trespassing" door:
+
+- prop_gate_bridge_ld | 0x8CABC97F | X:-266.7665 Y:-2212.149 Z:10.29901
+
+Secondary entrance/exit door:
+
+- 5d_mesa_door_01a | 0x4BB11DF4 | X:-265.6917 Y:-2206.476 Z:10.35663
+
+Last "office" door:
+
+- prop_pris_door_02 | 0xB8389439 | X:-252.9391 Y:-2208.685 Z:10.2068
+
+
+Here's a small list of seating props for your seating script:
+
+- prop_chair_06 | 0x313C1FCC | X:-248.4101 Y:-2209.804 Z:9.056157
+
+- prop_chair_06 | 0x313C1FCC | X:-247.9622 Y:-2207.228 Z:9.061389
+
+- prop_old_wood_chair | 0x5C0CEC9F | X:-281.4821 Y:-2208.798 Z:9.448477
