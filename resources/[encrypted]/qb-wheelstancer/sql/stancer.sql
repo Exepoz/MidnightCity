@@ -1,0 +1,1 @@
+ALTER TABLE player_vehicles ADD COLUMN `stance_value` longtext DEFAULT NULL;
