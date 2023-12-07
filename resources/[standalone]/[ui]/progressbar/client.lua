@@ -1,3 +1,24 @@
+local faster = false
+local time = 0
+
+local function Buff(time)
+    local t = time * 60
+    CreateThread(function ()
+        while true do
+            if t > 0 then
+                faster = true
+            else
+                faster = false
+                break
+            end
+            Wait(1000)
+        end
+    end)
+end
+RegisterNetEvent("progressbar:client:faster", function (time)
+    Buff(time)
+end)
+
 local Action = {
     name = '',
     duration = 0,
@@ -131,10 +152,16 @@ local function StartProgress(action, onStart, onTick, onFinish)
     if (not isPlayerDead or action.useWhileDead) and not isDoingAction then
         isDoingAction = true
         Action = action
+        local dur = Action.duration
+        if faster == true then
+          dur = (Action.duration * 2) / 10
+        else
+          dur = Action.duration
+        end
         SendNUIMessage({
-            action = 'progress',
-            duration = action.duration,
-            label = action.label
+        action = "progress",
+        duration = dur,
+        label = Action.label
         })
         StartActions()
         CreateThread(function()

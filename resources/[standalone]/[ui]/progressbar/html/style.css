@@ -61,11 +61,11 @@ body {
 }
 
 #progress-bar {
-    background-color: #dc143c;
+    background-color: #553969;
     width: 0%;
     height: 0.5vh;
     border-radius: 2px;
     transition: width 0.3s;
     transition-timing-function: ease-out;
-    box-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+    box-shadow: 0 0 10px #7a04ce;
 }
