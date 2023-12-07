@@ -27,7 +27,7 @@ Config.NotifyOptions = {
 Config.OutfitCodeLength = 10
 
 Config.UseRadialMenu = false
-Config.UseOxRadial = false -- Set to true to use ox_lib radial menu, both this and UseRadialMenu must be true 
+Config.UseOxRadial = false -- Set to true to use ox_lib radial menu, both this and UseRadialMenu must be true
 
 Config.EnablePedsForShops = true
 Config.EnablePedsForClothingRooms = true
@@ -566,17 +566,16 @@ Config.ClothingRooms = {
         size = vector3(4, 4, 4),
         rotation = 45,
         usePoly = false,
-        points = {
-            vector3(460.41918945312, -993.11444091797, 30.69),
-            vector3(449.39508056641, -993.60614013672, 30.69),
-            vector3(449.88696289062, -990.23779296875, 30.69),
-            vector3(450.97882080078, -989.71411132812, 30.69),
-            vector3(451.0325012207, -987.89904785156, 30.69),
-            vector3(453.47863769531, -987.76928710938, 30.69),
-            vector3(454.35513305664, -988.46459960938, 30.69),
-            vector3(460.4231262207, -987.94573974609, 30.69)
-        }
-    }
+        points = {}
+    },
+    {
+        job = "mechanic2", -- Rising Sun
+        coords = vector4(-340.49, -149.07, 39.06, 255.26),
+        size = vector3(1.5, 1.5, 1.5),
+        rotation = 45,
+        usePoly = false,
+        points = {}
+    },
 }
 
 

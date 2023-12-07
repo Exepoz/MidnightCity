@@ -4,7 +4,7 @@ Config.Peds = {
             peds = {
                 "mp_m_freemode_01",
                 "mp_f_freemode_01",
-                -- "a_f_m_beach_01",
+                "pw_jiwon",
                 -- "a_f_m_bevhills_01",
                 -- "a_f_m_bevhills_02",
                 -- "a_f_m_bodybuild_01",
