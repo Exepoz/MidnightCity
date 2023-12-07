@@ -19,7 +19,10 @@ RegisterNetEvent("jg-advancedgarages:client:InsertVehicle:config", function(vehi
   --print(QBCore.Shared.Gangs[vehicleDbData.citizenid].grades[#QBCore.Shared.Gangs[vehicleDbData.citizenid].grades+1-n])
   --print_table(QBCore.Shared.Gangs[vehicleDbData.citizenid].grades)
   --print_table(QBCore.Shared.Gangs[vehicleDbData.citizenid].grades[tostring(0)])
-
+  local mods = json.decode(vehicleDbData.mods)
+  for k, v in pairs(mods.tireHealth) do
+    print(k ,v)
+  end
   -- Evidence
   TriggerEvent('evidence:client:parkVehicle', vehicle, vehicleDbData.plate, 1)
 
@@ -43,6 +46,14 @@ RegisterNetEvent("jg-advancedgarages:client:TakeOutVehicle:config", function(veh
   if vehicleDbData.stance_value ~= nil then TriggerEvent('stancer:SyncStancer', json.decode(vehicleDbData.stance_value), vehicle) end
   -- Evidence
   TriggerEvent('evidence:client:takeOutVehicle', vehicle, vehicleDbData.plate, 0)
+
+  -- Wheel Damage
+  Wait(25)
+  local mods = json.decode(vehicleDbData.mods)
+  for k, v in pairs(mods.tireHealth) do
+    print(k ,v)
+    if v == 0.0 then TriggerEvent('kq_wheeldamage:removeWheel', vehicle, k) Wait(25) end
+  end
 
   local grades = {}
   if garageType == 'gang' and QBCore.Shared.Gangs[vehicleDbData.citizenid] then
@@ -259,6 +270,19 @@ function hideDrawText(id)
     Framework.Client.HideTextUI()
   end
 end
+
+RegisterKeyMapping('+parkVehicle', 'Park Vehicle', 'keyboard', 'u')
+RegisterKeyMapping('+grabVehicle', 'Open Garage', 'keyboard', 'u')
+RegisterKeyMapping('+openImpound', 'Open Impound', 'keyboard', 'i')
+
+
+RegisterCommand('+parkVehicle', function()
+    handsUp = true
+end, false)
+
+RegisterCommand('-handsup', function()
+    handsUp = false
+end, false)
 
 local function toggleDrawText(id, coords, distance, openEvent, insertEvent, isImpound)
   local pos = GetEntityCoords(PlayerPedId())
