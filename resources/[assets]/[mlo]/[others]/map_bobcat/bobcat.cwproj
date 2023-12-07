@@ -1,0 +1,21 @@
+<CodeWalkerProject>
+  <Name>New CodeWalker Project</Name>
+  <Version value="1" />
+  <YmapFilenames>
+    <Item>stream\ymap\id1_occl_00.ymap</Item>
+    <Item>stream\ymap\id1_occl_01.ymap</Item>
+    <Item>stream\ymap\prologue_details.ymap</Item>
+    <Item>stream\ymap\prologue06_int_np.ymap</Item>
+  </YmapFilenames>
+  <YtypFilenames>
+    <Item>stream\ytyp\des_vaultdoor.ytyp</Item>
+    <Item>stream\ytyp\prologue_np.ytyp</Item>
+    <Item>stream\ytyp\prologueint.ytyp</Item>
+  </YtypFilenames>
+  <YbnFilenames />
+  <YndFilenames />
+  <YnvFilenames />
+  <TrainsFilenames />
+  <ScenarioFilenames />
+  <AudioRelFilenames />
+</CodeWalkerProject>
