@@ -1,1 +1,0 @@
-lib.versionCheck('zf-labo/ox_compat')
