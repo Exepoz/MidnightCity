@@ -1,0 +1,23 @@
+{
+    "target_animal": "Dier Slachten",
+    "target_sale": "Verkoop Items",
+    "blip_area": "Jachtgebied",
+    "blip_sale": "Taxidermist",
+    "notify_title": "Jagen",
+    "notify_canceled": "Geannuleerd..",
+    "notify_reset": "Jagen Gereset",
+    "notify_bait_placed": "Je hebt aas geplaatst, nu wegwezen..",
+    "notify_already_bait": "Je hebt al aas geplaatst..",
+    "notify_on_bike": "Je moet te voet zijn..",
+    "notify_too_dark": "Het is te donker om te jagen",
+    "notify_cant_hunt": "Je kunt hier niet jagen..",
+    "notify_knife": "Je moet een mes vasthouden!",
+    "notify_spotted": "Het dier heeft je opgemerkt",
+    "notify_shoot": "Neem het schot!",
+    "notify_ruined": "Het kadaver is bedorven, het was geen schone kill..",
+    "notify_sold": "Je hebt je items verkocht",
+    "notify_nothing": "Je hebt geen jachtbuit..",
+    "progressbar_selling": "Items Verkopen",
+    "progressbar_bait": "Aas Plaatsen",
+    "progressbar_animal": "Kadaver Verwerken"
+}

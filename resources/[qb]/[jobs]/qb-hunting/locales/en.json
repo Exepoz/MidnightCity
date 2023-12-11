@@ -1,0 +1,23 @@
+{
+    "target_animal": "Slaughter Animal",
+    "target_sale": "Sell Items",
+    "blip_area": "Hunting Area",
+    "blip_sale": "Taxidermist",
+    "notify_title": "Hunting",
+    "notify_canceled": "Canceled..",
+    "notify_reset": "Reset Hunting",
+    "notify_bait_placed": "You placed some bait, now get out of here..",
+    "notify_already_bait": "You already placed some bait..",
+    "notify_on_bike": "You need to be on foot..",
+    "notify_too_dark": "It's too dark to hunt",
+    "notify_cant_hunt": "You can't hunt here..",
+    "notify_knife": "You need to hold a knife!",
+    "notify_spotted": "The animal spotted you",
+    "notify_shoot": "Take the shot!",
+    "notify_ruined": "The corpse is ruined, it was not a clean kill..",
+    "notify_sold": "You have sold your items",
+    "notify_nothing": "You don't have any hunting loot..",
+    "progressbar_selling": "Selling Items",
+    "progressbar_bait": "Placing Bait",
+    "progressbar_animal": "Processing Corpse"
+}
