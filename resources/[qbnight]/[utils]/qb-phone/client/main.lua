@@ -394,6 +394,17 @@ local function CellFrontCamActivate(activate)
 	return Citizen.InvokeNative(0x2491A93618B7D838, activate)
 end
 
+local function ToggleDayTime(day)
+    SendNUIMessage({
+        action = "ToggleDayTime",
+        dayTime = day,
+    })
+end exports('ToggleDayTime', ToggleDayTime)
+
+local function ClosePhone()
+    SendNUIMessage({action = "ClosePhone"})
+end exports('ClosePhone', ClosePhone)
+
 -- Command
 
 RegisterCommand('phone', function()
@@ -441,6 +452,10 @@ end)
 
 RegisterNUICallback('CancelOutgoingCall', function()
     CancelCall()
+end)
+
+RegisterNUICallback('DayTimeClicked', function()
+    TriggerEvent('openHuntDongle')
 end)
 
 RegisterNUICallback('DenyIncomingCall', function()

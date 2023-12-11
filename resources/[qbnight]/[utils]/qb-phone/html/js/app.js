@@ -365,6 +365,21 @@ $(document).on('click', '.phone-tab-button', function(event){
     }
 });
 
+$(document).on('click', '.phone-sun-button', function(e){
+    e.preventDefault();
+    $.post('https://qb-phone/DayTimeClicked');
+});
+
+QB.Phone.Functions.ToggleDayTime = function(data) {
+    if (data.dayTime) {
+        $(".phone-sun-button").removeClass('fas fa-moon')
+        $(".phone-sun-button").addClass('fas fa-sun')
+    } else {
+        $(".phone-sun-button").removeClass('fas fa-sun')
+        $(".phone-sun-button").addClass('fas fa-moon')
+    }
+}
+
 QB.Phone.Functions.Open = function(data) {
     QB.Phone.Animations.BottomSlideUp('.container', 500, -3.4);
     QB.Phone.Notifications.LoadTweets(data.Tweets, data.hasVPN);
@@ -867,6 +882,12 @@ $(document).ready(function(){
                 break;
             case "RefreshGroupChat":
                 QB.Phone.Functions.RefreshGroupChat(event.data.messageData)
+                break;
+            case "ToggleDayTime":
+                QB.Phone.Functions.ToggleDayTime(event.data.dayTime)
+                break;
+            case "ClosePhone":
+                QB.Phone.Functions.Close()
                 break;
         }
     })
