@@ -18,7 +18,7 @@ A lockpick minigame for use with other scripts
 ---@param item string|float?
 ---@param difficulty number?
 ---@param pins number?
-local success = exports["t3_lockpick"]:startLockpick(item, difficulty, pins)
+local success = exports["t3_lockpick"]:startLockpick(item, difficulty, pins, attempts)
 if success then
     -- Unlock vehicle
 else
