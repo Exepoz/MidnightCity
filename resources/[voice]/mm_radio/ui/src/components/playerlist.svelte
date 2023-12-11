@@ -9,8 +9,8 @@
 	})
 
     function showPlayerList() {
-        SHOWPLAYERLIST.set(!$SHOWPLAYERLIST)
-        SendNUI('showPlayerList', $SHOWPLAYERLIST)
+        // SHOWPLAYERLIST.set(!$SHOWPLAYERLIST)
+        SendNUI('showPlayerList', $RADIODATA)
     }
 
 </script>

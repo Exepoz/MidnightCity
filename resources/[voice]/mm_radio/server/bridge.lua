@@ -30,7 +30,7 @@ function GetUserName(source)
     if Shared.Core == "qb" and QBCore then
         local Player = QBCore.Functions.GetPlayer(source)
         if Player then
-            return Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname
+            return Player.PlayerData.metadata.radioNickname ~= '' and Player.PlayerData.metadata.radioNickname or Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname
         end
     elseif Shared.Core == 'qbox' then
         local Player = exports.qbx_core:GetPlayer(source)

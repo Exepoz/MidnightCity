@@ -1,4 +1,5 @@
 local channels = {}
+QBCore = exports['qb-core']:GetCoreObject()
 
 RegisterNetEvent('mm_radio:server:addToRadioChannel', function(channel)
     local src = source
@@ -14,6 +15,14 @@ RegisterNetEvent('mm_radio:server:removeFromRadioChannel', function(channel)
 
     if not channels[channel] then return end
     channels[channel][tostring(src)] = nil
+    TriggerClientEvent('mm_radio:client:radioListUpdate', -1, channels[channel], channel)
+end)
+
+RegisterNetEvent('radio:updateNickname', function(name, channel)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    Player.Functions.SetMetaData('radioNickname', name)
+    channels[channel][tostring(src)] = {name = name ~= '' and name or GetUserName(src), isTalking = false}
     TriggerClientEvent('mm_radio:client:radioListUpdate', -1, channels[channel], channel)
 end)
 

@@ -138,12 +138,16 @@ end
 
 local function giveBlueprintItem(source, blueprintValue)
     if Config.Inventory == 'qb' then
+        local given = false
         local info = {}
     	local Player = QBCore.Functions.GetPlayer(source)
         info.value = blueprintValue
         info.bpLabel = QBCore.Shared.Items[blueprintValue].label
-        Player.Functions.AddItem('blueprint', 1, nil, info)
-        TriggerClientEvent('inventory:client:ItemBox', source, getQBItem('blueprint'), "add")
+        if Player.Functions.AddItem('blueprint', 1, nil, info) then
+            TriggerClientEvent('inventory:client:ItemBox', source, getQBItem('blueprint'), "add")
+            given = true
+        end
+        return given
     elseif Config.Inventory == 'ox' then
         local carry = exports.ox_inventory:CanCarryItem(source, 'blueprint', 1)
         if carry then

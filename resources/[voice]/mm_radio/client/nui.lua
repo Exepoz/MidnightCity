@@ -61,8 +61,11 @@ RegisterNUICallback('removeFav', function(data, cb)
 end)
 
 RegisterNUICallback('showPlayerList', function(data, cb)
-    Radio.userData.playerlist.show = data
-    SetResourceKvp('radioSettings', json.encode(Radio.userData))
+    local input = lib.inputDialog('Chose Nickname', {{type = 'input', label = 'Name', description = "Leave blank to use your full name."}})
+    if not input or not input[1] then return end
+    TriggerServerEvent('radio:updateNickname', input[1], data.channel)
+    -- Radio.userData.playerlist.show = data
+    -- SetResourceKvp('radioSettings', json.encode(Radio.userData))
 end)
 
 RegisterNUICallback('updatePlayerListPosition', function(data, cb)

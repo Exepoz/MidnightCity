@@ -9,7 +9,7 @@
     "restricted_notify_description": "You are not allowed to join Station %.2f MHz",
     "volume_notify_title": "Volume",
     "volume_notify_description": "Volume set to %d%%",
-    
+
     "ui": {
         "header": "IN RADIO",
         "frequency": "Frequency",
@@ -21,7 +21,7 @@
         "favorites": "Favorites",
         "recommended": "Recommended",
         "clear": "CLEAR",
-        "hide_overlay": "HIDE OVERLAY",
-        "show_overlay": "SHOW OVERLAY"
+        "hide_overlay": "CHANGE NAME",
+        "show_overlay": "CHANGE NAME"
     }
 }

@@ -13,6 +13,11 @@ Config.Blueprints = { -- rarity is 1-5, chance is 0.0-1.0 with lower numbers low
 	['gatecrack'] = { rarity = 4, chance = 20 },
 	['handcuffs'] = { },
 	['lime_hacking'] = { rarity = 5, chance = 0 },
+	['green_hacking'] = { rarity = 5, chance = 0 },
+	['blue_hacking'] = { rarity = 5, chance = 0 },
+	['cyan_hacking'] = { rarity = 5, chance = 0 },
+	['yellow_hacking'] = { rarity = 5, chance = 0 },
+	['orange_hacking'] = { rarity = 5, chance = 0 },
 }
 
 Config.DefaultFailChance = 80
@@ -279,7 +284,7 @@ Config.Recipes = {
 	-- Heist Crafting
 	["lime_hacking"] = {
         name = "lime_hacking",
-		category = "Illegal Electronicts",
+		category = "Illegal Electronics",
         materials = {
             ["lime_electronics_1"] = 100,
             ["trojan_usb"] = 1,
@@ -288,7 +293,72 @@ Config.Recipes = {
         },
 		craftingTime= 10000,
 		blueprint = 'lime_hacking',
-		tables = {'illegal_electronics'}
+		tables = {'heist'}
+    },
+	["green_hacking"] = {
+        name = "green_hacking",
+		category = "Illegal Electronics",
+        materials = {
+            ["green_electronics_2"] = 100,
+            ["trojan_usb"] = 1,
+            ["plastic"] = 15,
+            ["copper"] = 10,
+        },
+		craftingTime= 10000,
+		blueprint = 'green_hacking',
+		tables = {'heist'}
+    },
+	["blue_hacking"] = {
+        name = "blue_hacking",
+		category = "Illegal Electronics",
+        materials = {
+            ["blue_electronics_3"] = 100,
+            ["trojan_usb"] = 1,
+            ["plastic"] = 15,
+            ["copper"] = 10,
+        },
+		craftingTime= 10000,
+		blueprint = 'blue_hacking',
+		tables = {'heist'}
+    },
+	["cyan_hacking"] = {
+        name = "cyan_hacking",
+		category = "Illegal Electronics",
+        materials = {
+            ["cyan_electronics_4"] = 100,
+            ["trojan_usb"] = 1,
+            ["plastic"] = 15,
+            ["copper"] = 10,
+        },
+		craftingTime= 10000,
+		blueprint = 'cyan_hacking',
+		tables = {'heist'}
+    },
+	["yellow_hacking"] = {
+        name = "yellow_hacking",
+		category = "Illegal Electronics",
+        materials = {
+            ["yellow_electronics_5"] = 100,
+            ["trojan_usb"] = 1,
+            ["plastic"] = 15,
+            ["copper"] = 10,
+        },
+		craftingTime= 10000,
+		blueprint = 'yellow_hacking',
+		tables = {'heist'}
+    },
+	["orange_hacking"] = {
+        name = "orange_hacking",
+		category = "Illegal Electronicts",
+        materials = {
+            ["orange_electronics_6"] = 100,
+            ["trojan_usb"] = 1,
+            ["plastic"] = 15,
+            ["copper"] = 10,
+        },
+		craftingTime= 10000,
+		blueprint = 'orange_hacking',
+		tables = {'heist'}
     },
 }
 
