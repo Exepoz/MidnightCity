@@ -1,5 +1,7 @@
 local closestBank, TickEnded, SoundID, HasCodes
-local AttemptingVault = false
+local AlertP = 0
+local caught
+local AttemptingVault, DisabledCameras = false, false
 LocalPlayer.state:set('inv_busy', false, true)
 LocalPlayer.state:set('nui', false, true)
 LocalPlayer.state:set('textui', false, true)
@@ -216,6 +218,118 @@ local function SetupBank(bank)
     end
 end
 
+
+
+--~=========~--
+--~ Cameras ~--
+--~=========~--
+
+local h_rgb = {
+    {100, 28, 131, 191},
+    {200, 158,191, 28},
+    {300, 191,147, 28},
+    {400, 255, 0, 0},
+}
+
+function ExitCameraZone()
+    AlertP = 0
+end
+
+local beepWait = false
+local function Beep()
+    Citizen.CreateThread(function()
+        if beepWait then return end
+        PlaySoundFrontend(-1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1)
+        beepWait = true Wait(1000) beepWait = false
+    end)
+end
+
+function InCameraZone()
+    if caught or DisabledCameras then return end
+    if exports['qb-weathersync']:getBlackoutState() then return end
+    AlertP = AlertP + 1
+    local ped = PlayerPedId()
+    local head = GetOffsetFromEntityInWorldCoords(ped, 0, 0.0, 1.2)
+    local hrgb = {255, 0, 0}
+    for _, v in pairs(h_rgb) do
+        if AlertP < v[1] then hrgb = {v[2], v[3], v[4]} break end
+    end
+    Beep()
+    DrawMarker(32, head, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, hrgb[1], hrgb[2], hrgb[3], 60, false, true, 2, 0, nil, nil, false)
+    if AlertP >= 500 then
+        AlertP = 500
+        TriggerServerEvent('cr-fleecabankrobbery:server:lockVault', closestBank)
+        FBCUtils.CallCops(Config.Banks[closestBank].loc)
+        caught = true
+    end
+end
+
+
+-- Camera Feed
+RegisterNetEvent('cr-fleecabankrobbery:client:DisableCameras', function(data)
+    FBCUtils.hasItemData():next(function(hasItem)
+        if not hasItem then FBCUtils.Notif(3, 'You don\'t have the proper tool to do this...') return end
+        local onFinish = function()
+            FBCUtils.Notif(1, 'Feed Looper installed, now hack into the feed!')
+            exports['rpemotes']:EmoteCommandStart('texting')
+            local success = exports['howdy-hackminigame']:Begin(3, 5000)
+            exports['rpemotes']:EmoteCancel()
+            if not success then FBCUtils.Notif(1, 'You failed to hack into the camera feed...') return end
+            FBCUtils.Notif(1, 'Camerla Loop Active!')
+            TriggerServerEvent('cr-fleecabankrobbery:server:disableFleecaCams', data.bank)
+        end
+        FBCUtils.ProgressUI(3000, "Installing Feed Looper", onFinish, nil, false, true, "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 33)
+    end)
+end)
+
+RegisterNetEvent('cr-fleecabankrobbery:client:disableFleecaCams', function(bank)
+    local physCameras = {}
+    local ped = PlayerPedId()
+    if #(GetEntityCoords(ped)- Config.Banks[bank].loc.xyz) > 50 then return end
+	local objects = GetGamePool("CObject")
+	for _, entity in pairs(objects) do
+		local model = GetEntityModel(entity)
+		if model == 168901740 and #(GetEntityCoords(entity)- Config.Banks[bank].loc.xyz) < 20 then
+            physCameras[#physCameras+1] = entity
+        end
+	end
+    local draw = true
+    SetEntityDrawOutlineColor(226, 219, 25, 255)
+    DisabledCameras = true
+    AlertP = 0
+    local function setCams(drawC)
+        for k, v in pairs(physCameras) do
+            SetEntityDrawOutline(v, drawC)
+        end
+    end
+    setCams(draw)
+    Wait(35000)
+    for _ = 1, 5 do
+        Wait(800) draw = false setCams(draw)
+        Wait(200) draw = true setCams(draw)
+        PlaySoundFrontend(-1, "CLICK_BACK", "WEB_NAVIGATION_SOUNDS_PHONE", 1)
+    end
+    for _ = 1, 5 do
+        Wait(400) draw = false setCams(draw)
+        Wait(100) draw = true setCams(draw)
+        PlaySoundFrontend(-1, "CLICK_BACK", "WEB_NAVIGATION_SOUNDS_PHONE", 1)
+    end
+    for _ = 1, 10 do
+        Wait(200) draw = false setCams(draw)
+        Wait(50) draw = true setCams(draw)
+        PlaySoundFrontend(-1, "CLICK_BACK", "WEB_NAVIGATION_SOUNDS_PHONE", 1)
+    end
+    DisabledCameras = false
+    setCams(false)
+end)
+
+RegisterNetEvent('cr-fleecabankrobbery:client:lockVault', function(bank)
+    local ped = PlayerPedId()
+    if #(GetEntityCoords(ped)- Config.Banks[bank].loc.xyz) > 10 then return end
+    caught = true
+    FBCUtils.Notif(3, "Intruder Detected, Locking Down Vault.", Lcl('FleecaTitle'))
+    PlaySoundFrontend(-1, "Hack_Failed", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS", 1)
+end)
 --~==============~--
 --~ Teller Doors ~--
 --~==============~--
@@ -235,24 +349,32 @@ RegisterNetEvent('cr-fleecabankrobbery:client:FleecaBankTellerDoors', function()
         SetEntityHeading(ped, Door.heading)
         local onFinish = function()
             TaskPlayAnim(ped, 'mp_common_heist', 'pick_door', 2.0, 2.0, -1, 1, 1.0, 1, 1, 1)
-            FBCUtils.Circle("TellerDoor"):next(function(success)
-                if success then
-                    ClearPedTasks(ped)
-                    FBCUtils.UnlockDoor(Config.FleecaBankTellerDoors[closestBank])
-                    LocalPlayer.state:set('inv_busy', false, true)
-                    LocalPlayer.state:set('textui', false, true)
-                    TriggerServerEvent("cr-fleecabankrobbery:server:TellerUnlocked", closestBank)
-                    TriggerServerEvent('cr-fleecabankrobbery:server:DeleteZones', closestBank, "tellerdoor")
-                    FBCUtils.Notif(1, Lcl("EnterTellerOffice"), Lcl("FleecaTitle"))
-                else
-                    LocalPlayer.state:set('inv_busy', false, true)
-                    LocalPlayer.state:set('textui', false, true)
-                    ClearPedTasks(ped)
-                    FBCUtils.Notif(3, Lcl("LockpickFailed"), Lcl('FleecaTitle'))
-                    TriggerServerEvent("cr-fleecabankrobbery:server:FleecaBankLockPickRemoval")
-                    TriggerServerEvent('cr-fleecabankrobbery:server:GenSyncs', "tellerdoor", closestBank, false)
-                end
-            end)
+
+            local success = exports["t3_lockpick"]:startLockpick(Config.Items.Lockpick.item, 3, 5, 3)
+            if success then
+                ClearPedTasks(ped)
+                FBCUtils.UnlockDoor(Config.FleecaBankTellerDoors[closestBank])
+                LocalPlayer.state:set('inv_busy', false, true)
+                LocalPlayer.state:set('textui', false, true)
+                TriggerServerEvent("cr-fleecabankrobbery:server:TellerUnlocked", closestBank)
+                TriggerServerEvent('cr-fleecabankrobbery:server:DeleteZones', closestBank, "tellerdoor")
+                FBCUtils.Notif(1, Lcl("EnterTellerOffice"), Lcl("FleecaTitle"))
+            else
+                LocalPlayer.state:set('inv_busy', false, true)
+                LocalPlayer.state:set('textui', false, true)
+                ClearPedTasks(ped)
+                FBCUtils.Notif(3, Lcl("LockpickFailed"), Lcl('FleecaTitle'))
+                TriggerServerEvent("cr-fleecabankrobbery:server:FleecaBankLockPickRemoval")
+                TriggerServerEvent('cr-fleecabankrobbery:server:GenSyncs', "tellerdoor", closestBank, false)
+            end
+
+            -- FBCUtils.Circle("TellerDoor"):next(function(success)
+            --     if success then
+
+            --     else
+
+            --     end
+            -- end)
         end
         local onCancel = function()
             ClearPedTasks(ped)
@@ -308,14 +430,14 @@ local function HackingHandler()
         TaskPlayAnim(ped, 'mp_prison_break', 'hack_loop', 2.0, 2.0, -1, 17, 1.0, 1, 1, 1)
         FBCUtils.Notif(1, Lcl("CodesFound"), Lcl('FleecaTitle'))
         Wait(1000) CRDisableControls(true)
-        exports['mdn-extras']:RemoveHackUse('fleeca')
+        --exports['mdn-extras']:RemoveHackUse('fleeca')
         TriggerServerEvent('cr-fleecabankrobbery:server:StartResetCooldown', closestBank)
         FBCUtils.HackingMinigame():next(function(success)
             if success then
                 LocalPlayer.state:set('textui', false, true)
                 LocalPlayer.state:set('inv_busy', false, true)
                 FBCUtils.Notif(1, Lcl("SecurityBypass"), Lcl('FleecaTitle'))
-                exports['mdn-extras']:RemoveProtocol()
+                --exports['mdn-extras']:RemoveProtocol()
                 TriggerServerEvent('cr-fleecabankrobbery:server:DeleteZones', closestBank, "computer")
                 ClearPedTasks(ped)
                 PrintingCodes(closestBank)
@@ -357,7 +479,7 @@ RegisterNetEvent('cr-fleecabankrobbery:client:FleecaBankUSBUsage', function(data
                 SetEntityCoords(ped, offsetCoords) SetEntityHeading(ped, Computer.heading)
             end
             local onFinish = function()
-                --TriggerServerEvent("cr-fleecabankrobbery:server:FleecaBankUSBRemoval")
+                TriggerServerEvent("cr-fleecabankrobbery:server:FleecaBankUSBRemoval")
                 FBCUtils.CallCops(Config.Banks[closestBank].loc)
                 HackingHandler()
                 FBCUtils.Notif(1, Lcl("USBInserted"), Lcl('FleecaTitle'))
@@ -732,6 +854,7 @@ end)
 -- Swipe Vault Card
 RegisterNetEvent("cr-fleecabankrobbery:client:VaultCard", function()
     if not Config.DevMode and not GlobalState.CRFleecaBank.Banks[closestBank].SecurityDisabled then FBCUtils.Notif(3, Lcl('SecurityNeedsDisabling'), Lcl('FleecaTitle')) return end
+    if GlobalState.CRFleecaBank.Banks[closestBank].vaultLocked then FBCUtils.Notif(3, 'Keypad Disabled : Intruder Detected', Lcl('FleecaTitle')) return end
     local ped, CurrentReader = PlayerPedId(), Config.Banks[closestBank].CardSwipe
     if CurrentReader.Swiped then return end
     local pcoords = GetEntityCoords(ped)
@@ -1121,6 +1244,9 @@ RegisterNetEvent('cr-fleecabankrobbery:client:ResetBank', function(bank)
         print(Lcl('debug_resetbanks'))
     end
     SetupCRFleecaBanks(bank)
+    caught = false
+    DisabledCameras = false
+    AlertP = 0
     Config.Banks[bank].TellerDoors.Occupied = false
     Config.Banks[bank].ComputerCoords.isHacked = false
     Config.Banks[bank].Safe.IsLooted = false
@@ -1149,6 +1275,9 @@ RegisterNetEvent('cr-fleecabankrobbery:client:ResetBanks', function()
     if Config.Debug then
         print(Lcl('debug_resetbanks'))
     end
+    caught = false
+    DisabledCameras = false
+    AlertP = 0
     SetupCRFleecaBanks()
     if Config.Scoreboard then FBCUtils.UpdateScoreboard(false) end
     for k, v in pairs(Config.Banks) do

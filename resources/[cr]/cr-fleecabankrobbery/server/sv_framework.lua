@@ -29,6 +29,13 @@ if Config.Framework.Framework == "QBCore" then
         cb(amount)
     end)
 
+    QBCore.Functions.CreateCallback('cr-fleecabankrobbery:server:hasItemData', function(src, cb)
+        local Player = QBCore.Functions.GetPlayer(src)
+        local item = Player.Functions.GetItemByName('camera_looper')
+        if item and item.amount > 0 then cb(item.info.quality > 0)
+        else cb(false) end
+    end)
+
 elseif Config.Framework.Framework == "ESX" then
     ESX = exports['es_extended']:getSharedObject()
 
@@ -122,7 +129,9 @@ end
 ---@param source number -- Player source
 ---@param item string -- Item given
 ---@param dataType string -- Metadata changed
-function FBSUtils.LowerMetadata(source, item, dataType)
+---@param amount number -- Amount to lower
+function FBSUtils.LowerMetadata(source, item, dataType, amount)
+    if not amount then amount = 1 end
     local itemData
     if Config.Framework.UseOxInv then
         local ox_inventory = exports.ox_inventory
@@ -137,12 +146,11 @@ function FBSUtils.LowerMetadata(source, item, dataType)
         local invItem = Player.Functions.GetItemByName(item)
         if type(Player.PlayerData.items[invItem.slot].info) == "string" then Player.PlayerData.items[invItem.slot].info = {} end
         itemData = Player.PlayerData.items[invItem.slot].info[dataType]
-        if not itemData then itemData = 1 else itemData = itemData + 1 end
-        print(itemData)
+        if not itemData then itemData = 1 else itemData = itemData + amount end
         Player.PlayerData.items[invItem.slot].info[dataType] = itemData
         Player.Functions.SetInventory(Player.PlayerData.items)
     end
-    if itemData >= Config.Difficulties.ComputerHack.ItemUses then FBSUtils.RemoveItem(source, item, 1) end
+    if item == Config.Items.ComputerHackItem and itemData >= Config.Difficulties.ComputerHack.ItemUses then FBSUtils.RemoveItem(source, item, 1) end
     --if Config.Debug then print(Lcl("debug_bladequality", itemData)) end
 end
 

@@ -10,6 +10,15 @@ local BackDoorPoint = nil
 RegisterNetEvent('cr-armoredtrucks:client:GetInQueue', function() TriggerServerEvent('cr-armoredtrucks:server:GetInQueue') end)
 RegisterNetEvent('cr-armoredtrucks:client:acceptTruck', function() TriggerServerEvent('cr-armoredtrucks:server:AcceptTruck') end)
 
+RegisterNetEvent('cr-armoredtrucks:client:locatingBankTruck', function(item)
+    exports['rpemotes']:EmoteCommandStart('texting')
+    Wait(1000)
+    exports["glow_minigames"]:StartMinigame(function(success)
+        Wait(1000) exports['rpemotes']:CancelEmote()
+        TriggerServerEvent('cr-armoredtrucks:server:startParkedTruck', success, item)
+    end, "path", {gridSize = 15, lives = 3, timeLimit = 10000})
+end)
+
 -- Receive Truck Location
 RegisterNetEvent('cr-armoredtrucks:client:StartDelivery', function(loc)
     local TruckPos = loc

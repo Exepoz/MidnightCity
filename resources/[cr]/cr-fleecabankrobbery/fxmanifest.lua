@@ -9,7 +9,7 @@ version '1.5.1'
 ui_page 'html/index.html'
 
 shared_scripts {
-    --'@ox_lib/init.lua',
+    '@ox_lib/init.lua',
     -- Un-Comment the line above to enable ox_lib
     'config.lua',
     'locales/en.lua', -- Change this to your preffered language. (Currently en.lua or fr.lua)

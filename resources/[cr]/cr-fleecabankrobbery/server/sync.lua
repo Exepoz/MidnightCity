@@ -18,3 +18,5 @@ end)
 RegisterNetEvent('cr-fleecabankrobbery:server:callCops', function(coords)
     TriggerClientEvent('cr-fleecabankrobbery:client:callCops', -1, coords)
 end)
+
+

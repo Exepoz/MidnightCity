@@ -7,23 +7,23 @@ Config.Framework = {
   Framework = "QBCore", --"QBCore" | "ESX"
   Interaction = {
       UseTarget = GetConvar('UseTarget', 'false') == 'true', -- Leave true if you are using qb-target. Set to false to disable targetting and enable DrawText for all interactions
-      Target = "qb-target", -- "qb-target" | "oxtarget"
+      Target = "oxtarget", -- "qb-target" | "oxtarget"
       OxLibDistanceCheck = false -- If true, most distance checks are done via oxlib, if false distance checks are done via built-in functions.
   },
   --Framework Overrides (You can change specific framework related functions to ones from other scripts.)
   UseOxInv = false, -- For ESX and QBCore. Lets ESX users utilize the "uses" configuration on the usb (Uses Item Metadata)
   Doorlocks = 'qb', --  'qb' = qb-doorlock | 'nui' = nui-doorlock | 'ox' = ox_doorlocks
   Skillbar = "qb-skillbar", -- "qb-skillbar" | "custom" (See cl_framework)
-  CircleMinigame = "ps-ui", -- "ps-ui" | "qb-lock" | "oxlib" | (You can use your own (See cl_framework)
-  Notifications = "qb", -- "okok" | "mythic" | "tnj" | "oxlib" | "qb" | "ESX" | "chat" |
+  CircleMinigame = "oxlib", -- "ps-ui" | "qb-lock" | "oxlib" | (You can use your own (See cl_framework)
+  Notifications = "oxlib", -- "okok" | "mythic" | "tnj" | "oxlib" | "qb" | "ESX" | "chat" |
   ProgressUI = "", -- "oxlib" | "mythic" | "rprogress" (Custom Settings at the bottom) |  Otherwise leave blank ("") to use Framework Settings.
-  DrawText = "", -- "oxlib" | "okok" | "psui" | Otherwise leave blank ("") to use Framework Settings.
+  DrawText = "oxlib", -- "oxlib" | "okok" | "psui" | Otherwise leave blank ("") to use Framework Settings.
   -- *Important* All oxlib option requires oxlib to be enabled in the fxmanifest *Important*
 }
 
-Config.DevMode = false -- Set to 'true' if you are Testing the Resource
-Config.Debug = false -- True = Debug Prints Enabled | false = Debug Prints Disabled
-Config.DebugPoly = false -- true = Visible Polyzones Enabled | fase = Visible Polyzones Disabled
+Config.DevMode = true -- Set to 'true' if you are Testing the Resource
+Config.Debug = true -- True = Debug Prints Enabled | false = Debug Prints Disabled
+Config.DebugPoly = true -- true = Visible Polyzones Enabled | fase = Visible Polyzones Disabled
 Config.InteractKey = "G" -- Key to press when interacting with things (Default : G | See Config.KeyList to know which string to change this value to.)
 Config.Scoreboard = true -- true = qb-scoreboard Enabled | false = qb-scoreboard disabled (See cl_framework to change scoreboard trigger)
 Config.Logs = true -- true = qb-logs Enabled | qb-logs Disabled
@@ -31,15 +31,15 @@ Config.ControlsDisabled = {36, 73, 322} -- Disable Controls when doing actions. 
 Config.HeistTimer = 10 -- Time for the players to complete the heist before cooldown starts
 Config.Cooldown = {
   Type = "global", -- "global" means only 1 bank can be done per cooldown interval | "unique" means each banks has their own coolodwn
-  Time = 30 -- Minutes
+  Time = 0 -- Minutes
 }
 
 -- Server Restarts / Script Restart Specific Configurations
-Config.ServerStartCooldown = true -- true = Bank Cooldown on Server Start Enabled | false =  Bank Cooldown on Server Start Disabled
+Config.ServerStartCooldown = false -- true = Bank Cooldown on Server Start Enabled | false =  Bank Cooldown on Server Start Disabled
 Config.ServerStartCooldownTime = 45 -- Time Is In Minutes | Cooldown is GLOBAL
 
 Config.Police = {
-  CopsNeeded = 4, -- Amount of Cops needed to be online for the robbery to start
+  CopsNeeded = 0, -- Amount of Cops needed to be online for the robbery to start
   CallCops = true,-- True = Enables Police Alerts | False = Disable Police Alers
   PoliceJobs = {"police"}, -- Name of the police jobs | You can add as many jobs in the table.
   Dispatch = "ps-dispatch", -- "qb" = Default (qb-policejob) | "cd" = Code Design's Dispatch | "core" = Core Dispatch | "ps-dispatch" = Project Sloth Dispatch | "other" = custom (see client/cl_extras.lua)
@@ -51,7 +51,7 @@ Config.Police = {
 
 Config.Items = {
   Lockpick = {item = 'lockpick', name = "lockpick"},
-  ComputerHackItem = {item = "usb_fleeca", name = "Fleeca Bank USB"},
+  ComputerHackItem = {item = "lime_hacking", name = "Password Cracker"},
   VaultCardItem = {item = "crfleecacard", name = "Fleeca Bank Security Card"},
   DrillingItem = {item = "drill", name = "drill"},
   PowerSaw = {item = "powersaw", name = "power saw"},
@@ -74,7 +74,7 @@ Config.Difficulties = {
     RemovalType = "uses", -- "uses" the hacking item has a certain amount of uses | "chance" the hacking item has a chance of being removed on use
     ItemUses = 3, -- if RemovalType == "uses" the # of uses the item has
     RemovalChance = 100,  -- if RemovalType == "chance" the % chance the item has of being removed
-    Hack = "NumberColor", -- "NumberColor" | "VAR" | "Dimbo" | "mHacking" | "Custom" (You can replace the hack by any that you want, see cl_framework l.63)
+    Hack = "Custom", -- "NumberColor" | "VAR" | "Dimbo" | "mHacking" | "Custom" (You can replace the hack by any that you want, see cl_framework l.63)
     NumberColor = { -- Difficulty Settings for the Number/Color Minigame
       Script = 'nathan', -- jesper = Jespers's NoPixel Number Color Hack | nathan = nathan's fork which include hack configuration
       -- Configuration (If using Nathan's)
@@ -226,6 +226,12 @@ if Config.Framework.MLO == "K4MB1" then
         coords = vector3(145.64, -1040.86, 29.37),
         heading = 250.48, minZ = 29.37, maxZ = 29.52,
       },
+      Cameras = {
+        coords = vector3(138.86, -1056.2, 28.81),
+        heading = 340.0, minZ = 29.37, maxZ = 29.52,
+        z1 = vector4(149.33, -1042.69, 29.37, 160.0),
+        z2 = vector4(146.06, -1044.70, 29.38, 160.0),
+      },
       ComputerCoords = {
         coords = vector3(151.09, -1042.08, 29.67),
         heading = 339.3193, minZ = 29.52, maxZ = 29.72,
@@ -274,6 +280,12 @@ if Config.Framework.MLO == "K4MB1" then
       TellerDoors = {
         coords = vector3(310.00, -279.27, 54.16),
         heading = 248.46, minZ = 54.16, maxZ = 54.36
+      },
+      Cameras = {
+        coords = vector3(319.73, -315.86, 50.8),
+        heading = 250.0, minZ = 29.37, maxZ = 29.52,
+        z1 = vector4(314.0, -280.96, 54.16, 160.0),
+        z2 = vector4(310.44, -282.98, 54.17, 160.0),
       },
       ComputerCoords = {
         coords = vector3(315.424, -280.437, 54.38),
@@ -324,6 +336,12 @@ if Config.Framework.MLO == "K4MB1" then
         coords = vector3(-355.16, -50.13, 49.04),
         heading = 245.63, minZ = 49.04, maxZ = 49.24,
       },
+      Cameras = {
+        coords = vector3(-356.04, -50.42, 54.38),
+        heading = 250.0, minZ = 29.37, maxZ = 29.52,
+        z1 = vector4(-351.0, -52.0, 49.04, 160.0),
+        z2 = vector4(-354.75, -53.85, 49.05, 160.0),
+      },
       ComputerCoords = {
         coords = vector3(-349.71, -51.226, 49.252),
         heading = 336.16, minZ = 49.24, maxZ = 49.40,
@@ -372,6 +390,12 @@ if Config.Framework.MLO == "K4MB1" then
       TellerDoors = {
         coords = vector3(-1215.42, -333.92, 37.78),
         heading = 290.89, minZ = 37.78, maxZ = 37.98,
+      },
+      Cameras = {
+        coords = vector3(-1217.15, -332.97, 42.09),
+        heading = 116.0, minZ = 29.37, maxZ = 29.52,
+        z1 = vector4(-1211.69, -332.50, 37.78, 206.86),
+        z2 = vector4(-1212.51, -336.20, 37.79, 206.86),
       },
       ComputerCoords = {
         coords = vector3(-1210.84, -330.75, 37.99),
@@ -422,6 +446,12 @@ if Config.Framework.MLO == "K4MB1" then
         coords = vector3(1178.9, 2708.41, 38.09),
         heading = 96.57, minZ = 38.09, maxZ = 38.29,
       },
+      Cameras = {
+        coords = vector3(1158.21, 2714.17, 38.06),
+        heading = 270.0, minZ = 29.37, maxZ = 29.52,
+        z1 = vector4(1175.05, 2708.86, 38.09, 360.0),
+        z2 = vector4(1177.44, 2711.82, 38.109, 360.0),
+      },
       ComputerCoords = {
         coords = vector3(1173.45, 2707.65, 38.30),
         heading = 180.21, minZ = 38.29, maxZ = 38.40
@@ -470,6 +500,12 @@ if Config.Framework.MLO == "K4MB1" then
       TellerDoors = {
         coords = vector3(-2961.15, 478.95, 15.95),
         heading = 0.0, minZ = 15.70, maxZ = 16.00,
+      },
+      Cameras = {
+        coords = vector3(-2948.03, 481.04, 15.76),
+        heading = 270.0, minZ = 29.37, maxZ = 29.52,
+        z1 = vector4(-2960.45, 482.89, 15.70, 265.0),
+        z2 = vector4(-2957.79, 480.35, 15.71, 265.0),
       },
       ComputerCoords = {
         coords = vector3(-2961.65, 484.48, 15.93),

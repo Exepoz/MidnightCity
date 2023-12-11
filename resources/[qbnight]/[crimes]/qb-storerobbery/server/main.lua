@@ -82,7 +82,6 @@ end)
 
 RegisterNetEvent('qb-storerobbery:server:SafeReward', function(safe)
     local src = source
-    exports['mdn-extras']:GiveHeistElectronics(src, 'stores')
     exports['mdn-extras']:GiveLootBag(src, 'StoreRobbery')
 end)
 

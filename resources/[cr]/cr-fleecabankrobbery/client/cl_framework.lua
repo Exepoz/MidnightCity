@@ -26,7 +26,7 @@ function PrepareBanks()
 end
 
 -- Show Missing Item
----@param item string -Item Name for Item Displayed 
+---@param item string -Item Name for Item Displayed
 function FBCUtils.MissingItem(item)
     if Config.Framework.Framework == "QBCore" then
         local data = {[1] = {name = QBCore.Shared.Items[item]["name"], image = QBCore.Shared.Items[item]["image"]}}
@@ -42,7 +42,7 @@ end
 
 --Show Items When Nearby
 ---@param item table - Table containing Item Name and Item Label
----@param bool boolean - Toggles if the item is showned or disabled 
+---@param bool boolean - Toggles if the item is showned or disabled
 function FBCUtils.ShowItem(item, bool)
     if Config.Framework.Framework == "QBCore" then
         local data = {[1] = {name = QBCore.Shared.Items[item.item]["name"], image = QBCore.Shared.Items[item.item]["image"]}}
@@ -112,10 +112,10 @@ function FBCUtils.HackingMinigame()
             p:resolve(success)
         end)
     elseif Heist.Hack == "Custom" then
-        print("Custom Hack Configuration")
-        -- You can insert your own hack here
-        -- to return Success/Failure you need to use the following:
-        -- p:resolve(true/false)
+        local settings = {gridSize = 15, lives = 3, timeLimit = 8500}
+        exports["glow_minigames"]:StartMinigame(function(success)
+            p:resolve(success)
+        end, "path", settings)
     end
     return p -- Do not touch
 end
@@ -368,6 +368,23 @@ function FBCUtils.Notif(notifType, message, title)
 	end
 --luacheck: pop
 end
+
+
+--- Get the amount of cops on duty
+function FBCUtils.hasItemData()
+    local p = promise.new()
+    if Config.Framework.Framework == "QBCore" then
+        QBCore.Functions.TriggerCallback('cr-fleecabankrobbery:server:hasItemData', function(works)
+            p:resolve(works)
+        end)
+    elseif Config.Framework.Framework == "ESX" then
+        ESX.TriggerServerCallback('cr-fleecabankrobbery:server:GetCops', function(amount)
+            if amount then p:resolve(amount) else p:reject() end
+        end)
+    end
+    return p
+end
+
 
 -- Client Event used for oxlib server-to-client notification
 RegisterNetEvent('cr-fleecabankrobbery:client:Notify', function(type, message, title)

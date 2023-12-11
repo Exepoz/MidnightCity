@@ -40,6 +40,7 @@ function SetupCRFleecaBanks(abank)
                 local PrevaultOptions = {{name = "crPreVault"..k, type = "client", event = "cr-fleecabankrobbery:client:UnlockPreVault", icon = "fa-solid fa-table-cells", label = Lcl('target_PreVaultDoors'), bank = k}}
                 local SafeOptions = {{name = "crFleecaSafe"..k, type = "client", event = "cr-fleecabankrobbery:client:AttemptSafe", icon = "fa-solid fa-vault", label = SafeLabel, bank = k, canInteract = function() if v.Safe.Busy then return false else return true end end }}
                 local CardOptions =  {{name = "crVaultSwipe"..k, type = "client", event = "cr-fleecabankrobbery:client:VaultCard", icon = "fa-solid fa-credit-card", label = Lcl('target_VaultCards'), bank = k }}
+                local CameraOptions =  {{name = "crDisableFleecaCams"..k, type = "client", event = "cr-fleecabankrobbery:client:DisableCameras", icon = "fa-solid fa-bug", label = "Loop Camera Feed", bank = k }}
 
                 if Config.Framework.Interaction.Target == "qb-target" then
                     exports['qb-target']:AddBoxZone("FleecaTellerDoor"..k, v.TellerDoors.coords, 0.2, 0.2, {name = "FleecaTellerDoor"..k, heading = v.TellerDoors.heading, debugPoly = Config.DebugPoly, minZ = v.TellerDoors.minZ, maxZ = v.TellerDoors.maxZ}, {options = DoorOptions})
@@ -55,12 +56,20 @@ function SetupCRFleecaBanks(abank)
                     oxTargets[k].Teller = exports['ox_target']:addBoxZone({coords = v.TellerDoors.coords+oxPos, size = oxSize, rotation = v.TellerDoors.heading, debug = Config.DebugPoly, options = DoorOptions})
                     if mlo == "K4MB1" then oxPos = vec3(0,0,0) oxSize = vec3(0.6, 0.2, 0.2) elseif mlo == "Gabz" then oxPos = vec3(0,0,0) oxSize = vec3(0.6, 0.2, 0.2) end
                     oxTargets[k].Computer = exports['ox_target']:addBoxZone({coords = v.ComputerCoords.coords+oxPos, size = oxSize, rotation = v.ComputerCoords.heading, debug = Config.DebugPoly, options = ComputerOptions})
-                    if mlo == "K4MB1" then oxPos = vec3(0,0,0) oxSize = vec3(0.2, 0.2, 0.4) elseif mlo == "Gabz" then oxPos = vec3(0,0,0.1) oxSize = vec3(0.2, 0.2, 0.2) end
+                    if mlo == "K4MB1" then oxPos = vec3(0,0,0.5) oxSize = vec3(0.2, 0.2, 0.4) elseif mlo == "Gabz" then oxPos = vec3(0,0,0.1) oxSize = vec3(0.2, 0.2, 0.2) end
                     oxTargets[k].PreVault = exports['ox_target']:addBoxZone({coords = v.PreVaultDoor.coords+oxPos, size = oxSize, rotation = v.PreVaultDoor.heading, debug = Config.DebugPoly, options = PrevaultOptions})
                     if mlo == "K4MB1" then oxPos = vec3(0,0,0.1) oxSize = vec3(0.55, 0.6, 0.7) elseif mlo == "Gabz" then oxPos = vec3(0,0,0) oxSize = vec3(3.0, 0.3, 2.0) end
                     oxTargets[k].Safe = exports['ox_target']:addBoxZone({coords = v.Safe.coords+oxPos, size = oxSize, rotation = v.Safe.heading, debug = Config.DebugPoly, options = SafeOptions})
                     if mlo == "K4MB1" then oxPos = vec3(0,0,0.45) oxSize = vec3(0.2, 0.2, 0.2) elseif mlo == "Gabz" then oxPos = vec3(0,0,0) oxSize = vec3(0.2, 0.5, 0.6) end
                     oxTargets[k].Card = exports['ox_target']:addBoxZone({coords = v.CardSwipe.coords+oxPos, size = oxSize, rotation = v.CardSwipe.heading, debug = Config.DebugPoly, options = CardOptions})
+
+                    if v.Cameras then
+                        if mlo == "K4MB1" then oxPos = vec3(0,0,0.0) oxSize = vec3(1.5, 0.2, 1.2) elseif mlo == "Gabz" then oxPos = vec3(0,0,0) oxSize = vec3(0.2, 0.5, 0.6) end
+                        oxTargets[k].Cameras = exports['ox_target']:addBoxZone({coords = v.Cameras.coords+oxPos, size = oxSize, rotation = v.Cameras.heading, debug = Config.DebugPoly, options = CameraOptions})
+
+                        oxTargets[k].CameraZ1 = lib.zones.box({coords = v.Cameras.z1.xyz, size = vector3(8.0, 2.0, 2.0), rotation = v.Cameras.z1[4], inside = InCameraZone, onExit = ExitCameraZone, debug = Config.DebugPoly})
+                        oxTargets[k].CameraZ2 = lib.zones.box({coords = v.Cameras.z2.xyz, size = vector3(4.0, 3.0, 2.0), rotation = v.Cameras.z2[4], inside = InCameraZone, onExit = ExitCameraZone, debug = Config.DebugPoly})
+                    end
                 end
                 ::continue::
             end

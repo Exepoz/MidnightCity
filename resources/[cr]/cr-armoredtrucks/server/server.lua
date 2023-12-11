@@ -93,9 +93,9 @@ function GiveXP(src)
     Player.Functions.SetMetaData('armtruckrep', Player.PlayerData.metadata.armtruckrep+1)
 end
 
------------------
--- QUEUE STUFF --
------------------
+-- -----------------
+-- -- QUEUE STUFF --
+-- -----------------
 -- Truck Queue
 RegisterNetEvent('cr-armoredtrucks:server:TruckQueue', function()
     CreateThread(function()
@@ -154,21 +154,21 @@ RegisterNetEvent('cr-armoredtrucks:server:TruckQueue', function()
     end)
 end)
 
--- Revives the bank truck queue when someone reconnects
-RegisterNetEvent('cr-armoredtrucks:server:ReviveQueue', function()
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local cid = Player.PlayerData.citizenid
-    for k, v in pairs(Queue) do
-        if v == cid then
-            if ConvoyQueue[k] then ConvoyQueue[source] = cid ConvoyQueue[k] = nil end
-            Queue[source] = cid Queue[k] = nil
-            print(cid.." Back in Queue")
-            TriggerClientEvent('QBCore:Notify', src, 'You are back in the Groupe 6 Truck Queue.', 'success')
-            break
-        end
-    end
-end)
+-- -- Revives the bank truck queue when someone reconnects
+-- RegisterNetEvent('cr-armoredtrucks:server:ReviveQueue', function()
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     local cid = Player.PlayerData.citizenid
+--     for k, v in pairs(Queue) do
+--         if v == cid then
+--             if ConvoyQueue[k] then ConvoyQueue[source] = cid ConvoyQueue[k] = nil end
+--             Queue[source] = cid Queue[k] = nil
+--             print(cid.." Back in Queue")
+--             TriggerClientEvent('QBCore:Notify', src, 'You are back in the Groupe 6 Truck Queue.', 'success')
+--             break
+--         end
+--     end
+-- end)
 
 -------------------------------
 -- Heists Start & Generation --
@@ -196,6 +196,36 @@ RegisterNetEvent('cr-armoredtrucks:server:HeistStarted', function(heist)
 end)
 
 RegisterNetEvent('cr-armoredtrucks:server:foundTruck', function() TruckFound = true end)
+
+RegisterNetEvent('cr-armoredtrucks:server:startParkedTruck', function(success, item)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    local time = os.time()
+
+    if not success or HeistInProgress then
+        TriggerClientEvent('QBCore:Notify', src, 'Truck Location Lost.', 'error')
+        Player.PlayerData.items[item.slot].info.cooldown = time
+        Player.Functions.SetInventory(Player.PlayerData.items)
+    return end
+
+    local charinfo = Player.PlayerData.charinfo
+    local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
+    local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
+    local pName = firstName.." "..lastName
+    local heistType = "Parked Truck Heist"
+    local logString = {ply = GetPlayerName(src), txt ="Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n\nHas started the "..heistType}
+    TriggerEvent("qb-log:server:CreateLog", "armTruck", "Parked Armored Truck.", "green", logString)
+
+    HeistInProgress = true
+    CurrentHeistTime = time
+    local truckPos = Config.Delivery.TruckLocations[math.random(#Config.Delivery.TruckLocations)]
+    TruckDelivery.Pos = truckPos
+    --TruckDelivery.DelPos = delPos
+    GlobalState.TruckDelivery = TruckDelivery
+    TriggerClientEvent('cr-armoredtrucks:client:StartDelivery', src, truckPos)
+end)
+
 
 RegisterNetEvent('cr-armoredtrucks:server:AcceptTruck', function(convoy)
     local src = source
@@ -233,12 +263,12 @@ RegisterNetEvent('cr-armoredtrucks:server:AcceptTruck', function(convoy)
             TruckRoaming.Type = Config.Roaming.TruckTypes[math.random(#Config.Roaming.TruckTypes)]
             GlobalState.TruckRoaming = TruckRoaming
             TriggerClientEvent('cr-armoredtrucks:client:GetTruckLocation', src)
-        else
-            local truckPos = Config.Delivery.TruckLocations[math.random(#Config.Delivery.TruckLocations)]
-            TruckDelivery.Pos = truckPos
-            --TruckDelivery.DelPos = delPos
-            GlobalState.TruckDelivery = TruckDelivery
-            TriggerClientEvent('cr-armoredtrucks:client:StartDelivery', src, truckPos)
+        -- else
+        --     local truckPos = Config.Delivery.TruckLocations[math.random(#Config.Delivery.TruckLocations)]
+        --     TruckDelivery.Pos = truckPos
+        --     --TruckDelivery.DelPos = delPos
+        --     GlobalState.TruckDelivery = TruckDelivery
+        --     TriggerClientEvent('cr-armoredtrucks:client:StartDelivery', src, truckPos)
         end
         HeistInProgress = true
         Debug('Heist In Progress')
@@ -285,6 +315,18 @@ RegisterNetEvent('cr-armoredtrucks:server:remThermite', function()
     local Player = QBCore.Functions.GetPlayer(src)
     Player.Functions.RemoveItem(Config.Delivery.ThermiteItem, 1)
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.Delivery.ThermiteItem], "remove", 1)
+end)
+
+QBCore.Functions.CreateUseableItem('green_hacking', function(source, item)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.Functions.GetItemByName(item.name) then
+        if item.cooldown and item.cooldown + 60 < os.time() then TriggerClientEvent('QBCore:Notify', src, 'The device is on cooldown...', 'error') return end
+        TriggerClientEvent('QBCore:Notify', src, 'Locating Bank Truck...', 'info')
+        Wait(math.random(2,4))
+        if HeistInProgress then TriggerClientEvent('QBCore:Notify', src, 'There is not trucks around currently.', 'error') return end
+        TriggerClientEvent('cr-armoredtrucks:client:locatingBankTruck', src, item)
+    end
 end)
 
 ----------------

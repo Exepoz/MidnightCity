@@ -11,11 +11,6 @@ local freezeTimer, freezeWeather, freezeRain = {18, 0, 0}, 'CLEAR', 0.0
 local pause = false
 local waitTime = 15.0
 
-
-RegisterCommand('getms', function()
-    print(GetMillisecondsPerGameMinute())
-end)
-
 -- RegisterCommand('setms', function()
 --     print(SetMillisecondsPerGameMinute())
 -- end)
@@ -160,6 +155,8 @@ CreateThread(function()
         end
     end
 end)
+
+exports('getBlackoutState', function() return blackout end)
 
 -- -- 4 second cycle
 -- CreateThread(function()

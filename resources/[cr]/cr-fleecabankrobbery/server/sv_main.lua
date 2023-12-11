@@ -58,6 +58,18 @@ AddEventHandler('onResourceStart', function(resource)
     end
 end)
 
+RegisterNetEvent('cr-fleecabankrobbery:server:disableFleecaCams', function(bank)
+    local src = source
+    FBSUtils.LowerMetadata(src, 'camera_looper', 'quality', -5)
+    TriggerClientEvent('cr-fleecabankrobbery:client:disableFleecaCams', -1, bank)
+end)
+
+RegisterNetEvent('cr-fleecabankrobbery:server:lockVault', function(bank)
+    CRFleecaBank.Banks[bank].vaultLocked = true
+    GlobalState.CRFleecaBank = CRFleecaBank
+    TriggerClientEvent('cr-fleecabankrobbery:client:lockVault', -1, bank)
+end)
+
 RegisterNetEvent('cr-fleecabankrobbery:server:UpdateGlobalState', function(state, value)
     GlobalState:set(state, value, true)
 end)
@@ -281,8 +293,7 @@ RegisterNetEvent('cr-fleecabankrobbery:server:FleecaBankUSBRemoval', function()
                 --FBSUtils.RemoveItem(src, Config.Items.ComputerHackItem.item)
             end
         elseif Config.Difficulties.ComputerHack.RemovalType == "uses" then
-            TriggerClientEvent('cr-fleecabankrobbery:client:RemoveHackUse', src)
-            --FBSUtils.LowerMetadata(src, Config.Items.ComputerHackItem.item, "uses")
+            FBSUtils.LowerMetadata(src, Config.Items.ComputerHackItem.item, "uses")
         end
     end
 end)
