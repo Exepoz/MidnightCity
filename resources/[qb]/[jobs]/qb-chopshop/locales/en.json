@@ -1,0 +1,17 @@
+{
+    "target_start": "Start Chop Shop",
+    "target_stop": "Cancel Job",
+    "blip_dropoff": "Vehicle Drop-off",
+    "blip_rejoin": "Chopshop - Vehicle",
+    "phone_current": "CURRENT",
+    "phone_success": "You\"ve successfully chopped the vehicle..",
+    "phone_rejoin": "We have marked the location of where you left the vehicle",
+    "phone_start": "Make your way towards the spot where to find the vehicle..",
+    "phone_find": "Find and steal the wanted vehicle..",
+    "phone_drop": "Bring the vehicle to the drop-off zone..",
+    "phone_chop": "Start chopping the vehicle..",
+    "phone_wait": "I will contact you shortly with a job..",
+    "already_have": "You already have a contract..",
+    "inventory_full": "Your pockets are too full",
+    "text_ui": "[E] - Chop Vehicle"
+}
