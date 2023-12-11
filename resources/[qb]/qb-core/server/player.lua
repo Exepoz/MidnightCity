@@ -112,6 +112,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['house_robbery_rep'] = PlayerData.metadata['house_robbery_rep'] or 0
     PlayerData.metadata['bountyPoints'] = PlayerData.metadata['bountyPoints'] or 0
     PlayerData.metadata['bloodyPrey'] = PlayerData.metadata['bloodyPrey'] or false
+    PlayerData.metadata['radioNickname'] = PlayerData.metadata['radioNickname'] or ''
     PlayerData.metadata['crypto'] = PlayerData.metadata['crypto'] or {
         ["shung"] = 0,
         ["gne"] = 0,

@@ -13,7 +13,7 @@ QBShared.Jobs = {
 	hotdog = { label = 'Hotdog', defaultDuty = true, offDutyPay = false, grades = { ['0'] = { name = 'Sales', payment = 50 } } },
 
 	police = {
-		label = 'Law Enforcement',
+		label = 'LSPD',
 		type = 'leo',
 		defaultDuty = true,
 		offDutyPay = false,
@@ -47,7 +47,7 @@ QBShared.Jobs = {
 	},
 	realestate = {
 		label = 'Real Estate',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -59,7 +59,7 @@ QBShared.Jobs = {
 	},
 	taxi = {
 		label = 'Taxi',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -71,7 +71,7 @@ QBShared.Jobs = {
 	},
 	cardealer = {
 		label = 'Vehicle Dealer',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -84,7 +84,7 @@ QBShared.Jobs = {
 	mechanic = {
 		label = 'East Customs',
 		type = 'mechanic',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -97,7 +97,7 @@ QBShared.Jobs = {
 	mechanic2 = {
 		label = 'Rising Sun',
 		type = 'mechanic',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -110,7 +110,7 @@ QBShared.Jobs = {
 	mechanic3 = {
 		label = 'Hayes',
 		type = 'mechanic',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -123,7 +123,7 @@ QBShared.Jobs = {
 	beeker = {
 		label = 'Beeker\'s Garage',
 		type = 'mechanic',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -136,7 +136,7 @@ QBShared.Jobs = {
 	bennys = {
 		label = 'Benny\'s Original Motor Works',
 		type = 'mechanic',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -148,7 +148,7 @@ QBShared.Jobs = {
 	},
 	beanmachine = {
 		label = 'Bean Machine',
-		defaultDuty = true,
+		defaultDuty = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
 			['1'] = { name = 'Novice', payment = 75 },
@@ -159,7 +159,7 @@ QBShared.Jobs = {
 	},
 	catcafe = {
 		label = 'UwU Cafe',
-		defaultDuty = true,
+		defaultDuty = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
 			['1'] = { name = 'Novice', payment = 75 },
@@ -170,7 +170,7 @@ QBShared.Jobs = {
 	},
 	burgershot = {
 		label = 'BurgerShot',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -182,7 +182,7 @@ QBShared.Jobs = {
 	},
 	vanilla = {
 		label = 'Vanilla Unicorn',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -194,7 +194,7 @@ QBShared.Jobs = {
 	},
 	bahama = {
 		label = 'Bahama Mamas',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -206,7 +206,7 @@ QBShared.Jobs = {
 	},
 	cluckinbell = {
 		label = 'Cluckin Bell',
-		defaultDuty = true,
+		defaultDuty = false,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },
@@ -214,7 +214,20 @@ QBShared.Jobs = {
 			['2'] = { name = 'Experienced', payment = 100 },
 			['3'] = { name = 'Assistant Manager', payment = 125 },
 			['4'] = { name = 'Manager', isboss = true, payment = 150 },
-			['4'] = { name = 'Owner', isboss = true, payment = 170 },
+			['5'] = { name = 'Owner', isboss = true, payment = 170 },
+		},
+	},
+	popsdiner = {
+		label = 'Rex\'s Diner',
+		defaultDuty = false,
+		offDutyPay = false,
+		grades = {
+			['0'] = { name = 'Recruit', payment = 50 },
+			['1'] = { name = 'Novice', payment = 75 },
+			['2'] = { name = 'Experienced', payment = 100 },
+			['3'] = { name = 'Assistant Manager', payment = 125 },
+			['4'] = { name = 'Manager', isboss = true, payment = 150 },
+			['5'] = { name = 'Owner', isboss = true, payment = 170 },
 		},
 	},
 
