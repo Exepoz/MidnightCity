@@ -4,7 +4,7 @@ WheatZone = {
 	PickUpKey = 74, RepAmount = 2, WheatWait = 5,
 	PickupDistance = 4.0,
 	Minigame = {
-		enabled = true, -- Dependancy PS-UI
+		enabled = false, -- Dependancy PS-UI
 		MinigameCircles = 2,
 		MinigameTime = 10,
 	},

@@ -4,18 +4,21 @@ function PickThing(event, ...)
         MiniGame(event, args)
     else
         TriggerEvent(event, args)
-    end 
+    end
 end
 
 function MiniGame(event,args)
-    exports["ps-ui"]:Circle(function(success)
+    print('game')
+    local success = lib.skillCheck('easy', {"h"})
+
+    --exports["ps-ui"]:Circle(function(success)
         if success then
             TriggerEvent(event, args)
             triggerNotify(nil, Loc[Config.CoreOptions.Lan].success["minigame_success"], "success")
         else
             triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["minigame_fail"], "error")
         end
-    end, Config.ScriptOptions.Minigame.MinigameCircles, Config.ScriptOptions.Minigame.MinigameTime)
+    --end, Config.ScriptOptions.Minigame.MinigameCircles, Config.ScriptOptions.Minigame.MinigameTime)
 end
 
 function MarkerDraw(data)

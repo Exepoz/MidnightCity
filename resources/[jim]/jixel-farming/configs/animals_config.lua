@@ -98,13 +98,12 @@ AnimalSettings = {
 	},
 	Pigs = {
 		Enabled = true,
-		CatchKey = 74,
+		CatchKey = 38,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Pig Farm",
 			BlipLoc = vec3(2170.37, 4963.35, 41.36),
 			BlipSprite = 537, BlipColor = 28,
-
 		},
 		Setup = {
 			KillRepAmount = 2,
@@ -132,7 +131,7 @@ AnimalSettings = {
 	Chickens = {
 		Enabled = true,
 		Target = false,
-		InteractionKey = 74,
+		InteractionKey = 38,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Chicken Farm",

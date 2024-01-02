@@ -38,7 +38,8 @@ end)
 RegisterServerEvent("jixel-farming:getTree", function(amount, Zone)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.Functions.AddItem(Zone.Item, amount) then
+	local info = {organic = true}
+	if Player.Functions.AddItem(Zone.Item, amount, false, info) then
 		TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[Zone.Item], "add", amount)
 		if Config.ScriptOptions.FarmingRep then
 			Player.Functions.SetMetaData("farmingrep",  Player.PlayerData.metadata["farmingrep"] + Zone.RepAmount)
@@ -72,7 +73,8 @@ end)
 RegisterServerEvent("jixel-farming:getPlant", function(amount, Zone)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if Player.Functions.AddItem(Zone.Item, amount) then
+	local info = {organic = true}
+    if Player.Functions.AddItem(Zone.Item, amount, false, info) then
         TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[Zone.Item], "add", amount)
     if Config.ScriptOptions.FarmingRep then
         Player.Functions.SetMetaData("farmingrep",  Player.PlayerData.metadata["farmingrep"] + Zone.RepAmount)
@@ -134,7 +136,7 @@ RegisterNetEvent("jixel-farming:server:toggleItem", function(give, item, amount,
 			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "remove", amount) -- Show removal item box when all are removed
 		else TriggerEvent("jixel-farming:DupeWarn", item, src) end -- if not boot the player
 	elseif give then
-		if Player.Functions.AddItem(item, amount) then
+		if Player.Functions.AddItem(item, amount, false, {organic = true}) then
 			if Config.DebugOptions.Debug then print("^5Debug^7: ^4Giving ^2Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
 			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add", amount)
 		end

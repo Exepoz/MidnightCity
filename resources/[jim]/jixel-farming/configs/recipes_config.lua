@@ -35,7 +35,7 @@ Crafting = {
 	},
 	MeatProcessor = {
 		{ ['rawporkchops'] = { ['rawpork'] = 1,  }, rep = 0 },
-		{ ['rawbacon'] = { ['rawpork'] = 1,  }, rep = 0 },
+		{ ['rawbacon'] = { ['rawpork'] = 1,  }, amount = 5, rep = 0, },
 		{ ['rawgroundbeef'] = { ['rawbeef'] = 1, }, rep = 0 },
 		{ ['rawsteak'] = { ['rawbeef'] = 1, }, rep = 0 },
 	},
@@ -51,7 +51,7 @@ Crafting = {
 	Drying = {
 		['driedtobaccoleaves'] = {
 			amount = 1,
-			item = {name= "pickedtobaccoleaves", amount = 1},  
+			item = {name= "pickedtobaccoleaves", amount = 1},
 			dryingTime = 5,
 			rep = 0
 		},
@@ -59,7 +59,7 @@ Crafting = {
 	Curing = {
 		['curedtobaccoleaves'] = {
 			amount = 1,
-			item = {name= "driedtobaccoleaves", amount = 1},  
+			item = {name= "driedtobaccoleaves", amount = 1},
 			curingTime = 5,
 			rep = 0
 		},
