@@ -11,10 +11,10 @@
 --]]
 AnimalSettings = {
 	AnimalFrozen = false, -- Do you want the Animals to Move?
-	CatchingChance = 85,
+	CatchingChance = 25,
 	LeaveZoneGracePeriod = 5, -- This is in seconds
 	RespawnTime = 1, -- This is time in minutes for cows to respawn
-	CollectWaitTime = 1, -- This is in minutes your player must wait to Collect Eggs or Milk Again!
+	CollectWaitTime = 30, -- This is in minutes your player must wait to Collect Eggs or Milk Again!
 	KillingWaitTime = 1,
 	KnifeBreak = true,
 	KnifeBreakChance = 10, -- change to 0 for no chance of breaking
@@ -28,9 +28,10 @@ AnimalSettings = {
 	},
 	Cows = {
 		Enabled = true,
-		Target = false,
+		Target = true,
 		MilkKey = 74,
 		KillKey = 38,
+		Price = 10000,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Cow Farm",
@@ -99,6 +100,7 @@ AnimalSettings = {
 	Pigs = {
 		Enabled = true,
 		CatchKey = 38,
+		Price = 5000,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Pig Farm",
@@ -130,8 +132,9 @@ AnimalSettings = {
 	},
 	Chickens = {
 		Enabled = true,
-		Target = false,
+		Target = true,
 		InteractionKey = 38,
+		Price = 5000,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Chicken Farm",
@@ -140,7 +143,7 @@ AnimalSettings = {
 		},
 		Setup = {
 			KillRepAmount = 2, EggCollectRepAmount = 2,
-			EggReward = function() return math.random(1, 2) end,
+			EggReward = function() return math.random(12, 21) end,
 			StressPerKill = function() return math.random(5, 10) end
 		},
 		ChickenZone = vector3(2378.39, 5053.22, 46.44),
@@ -184,21 +187,21 @@ Config.ChickenSetup = {
 	[3] = { coords = vec4(2374.36, 5049.59, 46.44, 116.17), animDict = "creatures@hen@move", animName = "move",  handle = 0 },
 	[4] = { coords = vec4(2378.21, 5046.29, 46.44, 229.59), animDict = "creatures@hen@move", animName = "move", handle = 0 },
 	[5] = { coords = vec4(2372.12, 5053.71, 46.44, 135.18), animDict = "creatures@hen@move", animName = "move", handle = 0 },
-	[6] = { coords = vec4(2378.99, 5052.77, 46.44, 94.8), animDict = "creatures@hen@move", animName = "move",  handle = 0 },
-	[7] = { coords = vec4(2382.76, 5053.41, 46.44, 181.55), animDict = "creatures@hen@move", animName = "move", handle = 0 },
-	[8] = { coords = vec4(2381.65, 5058.99, 46.44, 285.09), animDict = "creatures@hen@move", animName = "move",  handle = 0 },
+	-- [6] = { coords = vec4(2378.99, 5052.77, 46.44, 94.8), animDict = "creatures@hen@move", animName = "move",  handle = 0 },
+	-- [7] = { coords = vec4(2382.76, 5053.41, 46.44, 181.55), animDict = "creatures@hen@move", animName = "move", handle = 0 },
+	-- [8] = { coords = vec4(2381.65, 5058.99, 46.44, 285.09), animDict = "creatures@hen@move", animName = "move",  handle = 0 },
 }
 
 Config.PigSetup = {
 	[1] = { coords = vec4(2188.31, 4962.0, 41.27, 40.9), animDict = "creatures@pig@move", animName = "gallop",  handle = 0 },
 	[2] = { coords = vec4(2167.56, 4969.03, 41.4, 109.81), animDict = "creatures@pig@move", animName = "gallop", handle = 0  },
 	[3] = { coords = vec4(2159.0, 4963.67, 41.4, 38.75), animDict = "creatures@pig@move", animName = "gallop", handle = 0  },
-	[4] = { coords = vec4(2172.09, 4949.11, 41.35, 225.39), animDict = "creatures@pig@move", animName = "move", handle = 0  },
-	[5] = { coords = vec4(2177.12, 4952.44, 41.3, 228.85), animDict = "creatures@pig@move", animName = "move", handle = 0  },
-	[6] = { coords = vec4(2183.22, 4965.77, 41.32, 288.53), animDict = "creatures@pig@move", animName = "move",  handle = 0  },
-	[7] = { coords = vec4(2178.39, 4979.12, 41.44, 6.39), animDict = "creatures@pig@move", animName = "move",   handle = 0  },
-	[8] = { coords = vec4(2162.7, 4961.69, 41.44, 168.05), animDict = "creatures@pig@move", animName = "move",  handle = 0  },
-	[9] = { coords = vec4(2166.21, 4950.55, 41.48, 221.84), animDict = "creatures@pig@move", animName = "move", handle = 0  },
+	-- [4] = { coords = vec4(2172.09, 4949.11, 41.35, 225.39), animDict = "creatures@pig@move", animName = "move", handle = 0  },
+	-- [5] = { coords = vec4(2177.12, 4952.44, 41.3, 228.85), animDict = "creatures@pig@move", animName = "move", handle = 0  },
+	-- [6] = { coords = vec4(2183.22, 4965.77, 41.32, 288.53), animDict = "creatures@pig@move", animName = "move",  handle = 0  },
+	-- [7] = { coords = vec4(2178.39, 4979.12, 41.44, 6.39), animDict = "creatures@pig@move", animName = "move",   handle = 0  },
+	-- [8] = { coords = vec4(2162.7, 4961.69, 41.44, 168.05), animDict = "creatures@pig@move", animName = "move",  handle = 0  },
+	-- [9] = { coords = vec4(2166.21, 4950.55, 41.48, 221.84), animDict = "creatures@pig@move", animName = "move", handle = 0  },
 }
 
 Config.EggSetup = {

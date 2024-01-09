@@ -44,7 +44,7 @@ RegisterServerEvent("jixel-farming:server:pickWheat", function()
 	local amount = 1
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.Functions.AddItem("wheat", amount) then
+	if Player.Functions.AddItem("wheat", amount, false, {organic = true}) then
 		TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items["wheat"], "add", 1)
 		if Config.ScriptOptions.FarmingRep then
 		Player.Functions.SetMetaData("farmingrep",  Player.PlayerData.metadata["farmingrep"] + WheatZone.RepAmount)

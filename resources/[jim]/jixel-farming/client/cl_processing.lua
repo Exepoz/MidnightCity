@@ -1,3 +1,17 @@
+function HasMetaItem(items, amount)
+    local amount, count = amount or 1, 0
+    local pData = QBCore.Functions.GetPlayerData()
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+    for _, itemData in pairs(pData.items) do
+        if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
+            if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+            count += itemData.amount
+        end
+    end
+    if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end	return false
+end
+
 RegisterNetEvent(
     "jixel-farming:Crafting:MakeItem",
     function(data)
@@ -59,6 +73,7 @@ RegisterNetEvent("jixel-farming:Crafting",
                 params = {event = ""}
             }
         end
+        Menu[#Menu+1] = {icon = "fas fa-circle-info", header = 'Tip :', description = 'Packages are only considered "Organic" when made with ONLY organic ingredients', readOnly = true, }
         for i = 1, #data.craftable do
             for k, v in pairs(data.craftable[i]) do
                 if k ~= "amount" and k ~= "rep" then
@@ -89,7 +104,7 @@ RegisterNetEvent("jixel-farming:Crafting",
                             text = text .. "- " .. QBCore.Shared.Items[l].label .. number .. "<br>"
                         end
                         settext = text
-                        checktable[l] = HasItem(l, b)
+                        checktable[l] = HasMetaItem(l, b)
                     end
                     for _, v in pairs(checktable) do
                         if v == false then
@@ -158,7 +173,7 @@ RegisterNetEvent(
             model = "a_c_pig"
             item = "alivepig"
         end
-        if HasItem(item, 1) then
+        if HasMetaItem(item, 1) then
             local animalSlaughterCoord = vector3(989.31, -2183.84, 30.62)
             local collisionPoint = vector3(984.69, -2183.47, 30.67)
             local spawnAnimalCoord = vector3(972.55, -2182.22, 29.98)

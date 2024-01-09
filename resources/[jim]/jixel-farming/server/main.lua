@@ -90,36 +90,37 @@ RegisterServerEvent("jixel-farming:getPlant", function(amount, Zone)
 end)
 
 
-RegisterServerEvent('jixel-farming:Crafting:GetItem', function(ItemMake, craftable)
-	local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-	local amount = 1
-	if craftable then
-		if craftable["amount"] then amount = craftable["amount"] end
-		for k, v in pairs(craftable[ItemMake]) do TriggerEvent("jixel-farming:server:toggleItem", false, tostring(k), v, src) end
-	end
-	TriggerEvent("jixel-farming:server:toggleItem", true, ItemMake, amount, src)
-	local htmllist = {
-        {["name"] = "Crafted Item", ["value"] = ItemMake, ["inline"] = true},
-        {["name"] = "Amount Crafted", ["value"] = amount, ["inline"] = true},
-    }
-	for i, discord in ipairs(Discord.CraftingReports) do
-	if discord then
-    local info = { color = 1942002, htmllink = discord.link, thumbnail = "https://i.imgur.com/uj6elfl.png"}
-		sendToDiscord(
-			info.color,
-			Loc[Config.CoreOptions.Lan].discord["craftingLog"],
-			" ["..Player.PlayerData.citizenid.."] - "..Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname.." - " ..Loc[Config.CoreOptions.Lan].discord["crafted"]..": ",
-			Loc[Config.CoreOptions.Lan].discord["crafting_info"],
-			htmllist,
-			info
-		)
-		end
-	end
-end)
+-- RegisterServerEvent('jixel-farming:Crafting:GetItem', function(ItemMake, craftable)
+-- 	local src = source
+-- 	print(QBCore.Shared.SplitStr(ItemMake, "foodpack")[1])
+-- 	if QBCore.Shared.SplitStr(ItemMake, "foodpack")[1] then TriggerEvent('jixel-farming:Crafting:GetItem:foodpack', ItemMake, craftable, src) return end
+--     local Player = QBCore.Functions.GetPlayer(src)
+-- 	local amount = 1
+-- 	if craftable then
+-- 		if craftable["amount"] then amount = craftable["amount"] end
+-- 		for k, v in pairs(craftable[ItemMake]) do TriggerEvent("jixel-farming:server:toggleItem", false, tostring(k), v, src) end
+-- 	end
+-- 	TriggerEvent("jixel-farming:server:toggleItem", true, ItemMake, amount, src)
+-- 	local htmllist = {
+--         {["name"] = "Crafted Item", ["value"] = ItemMake, ["inline"] = true},
+--         {["name"] = "Amount Crafted", ["value"] = amount, ["inline"] = true},
+--     }
+-- 	for i, discord in ipairs(Discord.CraftingReports) do
+-- 	if discord then
+--     local info = { color = 1942002, htmllink = discord.link, thumbnail = "https://i.imgur.com/uj6elfl.png"}
+-- 		sendToDiscord(
+-- 			info.color,
+-- 			Loc[Config.CoreOptions.Lan].discord["craftingLog"],
+-- 			" ["..Player.PlayerData.citizenid.."] - "..Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname.." - " ..Loc[Config.CoreOptions.Lan].discord["crafted"]..": ",
+-- 			Loc[Config.CoreOptions.Lan].discord["crafting_info"],
+-- 			htmllist,
+-- 			info
+-- 		)
+-- 		end
+-- 	end
+-- end)
 
 RegisterNetEvent("jixel-farming:server:toggleItem", function(give, item, amount, newsrc)
-
 	local src = newsrc or source
 	local Player = QBCore.Functions.GetPlayer(src)
 	local amount = amount or 1
@@ -143,6 +144,69 @@ RegisterNetEvent("jixel-farming:server:toggleItem", function(give, item, amount,
 	end
 end)
 
+---foodpack
+RegisterServerEvent('jixel-farming:Crafting:GetItem', function(ItemMake, craftable, newsrc)
+	local src = newsrc or source
+    local Player = QBCore.Functions.GetPlayer(src)
+	--This grabs the table from client and removes the item requirements
+	local amount = 1
+	local oNeeded, oAmount = 0, 0
+	if craftable then
+		if craftable["amount"] then amount = craftable["amount"] end
+		for k, v in pairs(craftable[ItemMake]) do
+			oNeeded, oAmount = cookItem(false, tostring(k), v, src, oNeeded, oAmount)
+			--TriggerEvent("jim-burgershot:server:toggleItem", false, tostring(k), v, src)
+		end
+	end
+	--This should give the item, while the rest removes the requirements
+	cookItem(true, ItemMake, amount, src, oNeeded, oAmount)
+	--TriggerEvent("jim-burgershot:server:toggleItem", true, ItemMake, amount, src)
+end)
+
+function cookItem(give, item, amount, newsrc, oNeeded, oAmount)
+	local organicNeeded = oNeeded or 0
+	local organicAmount = oAmount or 0
+	local src = newsrc
+	local player = QBCore.Functions.GetPlayer(src)
+	local remamount = (amount or 1)
+	if give == 0 or give == false then
+		if HasItem(src, item, amount or 1) then -- check if you still have the item
+			organicNeeded += amount
+			--if Organic[item] then organicNeeded += amount end
+			local items = player.Functions.GetItemsByName(item)
+			for _,v in pairs(items) do
+				if remamount < 0 then break end
+				if v.amount < remamount then
+					for i = 1, v.amount do
+						if player.PlayerData.items[v.slot].info.organic then organicAmount += 1 end
+						player.Functions.RemoveItem(item, 1, v.slot)
+						remamount -= 1
+					end
+				else
+					while remamount > 0 do
+						if player.PlayerData.items[v.slot].info.organic then organicAmount += 1 end
+						print(item, v.slot)
+						player.Functions.RemoveItem(item, 1, v.slot)
+						remamount -= 1
+					end
+				end
+			end
+			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "remove", amount or 1)
+			if Config.Debug then print("^5Debug^7: ^1Removing ^2from Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
+			return organicNeeded, organicAmount
+		else triggerNotify(nil, "You don't seem to have everything to do this...", "error", src) end--dupeWarn(src, item) end -- if not boot the player
+	else
+		local info = {}
+		print(oNeeded, oAmount)
+		if oNeeded > 0 and oAmount >= oNeeded then
+			info = {organic = true, packedItems = Foodpacks[item] and Foodpacks[item].item or nil, qty = Foodpacks[item] and Foodpacks[item].qty or nil}
+		end
+		if player.Functions.AddItem(item, amount or 1, false, info) then
+			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add", amount or 1)
+			if Config.Debug then print("^5Debug^7: ^4Giving ^2Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
+		end
+	end
+end
 
 if Config.CoreOptions.Inv == "ox" then
 	function HasItem(src, items, amount)
@@ -161,7 +225,7 @@ else
 		if not Player then return false end
 		local count = 0
 		for _, itemData in pairs(Player.PlayerData.items) do
-			if itemData and (itemData.name == items) then
+			if itemData and (itemData.name == items) and itemData.info.quality > 0 then
 				if Config.DebugOptions.Debug then
 					print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)")
 				end

@@ -12,10 +12,10 @@ WheatZone = {
 	Effect = "ent_brk_tree_trunk_bark", Scale = 4.0,
 	TractorOptions = {
 		vehDespawns = true, -- Sends the vehicle to hell
-		Fuel = "ps-fuel", -- Change this to whatever your fuel is: LegacyFuel is usually the standard default
-		DepositNeeded = false,
-		TractorRent = 1000,
-		RakeNeeded = false, -- This is if you want players to have to attach a trailer before being able to harvest wheat
+		Fuel = "cdn-fuel", -- Change this to whatever your fuel is: LegacyFuel is usually the standard default
+		DepositNeeded = true,
+		TractorRent = 1500,
+		RakeNeeded = true, -- This is if you want players to have to attach a trailer before being able to harvest wheat
 		RakeCoords =  {coords = vec3(2574.34, 4508.96, 36.32), name = ('Trailer Loc'), radius = 7.0}
 	},
 	Locations = {

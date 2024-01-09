@@ -1,7 +1,13 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+local Midnight = exports['mdn-nighttime']:GetMidnightCore()
 local Targets = {}
 local Props = {}
 local milking = false
 local collecting = false
+
+CollectTimers = {
+}
+
 local CowZone =
     PolyZone:Create(
     AnimalSettings.Cows.CowZone.Zone,
@@ -72,26 +78,26 @@ if AnimalSettings.Cows.Target then
         zoneRadius = 30.0,
         parameters = {
             options = {
+                -- {
+                --     num = 1,
+                --     action = function(entity)
+                --         if IsPedAPlayer(entity) then
+                --             return false
+                --         end
+                --         killCow({entity = entity, animalType = "cows"})
+                --     end,
+                --     icon = "fas fa-paw",
+                --     label = Loc[Config.CoreOptions.Lan].target["kill_cow"],
+                --     job = Config.ScriptOptions.Job,
+                --     canInteract = function(entity)
+                --         if IsPedAPlayer(entity) then
+                --             return false
+                --         end
+                --         return CowZone:isPointInside(GetEntityCoords(PlayerPedId()))
+                --     end
+                -- },
                 {
                     num = 1,
-                    action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
-                        killCow({entity = entity, animalType = "cows"})
-                    end,
-                    icon = "fas fa-paw",
-                    label = Loc[Config.CoreOptions.Lan].target["kill_cow"],
-                    job = Config.ScriptOptions.Job,
-                    canInteract = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
-                        return CowZone:isPointInside(GetEntityCoords(PlayerPedId()))
-                    end
-                },
-                {
-                    num = 2,
                     action = function(entity)
                         if IsPedAPlayer(entity) then
                             return false
@@ -260,9 +266,9 @@ local function respawnAnimals(animalType)
         wanderarea = animalData.wanderarea,
         zoneRadius = animalData.zoneRadius,
         parameters = animalData.parameters,
-        animalGroup = type
+        animalGroup = animalType
     }
-    for _, setup in pairs(animalData.setups) do
+    for k, setup in pairs(animalData.setups) do
         data.setup = setup
         spawnAnimal(data)
     end
@@ -270,15 +276,7 @@ end
 
 AddRelationshipGroup("PED")
 function spawnAnimal(data)
-    local entity =
-        makePed(
-        data.animalModel,
-        vector4(data.setup.coords.x, data.setup.coords.y, data.setup.coords.z + 0.03, data.setup.coords.w),
-        0,
-        nil,
-        nil,
-        nil
-    )
+    local entity = makePed( data.animalModel, vector4(data.setup.coords.x, data.setup.coords.y, data.setup.coords.z + 0.03, data.setup.coords.w),   0, nil, nil, nil )
 
     if data.speed then
         CreateThread(
@@ -290,8 +288,7 @@ function spawnAnimal(data)
                     SetPedDesiredMoveBlendRatio(entity, 2.0)
                     Wait(0)
                 end
-            end
-        )
+            end )
     end
     if data.parameters then
         exports["qb-target"]:AddTargetEntity(entity, data.parameters)
@@ -320,22 +317,17 @@ function spawnAnimal(data)
     else
         CreateThread(
             function()
-                TaskWanderInArea(
-                    entity,
+                TaskWanderInArea( entity,
                     data.wanderarea.x,
                     data.wanderarea.y,
                     data.wanderarea.z,
                     data.zoneRadius,
-                    2,
-                    10.0
-                )
-            end
-        )
+                    2, 10.0 )
+            end )
     end
 end
 
 function killCow(animal)
-    print(json.encode(animal))
     local entity = animal.entity
     local animalType = animal.animalType
     if HasItem("weapon_knife", 1) then
@@ -422,12 +414,13 @@ function killCow(animal)
 end
 
 function MilkCow(entity)
+    print(milking)
     if HasItem("emptymilkbucket", 1) then
-        if not milking then
-            milking = true
-        else
-            return triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["wait"], "error")
-        end
+        if CollectTimers[entity] and GetGameTimer() < CollectTimers[entity] + AnimalSettings.CollectWaitTime*60000 or milking then
+        triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["wait"], "error") return end
+        --if not milking then milking = true else return end
+        milking = true
+        CollectTimers[entity] = GetGameTimer()
         local player = PlayerPedId()
         local CowCoords = GetEntityCoords(entity)
         local PlayerCoords = GetEntityCoords(player)
@@ -470,12 +463,13 @@ function MilkCow(entity)
             destroyProp(milkprop)
             FreezeEntityPosition(player, false)
             ClearPedTasksImmediately(player)
-            if Config.DebugOptions.Debug == false then
-                Wait(60000 * AnimalSettings.CollectWaitTime)
-                milking = false
-            else
-                milking = false
-            end
+            milking = false
+            print("milking done")
+            -- if Config.DebugOptions.Debug == false then
+            --     Wait(60000 * AnimalSettings.CollectWaitTime)
+            -- else
+            --     milking = false
+            -- end
         else
             destroyProp(milkprop)
             ClearPedTasks(player)
@@ -489,12 +483,18 @@ end
 
 function CollectEggs(entity)
     local basketneeded = Process.ChickenProcess.BasketNeeded
-    local hasbasket = HasItem("emptybasket", 1)
-    if not collecting then
+    --local hasbasket = HasItem("emptybasket", 1)
+    -- if not collecting then
+    --     collecting = true
+    -- else
+    --     return triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["wait"], "error")
+    -- end
+    if CollectTimers[entity] and GetGameTimer() < CollectTimers[entity] + AnimalSettings.CollectWaitTime*60000 or collecting then
+        triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["wait"], "error") return end
+        --if not milking then milking = true else return end
         collecting = true
-    else
-        return triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["wait"], "error")
-    end
+        CollectTimers[entity] = GetGameTimer()
+
     if not basketneeded or (basketneeded and hasbasket) then
         local player = PlayerPedId()
         local ChickenCoords = GetEntityCoords(entity)
@@ -527,9 +527,7 @@ function CollectEggs(entity)
             true,
             true,
             false,
-            true,
-            1,
-            true
+            true,    1, true
         )
         TaskPlayAnim(player, "anim@heists@box_carry@", "idle", 2.0, 2.0, 10000, 46, 0, false, false, false)
         EmoteStart({emoteName = "kneel"})
@@ -549,12 +547,13 @@ function CollectEggs(entity)
             TaskWanderInArea(entity, 2123.99, 5012.06, 41.36, 11.0, 2, 10.0)
             ClearPedTasksImmediately(player)
             FreezeEntityPosition(player, false)
-            if Config.DebugOptions.Debug == false then
-                Wait(60000 * AnimalSettings.CollectWaitTime)
-                collecting = false
-            else
-                collecting = false
-            end
+            collecting = false
+            -- if Config.DebugOptions.Debug == false then
+            --     Wait(60000 * AnimalSettings.CollectWaitTime)
+            --     collecting = false
+            -- else
+            --     collecting = false
+            -- end
         else
             destroyProp(basketprop)
             ClearPedTasks(player)
@@ -571,59 +570,28 @@ function getBucket(amount)
     RequestAnimDict("anim@heists@box_carry@")
     Wait(100)
     local milkprop = CreateObject(GetHashKey("prop_bucket_01a"), 0, 0, 0, true, true, true)
-    AttachEntityToEntity(
-        milkprop,
-        ped,
-        GetPedBoneIndex(PlayerPedId(), 60309),
-        0.12,
-        0,
-        0.30,
-        -145.0,
-        100.0,
-        0.0,
-        true,
-        true,
-        false,
-        true,
-        1,
-        true
-    )
+    AttachEntityToEntity( milkprop, ped,  GetPedBoneIndex(PlayerPedId(), 60309),  0.12, 0, 0.30,  -145.0, 100.0, 0.0, true, true, false,  true, 1, true)
     TaskPlayAnim(ped, "anim@heists@box_carry@", "idle", 2.0, 2.0, 5000, 51, 0, false, false, false)
     Wait(5000)
     DeleteObject(milkprop)
     TriggerServerEvent("jixel-farming:server:getcowbucket", amount)
 end
 
-RegisterNetEvent(
-    "jixel-farming:client:SlaughterChicken",
-    function()
+RegisterNetEvent("jixel-farming:client:SlaughterChicken", function()
         local player = PlayerPedId()
         local Coords = GetEntityCoords(player)
         local effect = "ent_dst_chick_carcass"
-        if HasItem("alivechicken", 1) then
+        if HasMetaItem("alivechicken", 1) then
             if Config.ScriptOptions.ParticleFXEnabled then
                 CreateThread(
                     function()
                         loadPtfxDict("core")
                         UseParticleFxAssetNextCall("core")
-                        local particle =
-                            StartParticleFxLoopedAtCoord(
-                            effect,
-                            GetEntityCoords(Coords).x,
-                            GetEntityCoords(Coords).y,
-                            GetEntityCoords(Coords).z,
-                            0.0,
-                            0.0,
-                            GetEntityHeading(Coords) - 180.0,
-                            2.5,
-                            0.0,
-                            0.0,
-                            0.0
-                        )
+                        local particle = StartParticleFxLoopedAtCoord( effect, GetEntityCoords(Coords).x,GetEntityCoords(Coords).y, GetEntityCoords(Coords).z,
+                            0.0, 0.0, GetEntityHeading(Coords) - 180.0, 2.5, 0.0, 0.0,  0.0 )
                         Wait(5000)
                         StopParticleFxLooped(particle, true)
-                    end
-                )
+                    end )
             end
             if
                 progressBar(
@@ -647,12 +615,10 @@ RegisterNetEvent(
     end
 )
 
-RegisterNetEvent(
-    "jixel-farming:client:PrepareChicken",
-    function()
+RegisterNetEvent("jixel-farming:client:PrepareChicken", function()
         local player = PlayerPedId()
         local Coords = GetEntityCoords(player)
-        if HasItem("deadchicken", 1) then
+        if HasMetaItem("deadchicken", 1) then
             if
                 progressBar(
                     {
@@ -673,12 +639,130 @@ RegisterNetEvent(
         else
             triggerNotify(nil, Loc[Config.CoreOptions.Lan].error["nochicken"], "error")
         end
-    end
-)
+    end)
 
-AddEventHandler(
-    "onResourceStop",
-    function(r)
+
+RegisterNetEvent('jixel-farming:client:CowGameMenu', function(data)
+    local GameMenu = {}
+    if Config.CoreOptions.Menu ~= "ox" then
+        GameMenu[#GameMenu + 1] = { icon = "fas fa-tractor", header = Loc[Config.CoreOptions.Lan].menu["job_header"], isMenuHeader = true, }
+		GameMenu[#GameMenu + 1] = { icon = "fas fa-circle-xmark", header = Loc[Config.CoreOptions.Lan].menu["close"], params = { event = "qb-menu:client:closeMenu" } }
+    end
+	GameMenu[#GameMenu + 1] = {
+            icon = "fas fa-car-tunnel",
+            header = Loc[Config.CoreOptions.Lan].menu["start_job"],
+            title = Loc[Config.CoreOptions.Lan].menu["start_job"],
+			event = "jixel-farming:client:payForAnimal",
+			args = { animalType = "cows", speed = 1.15, price = AnimalSettings.Cow.Price }, -- The chosen stop amount will be passed as an argument
+            params = { event = "jixel-farming:client:payForAnimal", args = { animalType = "cows", speed = 1.15, jobDifficulty = "easy", price = AnimalSettings.Cow.Price } } -- The chosen stop amount will be passed as an argument
+	}
+    if Config.CoreOptions.Menu == "ox" then
+        exports.ox_lib:registerContext({ id = 'CowsGameMenu', title = "Cows Game Menu", position = 'top-right', options = GameMenu })
+        exports.ox_lib:showContext("CowsGameMenu")
+    else
+        exports['qb-menu']:openMenu(GameMenu)
+    end
+end)
+RegisterNetEvent('jixel-farming:client:ChickyGameMenu', function(data)
+    local GameMenu = {}
+    if Config.CoreOptions.Menu ~= "ox" then
+        GameMenu[#GameMenu + 1] = { icon = "fas fa-tractor", header = Loc[Config.CoreOptions.Lan].menu["job_header"], isMenuHeader = true, }
+		GameMenu[#GameMenu + 1] = { icon = "fas fa-circle-xmark", header = Loc[Config.CoreOptions.Lan].menu["close"], params = { event = "qb-menu:client:closeMenu" } }
+    end
+	GameMenu[#GameMenu + 1] = {
+            icon = "fas fa-car-tunnel",
+            header = Loc[Config.CoreOptions.Lan].menu["start_job"],
+            title = Loc[Config.CoreOptions.Lan].menu["start_job"],
+			event = "jixel-farming:client:payForAnimal",
+			args = { animalType = "chickens", speed = 0 , price = AnimalSettings.Chickens.Price }, -- The chosen stop amount will be passed as an argument
+            params = { event = "jixel-farming:client:payForAnimal", args = { animalType = "chickens", speed = 0, jobDifficulty = "easy", price = AnimalSettings.Chickens.Price } } -- The chosen stop amount will be passed as an argument
+	}
+    if Config.CoreOptions.Menu == "ox" then
+        exports.ox_lib:registerContext({ id = 'ChickyGameMenu', title = "Chicky Game Menu", position = 'top-right', options = GameMenu })
+        exports.ox_lib:showContext("ChickyGameMenu")
+    else
+        exports['qb-menu']:openMenu(GameMenu)
+    end
+end)
+
+RegisterNetEvent('jixel-farming:client:PigGameMenu', function(data)
+    local GameMenu = {}
+    if Config.CoreOptions.Menu ~= "ox" then
+        GameMenu[#GameMenu + 1] = { icon = "fas fa-tractor", header = Loc[Config.CoreOptions.Lan].menu["job_header"], isMenuHeader = true, }
+		GameMenu[#GameMenu + 1] = { icon = "fas fa-circle-xmark", header = Loc[Config.CoreOptions.Lan].menu["close"], params = { event = "qb-menu:client:closeMenu" } }
+    end
+	GameMenu[#GameMenu + 1] = {
+            icon = "fas fa-car-tunnel",
+            header = Loc[Config.CoreOptions.Lan].menu["start_job"],
+            title = Loc[Config.CoreOptions.Lan].menu["start_job"],
+            event = "jixel-farming:client:payForAnimal",
+            args = { animalType = "pigs", speed = 1.15, price = AnimalSettings.Pigs.Price }, -- The chosen stop amount will be passed as an argument
+            params = { event = "jixel-farming:client:payForAnimal", args = { animalType = "pigs", speed = 1.15, price = AnimalSettings.Pigs.Price } } -- The chosen stop amount will be passed as an argument
+	}
+
+    if Config.CoreOptions.Menu == "ox" then
+        exports.ox_lib:registerContext({ id = 'PigGameMenu', title = "Pig Game Menu", position = 'top-right', options = GameMenu })
+        exports.ox_lib:showContext("PigGameMenu")
+    else
+        exports['qb-menu']:openMenu(GameMenu)
+    end
+end)
+
+RegisterNetEvent('jixel-farming:client:payForAnimal', function(data)
+    if Midnight.Functions.IsNightTime() then QBCore.Functions.Notify('It\'s too late right now! Come back when it\'s daytime...') return end
+    local alert = exports.ox_lib:alertDialog({
+        header = 'Pay for your meat!',
+        content = 'Catching these animals will cost you $'..data.price..'.\nDo you want to proceed?',
+        centered = true,
+        cancel = true
+    })
+    if alert ~= "confirm" then return end
+    QBCore.Functions.TriggerCallback('jixel-farming:server:payForAnimal', function(paid)
+        if not paid then QBCore.Functions.Notify('You don\'t have enough money to do this!') return end
+        TriggerEvent("jixel-farming:client:StartSlaughterRun", data)
+    end, data.price)
+end)
+
+--not in use (skipped)
+RegisterNetEvent('jixel-farming:client:StartSlaughterRun:SubMenu:Pigs', function(data)
+	local JobDifficulty = {
+        {
+            label = "easy",
+			speed = 1.15,
+        },
+        {
+            label = "medium",
+			speed = 5.0,
+        },
+        {
+            label = "hard",
+            speed = 10.0,
+        }
+    }
+    local GameMenu = {}
+    if Config.CoreOptions.Menu ~= "ox" then
+        GameMenu[#GameMenu + 1] = { icon = "fas fa-tractor", header = Loc[Config.CoreOptions.Lan].menu["job_header"], isMenuHeader = true, }
+		GameMenu[#GameMenu + 1] = { icon = "fas fa-circle-xmark", header = Loc[Config.CoreOptions.Lan].menu["close"], params = { event = "qb-menu:client:closeMenu" } }
+    end
+	for _ , jobDifficulty in ipairs(JobDifficulty) do
+        GameMenu[#GameMenu + 1] = {
+            icon = "fas fa-car-tunnel",
+            header = Loc[Config.CoreOptions.Lan].menu["job_size"] .. " [" .. jobDifficulty.label .. "]",
+            title = Loc[Config.CoreOptions.Lan].menu["job_size"] .. " [" .. jobDifficulty.label .. "]",
+            event = "jixel-farming:client:StartSlaughterRun",
+            args = { animalType = "pigs", speed = jobDifficulty.speed }, -- The chosen stop amount will be passed as an argument
+            params = { event = "jixel-farming:client:StartSlaughterRun", args = { animalType = "pigs", speed = jobDifficulty.speed, jobDifficulty = jobDifficulty.label } } -- The chosen stop amount will be passed as an argument
+        }
+    end
+    if Config.CoreOptions.Menu == "ox" then
+        exports.ox_lib:registerContext({ id = 'PiggyGameSubMenu', title = "Piggy Game Sub Menu", position = 'top-right', options = GameMenu })
+        exports.ox_lib:showContext("PiggyGameSubMenu")
+    else
+        exports['qb-menu']:openMenu(GameMenu)
+    end
+end)
+
+AddEventHandler("onResourceStop", function(r)
         if r ~= GetCurrentResourceName() then
             return
         end
@@ -701,5 +785,4 @@ AddEventHandler(
             end
         end
         exports[Config.CoreOptions.CoreName]:HideText()
-    end
-)
+    end)

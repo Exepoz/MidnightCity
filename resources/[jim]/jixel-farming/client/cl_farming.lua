@@ -31,7 +31,7 @@ CreateThread(function()
 											zoneData = zone,
 											targetName = targetName,
 											label = Loc[Config.CoreOptions.Lan].target["pick_" .. key:lower() .. i],
-											job = job,
+											job = nil,
 										},
 									},
 									distance = 2.2

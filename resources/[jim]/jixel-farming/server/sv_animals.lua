@@ -1,3 +1,4 @@
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local collected = false
 --[[
@@ -35,7 +36,7 @@ RegisterServerEvent("jixel-farming:KillAnimal", function(animalType, rep, takeIt
 	else return end
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if Player.Functions.AddItem(item, amount) then
+    if Player.Functions.AddItem(item, amount, false, {organic = true}) then
         if takeItem then TriggerEvent("jixel-farming:server:toggleItem", false, takeItem, 1, src) end
 		TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[item], "add", amount)
 		if Config.ScriptOptions.FarmingRep and rep then
@@ -79,7 +80,7 @@ RegisterServerEvent("jixel-farming:server:MilkCow", function()
     if Player.Functions.RemoveItem("emptymilkbucket", amount) then
         TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items["emptymilkbucket"], "remove", amount)
         Wait(1000)
-    if Player.Functions.AddItem("milkbucket", amount) then
+    if Player.Functions.AddItem("milkbucket", amount, false, {organic = true}) then
         TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items["milkbucket"], "add", amount)
         if Config.ScriptOptions.FarmingRep then
         Player.Functions.SetMetaData("farmingrep",  Player.PlayerData.metadata["farmingrep"] + milkrep)
@@ -102,7 +103,7 @@ RegisterServerEvent("jixel-farming:CollectEggs", function()
     local eggrep = AnimalSettings.Chickens.Setup.EggCollectRepAmount
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-	if Player.Functions.AddItem("egg", amount) then
+	if Player.Functions.AddItem("egg", amount, false, {organic = true}) then
       TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items["egg"], "add", amount)
 	  triggerNotify(nil, Loc[Config.CoreOptions.Lan].success["gathered"]..amount.." Eggs.", "success", src)
 	  if Config.ScriptOptions.FarmingRep then
@@ -132,6 +133,11 @@ RegisterServerEvent("jixel-farming:DeFeatherChicken", function()
 		Player.Functions.AddItem("deadchicken", amount)
 		end
 	end
+end)
+
+QBCore.Functions.CreateCallback('jixel-farming:server:payForAnimal', function(source, cb, price)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player.Functions.RemoveMoney('cash', price, 'Paid for animal') then cb(true) else cb(false) end
 end)
 
 

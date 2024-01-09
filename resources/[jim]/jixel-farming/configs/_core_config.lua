@@ -1,6 +1,6 @@
 Config = {
 	DebugOptions = {
-		Debug = false, -- This turns on boxes if true
+		Debug = true, -- This turns on boxes if true
 		DiscordLog = true, -- This is for Discord logs
 	},
 	CoreOptions = {
@@ -14,10 +14,10 @@ Config = {
 		img = "ps-inventory/html/images/", -- lj-inventory/html/images/ change this to whatever your inventory is or leave blank if getting double images
 	},
 	BankingOptions = {
-		RenewedBanking = false,
+		RenewedBanking = true,
 	},
 	ScriptOptions = {
-		Job = nil, -- put whatever your farming job is called or leave "all" for everyone can use this
+		Job = 'all', -- put whatever your farming job is called or leave "all" for everyone can use this
 		FarmingRep = false, -- turns on rep being given and requires rep for crafting
 		FarmingRepNotifications = false, -- turns on rep notifications
 		ParticleFXEnabled = true, -- Turns on Particle FX this helps if you're using a AC that has issues with Particle FX

@@ -44,9 +44,10 @@ Crafting = {
 		{ ['chickenwings'] = { ['rawchicken'] = 1, }, rep = 0 },
 	},
 	MilkProcess = {
-		{ ['milk'] = { ['milkbucket'] = 1,}, rep = 0 },
-		{ ['butter'] = { ['milk'] = 1, },  rep = 0 },
-		{ ['cheese'] = { ['milk'] = 1 ,},  rep = 0 },
+		{ ['milk'] = { ['milkbucket'] = 1,}, amount = 2,  rep = 0 },
+		{ ['butter'] = { ['milk'] = 1, },  amount = 2, rep = 0 },
+		{ ['cheese'] = { ['milk'] = 1 ,}, amount = 3,  rep = 0 },
+		{ ['foodpack_egg'] = { ['egg'] = 12 ,}, amount = 1,  rep = 0 },
 	},
 	Drying = {
 		['driedtobaccoleaves'] = {

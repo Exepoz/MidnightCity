@@ -65,7 +65,7 @@ end)
 
 for i , juicer in ipairs(JuicerLoc) do
   local targetName = "Juicer_"..i
-  Targets[targetName] = exports['qb-target']:AddBoxZone(targetName, vector3(juicer.coords.xyz), juicer.l, juicer.w,
+  Targets[targetName] = exports['qb-target']:AddBoxZone(targetName, vector3(juicer.coords.x, juicer.coords.y, juicer.coords.z-0.3), juicer.l, juicer.w,
     { name = targetName, heading = juicer.h, debugPoly = Config.DebugOptions.Debug, minZ = juicer.minZ, maxZ = juicer.maxZ, },
     { options = {
       {
@@ -111,7 +111,7 @@ end
 
 for i , milk in ipairs(MilkProcessLoc) do
   local targetName = "Milk_"..i
-  Targets[targetName] = exports['qb-target']:AddBoxZone(targetName, vector3(milk.coords.xyz), milk.l, milk.w,
+  Targets[targetName] = exports['qb-target']:AddBoxZone(targetName, vector3(milk.coords.x, milk.coords.y, milk.coords.z-0.2), milk.l, milk.w,
     { name = targetName, heading = milk.h, debugPoly = Config.DebugOptions.Debug, minZ = milk.minZ, maxZ = milk.maxZ, },
     { options = {
       {
@@ -125,7 +125,14 @@ for i , milk in ipairs(MilkProcessLoc) do
     },
       distance = 2.0
     })
+    if milk.prop then
+      Props[#Props+1] = makeProp({prop = tostring(milk.prop), coords = milk.coords}, true, false)
+      if milk.prop2 then
+        Props[#Props+1] = makeProp({prop = tostring(milk.prop2), coords = milk.prop2loc}, true, false)
+      end
+    end
 end
+
 if Process.MilkProcess.MilkBucketSetup.MilkBucket then
   for _, milkbucket in ipairs(MilkBucketLoc) do
     local options = { }
@@ -138,7 +145,7 @@ if Process.MilkProcess.MilkBucketSetup.MilkBucket then
         options[#options + 1] = { event = "jixel-farming:client:GetBucket", icon = "fas fa-sign-in-alt", label = Loc[Config.CoreOptions.Lan].target["grab_bucket"], }
     end
       Targets["GetCowBucket"] =
-      exports['qb-target']:AddBoxZone("GetCowBucket", vector3(milkbucket.coords.xyz), 0.5, 0.5,
+      exports['qb-target']:AddBoxZone("GetCowBucket", vector3(milkbucket.coords.x,milkbucket.coords.y,milkbucket.coords.z-1), 0.5, 0.5,
         { name = "GetCowBucket", heading=315, debugPoly = Config.DebugOptions.Debug, minZ=milkbucket.z, maxZ=milkbucket.z, },
         { options = options, distance = 1.2 })
       if milkbucket.prop then
@@ -282,7 +289,7 @@ slaughterZonePigsCows:onPlayerInOut(function(isPointInside)
 
   for i, pestle in ipairs(PestleLoc) do
   local targetName = "Pestle"..i
-    Targets[targetName] = exports['qb-target']:AddBoxZone(targetName, vector3(pestle.coords.xyz), pestle.l, pestle.w,
+    Targets[targetName] = exports['qb-target']:AddBoxZone(targetName, vector3(pestle.coords.x,pestle.coords.y,pestle.coords.z-1), pestle.l, pestle.w,
       { name = targetName, heading = pestle.h, debugPoly = Config.DebugOptions.Debug, minZ = pestle.minZ, maxZ = pestle.maxZ, },
       { options = { { event = "jixel-farming:Crafting", icon = "fas fa-utensils", craftable = Crafting.Pestle,
       label = Loc[Config.CoreOptions.Lan].target["processor"], job = Config.ScriptOptions.Job, header = Loc[Config.CoreOptions.Lan].header["header_pestle"], }, },
