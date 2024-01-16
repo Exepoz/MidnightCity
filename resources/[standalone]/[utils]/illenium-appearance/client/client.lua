@@ -120,6 +120,7 @@ function InitializeCharacter(gender, onSubmit, onCancel)
         elseif onCancel then
             onCancel()
         end
+        
         Framework.CachePed()
         TriggerServerEvent("illenium-appearance:server:ResetRoutingBucket")
     end, config)
@@ -151,6 +152,8 @@ function OpenShop(config, isPedMenu, shopType)
                     position = Config.NotifyOptions.position
                 })
             end
+            exports['is-playerstyles']:SetWalkingStyle()
+            exports['is-playerstyles']:SetMood()
             Framework.CachePed()
         end, config)
     end, shopType)

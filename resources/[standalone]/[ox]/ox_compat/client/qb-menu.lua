@@ -23,7 +23,7 @@ local function convert(menu)
         options[#options+1] = {
             title = title,
             disabled = button.isMenuHeader or false,
-            onSelect = button.action or nil,
+            onSelect = button.action or button.params?.isAction and button.params?.event or nil,
             icon = icon,
             arrow = button.subMenu or false,
             description = description,
