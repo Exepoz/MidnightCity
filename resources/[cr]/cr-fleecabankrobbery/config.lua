@@ -21,9 +21,9 @@ Config.Framework = {
   -- *Important* All oxlib option requires oxlib to be enabled in the fxmanifest *Important*
 }
 
-Config.DevMode = true -- Set to 'true' if you are Testing the Resource
-Config.Debug = true -- True = Debug Prints Enabled | false = Debug Prints Disabled
-Config.DebugPoly = true -- true = Visible Polyzones Enabled | fase = Visible Polyzones Disabled
+Config.DevMode = false -- Set to 'true' if you are Testing the Resource
+Config.Debug = false -- True = Debug Prints Enabled | false = Debug Prints Disabled
+Config.DebugPoly = false -- true = Visible Polyzones Enabled | fase = Visible Polyzones Disabled
 Config.InteractKey = "G" -- Key to press when interacting with things (Default : G | See Config.KeyList to know which string to change this value to.)
 Config.Scoreboard = true -- true = qb-scoreboard Enabled | false = qb-scoreboard disabled (See cl_framework to change scoreboard trigger)
 Config.Logs = true -- true = qb-logs Enabled | qb-logs Disabled
@@ -31,7 +31,7 @@ Config.ControlsDisabled = {36, 73, 322} -- Disable Controls when doing actions. 
 Config.HeistTimer = 10 -- Time for the players to complete the heist before cooldown starts
 Config.Cooldown = {
   Type = "global", -- "global" means only 1 bank can be done per cooldown interval | "unique" means each banks has their own coolodwn
-  Time = 0 -- Minutes
+  Time = 60 -- Minutes
 }
 
 -- Server Restarts / Script Restart Specific Configurations

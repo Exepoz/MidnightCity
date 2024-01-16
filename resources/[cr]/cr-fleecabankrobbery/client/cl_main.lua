@@ -1,5 +1,6 @@
 local closestBank, TickEnded, SoundID, HasCodes
 local AlertP = 0
+local inCamZone = false
 local caught
 local AttemptingVault, DisabledCameras = false, false
 LocalPlayer.state:set('inv_busy', false, true)
@@ -218,20 +219,19 @@ local function SetupBank(bank)
     end
 end
 
-
-
 --~=========~--
 --~ Cameras ~--
 --~=========~--
 
 local h_rgb = {
-    {100, 28, 131, 191},
-    {200, 158,191, 28},
-    {300, 191,147, 28},
-    {400, 255, 0, 0},
+    {100.0, 28, 131, 191},
+    {200.0, 158,191, 28},
+    {300.0, 191,147, 28},
+    {400.0, 255, 0, 0},
 }
 
 function ExitCameraZone()
+    inCamZone = false
     AlertP = 0
 end
 
@@ -245,9 +245,11 @@ local function Beep()
 end
 
 function InCameraZone()
+    inCamZone = true
     if caught or DisabledCameras then return end
     if exports['qb-weathersync']:getBlackoutState() then return end
-    AlertP = AlertP + 1
+    print(AlertP)
+    AlertP = AlertP + (LocalPlayer.state.foodBuff == 'sneaky' and 0.6 or 1)
     local ped = PlayerPedId()
     local head = GetOffsetFromEntityInWorldCoords(ped, 0, 0.0, 1.2)
     local hrgb = {255, 0, 0}
@@ -464,10 +466,10 @@ RegisterNetEvent('cr-fleecabankrobbery:client:FleecaBankUSBUsage', function(data
     local coords = GetEntityCoords(ped)
     local Computer = Config.Banks[closestBank].ComputerCoords
     local dist = #(coords - Computer.coords)
-    if LocalPlayer.state.inv_busy or dist > 2 or not GlobalState.CRFleecaBank.Banks[closestBank].TellerUnlocked or Computer.isHacked then return end
+    if LocalPlayer.state.inv_busy or dist > 2 or not GlobalState.CRFleecaBank.Banks[closestBank].TellerUnlocked or Computer.isHacked or not inCamZone then return end
     if GlobalState.CRFleecaBank.GlobalCD or GlobalState.CRFleecaBank.Banks[closestBank].onCooldown then FBCUtils.Notif(3, Lcl("CooldownMessage"), Lcl('FleecaTitle')) return end
-    --FBCUtils.HasItem(Config.Items.ComputerHackItem.item):next(function(hasItem)
-    --    if not hasItem then FBCUtils.Notif(3, Lcl("MissingItem"), Lcl('FleecaTitle')) FBCUtils.MissingItem(Config.Items.ComputerHackItem.item) return end
+    FBCUtils.HasItem(Config.Items.ComputerHackItem.item):next(function(hasItem)
+       if not hasItem then FBCUtils.Notif(3, Lcl("MissingItem"), Lcl('FleecaTitle')) FBCUtils.MissingItem(Config.Items.ComputerHackItem.item) return end
     --if not exports['mdn-extras']:CheckHasProgram('fleeca') then FBCUtils.Notif(3, "You don\'t have the required breaching protocol to do this", Lcl('FleecaTitle')) FBCUtils.MissingItem(Config.Items.ComputerHackItem.item) return end
         FBCUtils.GetCurrentCops():next(function(CopAmount)
             if CopAmount < Config.Police.CopsNeeded then FBCUtils.Notif(3, Lcl("NotEnoughCops"), Lcl('FleecaTitle')) return end
@@ -490,7 +492,7 @@ RegisterNetEvent('cr-fleecabankrobbery:client:FleecaBankUSBUsage', function(data
             end
             FBCUtils.ProgressUI(4000, Lcl('progbar_insertingusb'), onFinish, onCancel, true, true, "anim@gangops@morgue@office@laptop@", "enter", 17)
         end)
-    --end)
+    end)
 end)
 
 --~===============~--
