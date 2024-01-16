@@ -1,0 +1,37 @@
+.backgound-theme {
+	background-color: #f5f6f8;
+}
+
+.card-theme {
+    background: #fff;
+    border: 1px solid #e3dada;
+}
+
+.card-featured-theme {
+    background: #ECEDF1
+}
+
+.user-card .card-block .activity-leval li {
+    background-color: #ccc;
+}
+
+.bank-money-title, .bank-loan-title {
+    color: #313443;
+}
+
+.diagnostic-page .card-content:hover{
+    background-color: #dfdfdf;
+}
+
+.sidebar-navigation {
+	background-color: #313443;
+}
+
+.sidebar-navigation ul li .tooltip {
+	background-color: #313443;
+}
+
+.vt-card {
+    background-color: #fff;
+    color: #000;
+}

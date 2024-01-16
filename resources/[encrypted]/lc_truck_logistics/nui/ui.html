@@ -1,0 +1,626 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+		
+		<!-- jQuery -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+		<!-- Bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+		<link id="css-bs-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" disabled>
+		<link id="css-bs-dark" rel="stylesheet" href="css/bootstrap-night.css">
+		
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="css/style.css">
+		<link id="css-light" rel="stylesheet" href="css/light-style.css" disabled>
+		<link id="css-dark" rel="stylesheet" href="css/dark-style.css">
+
+		<!-- Font Awesome 6 -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+		<!-- Utils JavaScript -->
+		<script src="https://cfx-nui-lc_utils/nui/index.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<h1 style="color: #ffffff00;position: absolute;">_</h1>
+		<div class="main backgound-theme" style="display: none;">
+			<nav class="sidebar-navigation">
+				<ul id="sidebar-ul">
+					
+				</ul>
+			</nav>
+			<div class="container-pages">
+				<div class="d-flex player-info-container">
+					<div class="d-flex mr-4">
+						<h4 class="m-0 mr-1 text-primary player-info-item">LVL.</h4>
+						<h5 id="player-info-level" class="m-0 player-info-item"></h5>
+					</div>
+					<div class="d-flex mr-4">
+						<i class="fas fa-star mr-1 text-primary player-info-item"></i>
+						<h4 id="player-info-skill" class="m-0 player-info-item"></h4>
+					</div>
+					<div id="player-info-money-container" class="d-flex mr-4">
+						<i class="fas fa-coins mr-1 text-primary player-info-item"></i>
+						<h4 id="player-info-money" class="m-0 player-info-item"></h4>
+					</div>
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="css-toggle" checked="">
+						<label class="custom-control-label" for="css-toggle"></label>
+						<i id="dark-theme-icon" class="fas fa-moon mr-1 text-primary player-info-item" for="css-toggle" style="display: none;"></i>
+						<i id="light-theme-icon" class="fas fa-sun mr-1 text-primary player-info-item" for="css-toggle"></i>
+					</div>
+				</div>
+				<div class="pages main-page" style="height: 100%;">
+					<div class="row" style="height: 100%;">
+						<div class="col-md-12" style="height: 100%;">
+							<div class="col-12 mt-3 mb-3" id="main-title-div">
+								
+							</div>
+							<div style="max-height: calc(100% - var(--main-title-height)); overflow: auto;">
+								<div class="row no-gutters">
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-money" class="text-success"></h3>
+															<span id="profile-money-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-money-check-alt text-success font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-money-earned" class="text-success"></h3>
+															<span id="profile-money-earned-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-money-check text-success font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-deliveries" class="blue"></h3>
+															<span id="profile-deliveries-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-truck-loading blue font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-distance-traveled" class="blue"></h3>
+															<span id="profile-distance-traveled-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-route blue font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row no-gutters">
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-exp-1" class="amber accent-4"></h3>
+															<span id="profile-exp-1-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-chart-line amber accent-4 font-large-2 float-right"></i>
+														</div>
+													</div>
+													<div id="profile-exp-2" class="progress mt-1 mb-0" style="height: 7px;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-skill-points" class="amber accent-4"></h3>
+															<span id="profile-skill-points-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-medal amber accent-4 font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-trucks" class="info"></h3>
+															<span id="profile-trucks-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-truck info font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="card card-centering">
+											<div class="card-content">
+												<div class="card-body">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h3 id="profile-drivers" class="info"></h3>
+															<span id="profile-drivers-span"></span>
+														</div>
+														<div class="align-self-center">
+															<i class="fas fa-user-friends info font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="top-truckers-title-div" class="col-12 mt-3 mb-1">
+									
+								</div>
+								<div class="mt-3">
+									<ul id="top-truckers-list" class="list list-inline">
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pages job-page" style="height: 100%;">
+					<div class="row" style="height: 100%;">
+						<div class="col-md-12" style="height: 100%;">
+							<div id="job-title-div" class="col-12 mt-3 mb-3">
+								
+							</div>
+							<div id="job-page-list" style="max-height: calc(100% - var(--job-title-height)); overflow: auto;">
+
+							</div>
+							<div id="job-footer-div" class="m-1">
+								<i class="fa-regular fa-clock" style="font-size: 15px;"></i><span id="new-contracts-2" class="ml-2"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pages freight-page" style="height: 100%;">
+					<div class="row" style="height: 100%;">
+						<div class="col-md-12" style="height: 100%;">
+							<div id="freight-title-div" class="col-12 mt-3 mb-3">
+
+							</div>
+							<div id="freight-page-list" style="max-height: calc(100% - var(--freight-title-height)); overflow: auto;">
+							</div>
+							<div id="freight-footer-div" class="m-1">
+								<i class="fa-regular fa-clock" style="font-size: 15px;"></i><span id="new-contracts-1" class="ml-2"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pages party-page" style="height: 100%;">
+					<div class="row" style="height: 100%;">
+						<div class="col-md-12" style="height: 100%;">
+							<div id="party-title-div" class="col-12 mt-3 mb-3">
+								
+							</div>
+							<div id="party-form-container-base" class="party-body-initial card-theme">
+								<img src="img/party.png" alt="party">
+								<div class="party-buttons">
+									<div class="party-create">
+										<button id="party-create-btn" onclick="createParty()" class="btn btn-primary"></button>
+									</div>
+									<div class="party-join">
+										<button id="party-join-btn" onclick="joinParty()" class="btn btn-primary"></button>
+									</div>
+								</div>
+								<form id="party-form-create" class="party-form" role="form" style="opacity: 0; max-height: 0; padding: 0px; margin: 0px;">
+									<div id="party-form-container-create">
+
+									</div>
+								</form>
+								<form id="party-form-join" class="party-form" role="form" style="opacity: 0; max-height: 0; padding: 0px; margin: 0px;">
+									<div id="party-form-container-join">
+
+									</div>
+								</form>
+							</div>
+
+							<div id="party-container-members" style="max-height: calc(100% - var(--party-title-height)); overflow: auto;">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pages skills-page" style="height: 100%;">
+					<div id="skills-title-div" class="col-12 mt-3 mb-3">
+						<h4 id="skills-title" class="text-uppercase"></h4>
+						<p id="skills-desc"></p>
+					</div>
+					<div style="max-height: calc(100% - var(--skills-title-height)); overflow: auto;">
+						<div class="container-progresses card-theme mb-2">
+							<div>
+								<h4 id="product-type-title" class="m-2"></h4>
+							</div>
+							<div id="product_type" class="progresses">
+
+							</div>
+							<div class="skill-description">
+								<div class="accordion" id="product-type-desc-accordion">
+									<div class="card w-100 m-0">
+										<div class="card-header" id="heading-product-type-accordion" data-toggle="collapse" data-target="#collapse-product-type-accordion" aria-expanded="false" aria-controls="collapse-distance-accordion">
+											<h6 id="skills-description-1" class="mb-0 p-2"></h6>
+										</div>
+										<div id="collapse-product-type-accordion" class="collapse" aria-labelledby="heading-product-type-accordion" data-parent="#product-type-desc-accordion">
+											<div id="product-type-desc" class="card-body">
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container-progresses card-theme mb-2">
+							<div>
+								<h4 id="distance-title" class="m-2"></h4>
+							</div>
+							<div id="distance" class="progresses">
+
+							</div>
+							<div class="skill-description">
+								<div class="accordion" id="distance-desc-accordion">
+									<div class="card w-100 m-0">
+										<div class="card-header" id="heading-distance-accordion" data-toggle="collapse" data-target="#collapse-distance-accordion" aria-expanded="false" aria-controls="collapse-distance-accordion">
+											<h6 id="skills-description-2" class="mb-0 p-2"></h6>
+										</div>
+										<div id="collapse-distance-accordion" class="collapse" aria-labelledby="heading-distance-accordion" data-parent="#distance-desc-accordion">
+											<div id="distance-desc" class="card-body">
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container-progresses card-theme mb-2">
+							<div>
+								<h4 id="valuable-skill-title" class="m-2"></h4>
+							</div>
+							<div id="valuable" class="progresses">
+
+							</div>
+							<div class="skill-description">
+								<div class="accordion" id="valuable-skill-desc-accordion">
+									<div class="card w-100 m-0">
+										<div class="card-header" id="heading-valuable-skill-accordion" data-toggle="collapse" data-target="#collapse-valuable-skill-accordion" aria-expanded="false" aria-controls="collapse-valuable-skill-accordion">
+											<h6 id="skills-description-3" class="mb-0 p-2"></h6>
+										</div>
+										<div id="collapse-valuable-skill-accordion" class="collapse" aria-labelledby="heading-valuable-skill-accordion" data-parent="#valuable-skill-desc-accordion">
+											<div id="valuable-skill-desc" class="card-body">
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container-progresses card-theme mb-2">
+							<div>
+								<h4 id="fragile-skill-title" class="m-2"></h4>
+							</div>
+							<div id="fragile" class="progresses">
+
+							</div>
+							<div class="skill-description">
+								<div class="accordion" id="fragile-skill-desc-accordion">
+									<div class="card w-100 m-0">
+										<div class="card-header" id="heading-fragile-skill-accordion" data-toggle="collapse" data-target="#collapse-fragile-skill-accordion" aria-expanded="false" aria-controls="collapse-fragile-skill-accordion">
+											<h6 id="skills-description-4" class="mb-0 p-2"></h6>
+										</div>
+										<div id="collapse-fragile-skill-accordion" class="collapse" aria-labelledby="heading-fragile-skill-accordion" data-parent="#fragile-skill-desc-accordion">
+											<div id="fragile-skill-desc" class="card-body">
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container-progresses card-theme mb-2">
+							<div>
+								<h4 id="fast-skill-title" class="m-2"></h4>
+							</div>
+							<div id="fast" class="progresses">
+
+							</div>
+							<div class="skill-description">
+								<div class="accordion" id="fast-skill-desc-accordion">
+									<div class="card w-100 m-0">
+										<div class="card-header" id="heading-fast-skill-accordion" data-toggle="collapse" data-target="#collapse-fast-skill-accordion" aria-expanded="false" aria-controls="collapse-fast-skill-accordion">
+											<h6 id="skills-description-5" class="mb-0 p-2"></h6>
+										</div>
+										<div id="collapse-fast-skill-accordion" class="collapse" aria-labelledby="heading-fast-skill-accordion" data-parent="#fast-skill-desc-accordion">
+											<div id="fast-skill-desc" class="card-body">
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pages diagnostic-page">
+					<div id="diagnostic-title-div" class="col-12 mt-3 mb-1">
+						
+					</div>
+					<div class="d-flex justify-content-center align-items-center">
+						<div>
+							<div class="card mr-0">
+								<div onclick="repairTruck('body')" class="card-content">
+									<div id="diagnostic-body" class="card-body">
+
+									</div>
+								</div>
+							</div>
+
+							<div class="card mr-0">
+								<div onclick="repairTruck('engine')" class="card-content">
+									<div id="diagnostic-engine" class="card-body">
+
+									</div>
+								</div>
+							</div>
+
+							<div class="card mr-0">
+								<div onclick="repairTruck('transmission')" class="card-content">
+									<div id="diagnostic-transmission" class="card-body">
+
+									</div>
+								</div>
+							</div>
+							
+							<div class="card mr-0">
+								<div onclick="repairTruck('wheels')" class="card-content">
+									<div id="diagnostic-wheels" class="card-body">
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="truck-img">
+							<img src="img/truck.png" alt="Truck">
+						</div>
+						<div id="diagnostic-fuel-bar" class="d-flex flex-column align-items-center">
+							
+						</div>
+					</div>
+				</div>
+				<div class="pages dealership-page">
+					<div id="dealership-title-div" class="col-12 mt-3 mb-3">
+							
+					</div>
+					<div class="container-fluid" style="max-height: calc(100% - var(--dealership-title-height)); overflow: auto;">
+						<div id="dealership-page-list" class="row">
+
+						</div>
+					</div>
+				</div>
+				<div class="pages trucks-page">
+					<div id="trucks-title-div" class="col-12 mt-3 mb-3">
+						
+					</div>
+					<ul id="trucks-page-list" class="list list-inline" style="max-height: calc(100% - var(--trucks-title-height)); overflow: auto;">
+
+					</ul>
+				</div>
+				<div class="pages recruitment-page">
+					<div id="recruitment-title-div" class="col-12 mt-3 mb-3">
+						
+					</div>
+					<div class="container-fluid">
+						<div id="recruitment-page-list" class="row" style="max-height: calc(100% - var(--recruitment-title-height)); overflow: auto;">
+							
+						</div>
+					</div>
+				</div>
+				<div class="pages drivers-page">
+					<div id="drivers-title-div" class="col-12 mt-3 mb-3">
+
+					</div>
+					<ul id="drivers-page-list" class="list list-inline" style="max-height: calc(100% - var(--drivers-title-height)); overflow: auto;">
+
+					</ul>
+				</div>
+				<div class="pages bank-page">
+					<div id="bank-title-div" class="col-12 mt-3 mb-3">
+						
+					</div>
+					<div style="max-height: calc(100% - var(--bank-title-height)); overflow: auto;">
+						<div class="d-flex">
+							<div class="card card-body" style="width: 55%;">
+								<div class="d-flex justify-content-between mx-2 my-4">
+									<div>
+										<h6 id="bank-balance-text"></h6>
+										<div class="d-flex align-items-center mt-3">
+											<i class="fas fa-coins text-primary font-large-2" aria-hidden="true"></i>
+											<h3 id="bank-money" style="font-size: 48px;" class="bank-money-title mb-0 ml-4"></h3>
+										</div>
+									</div>
+									<div class="d-flex flex-column justify-content-between" style="min-width: 200px;">
+										<button data-toggle="modal" data-target="#deposit-modal" id="deposit-money-btn" class="btn btn-outline-primary"></button>
+										<button data-toggle="modal" data-target="#withdraw-modal" id="withdraw-money-btn" class="btn btn-primary"></button>
+									</div>
+								</div>
+							</div>
+							<div id="loans-card-container" class="card card-body d-flex align-items-center" style="width: 45%;">
+								<h4 id="bank-loans-title" class="bank-loan-title" style="font-weight: 600;"></h4>
+								<p id="bank-loans-desc" style="text-align: center;margin: 9px 0px;"></p>
+								<button data-toggle="modal" data-target="#loans-modal" id="bank-loans-btn" class="btn btn-outline-primary" style="min-width: 200px;"></button>
+							</div>
+						</div>
+						<div id="loan-table-container" class="card pb-2 pt-4 px-4 w-auto mb-3" style="display: none;">
+							<h4 id="active-loans-title" class="bank-loan-title" style="font-weight: 600;"></h4>
+							<div class="loans-table-container">
+								<table class="table mb-0">
+									<thead>
+										<tr>
+											<th id="loan-value-title" style="width: 20%;"></th>
+											<th id="loan-daily-title" style="width: 25%;"></th>
+											<th id="loan-remaining-title" style="width: 25%;"></th>
+											<th style="width: 30%;"></th>
+										</tr>
+									</thead>
+									<tbody id="loan-table-body">
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Modals -->
+				<div class="modal fade" id="loans-modal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="loan-modal-title"></h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="form-loan" style="margin: 0;">
+								<div class="modal-body">
+									<p id="loan-modal-desc"></p>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="radio" name="loan-radio" id="loan-1" value="4" checked>
+										<label id="loan-modal-label-1" class="form-check-label" for="loan-1"></label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="radio" name="loan-radio" id="loan-2" value="3" >
+										<label id="loan-modal-label-2" class="form-check-label" for="loan-2"></label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="radio" name="loan-radio" id="loan-3" value="2" >
+										<label id="loan-modal-label-3" class="form-check-label" for="loan-3"></label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="radio" name="loan-radio" id="loan-4" value="1" >
+										<label id="loan-modal-label-4" class="form-check-label" for="loan-4"></label>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button id="loan-modal-cancel" type="button" class="btn btn-outline-primary" data-dismiss="modal"></button>
+									<button id="loan-modal-submit" type="submit" class="btn btn-primary"></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="deposit-modal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="deposit-modal-title"></h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="form-deposit-money" style="margin: 0;">
+								<div class="modal-body">
+									<div class="form-group">
+										<label id="deposit-modal-desc" for="deposit-modal-money-amount"></label>
+										<input type="number" class="form-control mb-1 mt-2" id="deposit-modal-money-amount" placeholder="" name="amount" required>
+										<small id="deposit-modal-money-available" class="text-muted" style="font-size: 12px;"></small>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button id="deposit-modal-cancel" type="button" class="btn btn-outline-primary" data-dismiss="modal"></button>
+									<button id="deposit-modal-submit" type="submit" class="btn btn-primary"></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="withdraw-modal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="withdraw-modal-title"></h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="form-withdraw-money" style="margin: 0;">
+								<div class="modal-body">
+									<div class="form-group">
+										<label id="withdraw-modal-desc" for="withdraw-modal-money-amount"></label>
+										<input type="number" class="form-control mb-1 mt-2" id="withdraw-modal-money-amount" placeholder="" name="amount" required>
+										<small id="withdraw-modal-money-available" class="text-muted" style="font-size: 12px;"></small>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button id="withdraw-modal-cancel" type="button" class="btn btn-outline-primary" data-dismiss="modal"></button>
+									<button id="withdraw-modal-submit" type="submit" class="btn btn-primary"></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="panel.js" type="text/javascript"></script>
+	</body>
+</html>
