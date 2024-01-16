@@ -6,6 +6,11 @@ local birthday = nil
 local gender = nil
 local nationality = nil
 local citizenid = nil
+Config = Config or {}
+Config.GenderOptions = {
+    [1] = 'Female',
+    [2] = 'Male',
+}
 
 -- Entering the forgery
 RegisterNetEvent('cr-forgery:client:Enter', function()

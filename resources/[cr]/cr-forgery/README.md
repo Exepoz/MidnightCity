@@ -452,7 +452,7 @@ local idTypes = {
 * The cards need to be following the same templates as original cards.
 * You can add as many cards as you would like by following the instruction aboves, but changing the item names by any cards you would like.
 * Do not follow the "GiveStarterItem" snipet if you do not want the cards to be given upon character creation
-* Add a new entry in the Config.Licences by following the instructions below : 
+* Add a new entry in the Config.Licences by following the instructions below :
 
 ```
     ["Drivers License"] = {                    <-- The Name here will be displayed on different UIs and Menus (ie. "Forge 'Drivers License' ")

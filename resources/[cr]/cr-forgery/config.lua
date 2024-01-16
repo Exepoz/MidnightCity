@@ -1,11 +1,11 @@
 Config = {}
-Config.Debug = true
+Config.Debug = false
 
 Config.Framework = {
     -- Framework = "QBCore", --"QBCore" | "ESX"
     Interaction = {
         UseTarget = true, -- Leave true if you are using qb-target. Set to false to disable targetting and enable DrawText for all interactions
-        Target = "qb-target", -- "qb-target" | "oxtarget"
+        Target = "oxtarget", -- "qb-target" | "oxtarget"
         OxLibDistanceCheck = false -- Distance Checks are done via oxlib points instead of a loop.
     },
     Menu = 'ox',
@@ -13,10 +13,10 @@ Config.Framework = {
 
     --Framework Overrides (You can change specific framework related functions to ones from other scripts.)
     UseOxInv = false, -- For ESX and QBCore. Lets ESX users utilize the "uses" configuration on the usb (Uses Item Metadata)
-    Doorlocks = 'qb', --  'qb' = qb-doorlock | 'nui' = nui-doorlock | 'ox' = ox_doorlocks
+    Doorlocks = 'ox', --  'qb' = qb-doorlock | 'nui' = nui-doorlock | 'ox' = ox_doorlocks
     Skillbar = "qb-skillbar", -- "qb-skillbar" | "custom" (See cl_framework)
-    CircleMinigame = "ps-ui", -- "ps-ui" | "qb-lock" | "oxlib" | (You can use your own (See cl_framework)
-    Notifications = "qb", -- "okok" | "mythic" | "tnj" | "oxlib" | "qb" | "ESX" | "chat" |
+    CircleMinigame = "oxlib", -- "ps-ui" | "qb-lock" | "oxlib" | (You can use your own (See cl_framework)
+    Notifications = "oxlib", -- "okok" | "mythic" | "tnj" | "oxlib" | "qb" | "ESX" | "chat" |
     ProgressUI = "", -- "oxlib" | "mythic" | "rprogress" (Custom Settings at the bottom) |  Otherwise leave blank ("") to use Framework Settings.
     DrawText = "", -- "oxlib" | "okok" | "psui" | Otherwise leave blank ("") to use Framework Settings.
     -- *Important* All oxlib option requires oxlib to be enabled in the fxmanifest *Important*
@@ -30,19 +30,19 @@ Config.Logs = true -- True = Logs Enabled | False = Logs Disabled
 Config.Notifications = 'okok' -- 'qb' = QBCoreNotify | okok' = OKOKNotify | 'mythic' = Mythic Notify | 'chat' = Chat Messages
 Config.Menu = 'nh' -- 'qb' = "qb-menu" | "nh" = "nh-context"
 Config.ForgeTime = 15 -- Time Is In Seconds vector4(-143.85, -833.3, 31.12, 248.83) ACTUAL -> vector3(459.79, -1869.56, 27.11)
-Config.OutsideCoords = {coords = vector3(-143.85, -833.3, 31.12), heading = 248.83 } -- If you wish to change the Entrance, make sure this is changed to the Outside Location where you'd want the user Teleported if they Left the Building.
+Config.OutsideCoords = {coords = vector3(-82.94, -1399.01, 29.49), heading = -82.94 } -- If you wish to change the Entrance, make sure this is changed to the Outside Location where you'd want the user Teleported if they Left the Building.
 Config.InteractKey = "G" -- Key to press when interacting with things (Default : G | See Config.KeyList to know which string to change this value to.)
 Config.UseTarget = true
 
 Config.Licences = {
     ["ID Card"] = {
-        ForgingCost = 0, -- Leave at 0 for free, or set a price.
+        ForgingCost = 5000, -- Leave at 0 for free, or set a price.
         MoneyType = "cash", -- If payment is required, money type used to forge a card ("cash, crypto, bank, or any custom currency")
         RequiredItems = { -- List of items required to craft a card.
         -- Leave the table empty if you don't want to require items to forge.
         -- You can add as many items as wanted by following the template
         -- [ITEM_NUMBER] = {item = "ITEM_HASH", amount = "AMOUNT_REQUIRED"}
-            [1] = {item = "plastic", amount = 2},
+            [1] = {item = "plastic", amount = 20},
             --[2] = {item = "dye", amount = 1}
         },
         Card = "id_card", --Card Item Given ("item hash")
@@ -61,7 +61,7 @@ Config.Licences = {
         -- Leave the table empty if you don't want to require items to forge.
         -- You can add as many items as wanted by following the template
         -- [ITEM_NUMBER] = {item = "ITEM_HASH", amount = "AMOUNT_REQUIRED"}
-            -- [1] = {item = "plastic", amount = 2},
+            [1] = {item = "plastic", amount = 20},
             -- [2] = {item = "dye", amount = 1}
         },
         Card = "driver_license", --Card Item Given ("item hash")
@@ -138,11 +138,7 @@ Config.FemaleNoHandshoes = {
     [0] = true, [1] = true, [2] = true, [3] = true, [4] = true, [5] = true, [6] = true, [7] = true, [8] = true, [9] = true, [10] = true, [11] = true, [12] = true, [13] = true, [14] = true, [15] = true, [19] = true, [59] = true, [60] = true, [61] = true, [62] = true, [63] = true, [64] = true, [65] = true, [66] = true, [67] = true, [68] = true, [69] = true, [70] = true, [71] = true, [129] = true, [130] = true, [131] = true, [135] = true, [142] = true, [149] = true, [153] = true, [157] = true, [161] = true, [165] = true,
 }
 
-Config.GenderOptions = {
-    [1] = 'Female',
-    [2] = 'Male',
-    --[3] = 'Other',
-}
+
 
 Config.KeyList = {
     ["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,

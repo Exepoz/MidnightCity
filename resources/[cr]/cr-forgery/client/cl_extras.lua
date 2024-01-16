@@ -242,10 +242,10 @@ Citizen.CreateThread(function()
 
             exports['qb-target']:AddBoxZone("ForgeryForge", vector3(1169.52, -3196.85, -39.01), 0.4, 0.5,
             {name = "ForgeryForge", heading = 290, debugPoly = Config.Debug, minZ=-39.30, maxZ=-38.80}, {options = ForgeOptions, distance = 2.5})
-        elseif Config.Framework.Interaction.Target == "ox-target" then
-            exports['ox_target']:addBoxZone({coords = Config.OutsideCoords.coords, size = vec3(1,2,1), rotation = v.OutsideCoords.heading, debug = Config.Debug, options = EnterOptions})
+        elseif Config.Framework.Interaction.Target == "oxtarget" then
+            exports['ox_target']:addBoxZone({coords = Config.OutsideCoords.coords, size = vec3(1,2,1), rotation = Config.OutsideCoords.heading, debug = Config.Debug, options = EnterOptions})
             exports['ox_target']:addBoxZone({coords = vector3(1173.54, -3196.63, -39.01), size = vec3(1,2,1), rotation = 89, debug = Config.Debug, options = LeaveOptions})
-            exports['ox_target']:addBoxZone({coords = vector3(1169.52, -3196.85, -39.01), size = vec3(1,2,1), rotation = 290, debug = Config.Debug, options = ForgeOptions})
+            exports['ox_target']:addBoxZone({coords = vector3(1169.52, -3196.85, -39.01), size = vec3(1,1,1), rotation = 290, debug = Config.Debug, options = ForgeOptions})
         end
 
     else
