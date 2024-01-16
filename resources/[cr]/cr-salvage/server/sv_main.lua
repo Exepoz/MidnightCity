@@ -146,8 +146,12 @@ function DespawnTimer()
 end
 
 RegisterNetEvent('cr-salvage:server:ToggleEmails', function()
-    Player(source).state:set('cr_salvage_emails', not Player(source).state.cr_salvage_emails, true)
-    if Config.EmailDataBase then SSUtils.ToggleEmails(source, Player(source).state.cr_salvage_emails) end
+    local src = source
+    local state = Player(src).state.cr_salvage_emails
+    Player(src).state:set('cr_salvage_emails', not state, true)
+    if state == false then SSUtils.SalvageNotify(2, Lcl("notif_enableemailnotification"), Lcl('salvagetitle'), src)
+    else SSUtils.SalvageNotify(2, Lcl("notif_disableemailnotification"), Lcl('salvagetitle'), src) end
+    if Config.EmailDataBase then SSUtils.ToggleEmails(src, state) end
 end)
 
 RegisterNetEvent('cr-salvage:server:SawPfx', function(coords)

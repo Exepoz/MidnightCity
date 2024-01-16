@@ -197,6 +197,7 @@ Config.Rewards = {
       [1] = {item = "diamond", amount = {Min = 3, Max = 7}, weight = 40},
       [2] = {item = "goldchain", amount = {Min = 5, Max = 8}, weight = 50},
       [3] = {item = "rolex", amount = {Min = 3, Max = 7}, weight = 60},
+      [4] = {item = "money_orders", amount = {Min = 1, Max = 1}, weight = 8},
     }},
   },
   Heist1 = {

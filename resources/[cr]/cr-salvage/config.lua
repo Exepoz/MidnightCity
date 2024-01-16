@@ -7,7 +7,7 @@ Config.Framework = {
     PolyZone = "PolyZone", -- "PolyZone" | "oxlib"
     Interaction = {
         UseTarget = GetConvar('UseTarget', 'false') == 'true', -- Leave true if you are using qb-target. Set to false to disable targetting and enable DrawText for all interactions
-        Target = "qb-target", -- "qb-target" ~ Requires PolyZone "PolyZone" ~ | "oxtarget" ~ Requires PolyZone "oxlib" ~
+        Target = "oxtarget", -- "qb-target" ~ Requires PolyZone "PolyZone" ~ | "oxtarget" ~ Requires PolyZone "oxlib" ~
         OxLibDistanceCheck = false -- If true, most distance checks are done via oxlib, if false distance checks are done via built-in functions.
     },
     --Framework Overrides (You can change specific framework related functions to ones from other scripts.)

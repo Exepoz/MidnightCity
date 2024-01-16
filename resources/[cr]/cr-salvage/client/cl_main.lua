@@ -227,8 +227,6 @@ RegisterNetEvent('cr-salvage:client:emailnotification', function()
     TriggerServerEvent('cr-salvage:server:ToggleEmails')
     Wait(200)
     if Config.Debug then print(Lcl('debug_emailsToggle', LocalPlayer.state.cr_salvage_emails)) end
-    if LocalPlayer.state.cr_salvage_emails then SCUtils.SalvageNotif(2, Lcl("notif_enableemailnotification"), Lcl('salvagetitle'))
-    else SCUtils.SalvageNotif(2, Lcl("notif_disableemailnotification"), Lcl('salvagetitle')) end
 end)
 
 RegisterNetEvent('cr-salvage:client:RemoveBB', function()

@@ -7,7 +7,7 @@ description 'Salvage System for FiveM QBCore & ESX'
 version '1.2.3'
 
 shared_scripts {
-    -- '@ox_lib/init.lua',
+    '@ox_lib/init.lua',
     -- Un-Comment the line above to enable ox_lib
     'config.lua',
     'locales/en.lua', -- Change this to the desired language file (Only 1 at a time.)
