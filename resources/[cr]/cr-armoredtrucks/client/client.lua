@@ -20,10 +20,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function() Wait(5000) TriggerSe
 -- Deestroys zones on startup (If restarted)
 AddEventHandler('onResourceStart', function(resourceName)
     if GetCurrentResourceName() == resourceName then
-        exports["ps-zones"]:DestroyZone('Guard-Zone')
-        exports["ps-zones"]:DestroyZone('Truck-Zone')
-        exports["ps-zones"]:DestroyZone('Delivery-TruckZone')
-        exports["ps-zones"]:DestroyZone('Delivery-DropZone')
+
     end
 end)
 

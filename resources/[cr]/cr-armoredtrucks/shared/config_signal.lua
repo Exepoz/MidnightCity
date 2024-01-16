@@ -1,17 +1,27 @@
--- Config = Config or {}
-Config.Delivery = {}
+Config = Config or {}
+Config.Signal = {}
 --------------
 -- Delivery --
 --------------
-Config.Delivery.QueuePrice = 5000 -- Price to enter the queue (If changed, ped dialog needs changed in cr-talktopeds)
-Config.Delivery.Cops = 0
-Config.Delivery.Cooldown = 0
-Config.Delivery.GpsTimer = 5 -- Time for police tracker to disable and receive drop off location
-Config.Delivery.ThermiteHack = {CorrectBlocks = 10, IncorrectBlocks = 3, TimeToShow = 4, TimeToLose = 5}
-Config.Delivery.BombTimer = 2
-Config.Delivery.ThermiteItem = 'thermite'
+Config.Signal.Cops = 0
+Config.Signal.Cooldown = 0
+Config.Signal.TimeToComplete = 45
+Config.Signal.ThermiteHack = {CorrectBlocks = 10, IncorrectBlocks = 3, TimeToShow = 4, TimeToLose = 5}
+Config.Signal.BombTimer = 2
+Config.Signal.ThermiteItem = 'thermite'
 
-Config.Delivery.TruckLocations = {-- where truck spawns add as many coords as you like
+Config.Signal.Towers = {
+    vector3(-1008.56958, -1758.99377, 5.40517569), --marina
+    vector3(-1650.848, 3164.76685, 31.84), --zancudo
+    vector3(1683.17, 6436.83, 31.0290546), -- paleto
+    vector3(2679.652, 4570.538, 39.7947845), -- grapeseed
+    vector3(1397.0498, 2116.64258, 104.183807), -- sandy
+    vector3(-343.3855, -1367.37378, 30.5834579), -- South side
+    vector3(950.340454, -3295.5022, 4.700043), -- docks
+}
+
+
+Config.Signal.TruckLocations = {-- where truck spawns add as many coords as you like
     vector4(-1318.5, -588.94, 28.92, 34.31), --7220/7258
     vector4(308.83, 366.49, 105.26, 345.00),   --7092
     vector4(1034.76, -142.68, 73.8, 313.86),   --7299
@@ -29,7 +39,7 @@ Config.Delivery.TruckLocations = {-- where truck spawns add as many coords as yo
     vector4(-1458.24, -388.26, 38.21, 304.28),  --7169
 }
 
-Config.Delivery.RandomDropLocation = { -- where delivery locations are, add as many as you like
+Config.Signal.RandomDropLocation = { -- where delivery locations are, add as many as you like
     vector4(-2170.1, 4276.49, 48.57, 329.47),
     vector4(572.97, 2797.41, 42.05, 193.96),
     vector4(1263.14, -2564.7, 42.77, 117.85),

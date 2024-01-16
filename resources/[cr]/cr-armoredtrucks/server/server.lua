@@ -96,63 +96,63 @@ end
 -- -----------------
 -- -- QUEUE STUFF --
 -- -----------------
--- Truck Queue
-RegisterNetEvent('cr-armoredtrucks:server:TruckQueue', function()
-    CreateThread(function()
-        Debug('Starting Queue')
-        if QueueStarted or HeistInProgress then return end
-        QueueStarted = true
-        --if cd then Wait(Config.QueueTime*60000) end
-        Debug('Checking Availability.')
-        if GetCops() < Config.Delivery.Cops or onCooldown then Debug("Heist Unavailable") Wait(10*60000) QueueStarted = false TriggerEvent('cr-armoredtrucks:server:TruckQueue')
-        else
-            --local currentQueue = 0
-            --for _, _ in pairs(Queue) do currentQueue = currentQueue + 1 end
-            --if currentQueue > AmountInQueue then AmountInQueue = currentQueue Debug("New People in queue, Adding Time...") Wait(15*60000) QueueStarted = false TriggerEvent('cr-armoredtrucks:server:TruckQueue') return end
-            TriggerClientEvent('cr-armoredtrucks:client:Clean', -1)
-            TruckAccepted, TruckFound, TimeOut, Completed, CurrentContracts = false, false, false, false, {}
-            QueueTime = os.time()
-            local l = 0
-            Debug("Generating Queue")
-            for k,v in pairs(Queue) do
-                local emailData ={}
-                if ConvoyQueue[k] and GetCops() >= Config.Roaming.Cops then
-                    emailData = {
-                        sender = 'Anonymous',
-                        subject = 'Roaming Truck Spotted.',
-                        message = 'Hey, one of my guys spotted a roaming truck. Do whatever you want with that info. The location is in the attachment.',
-                        button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:acceptConvoy'}
-                    }
-                    --if Config.RemoveFromQueueOnEmailSend then ConvoyQueue[k] = nil end
-                else
-                    if ConvoyQueue[k] then
-                        emailData = {
-                            sender = 'Anonymous',
-                            subject = 'Truck Spotted.',
-                            message = 'Hey, we couldn\'t find a roaming truck, but one of my guys spotted one parked. At least it\'s something.. The location is in the attachment.',
-                            button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:acceptTruck'}
-                        }
-                    else
-                        emailData = {
-                            sender = 'Elliot Lockheart',
-                            subject = 'Truck Spotted.',
-                            message = 'Hey, we spotted a bank truck. Open the attachment and you will get the location. Be quick or I will send this to someone else...',
-                            button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:acceptTruck'}
-                        }
-                        if Config.RemoveFromQueueOnEmailSend then AmountInQueue = AmountInQueue - 1 Queue[k] = nil end
-                    end
-                end
-                CurrentContracts[#CurrentContracts+1] = v
-                TriggerEvent('qs-smartphone:server:sendNewMailToOffline', v, emailData)
-                l = l+1 if l >= Config.EmailAmountSent then Debug("Emails Sent") break end
-            end
-            Debug("Emails Sent")
-            Wait(Config.TimeToAccept*60000)
-            QueueStarted = false
-            if not TruckAccepted then Debug("Finding New Contract") CurrentContracts = {} TriggerEvent('cr-armoredtrucks:server:TruckQueue') end
-        end
-    end)
-end)
+-- -- Truck Queue
+-- RegisterNetEvent('cr-armoredtrucks:server:TruckQueue', function()
+--     CreateThread(function()
+--         Debug('Starting Queue')
+--         if QueueStarted or HeistInProgress then return end
+--         QueueStarted = true
+--         --if cd then Wait(Config.QueueTime*60000) end
+--         Debug('Checking Availability.')
+--         if GetCops() < Config.Delivery.Cops or onCooldown then Debug("Heist Unavailable") Wait(10*60000) QueueStarted = false TriggerEvent('cr-armoredtrucks:server:TruckQueue')
+--         else
+--             --local currentQueue = 0
+--             --for _, _ in pairs(Queue) do currentQueue = currentQueue + 1 end
+--             --if currentQueue > AmountInQueue then AmountInQueue = currentQueue Debug("New People in queue, Adding Time...") Wait(15*60000) QueueStarted = false TriggerEvent('cr-armoredtrucks:server:TruckQueue') return end
+--             TriggerClientEvent('cr-armoredtrucks:client:Clean', -1)
+--             TruckAccepted, TruckFound, TimeOut, Completed, CurrentContracts = false, false, false, false, {}
+--             QueueTime = os.time()
+--             local l = 0
+--             Debug("Generating Queue")
+--             for k,v in pairs(Queue) do
+--                 local emailData ={}
+--                 if ConvoyQueue[k] and GetCops() >= Config.Roaming.Cops then
+--                     emailData = {
+--                         sender = 'Anonymous',
+--                         subject = 'Roaming Truck Spotted.',
+--                         message = 'Hey, one of my guys spotted a roaming truck. Do whatever you want with that info. The location is in the attachment.',
+--                         button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:acceptConvoy'}
+--                     }
+--                     --if Config.RemoveFromQueueOnEmailSend then ConvoyQueue[k] = nil end
+--                 else
+--                     if ConvoyQueue[k] then
+--                         emailData = {
+--                             sender = 'Anonymous',
+--                             subject = 'Truck Spotted.',
+--                             message = 'Hey, we couldn\'t find a roaming truck, but one of my guys spotted one parked. At least it\'s something.. The location is in the attachment.',
+--                             button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:acceptTruck'}
+--                         }
+--                     else
+--                         emailData = {
+--                             sender = 'Elliot Lockheart',
+--                             subject = 'Truck Spotted.',
+--                             message = 'Hey, we spotted a bank truck. Open the attachment and you will get the location. Be quick or I will send this to someone else...',
+--                             button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:acceptTruck'}
+--                         }
+--                         if Config.RemoveFromQueueOnEmailSend then AmountInQueue = AmountInQueue - 1 Queue[k] = nil end
+--                     end
+--                 end
+--                 CurrentContracts[#CurrentContracts+1] = v
+--                 TriggerEvent('qs-smartphone:server:sendNewMailToOffline', v, emailData)
+--                 l = l+1 if l >= Config.EmailAmountSent then Debug("Emails Sent") break end
+--             end
+--             Debug("Emails Sent")
+--             Wait(Config.TimeToAccept*60000)
+--             QueueStarted = false
+--             if not TruckAccepted then Debug("Finding New Contract") CurrentContracts = {} TriggerEvent('cr-armoredtrucks:server:TruckQueue') end
+--         end
+--     end)
+-- end)
 
 -- -- Revives the bank truck queue when someone reconnects
 -- RegisterNetEvent('cr-armoredtrucks:server:ReviveQueue', function()
@@ -200,15 +200,13 @@ RegisterNetEvent('cr-armoredtrucks:server:foundTruck', function() TruckFound = t
 RegisterNetEvent('cr-armoredtrucks:server:startParkedTruck', function(success, item)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-
     local time = os.time()
-
     if not success or HeistInProgress then
         TriggerClientEvent('QBCore:Notify', src, 'Truck Location Lost.', 'error')
         Player.PlayerData.items[item.slot].info.cooldown = time
         Player.Functions.SetInventory(Player.PlayerData.items)
     return end
-
+    TriggerClientEvent('QBCore:Notify', src, 'Received Truck Approximate Location!', 'error')
     local charinfo = Player.PlayerData.charinfo
     local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
     local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
@@ -317,15 +315,16 @@ RegisterNetEvent('cr-armoredtrucks:server:remThermite', function()
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.Delivery.ThermiteItem], "remove", 1)
 end)
 
-QBCore.Functions.CreateUseableItem('green_hacking', function(source, item)
+QBCore.Functions.CreateUseableItem('truck_locator_1', function(source, item)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if Player.Functions.GetItemByName(item.name) then
-        if item.cooldown and item.cooldown + 60 < os.time() then TriggerClientEvent('QBCore:Notify', src, 'The device is on cooldown...', 'error') return end
+        --if item.cooldown and item.cooldown + 60 < os.time() then TriggerClientEvent('QBCore:Notify', src, 'There is no active trucks at the moment.', 'error') return end
         TriggerClientEvent('QBCore:Notify', src, 'Locating Bank Truck...', 'info')
-        Wait(math.random(2,4))
+        Wait(math.random(2,4)*1000)
         if HeistInProgress then TriggerClientEvent('QBCore:Notify', src, 'There is not trucks around currently.', 'error') return end
-        TriggerClientEvent('cr-armoredtrucks:client:locatingBankTruck', src, item)
+        TriggerClientEvent('QBCore:Notify', src, 'There is a faint signal, use the computer at the Hub to boost it!', 'error')
+        --TriggerClientEvent('cr-armoredtrucks:client:locatingBankTruck', src, item)
     end
 end)
 

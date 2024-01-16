@@ -225,8 +225,7 @@ RegisterNetEvent('cr-armoredtrucks:client:PlantThermite', function ()
                 local diff = Config.Roaming.ThermiteHack
                 exports['memorygame']:thermiteminigame(diff.CorrectBlocks, diff.IncorrectBlocks, diff.TimeToShow, diff.TimeToLose, function()
                     TruckThermited = true
-                    TriggerServerEvent("QBCore:Server:RemoveItem", Config.BombItem, 1)
-                    TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.BombItem], "remove")
+                    TriggerServerEvent("cr-armoredtrucks:server:remThermite")
                     ClearPedTasks(ped)
                     DetachEntity(ThermiteProp)
                     AttachEntityToEntity(ThermiteProp, Truck, GetEntityBoneIndexByName(Truck, 'door_pside_r'), -0.7, 0.0,0.0, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
