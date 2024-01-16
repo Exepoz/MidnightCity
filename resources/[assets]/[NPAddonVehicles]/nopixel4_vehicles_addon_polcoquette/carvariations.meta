@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CVehicleModelInfoVariation>
+  <variationData>
+	<Item>
+      <modelName>polcoquette</modelName>
+      <colors>
+		  <Item>
+          <indices content="char_array">
+      	   134
+           134
+           156
+           156
+          </indices>
+        </Item>
+      </colors>
+      <kits>
+        <Item>914_polcoquette_modkit</Item>
+      </kits>
+      <windowsWithExposedEdges />
+      <plateProbabilities>
+        <Probabilities>
+          <Item>
+            <Name>police guv plate</Name>
+            <Value value="100" />
+          </Item>
+        </Probabilities>
+      </plateProbabilities>
+      <lightSettings value="72"/>
+      <sirenSettings value="1232"/>
+	</Item>
+	</variationData>
+</CVehicleModelInfoVariation>
