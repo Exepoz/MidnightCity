@@ -88,10 +88,6 @@ Config.FenceItems = {
     ['pencil'] = {price = 2, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['book'] = {price = 12, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['skull'] = {price = 21, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
-    ['pd_necklace'] = {price = 44, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
-    ['pd_watch'] = {price = 25, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
-    ['pd_ringset'] = {price = 40, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
-    ['pd_laptop'] = {price = 21, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
 }
 
 -- Price is needed if the item is not in Config.FenceItems OR if you want to override the default 1.5x hot value.

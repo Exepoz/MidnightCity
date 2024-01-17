@@ -20,7 +20,7 @@ RegisterCommand('fetchLightInfo', function(source, args)
     -- [[
 
     --]]
-    print(vector3(-626.7, -989.67, 29.02)- vector3(-623.77, -999.20, 20.99))
+    print(vector3(-1185.06, -872.23, 13.88) - vector3(-1186.82, -877.12, 21.11))
 end)
 
 --- Checks if player is inside a green zone & updtaes their Player State Bag

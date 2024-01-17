@@ -143,7 +143,7 @@ end
 
 LockPick = function(data)
 	local success = nil
-	SetTimeout(180000,function()
+	SetTimeout(1000,function()
 		repeat
 		local lockpick = lib.progressBar({
 			duration = 10000,
@@ -152,17 +152,16 @@ LockPick = function(data)
 			canCancel = true,
 			anim = {
 				dict = 'veh@break_in@0h@p_m_one@',
-				clip = 'low_force_entry_ds'
+				clip = 'low_force_entry_ds' 
 			},
 		})
 		Wait(0)
 		until success ~= nil
 	end)
-	success = exports['t3_lockpick']:startLockpick(1.0, 3, 5, 3)
-	-- success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'easy'})
-	-- if lib.progressActive() then
-	-- 	lib.cancelProgress()
-	-- end
+	success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'easy'})
+	if lib.progressActive() then
+		lib.cancelProgress()
+	end
 	if success then
 		TriggerServerEvent('renzu_motels:Door', {
             motel = data.motel,
@@ -407,7 +406,7 @@ SendMessageApi = function(motel)
 		{type = 'textarea', label = 'Description', description = 'your message', icon = 'mail', required = true},
 		{type = 'number', label = 'Contact Number', icon = 'phone', required = false},
 	})
-
+	
 	config.messageApi({title = input[1], message = input[2], motel = motel})
 end
 
@@ -716,7 +715,7 @@ end
 MotelRentalPoints = function(data)
     local point = lib.points.new(data.rentcoord, 5, data)
 
-    function point:onEnter()
+    function point:onEnter() 
 		lib.showTextUI('[E] - Motel Rent', {
 			position = "top-center",
 			icon = 'hotel',
@@ -728,7 +727,7 @@ MotelRentalPoints = function(data)
 		})
 	end
 
-    function point:onExit()
+    function point:onExit() 
 		lib.hideTextUI()
 	end
 
@@ -744,26 +743,26 @@ end
 local inMotelZone = false
 MotelZone = function(data)
 	local point = nil
-    function onEnter(self)
+    function onEnter(self) 
 		inMotelZone = true
 		Citizen.CreateThreadNow(function()
 			for index, doors in pairs(data.doors) do
 				for type, coord in pairs(doors) do
 					MotelFunction({
 						payment = data.payment or 'money',
-						uniquestash = data.uniquestash,
-						shell = data.shell,
-						Mlo = data.Mlo,
-						type = type,
-						index = index,
-						coord = coord,
-						label = config.Text[type],
-						motel = data.motel,
+						uniquestash = data.uniquestash, 
+						shell = data.shell, 
+						Mlo = data.Mlo, 
+						type = type, 
+						index = index, 
+						coord = coord, 
+						label = config.Text[type], 
+						motel = data.motel, 
 						door = data.door
 					})
 				end
 			end
-			point = MotelRentalPoints(data)
+			point = MotelRentalPoints(data) 
 		end)
 	end
 
@@ -822,9 +821,9 @@ EnterShell = function(data,login)
 		return false
 	end
 	local shelldata = config.shells[data.shell or data.motel]
-	if not shelldata then
+	if not shelldata then 
 		warn('Shell is not configure')
-		return
+		return 
 	end
 	lib.callback.await('renzu_motels:SetRouting',false,data,'enter')
 	inhouse = true
@@ -870,16 +869,16 @@ EnterShell = function(data,login)
 end
 
 function RotationToDirection(rotation)
-	local adjustedRotation =
-	{
-		x = (math.pi / 180) * rotation.x,
-		y = (math.pi / 180) * rotation.y,
-		z = (math.pi / 180) * rotation.z
+	local adjustedRotation = 
+	{ 
+		x = (math.pi / 180) * rotation.x, 
+		y = (math.pi / 180) * rotation.y, 
+		z = (math.pi / 180) * rotation.z 
 	}
-	local direction =
+	local direction = 
 	{
-		x = -math.sin(adjustedRotation.z) * math.abs(math.cos(adjustedRotation.x)),
-		y = math.cos(adjustedRotation.z) * math.abs(math.cos(adjustedRotation.x)),
+		x = -math.sin(adjustedRotation.z) * math.abs(math.cos(adjustedRotation.x)), 
+		y = math.cos(adjustedRotation.z) * math.abs(math.cos(adjustedRotation.x)), 
 		z = math.sin(adjustedRotation.x)
 	}
 	return direction
@@ -889,9 +888,9 @@ function RayCastGamePlayCamera(distance,flag)
     local cameraRotation = GetGameplayCamRot()
     local cameraCoord = GetGameplayCamCoord()
 	local direction = RotationToDirection(cameraRotation)
-	local destination =  vector3(cameraCoord.x + direction.x * distance,
-		cameraCoord.y + direction.y * distance,
-		cameraCoord.z + direction.z * distance
+	local destination =  vector3(cameraCoord.x + direction.x * distance, 
+		cameraCoord.y + direction.y * distance, 
+		cameraCoord.z + direction.z * distance 
     )
     if not flag then
         flag = 1

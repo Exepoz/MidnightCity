@@ -350,7 +350,7 @@ Config.Elevators = {
         }
     },
     ['midnight'] = {
-        Group = {""},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
+        --Group = {"midnight"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
         Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
         Name = "Midnight Compound Elevator",
         Floors = {
@@ -378,7 +378,7 @@ Config.Elevators = {
         }
     },
     ['midnight2'] = {
-        Group = nil,                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
+        --Group = {"midnight"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
         Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
         Name = "Midnight Compound Elevator",
         Floors = {

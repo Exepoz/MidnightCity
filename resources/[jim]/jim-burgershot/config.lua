@@ -92,7 +92,7 @@ Config = {
 		},
 		{ -- Sandy Shores (GNMODS)
 			zoneEnable = true,
-			job = "burgershot2",
+			job = "burgershot",
 			label = "Burger Shot (Sandy Shores)",
 			autoClock = { enter = false, exit = true, },
 			zones = {

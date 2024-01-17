@@ -292,7 +292,7 @@ local sellBags = function()
         local alert = lib.alertDialog({
             header = 'Exchange Money Bags',
             cancel = true, centered = true,
-            content = "Exchange all of your money bags for "..Config.CrimHub.CurrencyExchange.moneyBagsRatio*100.."% of it's value, in crumbs?\n\nThis would give you "..data.." Gold Crumbs."
+            content = "Exchange all of your money bags for "..(Config.CrimHub.CurrencyExchange.moneyBagsRatio*100).."% of it's value, in crumbs?\n\nThis would give you "..data.." Gold Crumbs."
         }) if alert ~= 'confirm' then return end
         TriggerServerEvent('crimHub:server:exchangeMoneyBags')
     end)
@@ -317,7 +317,7 @@ RegisterNetEvent('crimHub:client:talkToCurrExchange', function()
     options[#options+1] = {title = 'Buy Cash...', description = 'Receive regular money in exchange of other currencies', menu = 'exCashMenu'}
     options[#options+1] = {title = 'Buy Crumbs...', description = 'Receive Gold Crumbs in exchange of other currencies', menu = 'exCrumbsMenu'}
     options[#options+1] = {title = 'Buy sCoins...', description = 'Receive sCoins in exchange of other currencies', menu = 'exCoinsMenu'}
-    options[#options+1] = {title = 'Sell Money Bags...', description = 'Got money bags? We\'ll get them off your hands.', onSelect = sellBags}
+    --options[#options+1] = {title = 'Sell Money Bags...', description = 'Got money bags? We\'ll get them off your hands.', onSelect = sellBags}
 
 
     lib.registerContext({id = 'currencyExchange', title = 'The Currency Exchange',  options = options })

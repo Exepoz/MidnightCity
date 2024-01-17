@@ -180,8 +180,6 @@ end)
 
 for k, v in pairs(Config.Foodpacks) do
     QBCore.Functions.CreateUseableItem(v, function(source, item)
-        print('used')
-        QBCore.Debug(item)
         local Player = QBCore.Functions.GetPlayer(source)
         local oItem = Player.PlayerData.items[item.slot].info.packedItems
         local info = {organic = Player.PlayerData.items[item.slot].info.organic or false}

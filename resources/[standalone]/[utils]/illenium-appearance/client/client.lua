@@ -120,7 +120,6 @@ function InitializeCharacter(gender, onSubmit, onCancel)
         elseif onCancel then
             onCancel()
         end
-        
         Framework.CachePed()
         TriggerServerEvent("illenium-appearance:server:ResetRoutingBucket")
     end, config)

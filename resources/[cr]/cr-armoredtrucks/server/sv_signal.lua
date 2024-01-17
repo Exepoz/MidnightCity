@@ -137,8 +137,7 @@ QBCore.Functions.CreateCallback('cr-armoredtrucks:canStartSignalHeist', function
     if HeistInProgress then TriggerClientEvent('QBCore:Notify', source, 'The signal has been lost...', 'error') cb(false) return end
 
     local item = QBCore.Functions.GetPlayer(src).Functions.GetItemByName('truck_locator_1')
-    if not item then TriggerClientEvent('QBCore:Notify', src, 'You don\'t have anything to connect to this', 'error') cb(false) return end
-
+    if not item then TriggerClientEvent('QBCore:Notify', source, 'You don\'t have anything to connect to this', 'error') cb(false) return end
     local qual = item.info.quality
     if qual-50 <= 0 then TriggerClientEvent('QBCore:Notify', source, 'Your locator doesn\'t have enough powert to receive a signal...', 'error') return end
 

@@ -7,7 +7,7 @@ local getDispo = function(setting) return GlobalState.Disposals[setting] > 0 end
 -- Disposal Zones
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Disposals) do
-        exports['qb-target']:AddBoxZone("DisposalZone_"..k, v.d.xyz, 1.3, 1.3, {name = "DisposalZone_"..k, heading = 100.0, debugPoly = true, minZ = v.d.z-1, maxZ = v.d.z+1},
+        exports['qb-target']:AddBoxZone("DisposalZone_"..k, v.d.xyz, 1.3, 1.3, {name = "DisposalZone_"..k, heading = 100.0, debugPoly = false, minZ = v.d.z-1, maxZ = v.d.z+1},
         { options = {{type = "client", event = "mdn-extras:client:disposeBody", icon = 'fas fa-user-secret', setting = k, label = 'Dispose Body', canInteract = function() return getDispo(k) end}}, distance = 2.5, })
     end
 end)

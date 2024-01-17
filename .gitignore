@@ -7,4 +7,5 @@ resources/\[notused\]/**
 resources/\[uft\]/\[project-sloth\]/ps-adminmenu/ui/src/utils/debugData.ts
 resources/\[assets\]/\[clothing\]/**
 resources/\[testonly\]/**
+resources/\[standalone\]/\[utils\]/zdiscord/**
 .vscode/pinned-files.json

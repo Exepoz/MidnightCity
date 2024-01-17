@@ -106,8 +106,8 @@ local function DestroyGroup(groupID)
 end exports("DestroyGroup", DestroyGroup)
 
 local function RemovePlayerFromGroup(src, groupID, disconnected)
-    QBCore.Debug(Players)
-    QBCore.Debug(EmploymentGroup)
+    -- QBCore.Debug(Players)
+    -- QBCore.Debug(EmploymentGroup)
     if not Players[src] or not EmploymentGroup[groupID] then return print("RemovePlayerFromGroup was sent an invalid groupID :"..groupID) end
     local g = EmploymentGroup[groupID].members
     for k,v in pairs(g) do
@@ -305,8 +305,8 @@ end)
 
 RegisterNetEvent('qb-phone:server:jobcenter_leave_grouped', function(data)
     local src = source
-    print(1)
-    QBCore.Debug(Players)
+    -- print(1)
+    -- QBCore.Debug(Players)
     if not Players[src] then return end
     RemovePlayerFromGroup(src, data.id)
 end)

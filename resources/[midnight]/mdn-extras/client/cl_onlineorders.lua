@@ -6,7 +6,6 @@ Citizen.CreateThread(function()
     for k, v in pairs(Config.OnlineOrders.CustomJobs) do
         local p = lib.points.new(v.coords, 2.5)
         function p:onEnter()
-            print('enter')
             local search = v.isGang and 'Gangs' or 'Jobs'
             local psearch = v.isGang and 'gang' or 'job'
             if v.cids then
@@ -15,13 +14,27 @@ Citizen.CreateThread(function()
                 print(search, psearch, QBCore.Functions.GetPlayerData()[psearch].grade.level)
                 if not QBCore.Shared[search][k].grades[tostring(QBCore.Functions.GetPlayerData()[psearch].grade.level)].canOrderOnline then return end
             end
-            lib.addRadialItem({id = "OOTablet", icon = 'tablet', label = 'Order Ingredients',
-            onSelect = function()
-                ExecuteCommand('e tablet2')
-                TriggerEvent('OnlineOrders:client:Menu', {name = k, label = v.label})
-            end})
+            exports['qb-radialmenu']:AddOption({
+                id = 'OOTablet',
+                title = 'Order Ingredients',
+                icon = "tablet",
+                type = "client",
+                jobData = {name = k, label = v.label},
+                event = 'OnlineOrders:client:Menu',
+                shouldClose = true
+            }, 'OOTablet')
+
+            -- lib.addRadialItem({id = "OOTablet", icon = 'tablet', label = 'Order Ingredients',
+            -- onSelect = function()
+            --     ExecuteCommand('e tablet2')
+            --     TriggerEvent('OnlineOrders:client:Menu', {name = k, label = v.label})
+            -- end})
         end
-        function p:onExit() lib.removeRadialItem('OOTablet') ExecuteCommand('emotecancel') end
+        function p:onExit()
+            exports['qb-radialmenu']:RemoveOption('OOTablet')
+            --lib.removeRadialItem('OOTablet')
+            ExecuteCommand('emotecancel')
+        end
     end
 end)
 
@@ -82,9 +95,9 @@ function AddShopItem(item, src, key, job)
     return itemTable
 end
 
-RegisterNetEvent('OnlineOrders:client:Menu', function(j)
+RegisterNetEvent('OnlineOrders:client:Menu', function(data)
     local pData = QBCore.Functions.GetPlayerData()
-    local job = j or pData.job
+    local job = data.jobData or pData.job
     if not Config.OnlineOrders.jobs[job.name] then QBCore.Functions.Notify('You do not have the password to the account!', 'error', 7500) return end
     local options = MakeMenu(job)
     lib.registerContext({id = 'onlineOrders', title = "Online Store", canClose = true, options = options})

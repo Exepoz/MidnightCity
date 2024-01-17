@@ -18,40 +18,11 @@ Config.OnlineOrders.CustomJobs = {
         coords = vector3(128.21, -3011.18, 7.04),
         --cids = {['UPY10832'] = true, ['RQN37448'] = true}
     },
-    ['catcafe'] = {
-        label = "UwU Cafe Ordering",
-        bankAccount = 'catcafe',
+    ['lostmc'] = {
+        label = "Lost MC's Bar",
+        bankAccount = 'lostmc',
+        isGang = true,
         coords = vector3(2518.64, 4098.16, 35.59),
-        --cids = {['UPY10832'] = true}
-    },
-    ['beanmachine'] = {
-        label = "Bean Machine Ordering",
-        bankAccount = 'beanmachine',
-        coords = vector3(126.85, -1035.17, 30.02),
-        --cids = {['UPY10832'] = true}
-    },
-    ['burgershot'] = {
-        label = "Burgershot Ordering",
-        bankAccount = 'burgershot',
-        coords = vector3(-1200.84, -901.9, 14.36),
-        --cids = {['UPY10832'] = true}
-    },
-    ['cluckinbell'] = {
-        label = "Cluckinbell Ordering",
-        bankAccount = 'cluckinbell',
-        coords = vector3(-149.64, -261.94, 43.84),
-        --cids = {['UPY10832'] = true}
-    },
-    ['lscustoms'] = {
-        label = "LS Customs Ordering",
-        bankAccount = 'lscustoms',
-        coords = vector3(-350.33, -128.83, 39.25),
-        --cids = {['UPY10832'] = true}
-    },
-    ['burgershot2'] = {
-        label = "Burgershot Ordering",
-        bankAccount = 'burgershot2',
-        coords = vector3(1591.49, 3746.19, 34.49),
         --cids = {['UPY10832'] = true}
     },
     -- ['vubar'] = {

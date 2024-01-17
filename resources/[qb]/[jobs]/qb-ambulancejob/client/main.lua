@@ -907,7 +907,7 @@ if Config.UseTarget then
                         type = 'client',
                         icon = 'fa fa-clipboard',
                         event = 'qb-ambulancejob:checkin',
-                        label = 'Check In',
+                        label = 'Check In'..(k == 1 and " with Morticia" or "") ,
                     }
                 },
                 distance = 1.5

@@ -550,4 +550,3 @@ RegisterCommand('checkHunters', function()
     Midnight.Functions.Debug('List of Current Hunters :')
     QBCore.Debug(hunters)
 end)
-

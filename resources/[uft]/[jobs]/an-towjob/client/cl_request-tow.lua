@@ -2,7 +2,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 if Config.reqTow then
 
-    exports.ox_target:addGlobalVehicle({{name = 'towVehicle', icon = "fas fa-truck", label = "Request Tow", event = "an-tow:requestTow"}})
+    -- exports.ox_target:addGlobalVehicle({{name = 'towVehicle', icon = "fas fa-truck", label = "Request Tow", event = "an-tow:requestTow"}})
 
     RegisterNetEvent('an-tow:requestTow')
     AddEventHandler('an-tow:requestTow', function()

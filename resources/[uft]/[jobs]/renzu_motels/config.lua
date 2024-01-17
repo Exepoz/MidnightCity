@@ -5,7 +5,7 @@ config.business = false -- allowed players to purchase the motel
 config.autokickIfExpire = true -- auto kick occupants if rent is due. if false owner of motel must kick the occupants
 config.breakinJobs = { -- jobs can break in to door using gunfire in doors
 	['police'] = true,
-
+	
 }
 config.wardrobes = { -- skin menus
 	['renzu_clothes'] = function()
@@ -56,7 +56,7 @@ config.shells = {
 config.messageApi = function(data) -- {title,message,motel}
 	local motel = GlobalState.Motels[data.motel]
 	local identifier = motel.owned -- owner identifier
-	-- add your custom message here. ex. SMS phone
+	-- add your custom message here. ex. SMS phone 
 
 	-- basic notification (remove this if using your own message system)
 	local success = lib.callback.await('renzu_motels:MessageOwner',false,{identifier = identifier, message = data.message, title = data.title, motel = data.motel})
@@ -183,7 +183,7 @@ config.motels = {
 				wardrobe = vec3(351.77719116211,-205.24267578125,58.351734161377),
 				fridge = vec3(349.24819946289,-206.78134155273,58.326892852783),
 			},
-
+			
 		},
 	},
 	[2] = { -- index name of motel
@@ -192,8 +192,8 @@ config.motels = {
 		shell = 'sandy', -- shell type, configure only if using Mlo = true
 		label = 'Sandy Shores Motel',
 		rental_period = 'day',-- hour, day, month
-		rate = 1500, -- cost per period
-		businessprice = 100000000,
+		rate = 1000, -- cost per period
+		businessprice = 1000000,
 		motel = 'sandyshores',
 		payment = 'money', -- money, bank
 		door = `gabz_pinkcage_doors_front`, -- door hash for MLO type
@@ -263,7 +263,7 @@ config.motels = {
 				stash = vec3(347.33102416992,-205.13743591309,53.759078979492),
 				wardrobe = vec3(351.68756103516,-205.30010986328,54.674419403076),
 				fridge = vec3(349.34033203125,-206.6258392334,54.639694213867),
-			},
+			},	
 		},
 	},
 	[3] = { -- index name of motel
@@ -272,7 +272,7 @@ config.motels = {
 		shell = 'standard', -- shell type, configure only if using Mlo = true
 		label = 'Southside Motel',
 		rental_period = 'day',-- hour, day, month
-		rate = 800, -- cost per period
+		rate = 1000, -- cost per period
 		businessprice = 1000000,
 		motel = 'southside',
 		payment = 'money', -- money, bank

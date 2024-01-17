@@ -1,6 +1,6 @@
 Config = {}
-Config.Debug = true
-Config.DebugPoly = true
+Config.Debug = false
+Config.DebugPoly = false
 
 Config.SafeJobs = {
     ['police'] = true,
@@ -119,24 +119,6 @@ Config.GreenZones = {
         {coords = vector3(-282.18, -2240.53, 15.38), dir = vector3(4.0, -4.0, -9.0), d = 20.0, b = 1.0, h = 0.9, r = 15.0, f = 0.95},
         {coords = vector3(-276.12, -2219.98, 15.11), dir = vector3(4.0, 4.0, -9.0), d = 20.0, b = 1.0, h = 0.9, r = 25.0, f = 0.95},
         {coords = vector3(-300.92, -2233.43, 5.83), dir = vector3(-3.0, -1.5, -9.0), d = 20.0, b = 1.0, h = 0.9, r = 25.0, f = 0.95},
-    }
-},
-[5] = { name = 'uwu',
-    center = vector3(-580.96, -1073.29, 22.33),
-    thickness = 40,
-    points = {
-        vector3(-565.59, -1169.74, 18.88),
-        vector3(-551.69, -1107.85, 18.05),
-        vector3( -552.54, -969.11, 18.41),
-        vector3( -624.01, -968.84, 18.34),
-        vector3(-624.39, -1018.12, 18.98),
-        vector3(-623.12, -1167.45, 18.18),
-        vector3(-575.13, -1167.02, 18.18),
-    },
-    lights = {
-        {coords = vector3(-555.7, -1104.86, 28.15), dir = vector3(-3.589993, -10.0, -9.0), d = 25.0, b = 2.0, h = 1.9, r = 30.0, f = 1.95},
-        {coords = vector3(-558.68, -991.01, 30.24), dir = vector3(-2.589993, -8.0, -11.0), d = 30.0, b =2.0, h = 0.9, r = 25.0, f = 1.95},
-        {coords = vector3(-626.7, -989.67, 29.02), dir = vector3(1.679993, -7.0, -8.0), d = 25.0, b = 2.0, h = 1.9, r = 30.0, f = 1.95},
     }
 },
 }

@@ -21,7 +21,6 @@ end)
 
 lib.callback.register("delivery:callback:get_current_stock", function(source, data)
     local result = MySQL.query.await('SELECT stock FROM kloud_delivery WHERE job = ?', { data.job })
-    QBCore.Debug(result)
     if not result[1] then
         MySQL.insert.await("INSERT INTO kloud_delivery (job) VALUES (?)", { data.job })
         return 0

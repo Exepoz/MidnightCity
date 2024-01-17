@@ -116,6 +116,48 @@ function AmmuDoor:onExit() lib.removeRadialItem('AmmuTablet') end
 -- Weapon Crafting Shell
 local shellobj = nil
 
+exports['qb-target']:AddCircleZone("illcraftenter", vector3(2371.57, 3049.75, 48.15), 1.0, {
+        name = "illcraftenter",
+        debugPoly = true,
+        useZ=true
+        }, {
+               options = {
+                {
+                    type = "client",
+                    action = function()
+                        shellobj = CreateObject('container2_shell', vector3(2371.57, 3059.75, -20.15), false, false, false)
+                        FreezeEntityPosition(shellobj, true )
+                        Wait(100)
+                        SetEntityCoords(PlayerPedId(),  vector3(2371.66, 3054.7, -19.03))
+                        SetEntityHeading(PlayerPedId(), 358.8)
+                      end,
+                    icon = "fas fa-gun",
+                    label = "Whats in here?",
+                },
+             },
+             distance = 2.1
+        })
+
+        exports['qb-target']:AddCircleZone("illcraftexit", vector3(2371.57, 3054.12, -19.03), 1.0, {
+            name = "illcraftexit",
+            debugPoly = false,
+            useZ=true
+            }, {
+                   options = {
+                    {
+                        type = "client",
+                        action = function()
+                            SetEntityCoords(PlayerPedId(),  vector3(2371.57, 3049.75, 48.15))
+                            SetEntityHeading(PlayerPedId(), 245.9)
+                            Wait(100)
+                            DeleteObject(shellobj)
+                          end,
+                        icon = "fas fa-gun",
+                        label = "Exit",
+                    },
+                 },
+                 distance = 2.1
+            })
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function() Wait(5000) SetupTargets() end)
 AddEventHandler('onResourceStart', function(resource) if resource == GetCurrentResourceName() then SetupTargets() end end)

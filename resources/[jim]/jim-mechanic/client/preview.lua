@@ -212,7 +212,6 @@ local function printDifferences(vehicle, properties, newproperties)
 	elseif not Config.Previews.PreviewPhone or not hasPhone then
 		if vehlist[1] then
 			local info = { veh = veh, vehplate = vehplate, vehlist = vehlist }
-			QBCore.Debug(modlist)
 			TriggerServerEvent("jim-mechanic:server:giveList", info, modlist)
 		end
 	end

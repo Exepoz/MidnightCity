@@ -125,7 +125,7 @@ Config.ApartmentStart = false -- If you make it true, the [new character] will s
 
 Config.DefaultSpawn = { -- If ApartmentStart is false, it spawns the [new character here]
     Random = false, -- If you want to spawn randomly, you can make it true. [list/defaulspawncoords.lua]
-    Single = vector4(979.43, -2331.09, 35.01, 318.82)
+    Single = vector4(1032.86, -2330.28, 30.54, 265.46)
 }
 
 --[[

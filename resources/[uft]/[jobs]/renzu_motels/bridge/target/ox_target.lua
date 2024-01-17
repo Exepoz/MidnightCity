@@ -20,7 +20,7 @@ MotelFunction = function(data)
 		-- table.insert(options,{
 		-- 	items = {'lockpick'},
 		-- 	name = data.index .. '_' .. data.type..'_lockpick',
-		-- 	onSelect = function()
+		-- 	onSelect = function() 
 		-- 		return LockPick(data)
 		-- 	end,
 		-- 	icon = 'fas fa-unlink',
@@ -29,7 +29,7 @@ MotelFunction = function(data)
 		if not data.Mlo then
 			table.insert(options,{
 				name = data.index .. '_' .. data.type..'_lockpick',
-				onSelect = function()
+				onSelect = function() 
 					return EnterShell(data)
 				end,
 				icon = 'fas fa-person-booth',
@@ -39,7 +39,7 @@ MotelFunction = function(data)
 	end
 	table.insert(options,{
 		name = data.index .. '_' .. data.type,
-		onSelect = function()
+		onSelect = function() 
 			return RoomFunction(data)
 		end,
 		icon = config.icons[data.type],
@@ -65,7 +65,7 @@ ShellTargets = function(data,offsets,loc,house)
 		local options = {}
 		table.insert(options,{
 			name = data.motel .. '_' .. k..'_'..data.index,
-			onSelect = function()
+			onSelect = function() 
 				data.type = k
 				return RoomFunction(data)
 			end,
@@ -75,7 +75,7 @@ ShellTargets = function(data,offsets,loc,house)
 		if k == 'exit' then
 			table.insert(options,{
 				name = data.motel .. '_' .. k..'_'..data.index..'_door',
-				onSelect = function()
+				onSelect = function() 
 					data.type = 'door'
 					return Door(data)
 				end,
@@ -91,7 +91,7 @@ ShellTargets = function(data,offsets,loc,house)
 			for identifier,name in pairs(keys) do
 				table.insert(options,{
 					name = data.motel .. '_' .. k..'_'..data.index..'_'..identifier,
-					onSelect = function()
+					onSelect = function() 
 						data.type = k
 						return RoomFunction(data,identifier)
 					end,

@@ -187,7 +187,7 @@ RegisterNetEvent('consumables:client:Drink', function(itemName)
         --     TriggerEvent("progressbar:client:faster", Config.Coffees[itemName])
         -- end
         TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-        TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumeablesDrink[itemName])
+        TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + Config.Consumables.drink[itemName])
     end)
 end)
 

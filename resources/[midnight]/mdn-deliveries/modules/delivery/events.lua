@@ -1,16 +1,12 @@
 local Midnight = exports['mdn-nighttime']:GetMidnightCore()
 
 AddEventHandler("delivery:start_delivery", function(data)
-    QBCore.Debug(data)
     if data.job =='fence' then
         if not Midnight.Functions.IsNightTime() then
             QBCore.Functions.Notify('You can only do this at night...') return
         else
-            print('Merging tables')
             data = lib.table.merge(data, KloudDev.Locations['fence'])
             SpawnedEntities.Ped[data.pedID] = data.entity
-            QBCore.Debug(SpawnedEntities)
-            QBCore.Debug(data)
         end
     end
     _G.DeliveryData = data
