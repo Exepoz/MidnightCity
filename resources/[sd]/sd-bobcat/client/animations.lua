@@ -41,7 +41,7 @@ function firstDoor()
     ClearPedTasks(ped)
     DeleteObject(bomb)
     StopParticleFxLooped(effect, 0)
-    TriggerEvent("sd-bobcat:openFirstDoor")
+    TriggerEvent("sd-bobcat:client:changeDoorlock", 'bobcatfirst', false) 
 end 
 
 function secondDoor() 
@@ -84,7 +84,7 @@ function secondDoor()
     ClearPedTasks(ped)
     DeleteObject(bomb)
     StopParticleFxLooped(effect, 0)
-	TriggerEvent("sd-bobcat:openSecondDoor")
+    TriggerEvent("sd-bobcat:client:changeDoorlock", 'bobcatsecond', false) 
 end
 
 function bombplant(timer)
@@ -168,7 +168,7 @@ elseif Config.MLOType == 'nopixel' then
         ClearPedTasks(ped)
         DeleteObject(bomb)
         StopParticleFxLooped(effect, 0)
-        TriggerEvent("sd-bobcat:openFirstDoor") 
+        TriggerEvent("sd-bobcat:client:changeDoorlock", 'bobcatfirst', false) 
     end
     
     function secondDoor() 
@@ -211,7 +211,7 @@ elseif Config.MLOType == 'nopixel' then
         ClearPedTasks(ped)
         DeleteObject(bomb)
         StopParticleFxLooped(effect, 0)
-        TriggerEvent("sd-bobcat:openSecondDoor")
+        TriggerEvent("sd-bobcat:client:changeDoorlock", 'bobcatsecond', false) 
     end
     
     function bombplant(timer)

@@ -9,6 +9,7 @@ Config.BobcatDebug = false -- Change to true to enable PolyZone DebugPoly's for 
 Config.MinimumPolice = 3 -- minimum police to start heist
 Config.Cooldown = 60 -- minutes
 Config.DoorLock = 'ox' -- qb/nui/ox/cd
+Config.UseTargetForDoors = true -- Instead of using the item to plant the thermite, you'd use your target (3rd eye) to interact with the doors..
 
 Config.Items = { -- The items used at each part of the robbery
     Thermite = 'thermite',
@@ -23,28 +24,68 @@ Config.RemoveThermiteOnFail = false
 
 -- Misc Settings
 Config.ExplosionType = 2 -- vault door explosion - reference this for all explosion types: https://docs.fivem.net/natives/?_0xE3AD2BDBAEE269AC 
-Config.UseTargetForDoors = false -- Instead of using the item to plant the thermite, you'd use your target (3rd eye) to interact with the doors..
 Config.MaxBombTime = 90 -- Maximum duration (in seconds) the user can set for the C4 Charge to detonate.
 
 -- Alarm Settings
-Config.SoundAlarm = false -- Enable or disable the alarm sound
+Config.Alarm = {
+    SoundAlarm = true, -- Enable or disable the alarm sound
 
-if Config.MLOType == 'gabz' then -- if MLOType is Gabz use the following Config.AlarmCoordinates
-    Config.AlarmCoordinates = vector3(877.35, -2129.76, 31.92)  -- Alarm Sound Location
-elseif Config.MLOType == 'nopixel' then -- if MLOType is nopixel use the following Config.AlarmCoordinates
-    Config.AlarmCoordinates = vector3(890.13, -2294.9, 31.17)  -- Alarm Sound Location
-end
+    -- Specific alarm coordinates for 'gabz' and 'nopixel'
+    Coordinates = {
+        gabz = vector3(877.35, -2129.76, 31.92), -- Alarm Sound Location for Gabz
+        nopixel = vector3(890.13, -2294.9, 31.17), -- Alarm Sound Location for nopixel
+    },
 
-Config.SoundSettings = { -- view paste bins for examples. https://pastebin.com/eeFc5DiW
-    Name = "ALARMS_KLAXON_03_CLOSE", -- Sound Name (The best sounds I tested are this one and the one that can be heard from far away: "ALARMS_KLAXON_03_FAR")
-    Ref = "", -- Sound Reference
-    Timeout = 2, -- Sound Timeout in minutes
+    SoundSettings = {
+        Name = "ALARMS_KLAXON_03_CLOSE", -- Sound Name
+        Ref = "", -- Sound Reference
+        Timeout = 2, -- Sound Timeout in minutes
+    }
+}
+
+-- Blip Settings
+Config.Blip = {
+    Enable = true, -- Change to false to disable the Blip
+    Sprite = 106,
+    Display = 4,
+    Scale = 0.6,
+    Colour = 5,
+    Name = "Bobcat Security", -- Change the name to your liking
+
+    Locations = {
+        gabz = vector3(905.75, -2121.06, 31.23), -- Blip coords for Gabz
+        nopixel = vector3(881.36, -2266.83, 30.47), -- Blip coords for Tobii/NoPixel Version
+    }
+}
+
+-- Locations & State Management Settings
+Config.Locations = {
+    gabz = {
+        FirstDoor = {location = vector3(915.22, -2122.0, 31.23), busy = false, hacked = false},
+        SecondDoor = {location = vector3(908.89, -2120.6, 31.23), busy = false, hacked = false},
+        ThirdDoor = {location = vector3(905.01, -2121.11, 31.23), busy = false, hacked = false},
+        VaultDoor = {location = vector3(888.47, -2129.88, 31.81), busy = false, hacked = false},
+        SMGs = {location = vector3(890.81, -2120.93, 31.25), busy = false, looted = true},
+        Explosives = {location = vector3(891.57, -2126.32, 31.21), busy = false, looted = true},
+        Rifles = {location = vector3(887.31, -2125.31, 31.01), busy = false, looted = true},
+        Ammo = {location = vector3(885.87, -2127.59, 30.92), busy = false, looted = true}
+    },
+    nopixel = {
+        FirstDoor = {location = vector3(882.29, -2258.11, 30.47), busy = false, hacked = false},
+        SecondDoor = {location = vector3(880.64, -2264.07, 30.47), busy = false, hacked = false},
+        ThirdDoor = {location = vector3(881.33, -2268.24, 30.47), busy = false, hacked = false},
+        VaultDoor = {location = vector3(890.27, -2284.61, 30.47), busy = false, hacked = false},
+        SMGs = {location = vector3(881.45, -2282.61, 30.47), busy = false, looted = true},
+        Explosives = {location = vector3(882.31, -2286.33, 30.47), busy = false, looted = true},
+        Rifles = {location = vector3(886.86, -2281.74, 30.47), busy = false, looted = true},
+        Ammo = {location = vector3(886.65, -2287.11, 30.47), busy = false, looted = true}
+    }
 }
 
 -- Hacking Settings
-Config.MainMinigame = 'memorygame' -- Choose between 'memorygame' or 'ps-ui' for the first two doors
+Config.MainMinigame = 'ps-ui' -- Choose between 'memorygame' or 'ps-ui' for the first two doors
 Config.EnableHacking = true -- for the third door
-Config.KeycardMinigame = 'mhacking' -- Choose between 'mhacking', 'hacking', or 'ps-ui' for the third door
+Config.KeycardMinigame = 'ps-ui' -- Choose between 'mhacking', 'hacking', or 'ps-ui' for the third door
 Config.VaultHacking = false -- Enable or disable vault hacking
 Config.VaultMinigame = 'memorygame' -- Choose between 'memorygame' or 'ps-ui' for the vault
 
@@ -226,47 +267,3 @@ Config.Rewards = {
         amount = {min = 1, max = 2} -- specifying amount that can be given if MedicRewards is picked.
     },
 }
-
--- MLO Specific Settings
-if Config.MLOType == 'gabz' then
-Config.FirstDoor = vector3(915.22, -2122.0, 31.23)
-Config.SecondDoor = vector3(908.89, -2120.6, 31.23)
-Config.ThirdDoor = vector3(905.01, -2121.11, 31.23)
-
-Config.VaultDoorLocation = vector3(888.47, -2129.88, 31.81)
-Config.SMGsLocation = vector3(890.81, -2120.93, 31.25)
-Config.ExplosivesLocation = vector3(891.57, -2126.32, 31.21)
-Config.RiflesLocation = vector3(887.31, -2125.31, 31.01)
-Config.AmmoLocation = vector3(885.87, -2127.59, 30.92)
-
-Config.Blip = { -- Blip Settings for Gabz
-    Enable = true, -- Change to false to disable the Blip
-    Location = vector3(905.75, -2121.06, 31.23), -- Change the blip coords here
-    Sprite = 106,
-    Display = 4,
-    Scale = 0.6,
-    Colour = 5,
-    Name = "Bobcat Security", --Change the name to your liking
-}
-
-elseif Config.MLOType == 'nopixel' then
-Config.FirstDoor = vector3(882.29, -2258.11, 30.47)
-Config.SecondDoor = vector3(880.64, -2264.07, 30.47) 
-Config.ThirdDoor = vector3(881.33, -2268.24, 30.47)
-
-Config.VaultDoorLocation = vector3(890.27, -2284.61, 30.47)
-Config.SMGsLocation = vector3(881.45, -2282.61, 30.47)
-Config.ExplosivesLocation = vector3(882.31, -2286.33, 30.47)
-Config.RiflesLocation = vector3(886.86, -2281.74, 30.47)
-Config.AmmoLocation = vector3(886.65, -2287.11, 30.47)
-
-Config.Blip = { -- Blip Settings for Tobii Version
-    Enable = true, -- Change to false to disable the Blip
-    Location = vector3(881.36, -2266.83, 30.47), -- Change the blip coords here
-    Sprite = 106,
-    Display = 4,
-    Scale = 0.6,
-    Colour = 5,
-    Name = "Bobcat Security", --Change the name to your liking
-}
-end

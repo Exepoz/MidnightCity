@@ -1,16 +1,61 @@
 Beekeeping = {}
 
 Beekeeping.LockedToOwner = true -- If locked to owner then only the owner / placer will have access to open it. Otherwise, the hives and houses can be accessed by anyone.
-Beekeeping.Max = { -- Max amount of houses/hives an individual player can have placed down at any time.    
+Beekeeping.Max = { -- Max amount of houses/hives an individual player can have placed down at any time.
     Hives = 5, -- Maximum
     Houses = 5, -- Maximum
 }
 
--- PLEASE, Make sure your deadset on the value you set below. If you change it from false to true after players have already placed down hives/houses, it will cause issues. Refer to the docuemntation for more information.
+-- PLEASE, Make sure your deadset on the value you set below. If you change it from false to true after players have already placed down hives/houses, it will cause issues. Refer to the documentation for more information.
 Beekeeping.EnableExpiration = true -- If enabled, the houses/hives will expire, if not interacted with for the duration set below.
--- PLEASE, Make sure your deadset on the value you set above. If you change it from false to true after players have already placed down hives/houses, it will cause issues. Refer to the docuemntation for more information.
+-- PLEASE, Make sure your deadset on the value you set above. If you change it from false to true after players have already placed down hives/houses, it will cause issues. Refer to the documentation for more information.
+-- Documentation Entry: https://docs.samueldev.shop/resources/beekeeping/configuration/beekeeping.enableexpiration
 
 Beekeeping.ExpiryTime = 168 -- -- Expiry time for bee hives/houses in hours. If not interacted with for this duration, they are removed from the database. Example: 168 hours (1 week).
+
+-- Beekeeping Ped Settings
+Beekeeping.Beekeeper = {
+    Enable =false, -- If enabled, the beekeeper will spawn at the location below.
+    Location = {
+        {x = 442.05, y = 6506.10, z = 27.83, w = 61.1},
+        -- Add more locations as needed (Will Randomize from available locations each script start)
+    },
+    Model = "a_m_m_farmer_01",
+    Interaction = {
+        Icon = "fas fa-circle",
+        Distance = 3.0,
+    },
+    Scenario = "WORLD_HUMAN_STAND_IMPATIENT" -- Full list of scenarios @ https://pastebin.com/6mrYTdQv
+}
+
+-- Blip Creation for Beekeeper if the Beekeeper is enabled
+Beekeeping.Blip = {
+    Enable = true,  -- Set to false to disable blip creation
+    Sprite = 106,    -- Sprite/Icon for the blip
+    Display = 4,     -- Display type
+    Scale = 0.6,     -- Scale of the blip
+    Colour = 33,      -- Colour of the blip
+    Name = "Beekeeper"  -- Name of the blip
+}
+
+-- Beekeeping.ExclusionZones: Array of zones where hive/house placement is disabled.
+-- Each zone is defined by a central point ('coords') and a 'radius'.
+Beekeeping.ExclusionZones = {
+    { coords = vector3(426.05, 6478.9, 27.84), radius = 100 }, -- Example Location (Default Beekeeper Location)
+    -- Add more zones as needed
+}
+
+-- Beekeeping Buying/Selling Settings if the Beekeeper is enabled
+Beekeeping.Shop = {
+    Buy = {
+        ['bee-house'] = 10000, -- Buy Price
+        ['bee-hive'] = 7000, -- Buy Price
+    },
+    Sell = {
+        ['bee-honey'] = 30, -- Sell Price
+        ['bee-wax'] = 20, -- Sell Price
+    },
+}
 
 function GetInventoryIcon(item)
     local inventoryLink = 'ps-inventory' -- ox_inventory, ps-inventory etc.
@@ -19,9 +64,9 @@ function GetInventoryIcon(item)
 end
 
 Beekeeping.House = { -- These values are recommanded to be left at defautl to keep a balanced gameplay
-    CaptureTime = 300, -- Time in seconds to capture a new bee
-    QueenSpawnChance = 10, -- Chance in % to spawn a queen when capturing new bees
-    BeesPerCapture = {2, 3}, -- Min and max bees to capture per capture or fix amount
+    CaptureTime = 1000, -- Time in seconds to capture a new bee
+    QueenSpawnChance = 2, -- Chance in % to spawn a queen when capturing new bees
+    BeesPerCapture = {1, 2}, -- Min and max bees to capture per capture or fix amount
     QueensPerCapture = 1, -- Min and max queens to capture per capture or fix amount
     MaxQueens = 5, -- Max queens per house
     MaxWorkers = 50, -- Max workers per house
@@ -29,16 +74,16 @@ Beekeeping.House = { -- These values are recommanded to be left at defautl to ke
 
 Beekeeping.Hives = { -- These values are recommanded to be left at defautl to keep a balanced gameplay
     -- Honey
-    HoneyTime = 600, -- Time in seconds to produce honey & wax
+    HoneyTime = 2000, -- Time in seconds to produce honey & wax
     HoneyPerTime = {1, 2}, -- Min and max honey to produce per time
     MaxHoney = 100, -- Max honey per hive
     -- Wax
-    ChanceOfWax = 10, -- In percentage what are the chances to get wax on HoneyTime?
+    ChanceOfWax = 4, -- In percentage what are the chances to get wax on HoneyTime?
     WaxPerTime = {1, 2}, -- Min and max honey to produce per time
     MaxWax = 20, -- Max wax per hive
     -- Bees
-    NeededQueens = 1, -- Amount of queens needed for the hive to work.
-    NeededWorkers = 5, -- Amount of workers needed for the hive to work.
+    NeededQueens = 5, -- Amount of queens needed for the hive to work.
+    NeededWorkers = 25, -- Amount of workers needed for the hive to work.
 }
 
 Beekeeping.Items = {

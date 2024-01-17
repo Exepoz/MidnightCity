@@ -14,12 +14,229 @@ local function GetProgressColor(pourcentage, inverted)
     if pourcentage > 0 then return '#2a9d8f' end
 end
 
+-- Ped Creation Function
+function CreatePedAtCoords(pedModel, coords, scenario)
+    if type(pedModel) == "string" then pedModel = GetHashKey(pedModel) end
+    SD.utils.LoadModel(pedModel)
+    local ped = CreatePed(0, pedModel, coords.x, coords.y, coords.z, coords.w, false, false)
+    FreezeEntityPosition(ped, true)
+    TaskStartScenarioInPlace(ped, scenario, 0, true)
+    SetEntityVisible(ped, true)
+    SetEntityInvincible(ped, true)
+    PlaceObjectOnGroundProperly(ped)
+    SetBlockingOfNonTemporaryEvents(ped, true)
+
+    SD.target.AddTargetEntity(ped, {
+        options = {
+            {
+                action = function()
+                    OpenBeekeepingMenu() 
+                end,
+                icon = Beekeeping.Beekeeper.Interaction.Icon,
+                label = Lang:t('target.beekeeper'),
+                canInteract = function() return true end
+            },
+        },
+        distance = Beekeeping.Beekeeper.Interaction.Distance,
+    })
+
+    AddEventHandler("onResourceStop", function(resource)
+        if resource == GetCurrentResourceName() then
+            DeleteEntity(ped)
+        end
+    end)
+    
+    return ped
+end
+
+-- Thread for Ped Creation
+CreateThread(function()
+    while not GlobalState.BeekeeperLocation do Wait(0) end
+    if Beekeeping.Beekeeper.Enable then local ped = CreatePedAtCoords(Beekeeping.Beekeeper.Model, GlobalState.BeekeeperLocation, Beekeeping.Beekeeper.Scenario) end
+end)
+
+-- Blip Creation Thread
+CreateThread(function()
+    if Beekeeping.Beekeeper.Enable and Beekeeping.Blip.Enable then
+        local coords = GlobalState.BeekeeperLocation
+        local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+        SetBlipSprite(blip, Beekeeping.Blip.Sprite)
+        SetBlipDisplay(blip, Beekeeping.Blip.Display)
+        SetBlipScale(blip, Beekeeping.Blip.Scale)
+        SetBlipAsShortRange(blip, true)
+        SetBlipColour(blip, Beekeeping.Blip.Colour)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName(Beekeeping.Blip.Name)
+        EndTextCommandSetBlipName(blip)
+    end
+end)
+
+-- Menu Function for the beekeeper
+-- Function to handle Purchasing Tools/Objects
+function OpenPurchaseBeekeepingMenu()
+    local purchaseElements = {
+        {
+            title = Lang:t('beekeeper.buy_bee_house'),
+            description = Lang:t('beekeeper.purchase_bee_house_desc'),
+            icon = 'home',
+            product = 'bee-house',
+            price = Beekeeping.Shop.Buy['bee-house']
+        },
+        {
+            title = Lang:t('beekeeper.buy_bee_hive'),
+            description = Lang:t('beekeeper.purchase_bee_hive_desc'),
+            icon = 'fa-brands fa-hive',
+            product = 'bee-hive',
+            price = Beekeeping.Shop.Buy['bee-hive']
+        },
+        {
+            title = Lang:t('beekeeper.return_main_menu'),
+            icon = 'arrow-left',
+            onSelect = OpenBeekeepingMenu
+        }
+    }
+
+    for _, element in ipairs(purchaseElements) do
+        if element.product then
+            element.onSelect = function()
+                local input = lib.inputDialog('Purchase ' .. element.title, {
+                    {type = 'number', label = 'Quantity', required = true, min = 1}
+                })
+
+                if not input or not input[1] then return end
+                local quantity = tonumber(input[1])
+                if quantity and quantity > 0 then
+                    local totalCost = element.price * quantity
+                    OpenConfirmationDialog('buy', element.product, quantity, totalCost, 'sd-beekeeping:buyProduct')
+                end
+            end
+        end
+    end
+
+    lib.registerContext({
+        id = 'purchase_beekeeping_menu',
+        title = Lang:t('beekeeper.purchase_tools_title'),
+        options = purchaseElements
+    })
+
+    lib.showContext('purchase_beekeeping_menu')
+end
+
+-- Function to handle Selling Beekeeping Items
+function OpenSellBeekeepingMenu()
+    local sellElements = {
+        {
+            title = Lang:t('beekeeper.sell_honey'),
+            description = Lang:t('beekeeper.sell_honey_desc'),
+            icon = 'jar',
+            product = 'bee-honey',
+            price = Beekeeping.Shop.Sell['bee-honey']
+        },
+        {
+            title = Lang:t('beekeeper.sell_wax'),
+            description = Lang:t('beekeeper.sell_wax_desc'),
+            icon = 'fa-brands fa-hive',
+            product = 'bee-wax',
+            price = Beekeeping.Shop.Sell['bee-wax']
+        },
+        {
+            title = Lang:t('beekeeper.return_main_menu'),
+            icon = 'arrow-left',
+            onSelect = OpenBeekeepingMenu
+        }
+    }
+
+    for _, element in ipairs(sellElements) do
+        if element.product then
+            element.onSelect = function()
+                local input = lib.inputDialog('Sell ' .. element.title, {
+                    {type = 'number', label = 'Quantity', required = true, min = 1}
+                })
+
+                if not input or not input[1] then return end
+                local quantity = tonumber(input[1])
+                if quantity and quantity > 0 then
+                    local totalPrice = element.price * quantity
+                    OpenConfirmationDialog('sell', element.product, quantity, totalPrice, 'sd-beekeeping:sellProduct')
+                end
+            end
+        end
+    end
+
+    lib.registerContext({
+        id = 'sell_beekeeping_menu',
+        title = Lang:t('beekeeper.sell_products_title'),
+        options = sellElements
+    })
+
+    lib.showContext('sell_beekeeping_menu')
+end
+
+function OpenConfirmationDialog(actionType, product, quantity, totalCost, serverEvent)
+    local dialogTitle = 'Transaction Confirmation'
+    local productName = product:gsub("-", " "):gsub("(%l)(%w*)", function(a,b) return string.upper(a)..b end)  -- Capitalizes each word
+    local confirmMessage = 'Do you want to ' .. (actionType == 'buy' and 'purchase ' or 'sell ') .. quantity .. ' x ' .. productName .. ' for $' .. totalCost .. '?'
+    local icon = (actionType == 'buy' and 'dollar-sign' or 'hand-holding-usd')
+
+    lib.registerContext({
+        id = 'confirmation_dialog',
+        title = dialogTitle,
+        options = {
+            {
+                title = (actionType == 'buy' and 'Confirm Purchase' or 'Confirm Sale'),
+                description = confirmMessage,
+                icon = icon,
+                onSelect = function()
+                    TriggerServerEvent(serverEvent, product, quantity)
+                    lib.hideContext()
+                end
+            },
+            {
+                title = 'Cancel',
+                icon = 'times',
+                onSelect = function()
+                    lib.hideContext()
+                end
+            }
+        }
+    })
+
+    lib.showContext('confirmation_dialog')
+end
+
+-- Function to open the main Beekeeping Menu
+function OpenBeekeepingMenu()
+    local elements = {
+        {
+            title = Lang:t('beekeeper.purchase_tools'),
+            icon = 'tools',
+            description = Lang:t('beekeeper.purchase_tools_desc'),
+            onSelect = OpenPurchaseBeekeepingMenu
+        },
+        {
+            title = Lang:t('beekeeper.sell_items'),
+            icon = 'dollar-sign',
+            description = Lang:t('beekeeper.sell_items_desc'),
+            onSelect = OpenSellBeekeepingMenu
+        }
+    }
+
+    lib.registerContext({
+        id = 'beekeeping_main_menu',
+        title = Lang:t('beekeeper.main_menu_title'),
+        options = elements
+    })
+
+    lib.showContext('beekeeping_main_menu')
+end
+
 -- [[ BEE HOUSE ]]
 RegisterNetEvent('sd-beekeeping:openBeeHouse', function(data)
     local oData = data
-    TriggerEvent('sd-beekeeping:resetMaintenance', data.id)
+    TriggerServerEvent('sd-beekeeping:resetMaintenance', data.id)
     lib.callback('sd-beekeeping:getHiveData', false, function(hData)
-        local hiveData = json.decode(hData.data)
+        if not hData or type(hData) ~= 'table' then print('Error retrieving Data') return end
+        local hiveData = hData.data
         local hiveOptions = {}
         if hiveData then
             if Beekeeping.LockedToOwner then
@@ -136,9 +353,9 @@ end
 -- [[ BEE HIVE ]]
 RegisterNetEvent('sd-beekeeping:openBeeHive', function(data)
     local originalData = data
-    TriggerEvent('sd-beekeeping:resetMaintenance', data.id)
+    TriggerServerEvent('sd-beekeeping:resetMaintenance', data.id)
     lib.callback('sd-beekeeping:getHiveData', false, function(hData)
-        local hiveData = json.decode(hData.data)
+        local hiveData = hData.data
         local hiveOptions = {}
 
         if hiveData then

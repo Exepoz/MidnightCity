@@ -42,9 +42,10 @@ Config.Items = { -- Item/Amount
 Config.BossPed = `a_m_y_eastsa_01`
 
 Config.BossLocation = {
-    [1] = vector4(87.94, -1434.8, 28.31, 142.09),
-    [2] = vector4(278.05, 266.58, 104.64, 342.01),
-    [3] = vector4(-1129.8, -1604.41, 3.4, 213.84)
+    [1] = vector4(-101.39, 6521.59, 29.75, 302.00),
+    [2] = vector4(246.57, 376.73, 105.69, 337.71),
+    [3] = vector4(1960.90, 3826.50, 32.21, 115.05),
+    [4] = vector4(1431.08, 3637.24, 34.91, 318.89)
 }
 
 -- Money Reward per delievery.

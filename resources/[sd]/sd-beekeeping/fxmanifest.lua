@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'Samuel#0008 & ZF Labo'
 description 'Advanced Beekeeping System for QBCore and ESX'
-Version '1.0.2'
+Version '1.0.4'
 
 client_script 'client/*.lua'
 
@@ -24,4 +24,5 @@ escrow_ignore {
     '**/*.lua',  
     'config.lua',
 }
+
 dependency '/assetpacks'

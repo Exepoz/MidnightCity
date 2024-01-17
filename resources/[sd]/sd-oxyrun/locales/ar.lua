@@ -14,6 +14,9 @@ local Translations = {
             ["leave_area"]                  = "سيغادر عملاؤك إذا لم تبق في المنطقة ..",
             ["occupied_routes"]             = "جميع الطرق مشغولة حاليًا ، حاول مرة أخرى لاحقًا ..",
             ["missing_required_item"]       = "أنت تفتقد شيئًا..",
+            ["you_robbed"]                  = "العميل يحاول القيادة بعيداً دون أن يعطيك أوكسي الخاص بك!",
+            ["you_were_robbed"]             = "لقد غادر العميل دون أن يدفع لك بالأوكسي!",
+            ["robbery_stopped"]             = "لقد نجحت في منع العميل من المغادرة دون أن يدفع لك بالأوكسي!",
         },
         success = {
             ["you_have_arrived"]            = "لقد وصلت إلى الموقع المحدد ، انتظر العملاء ..",
@@ -28,7 +31,6 @@ local Translations = {
             ["global_cooldown_started"] = "OXY RUN: بدأت فترة الانتظار",
             ["global_cooldown_finished"] = "OXY RUN: انتهت فترة الانتظار",
         },
-        -- Locales Used in qb-phone email event if Config.SendEmail is true.
         mailstart = {
             ["sender"]                      = "مجهول",
             ["subject"]                     = "توصيل خاص",

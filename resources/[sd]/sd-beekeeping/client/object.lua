@@ -167,7 +167,17 @@ local function RayCastGamePlayCamera(distance)
 	return hit, endCoords, entityHit, materialHash
 end
 
+local function isInExclusionZone(playerCoords)
+    for _, zone in pairs(Beekeeping.ExclusionZones) do
+        if #(playerCoords - zone.coords) < zone.radius then
+            return true
+        end
+    end
+    return false
+end
+
 local function PlaceSpawnedObject(heading)
+    if isInExclusionZone(GetEntityCoords(PlayerPedId())) then SD.ShowNotification(Lang:t('notifications.in_exclusion_zone'), 'error') return end
     local ObjectType = 'prop' --will be replaced with inputted prop type later, which will determine options/events
     local Options = { SpawnRange = tonumber(CurrentSpawnRange) }
 
@@ -176,7 +186,7 @@ local function PlaceSpawnedObject(heading)
     end
     local finalCoords = vector4(CurrentCoords.x, CurrentCoords.y, CurrentCoords.z, heading)
     if PlacingItemObject then
-        TriggerServerEvent("sd-beekeeping:server:removeItem", PlacingItemObject.name, 1)
+        TriggerServerEvent("sd-beekeeping:server:removeItem", PlacingItemObject.name or PlacingItemObject, 1)
     end
     TriggerServerEvent("sd-beekeeping:objects:server:CreateNewObject", CurrentHiveType, finalCoords, Options, ObjectParams[CurrentHiveType].defaultData, CurrentOwner)
     DeleteObject(CurrentObject)
@@ -210,7 +220,7 @@ local function CreateSpawnedObject(data)
     FreezeEntityPosition(CurrentObject, true)
 
     CreateThread(function()
-        form = setupScaleform("instructional_buttons")
+        local form = setupScaleform("instructional_buttons")
         while PlacingObject do
             local hit, coords, entity, material = RayCastGamePlayCamera(7.0)
             CurrentCoords = coords
@@ -218,9 +228,13 @@ local function CreateSpawnedObject(data)
             DrawScaleformMovieFullscreen(form, 255, 255, 255, 255, 0)
 
             if hit then
-                SetEntityCoords(CurrentObject, coords.x, coords.y, coords.z)
+                local _, groundZ = GetGroundZFor_3dCoord(coords.x, coords.y, coords.z + 10.0, 0)
+                local adjustedZ = groundZ + 0.7
+
+                SetEntityCoords(CurrentObject, coords.x, coords.y, adjustedZ)
             end
             
+            -- Rotate object
             if IsControlJustPressed(0, 15) then
                 heading = heading + 5
                 if heading > 360 then heading = 0.0 end
@@ -231,11 +245,14 @@ local function CreateSpawnedObject(data)
                 if heading < 0 then heading = 360.0 end
             end
             
+            -- Cancel placement
             if IsControlJustPressed(0, 73) then
                 CancelPlacement()
             end
 
             SetEntityHeading(CurrentObject, heading)
+
+            -- Place object
             if IsControlJustPressed(0, 176) then
                 if lib.table.contains(Beekeeping.Grounds, material) then
                     PlaceSpawnedObject(heading)
@@ -332,11 +349,11 @@ end)
 RegisterNetEvent('sd-beekeeping:objects:client:SpawnObject', function(data)
     if not PlacingObject then
         
+        -- Check if the player is in an exclusion zone
+        if isInExclusionZone(GetEntityCoords(PlayerPedId())) then SD.ShowNotification(Lang:t('notifications.in_exclusion_zone'), 'error') return end
+
         lib.callback('sd-beekeeping:server:CheckHiveCount', data, function(hasReachedMax)
-            if hasReachedMax then
-                SD.ShowNotification(Lang:t('notifications.max_limit_reached'), 'error')
-                return
-            end
+            if hasReachedMax then SD.ShowNotification(Lang:t('notifications.max_limit_reached'), 'error') return end
 
             PlacingObject = true
             PlacingItemObject = data.item

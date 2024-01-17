@@ -14,47 +14,32 @@ local lootedBoxes = { smgs = true, explosives = true, rifles = true, ammo = true
 -- Item Creation
 if not Config.UseTargetForDoors then
 SD.RegisterUsableItem(Config.Items.Thermite, function(source) 
-	TriggerClientEvent('sd-bobcat:startHeist', source) 
+	TriggerClientEvent('sd-bobcat:client:startHeist', source) 
 end) 
 
 SD.RegisterUsableItem(Config.Items.Keycard, function(source)
-	TriggerClientEvent('sd-bobcat:openThirdDoor', source)
+	TriggerClientEvent('sd-bobcat:client:openThirdDoor', source)
 end)
 end
 
--- Events to Sync Player Activity
-local events = {
-    'seconddoor', 
-    'bombsync', 
-    'bombfail',
-    'thermite1',
-    'thermitefail1',
-    'thermite2',
-    'thermitefail2',
-    'bobcatkeycard',
-    'bobcatkeycardfail',
-    'particles',
-    'particles2',
-    'lootsync',
-    'lootItemSync',
-    'vaultsync',
-}
+-- Event to sync door states
+RegisterServerEvent('sd-bobcat:server:changeState', function(locationKey, stateType, stateValue)
+    if locationKey == nil or stateType == nil or stateValue == nil then return end
+    TriggerClientEvent('sd-bobcat:client:changeState', -1, locationKey, stateType, stateValue)
+end)
 
-for _, eventName in ipairs(events) do
-    RegisterNetEvent('sd-bobcat:server:' .. eventName, function(...)
-        TriggerClientEvent('sd-bobcat:client:' .. eventName, -1, ...)
-    end)
-end
+-- Events to sync particles.
+RegisterNetEvent('sd-bobcat:server:particles', function()
+    TriggerClientEvent('sd-bobcat:client:particles', -1)
+end)
+
+RegisterNetEvent('sd-bobcat:server:particles2', function()
+    TriggerClientEvent('sd-bobcat:client:particles2', -1)
+end)
 
 -- Removing Items
-RegisterNetEvent('sd-bobcat:server:removeItem', function(itemType)
-	if itemType == Config.Items.Thermite then
-		SD.RemoveItem(source, Config.Items.Thermite, 1)
-	elseif itemType == Config.Items.Keycard then
-		SD.RemoveItem(source, Config.Items.Keycard, 1)
-	elseif itemType == Config.Items.Bomb then
-		SD.RemoveItem(source, Config.Items.Bomb, 1)
-	end
+RegisterNetEvent('sd-bobcat:server:removeItem', function(item)
+	SD.RemoveItem(source, item, 1)
 end)
 
 -- Check for items listed in Config.Items
@@ -66,6 +51,38 @@ SD.RegisterCallback('sd-bobcat:server:hasItem', function(source, cb, item)
     end
 end)
 
+-- Callback to check cop count
+SD.RegisterCallback('sd-bobcat:server:getCops', function(source, cb)
+    local players = GetPlayers()
+    local amount = 0
+    for i=1, #players do
+        local player = tonumber(players[i])
+        if SD.HasGroup(player, SD.PoliceJobs) then
+            amount = amount + 1
+        end
+    end
+    cb(amount)
+end)
+
+-- Callback to check cooldown
+SD.RegisterCallback('sd-bobcat:server:cooldown', function(source, cb)
+    cb(cooldown)
+end)
+
+-- Callback to add player to bobcatplayers table
+SD.RegisterCallback('sd-bobcat:server:addPlayerCallback', function(source, cb)
+	local added = false
+    local src = source
+    local identifier = SD.GetIdentifier(source)
+    bobcatPlayers[#bobcatPlayers+1] = {
+        id = src,
+        citizenid = identifier
+    }
+    added = true
+    cb(added)
+
+end)
+
 -- Loot Giving Event for Boxes
 RegisterNetEvent('sd-bobcat:giveRandomBox', function(box)
     if not isBobcatPlayer(source) then return end
@@ -75,10 +92,10 @@ RegisterNetEvent('sd-bobcat:giveRandomBox', function(box)
     local distanceThreshold = 4.0 -- Distance threshold in meters
     
     local distances = {
-        smgs = #(playerCoords - Config.SMGsLocation),
-        explosives = #(playerCoords - Config.ExplosivesLocation),
-        rifles = #(playerCoords - Config.RiflesLocation),
-        ammo = #(playerCoords - Config.AmmoLocation)
+        smgs = #(playerCoords - Config.Locations[Config.MLOType].SMGs.location),
+        explosives = #(playerCoords - Config.Locations[Config.MLOType].Explosives.location),
+        rifles = #(playerCoords - Config.Locations[Config.MLOType].Rifles.location),
+        ammo = #(playerCoords - Config.Locations[Config.MLOType].Ammo.location)
     }
     
     if cooldown and distances[box] <= distanceThreshold and not lootedBoxes[box] then
@@ -182,26 +199,6 @@ SpawnGuards = function()
     TriggerClientEvent('sd-bobcat:client:SpawnGuards', -1 ,netIds)
 end
 
-SD.RegisterCallback('sd-bobcat:server:getCops', function(source, cb)
-    local players = GetPlayers()
-    local amount = 0
-    for i=1, #players do
-        local player = tonumber(players[i])
-        if SD.HasGroup(player, SD.PoliceJobs) then
-            amount = amount + 1
-        end
-    end
-    cb(amount)
-end)
-
-SD.RegisterCallback('sd-bobcat:server:cooldown', function(source, cb)
-	if cooldown then
-        cb(true)
-    else
-        cb(false)
-    end
-end)
-
 RegisterNetEvent('sd-bobcat:server:startCooldown', function()
 	cooldown = true 
 	local timer = Config.Cooldown * 60000
@@ -258,19 +255,6 @@ AddEventHandler('playerDropped', function()
     end
 end)
 
-SD.RegisterCallback('sd-bobcat:server:addPlayerCallback', function(source, cb)
-	local added = false
-    local src = source
-    local identifier = SD.GetIdentifier(source)
-    bobcatPlayers[#bobcatPlayers+1] = {
-        id = src,
-        citizenid = identifier
-    }
-    added = true
-    cb(added)
-
-end)
-
 RegisterNetEvent('sd-bobcat:server:removePlayer', function()
     local src = source
     RemovePlayer(src)
@@ -291,6 +275,7 @@ end)
 -- Reset Vault Event
 RegisterNetEvent('sd-bobcat:server:resetVault', function()
     lootedBoxes.smgs = true lootedBoxes.explosives = true lootedBoxes.rifles = true lootedBoxes.ammo = true
+    RemoveGuards()
     TriggerClientEvent('sd-bobcat:client:resetVault', -1)
 end)
 

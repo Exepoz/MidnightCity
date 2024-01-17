@@ -14,6 +14,10 @@ local Translations = {
         ["leave_area"]                  = "Deine Kunden werden gehen, wenn du nicht in der Gegend bleibst..",
         ["occupied_routes"]             = "Alle Routen sind derzeit belegt, versuche es später erneut..",
         ["missing_required_item"]       = "Dir fehlt etwas..",
+        ["you_robbed"]                  = "Der Kunde versucht wegzufahren, ohne Ihnen Ihr oxy zu geben!",
+        ["you_were_robbed"]             = "Der Kunde ist abgefahren, ohne dir mit oxy zu bezahlen!",
+        ["robbery_stopped"]             = "Du hast erfolgreich verhindert, dass der Kunde abfährt, ohne dir mit Oxy zu bezahlen!",
+    
     },
     success = {
         ["you_have_arrived"]            = "Du bist am markierten Ort angekommen, warte auf Kunden..",
@@ -28,7 +32,6 @@ local Translations = {
         ["global_cooldown_started"] = "OXY RUN: Abklingzeit gestartet",
         ["global_cooldown_finished"] = "OXY RUN: Abklingzeit beendet",
     },
-    -- Locales Used in qb-phone email event if Config.SendEmail is true.
     mailstart = {
         ["sender"]                      = "Unbekannt",
         ["subject"]                     = "Spezial Lieferung",

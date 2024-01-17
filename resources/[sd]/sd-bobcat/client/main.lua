@@ -1,17 +1,11 @@
 local SD = exports['sd_lib']:getLib()
 
-local lootingTypes = { 'smgs', 'explosives', 'rifles', 'ammo' }
-local lootedFlags = { smgs = false, explosives = false, rifles = false, ammo = false }
+local lootingTypes = { 'smgs', 'explosives', 'rifles', 'ammo' } -- Variable to track looting types
+local itemTypeToLocation = { smgs = 'SMGs', rifles = 'Rifles', explosives = 'Explosives', ammo = 'Ammo' } -- Variable to associate looting types with Location
 
 local props = {}
-
-local ishacking = false
-local ishacking1 = false
-local ishacking2 = false
+local lootingFunctions = {}
 local nearBobcat = false
-
-local secondDoorhacked = false
-local killedpeds = false
 local bobcat = nil
 local inBobcat = false
 
@@ -56,52 +50,44 @@ elseif Config.MLOType == 'nopixel' then
   })
 end
 
+-- This function listens for the event from the server
+RegisterNetEvent('sd-bobcat:client:changeState', function(locationKey, stateType, stateValue)
+    if Config.Locations[Config.MLOType] and Config.Locations[Config.MLOType][locationKey] then
+        Config.Locations[Config.MLOType][locationKey][stateType] = stateValue
+    end
+end)
+
 -- Minigame and Heist Starting 
--- Checks if people are doing a hack at the same time..
-RegisterNetEvent('sd-bobcat:client:thermite1', function()
-    ishacking1 = true
-end)
-
-RegisterNetEvent('sd-bobcat:client:thermite2', function()
-    ishacking2 = true
-end)
-
-RegisterNetEvent('sd-bobcat:client:thermitefail1', function()
-    ishacking1 = false
-end)
-
-RegisterNetEvent('sd-bobcat:client:thermitefail2', function()
-    ishacking2 = false
-end)
-
--- Checks for exploiters.
-RegisterNetEvent('sd-bobcat:client:seconddoor', function()
-    secondDoorhacked = true
-end)
+-- Play Alarm Sound (if enabled)
+local function playAlarmSound()
+    if Config.Alarm.SoundAlarm then
+        local soundId = GetSoundId() 
+        local alarmCoords = Config.Alarm.Coordinates[Config.MLOType]
+        PlaySoundFromCoord(soundId, Config.Alarm.SoundSettings.Name, alarmCoords.x, alarmCoords.y, alarmCoords.z, Config.Alarm.SoundSettings.Ref, true, 5000, false)
+        SetTimeout(Config.Alarm.SoundSettings.Timeout * 60 * 1000, function()
+            StopSound(soundId)
+            ReleaseSoundId(soundId)
+        end)
+    end
+end
 
 local function ThermiteDoor(success, doorNumber)
     if success then
         if doorNumber == 1 then
             firstDoor()
+            TriggerServerEvent('sd-bobcat:server:changeState', 'FirstDoor', 'hacked', true)
         elseif doorNumber == 2 then
-            if Config.SoundAlarm then
-                local soundId = GetSoundId() -- Get a unique sound ID
-                PlaySoundFromCoord(soundId, Config.SoundSettings.Name, Config.AlarmCoordinates.x, Config.AlarmCoordinates.y, Config.AlarmCoordinates.z, Config.SoundSettings.Ref, true, 5000, false)
-                SetTimeout(Config.SoundSettings.Timeout * 60 * 1000, function()
-                    StopSound(soundId)
-                    ReleaseSoundId(soundId)
-                end)
-            end
+            if Config.Alarm.SoundAlarm then playAlarmSound() end
             secondDoor()
-            TriggerServerEvent('sd-bobcat:server:seconddoor')
+            TriggerServerEvent('sd-bobcat:server:changeState', 'SecondDoor', 'hacked', true)
             TriggerServerEvent('sd-bobcat:server:startCooldown')
         end
         policeAlert()
     else
         if doorNumber == 1 then
-            TriggerServerEvent('sd-bobcat:server:thermitefail1')
+            TriggerServerEvent('sd-bobcat:server:changeState', 'FirstDoor', 'busy', false)
         elseif doorNumber == 2 then
-            TriggerServerEvent('sd-bobcat:server:thermitefail2')
+            TriggerServerEvent('sd-bobcat:server:changeState', 'SecondDoor', 'busy', false)
         end
         if Config.RemoveThermiteOnFail then
             TriggerServerEvent('sd-bobcat:server:removeItem', Config.Items.Thermite)
@@ -110,15 +96,9 @@ local function ThermiteDoor(success, doorNumber)
     end
 end
 
-RegisterNetEvent('sd-bobcat:startHeist', function() 
-    local ped = PlayerPedId()
-    local coords = GetEntityCoords(ped)
-    local bobcatarea
-    if Config.MLOType == 'gabz' then
-        bobcatarea = vector3(911.61, -2121.13, 31.23)
-    elseif Config.MLOType == 'nopixel' then
-        bobcatarea = vector3(881.95, -2263.41, 30.47)
-    end
+RegisterNetEvent('sd-bobcat:client:startHeist', function() 
+    local ped = PlayerPedId() local coords = GetEntityCoords(ped) local bobcatarea
+    if Config.MLOType == 'gabz' then bobcatarea = vector3(911.61, -2121.13, 31.23) elseif Config.MLOType == 'nopixel' then bobcatarea = vector3(881.95, -2263.41, 30.47) end
     local distance = GetDistanceBetweenCoords(coords, bobcatarea, true)
     
     if distance < 10.0 then
@@ -128,9 +108,9 @@ RegisterNetEvent('sd-bobcat:startHeist', function()
                     if not cooldown then
                         SD.ServerCallback("sd-bobcat:server:hasItem", function(hasItem)
                             if hasItem then
-                                if #(coords - Config.FirstDoor) < 2.0 then
-                                    if not ishacking1 then
-                                        TriggerServerEvent('sd-bobcat:server:thermite1')
+                                if #(coords - Config.Locations[Config.MLOType].FirstDoor.location) < 2.0 then
+                                    if not Config.Locations[Config.MLOType].FirstDoor.busy and not Config.Locations[Config.MLOType].FirstDoor.hacked  then
+                                        TriggerServerEvent('sd-bobcat:server:changeState', 'FirstDoor', 'busy', true)
                                         if Config.MainMinigame == "ps-ui" then
                                             exports['ps-ui']:Thermite(function(success)
                                                 ThermiteDoor(success, 1)
@@ -143,9 +123,9 @@ RegisterNetEvent('sd-bobcat:startHeist', function()
                                             end)
                                         end
                                     end
-                                elseif #(coords - Config.SecondDoor) < 2.0 then
-                                    if not ishacking2 then
-                                        TriggerServerEvent('sd-bobcat:server:thermite2')
+                                elseif #(coords - Config.Locations[Config.MLOType].SecondDoor.location) < 2.0 then
+                                    if not Config.Locations[Config.MLOType].SecondDoor.busy and not Config.Locations[Config.MLOType].SecondDoor.hacked then
+                                        TriggerServerEvent('sd-bobcat:server:changeState', 'SecondDoor', 'busy', true)
                                         if Config.MainMinigame == "ps-ui" then
                                             exports['ps-ui']:Thermite(function(success)
                                                 ThermiteDoor(success, 2)
@@ -194,7 +174,7 @@ end
 -- Blip Creation
 CreateThread(function()
     if Config.Blip.Enable then
-        local blip = AddBlipForCoord(Config.Blip.Location)
+        local blip = AddBlipForCoord(Config.Blip.Locations[Config.MLOType])
         SetBlipSprite(blip, Config.Blip.Sprite)
         SetBlipDisplay(blip, Config.Blip.Display)
         SetBlipScale(blip, Config.Blip.Scale)
@@ -206,21 +186,9 @@ CreateThread(function()
     end
 end)
 
--- Doorlocks
-RegisterNetEvent('sd-bobcat:openFirstDoor', function()  
-    SD.utils.Doorlock({type = Config.DoorLock, id = 'bobcatfirst', locked = false, enablesounds = true, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'})
-end)
-
-RegisterNetEvent('sd-bobcat:openSecondDoor', function()  
-    SD.utils.Doorlock({type = Config.DoorLock, id = 'bobcatsecond', locked = false, enablesounds = true, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'})
-end)
-
-RegisterNetEvent('sd-bobcat:client:bobcatkeycard', function()
-    ishacking = true
-end)
-
-RegisterNetEvent('sd-bobcat:client:bobcatkeycardfail', function()
-    ishacking = false
+-- Doorlock Handler 
+RegisterNetEvent('sd-bobcat:client:changeDoorlock', function(doorId, state)
+   SD.utils.Doorlock({type = Config.DoorLock, id = doorId, locked = state, enablesounds = true, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'})
 end)
 
 local function thirdunlock(success)
@@ -236,9 +204,6 @@ local function thirdunlock(success)
         local coords = GetEntityCoords(ped) 
         local id_card = 'p_ld_id_card_01'
         SD.utils.LoadModel(id_card)
-        while not HasModelLoaded("p_ld_id_card_01") do
-            Wait(1)
-        end
         idProp = CreateObject(id_card, coords, 1, 1, 0)
         local boneIndex = GetPedBoneIndex(ped, 28422)
         AttachEntityToEntity(idProp, ped, boneIndex, 0.12, 0.028, 0.001, 10.0, 175.0, 0.0, true, true, false, true, 1, true)
@@ -252,14 +217,12 @@ local function thirdunlock(success)
         DeleteEntity(idProp)
 
         Wait(2500) 
-        SD.utils.Doorlock({type = Config.DoorLock, id = 'bobcatthird', locked = false, enablesounds = true, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'})
+        TriggerEvent("sd-bobcat:client:changeDoorlock", 'bobcatthird', false) 
         ClearPedTasks(ped)
-        TriggerServerEvent('sd-bobcat:server:vaultsync') 
+        TriggerServerEvent('sd-bobcat:server:changeState', 'ThirdDoor', 'hacked', true)
     else
-        if Config.RemoveKeyCardOnFail then
-            TriggerServerEvent('sd-bobcat:server:removeItem', Config.Items.Keycard)
-        end
-        TriggerServerEvent('sd-bobcat:server:bobcatkeycardfail')
+        if Config.RemoveKeyCardOnFail then TriggerServerEvent('sd-bobcat:server:removeItem', Config.Items.Keycard) end
+        TriggerServerEvent('sd-bobcat:server:changeState', 'ThirdDoor', 'busy', false)
         SD.ShowNotification(Lang:t('error.you_failed'), 'error')
         if Config.KeycardMinigame == 'mhacking' then
         TriggerEvent('mhacking:hide')
@@ -267,57 +230,44 @@ local function thirdunlock(success)
     end
 end
 
-RegisterNetEvent('sd-bobcat:openThirdDoor', function()
+RegisterNetEvent('sd-bobcat:client:openThirdDoor', function()
     local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
-    if #(coords - Config.ThirdDoor) < 3.0 then
-        if secondDoorhacked then 
-            SD.ServerCallback('sd-bobcat:server:hasItem', function(hasItem)
-                if hasItem then
-                    if Config.EnableHacking then
-                        if Config.KeycardMinigame == 'ps-ui' then
-                            if not ishacking then
-                                TriggerServerEvent('sd-bobcat:server:bobcatkeycard')
+    if #(coords - Config.Locations[Config.MLOType].ThirdDoor.location) < 3.0 then
+        SD.ServerCallback('sd-bobcat:server:hasItem', function(hasItem)
+            if hasItem then
+                if Config.EnableHacking then
+                    if not Config.Locations[Config.MLOType].ThirdDoor.hacked and Config.Locations[Config.MLOType].SecondDoor.hacked then 
+                        if not Config.Locations[Config.MLOType].ThirdDoor.busy then
+                            TriggerServerEvent('sd-bobcat:server:changeState', 'ThirdDoor', 'busy', true)
+                            if Config.KeycardMinigame == 'ps-ui' then
                                 exports['ps-ui']:Scrambler(function(success)
                                     thirdunlock(success)
                                 end, Config.Type, Config.TimeP3, Config.Mirrored)
-                            end
-                        end
-                        if Config.KeycardMinigame == 'mhacking' then
-                            Wait(1000)
-                            if not ishacking then
-                                TriggerServerEvent('sd-bobcat:server:bobcatkeycard')
+                            elseif Config.KeycardMinigame == 'mhacking' then
+                                Wait(1000)
                                 TriggerEvent("mhacking:show")
                                 TriggerEvent("mhacking:start", math.random(Config.MinChar, Config.MaxChar), Config.Time, thirdunlock)
-                            end
-                        elseif Config.KeycardMinigame == 'hacking' then
-                            if not ishacking then
-                                TriggerServerEvent('sd-bobcat:server:bobcatkeycard')
+                            elseif Config.KeycardMinigame == 'hacking' then
                                 exports['hacking']:OpenHackingGame(Config.BobTime, Config.BobBlocks, Config.BobRepeat, thirdunlock)
                             end
                         end
-                    elseif not Config.EnableHacking then
-                        if not ishacking then
-                            TriggerServerEvent('sd-bobcat:server:bobcatkeycard')
-                            SD.utils.Doorlock({type = Config.DoorLock, id = 'bobcatthird', locked = false, enablesounds = true, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'})
-                            TriggerServerEvent('sd-bobcat:server:vaultsync') 
-                            if Config.RemoveKeyCardOnUse then
-                                TriggerServerEvent('sd-bobcat:server:removeItem', Config.Items.Keycard)
-                            end
-                        end
                     end
-                else
-                    SD.ShowNotification(Lang:t('error.missing_something2'), 'error')
+                elseif not Config.EnableHacking then
+                    TriggerEvent("sd-bobcat:client:changeDoorlock", 'bobcatthird', false)
+                    TriggerServerEvent('sd-bobcat:server:changeState', 'ThirdDoor', 'hacked', true)
+                    TriggerServerEvent('sd-bobcat:server:vaultsync') 
+                    if Config.RemoveKeyCardOnUse then
+                        TriggerServerEvent('sd-bobcat:server:removeItem', Config.Items.Keycard)
+                    end
                 end
-            end, Config.Items.Keycard)
-        else
-            SD.ShowNotification(Lang:t('error.how_you_get_here'), 'error')
-        end	
+            else
+                SD.ShowNotification(Lang:t('error.missing_something2'), 'error')
+            end
+        end, Config.Items.Keycard)
+    else
+        SD.ShowNotification(Lang:t('error.how_you_get_here'), 'error')
     end
-end)
-
-RegisterNetEvent('sd-bobcat:client:vaultsync', function()
-    killedpeds = true
 end)
 
 -- Guards
@@ -412,16 +362,28 @@ function PlayParticleEffect(method)
 end
 
 -- Vault Opening 
-RegisterNetEvent('sd-bobcat:client:explosion')
-AddEventHandler('sd-bobcat:client:explosion', function()
+RegisterNetEvent('sd-bobcat:client:explosion', function()
     TriggerServerEvent("sd-bobcat:server:explodeVaultDoorSync")
-    TriggerServerEvent("sd-bobcat:server:lootsync")
+
+    -- Resetting 'looted' state for each location
+    local locations = {"SMGs", "Explosives", "Rifles", "Ammo"}
+    for _, location in ipairs(locations) do
+        TriggerServerEvent('sd-bobcat:server:changeState', location, 'looted', false)
+    end
 end)
 
 local function closeVaultDoor()
-    if vaultdooropen then
-        SetStateOfRayfireMapObject(vaultobject, 4)
-        vaultdooropen = false
+    if Config.MLOType == 'gabz' then
+        if vaultdooropen then
+            SetStateOfRayfireMapObject(vaultobject, 4)
+            vaultdooropen = false
+        end
+    elseif Config.MLOType == 'nopixel' then
+        RequestIpl("prologue06_int")
+        local interiorid = GetInteriorAtCoords(883.4142, -2282.372, 31.44168)
+        ActivateInteriorEntitySet(interiorid, "np_prolog_clean")
+        DeactivateInteriorEntitySet(interiorid, "np_prolog_broken")
+        RefreshInterior(interiorid)
     end
 end
 
@@ -448,7 +410,6 @@ RegisterNetEvent('sd-bobcat:client:updateIPL', function()
             SetStateOfRayfireMapObject(vaultobject, 9)
             Citizen.Wait(100)
             vaultdooropen = true
-            killedpeds = false
     elseif Config.MLOType == 'nopixel' then
         AddExplosion(890.7849, -2284.88, 32.441, Config.ExplosionType, 150000.0, true, false, 4.0)
         AddExplosion(894.0084, -2284.90, 32.580, Config.ExplosionType, 150000.0, true, false, 4.0)
@@ -458,16 +419,7 @@ RegisterNetEvent('sd-bobcat:client:updateIPL', function()
         DeactivateInteriorEntitySet(interiorid, "np_prolog_clean")
         RefreshInterior(interiorid)
     
-        killedpeds = false
     end
-end)
-
-RegisterNetEvent('sd-bobcat:client:bombsync', function()
-    killedpeds = false
-end)
-    
-RegisterNetEvent('sd-bobcat:client:bombfail', function()
-    killedpeds = true
 end)
 
 local function openTimerInput()
@@ -510,6 +462,7 @@ local function openTimerInput()
     end
 
     if mdialog ~= nil then
+        TriggerServerEvent('sd-bobcat:server:changeState', 'VaultDoor', 'hacked', true)
         bombplant(timer * 1000)
     else
         SD.ShowNotification(Lang:t('error.timer_input_closed'), 'error')
@@ -520,30 +473,32 @@ local function PlaceBomb(success)
     if success then
         openTimerInput()
     else
-        TriggerServerEvent('sd-bobcat:server:bombfail')
+        TriggerServerEvent('sd-bobcat:server:changeState', 'VaultDoor', 'busy', false)
         SD.ShowNotification(Lang:t('error.you_failed'), 'error')
     end
 end
 
-RegisterNetEvent('sd-bobcat:client:bomb')
-AddEventHandler('sd-bobcat:client:bomb', function()
+RegisterNetEvent('sd-bobcat:client:bomb', function()
     SD.ServerCallback('sd-bobcat:server:hasItem', function(hasItem)
         if hasItem then
-            TriggerServerEvent('sd-bobcat:server:bombsync')
-            if not Config.VaultHacking then
-                openTimerInput()
+            if not Config.VaultHacking then 
+                openTimerInput() 
             end
+
             if Config.VaultHacking then
-                if Config.VaultMinigame == "ps-ui" then
-                    exports['ps-ui']:VarHack(function(success)
-                        PlaceBomb(success)
-                    end, Config.Blocks4, Config.Time4)
-                elseif Config.VaultMinigame == "memorygame" then
-                    exports["memorygame"]:thermiteminigame(Config.Blocks3, Config.Attempts, Config.Show, Config.Time, function()
-                        PlaceBomb(true)
-                    end, function()
-                        PlaceBomb(false)
-                    end)
+                if not Config.Locations[Config.MLOType].VaultDoor.busy and Config.Locations[Config.MLOType].ThirdDoor.hacked then 
+                    TriggerServerEvent('sd-bobcat:server:changeState', 'VaultDoor', 'busy', true)
+                    if Config.VaultMinigame == "ps-ui" then
+                        exports['ps-ui']:VarHack(function(success)
+                            PlaceBomb(success)
+                        end, Config.Blocks4, Config.Time4)
+                    elseif Config.VaultMinigame == "memorygame" then
+                        exports["memorygame"]:thermiteminigame(Config.Blocks3, Config.Attempts, Config.Show, Config.Time, function()
+                            PlaceBomb(true)
+                        end, function()
+                            PlaceBomb(false)
+                        end)
+                    end
                 end
             end
         else
@@ -553,20 +508,29 @@ AddEventHandler('sd-bobcat:client:bomb', function()
 end)
 
 RegisterNetEvent('sd-bobcat:client:resetVault', function()
-for k in pairs(lootedFlags) do
-    lootedFlags[k] = false
-end
-lootingFunctions = {}
-closeVaultDoor()
-ishacking = false ishacking1 = false ishacking2 = false secondDoorhacked = false killedpeds = false
-local doors = {
-    {id = 'bobcatfirst', locked = true, enablesounds = true, type = Config.DoorLock, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'},
-    {id = 'bobcatsecond', locked = true, enablesounds = true, type = Config.DoorLock, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'},
-    {id = 'bobcatthird', locked = true, enablesounds = true, type = Config.DoorLock, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'}
-}
-for _, doorData in ipairs(doors) do
-    SD.utils.Doorlock(doorData)
-end
+    -- Reset looting functions and states
+    lootingFunctions = {}
+    closeVaultDoor()
+
+    if Config.Locations[Config.MLOType] then
+        for _, location in pairs(Config.Locations[Config.MLOType]) do
+            location.busy = false
+            location.hacked = true
+            location.looted = true
+        end
+    end
+
+    -- Define doors data
+    local doors = {
+        {id = 'bobcatfirst', locked = true, enablesounds = true, type = Config.DoorLock, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'},
+        {id = 'bobcatsecond', locked = true, enablesounds = true, type = Config.DoorLock, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'},
+        {id = 'bobcatthird', locked = true, enablesounds = true, type = Config.DoorLock, doorNames = {'bobcatfirst', 'bobcatsecond', 'bobcatthird'}, location = 'bobcat'}
+    }
+
+    -- Lock the doors
+    for _, doorData in ipairs(doors) do
+        SD.utils.Doorlock(doorData)
+    end
 end)
 
 -- Prop Creation
@@ -594,11 +558,11 @@ if Config.MLOType == 'gabz' then
     end)
 end
 
-local lootingFunctions = {}
-
 local function giveRandomForType(itemType)
     TriggerServerEvent('sd-bobcat:giveRandomBox', itemType)
-    TriggerServerEvent('sd-bobcat:server:lootItemSync', itemType)
+    if itemTypeToLocation[itemType] then
+        TriggerServerEvent('sd-bobcat:server:changeState', itemTypeToLocation[itemType], 'looted', true)
+    end
 end
 
 for _, itemType in ipairs(lootingTypes) do
@@ -607,81 +571,71 @@ for _, itemType in ipairs(lootingTypes) do
     }
 end
 
--- Event to set all flags to true
-RegisterNetEvent('sd-bobcat:client:lootsync', function()
-    for k, v in pairs(lootedFlags) do
-        lootedFlags[k] = true
-    end
-end)
-
--- Event to set a specific flag to false
-RegisterNetEvent('sd-bobcat:client:lootItemSync', function(itemType)
-    if lootedFlags[itemType] ~= nil then
-        lootedFlags[itemType] = false
-    end
-end)
-
 local function startLooting(itemType)
     local ped = PlayerPedId()
     SD.utils.LoadAnim('anim@amb@clubhouse@tutorial@bkr_tut_ig3@')
     TaskPlayAnim(ped, "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 8.0, 8.0, 6000, 49, 1, 0, 0, 0)
     
-    local lootingData = lootingFunctions[itemType]
-    if lootingData then
-        SD.StartProgress('looting' .. itemType, Lang:t('progress.looting_crate'), math.random(3500, 5000),
-            function()
-                lootingData.giveRandom()
-                ClearPedTasks(ped)
-            end,
-            function()
-                SD.ShowNotification(Lang:t('error.canceled'), 'error')
-                ClearPedTasks(ped)
-            end)
+    if not Config.Locations[Config.MLOType][itemTypeToLocation[itemType]].looted and not Config.Locations[Config.MLOType][itemTypeToLocation[itemType]].busy  then
+        local lootingData = lootingFunctions[itemType]
+        if lootingData then
+            TriggerServerEvent('sd-bobcat:server:changeState', itemTypeToLocation[itemType], 'busy', true)
+            SD.StartProgress('looting' .. itemType, Lang:t('progress.looting_crate'), math.random(3500, 5000),
+                function()
+                    lootingData.giveRandom()
+                    ClearPedTasks(ped)
+                end,
+                function()
+                    TriggerServerEvent('sd-bobcat:server:changeState', itemTypeToLocation[itemType], 'busy', false)
+                    SD.ShowNotification(Lang:t('error.canceled'), 'error')
+                    ClearPedTasks(ped)
+                end)
         else
-        ClearPedTasks(ped)
+            ClearPedTasks(ped)
+        end
     end
 end
 
 CreateThread(function()
-    Zones["Boom"] = SD.target.AddCircleZone("boom", Config.VaultDoorLocation, 2.0, {
+    Zones["Boom"] = SD.target.AddCircleZone("boom", Config.Locations[Config.MLOType].VaultDoor.location, 2.0, {
         distance = 2.0,
-        options = { { label = Lang:t('target.place_bomb'), icon = "fas fa-bomb", event = "sd-bobcat:client:bomb", canInteract = function() return killedpeds or false end  } },
+        options = { { label = Lang:t('target.place_bomb'), icon = "fas fa-bomb", event = "sd-bobcat:client:bomb", canInteract = function() return Config.Locations[Config.MLOType].ThirdDoor.hacked and not Config.Locations[Config.MLOType].VaultDoor.hacked and not Config.Locations[Config.MLOType].VaultDoor.busy or false end  } },
     }, Config.BobcatDebug)
     
-    Zones["Smgs"] = SD.target.AddCircleZone("smgs", Config.SMGsLocation, 2.0, {
+    Zones["Smgs"] = SD.target.AddCircleZone("smgs", Config.Locations[Config.MLOType].SMGs.location, 2.0, {
         distance = 2.0,
-        options = { { label = Lang:t('target.take_weapon'), icon = "fas fa-box", action = function() startLooting('smgs') end, canInteract = function() return lootedFlags.smgs or false end  } },
+        options = { { label = Lang:t('target.take_weapon'), icon = "fas fa-box", action = function() startLooting('smgs') end, canInteract = function() return not Config.Locations[Config.MLOType].SMGs.looted or false end  } },
     }, Config.BobcatDebug)
     
-    Zones["Explosives"] = SD.target.AddCircleZone("explosives", Config.ExplosivesLocation, 2.0, {
+    Zones["Explosives"] = SD.target.AddCircleZone("explosives", Config.Locations[Config.MLOType].Explosives.location, 2.0, {
         distance = 2.0,
-        options = { { label = Lang:t('target.take_weapon'), icon = "fas fa-box", action = function() startLooting('explosives') end, canInteract = function() return lootedFlags.explosives or false end  } },
+        options = { { label = Lang:t('target.take_weapon'), icon = "fas fa-box", action = function() startLooting('explosives') end, canInteract = function() return not Config.Locations[Config.MLOType].Explosives.looted or false end  } },
     }, Config.BobcatDebug)
     
-    Zones["Rifles"] = SD.target.AddCircleZone("Rifles", Config.RiflesLocation, 2.0, {
+    Zones["Rifles"] = SD.target.AddCircleZone("Rifles", Config.Locations[Config.MLOType].Rifles.location, 2.0, {
         distance = 2.0,
-        options = { { label = Lang:t('target.take_weapon'), icon = "fas fa-box", action = function() startLooting('rifles') end, canInteract = function() return lootedFlags.rifles or false end  } },
+        options = { { label = Lang:t('target.take_weapon'), icon = "fas fa-box", action = function() startLooting('rifles') end, canInteract = function() return not Config.Locations[Config.MLOType].Rifles.looted or false end  } },
     }, Config.BobcatDebug)
     
-    Zones["Ammo"] = SD.target.AddCircleZone("Ammo", Config.AmmoLocation, 1.3, {
+    Zones["Ammo"] = SD.target.AddCircleZone("Ammo", Config.Locations[Config.MLOType].Ammo.location, 1.3, {
         distance = 2.0,
-        options = { { label = Lang:t('target.take_ammo'), icon = "fas fa-box", action = function() startLooting('ammo') end, canInteract = function() return lootedFlags.ammo or false end } },
+        options = { { label = Lang:t('target.take_ammo'), icon = "fas fa-box", action = function() startLooting('ammo') end, canInteract = function() return not Config.Locations[Config.MLOType].Ammo.looted or false end } },
     }, Config.BobcatDebug)
 
     if Config.UseTargetForDoors then
-        Zones["firstDoor"] = SD.target.AddCircleZone("firstDoor", Config.FirstDoor, 2.0, {
+        Zones["firstDoor"] = SD.target.AddCircleZone("firstDoor", Config.Locations[Config.MLOType].FirstDoor.location, 2.0, {
             distance = 2.0,
-            options = { { label = Lang:t('target.plant_thermite'), icon = "fas fa-bomb", event = "sd-bobcat:startHeist", canInteract = function() return not ishacking1 end } },
+            options = { { label = Lang:t('target.plant_thermite'), icon = "fas fa-bomb", event = "sd-bobcat:client:startHeist", canInteract = function() return not Config.Locations[Config.MLOType].FirstDoor.hacked end } },
         }, Config.BobcatDebug)
 
-        Zones["secondDoor"] = SD.target.AddCircleZone("secondDoor", Config.SecondDoor, 2.0, {
+        Zones["secondDoor"] = SD.target.AddCircleZone("secondDoor", Config.Locations[Config.MLOType].SecondDoor.location, 2.0, {
             distance = 2.0,
-            options = { { label = Lang:t('target.plant_thermite'), icon = "fas fa-bomb", event = "sd-bobcat:startHeist", canInteract = function() return not ishacking2 end } },
+            options = { { label = Lang:t('target.plant_thermite'), icon = "fas fa-bomb", event = "sd-bobcat:client:startHeist", canInteract = function() return not Config.Locations[Config.MLOType].SecondDoor.hacked end } },
         }, Config.BobcatDebug)
 
-        Zones["thirdDoor"] = SD.target.AddCircleZone("thirdDoor", Config.ThirdDoor, 2.0, {
+        Zones["thirdDoor"] = SD.target.AddCircleZone("thirdDoor", Config.Locations[Config.MLOType].ThirdDoor.location, 2.0, {
             distance = 2.0,
-            options = { { label = Lang:t('target.swipe_card'), icon = "fa-sharp fa-solid fa-hands", event = "sd-bobcat:openThirdDoor", canInteract = function() return not ishacking end,  } },
+            options = { { label = Lang:t('target.swipe_card'), icon = "fa-sharp fa-solid fa-hands", event = "sd-bobcat:client:openThirdDoor", canInteract = function() return not Config.Locations[Config.MLOType].ThirdDoor.hacked end,  } },
         }, Config.BobcatDebug)
     end
 end)

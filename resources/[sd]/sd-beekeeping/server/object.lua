@@ -7,7 +7,11 @@ RegisterNetEvent("sd-beekeeping:objects:server:CreateNewObject", function(hive_t
     if hive_type and coords and options then
         local currentTime = os.time()
         local data = MySQL.query.await("INSERT INTO sd_beekeeping (hive_type, coords, options, data, citizenid, last_maintained) VALUES (?, ?, ?, ?, ?, ?)", {hive_type, json.encode(coords), json.encode(options), json.encode(defaultData), citizenid, currentTime})
+        
         ServerObjects[data.insertId] = {id = data.insertId, hive_type = hive_type, coords = coords, options = options, last_maintained = currentTime}
+        
+        TriggerEvent("sd-beekeeping:server:AddToBeekeepingData", data.insertId, hive_type, coords, options, defaultData, citizenid, currentTime)
+        
         TriggerClientEvent("sd-beekeeping:objects:client:AddObject", -1, {id = data.insertId, hive_type = hive_type, coords = coords, options = options})
     end
 end)
@@ -39,10 +43,6 @@ RegisterNetEvent("sd-beekeeping:objects:server:DeleteObject", function(objectid)
         TriggerClientEvent("sd-beekeeping:objects:client:receiveObjectDelete", -1, objectid)
     end
 end)
-
-local function CreateDataObject(mode, coords, hive_type, options, objectname)
-    MySQL.query.await("INSERT INTO sd_beekeeping (hive_type, coords, options) VALUES (?, ?, ?)", {hive_type, json.encode(coords), json.encode(options)})
-end
 
 RegisterNetEvent('sd-beekeeping:resetMaintenance', function(beeHouseId)
     local src = source
