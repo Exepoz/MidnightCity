@@ -4,24 +4,24 @@ Config.Mysql = 'oxmysql'
 Config.IsBoss = false -- if u want only the boss to swap engines (true/false)
 Config.DrawText = "qb-core" -- Define the export resource accordingly | qb-core, qb-drawtext, ps-ui
 Config.engineLocations = {
-  ["rising"] = { -- THis name should be unique no duplicates
-    ["coords"] = vector3(-344.87, -114.64, 39.06), -- The coords of the zone
+  ["lscustoms"] = { -- THis name should be unique no duplicates
+    ["coords"] = vector3(-313.04, -124.87, 38.58), -- The coords of the zone
     ["size"] = 2.0, -- How big is the zone?
     ["heading"] = 0.0, -- Heading
     ["debug"] = false, -- Should zone be debugged?
-    ["authorizedJob"] = "rising", -- job authorized to engine swap
+    ["authorizedJob"] = "lscustoms", -- job authorized to engine swap
     ["inVehicle"] = "Press E to engineswap", -- The name if a user is in a vehicle
     ["outVehicle"] = "You need to be in a vehicle!", -- Message if user is not in a vehicle
   },
-    ["tunershop"] = { -- THis name should be unique no duplicates
-    ["coords"] = vector3(125.47, -3023.28, 6.75), -- The coords of the zone
-    ["size"] = 2.0, -- How big is the zone?
-    ["heading"] = 0.0, -- Heading
-    ["debug"] = false, -- Should zone be debugged?
-    ["authorizedJob"] = "midnightmotors", -- job authorized to engine swap
-    ["inVehicle"] = "Press E to Swap the Engine", -- The name if a user is in a vehicle
-    ["outVehicle"] = "You need to be in a vehicle!", -- Message if user is not in a vehicle
-  },
+ --  ["tunershop"] = { -- THis name should be unique no duplicates
+ --  ["coords"] = vector3(125.47, -3023.28, 6.75), -- The coords of the zone
+ --  ["size"] = 2.0, -- How big is the zone?
+ --  ["heading"] = 0.0, -- Heading
+ --  ["debug"] = false, -- Should zone be debugged?
+ --  ["authorizedJob"] = "midnightmotors", -- job authorized to engine swap
+ --  ["inVehicle"] = "Press E to Swap the Engine", -- The name if a user is in a vehicle
+ --  ["outVehicle"] = "You need to be in a vehicle!", -- Message if user is not in a vehicle
+ --},
 }
 Config.custom_engine = {
   [`r34sound`] = { 	custom = true, 	label = 'RB26DE Twin Turbo', 	soundname = 'r34sound', },

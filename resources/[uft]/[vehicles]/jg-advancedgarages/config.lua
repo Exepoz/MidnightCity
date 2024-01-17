@@ -658,7 +658,7 @@ Config.JobGarageLocations = {
     hideBlip = true,
     vehiclesType = 'owned',
   },
-  ['Mount Zonah (Ambulances)'] = {
+  ['Pillbox (Ambulances)'] = {
     coords = vector3(-503.13, -335.16, 34.39),
     spawn = vector4(-503.13, -335.16, 34.39, 261.59),
     distance = 5,
