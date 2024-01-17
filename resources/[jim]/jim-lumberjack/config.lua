@@ -1,6 +1,6 @@
 Config = {
 	Debug = false, -- enable debug mode
-	img = "ps_inventory/web/images/", -- Change this to your inventory's name and image folder
+	img = "ps-inventory/html/images/", -- Change this to your inventory's name and image folder
 
 	Blips = true, -- Enable Blips?
 
@@ -14,17 +14,17 @@ Config = {
 	Job = nil, -- leave this as nil to have no job restriction
 	JimShops = false, -- Set this to true if using jim-shops
 
-	SawBreak = true, -- If true, chance to break powersaw/chainsaw on use
+	SawBreak = false, -- If true, chance to break powersaw/chainsaw on use
 
-	ChainsawMod = false, -- Set to true if using Mrs. BzZz's Chainsaw prop (https://bzzz.tebex.io/package/5449983)
+	ChainsawMod = true, -- Set to true if using Mrs. BzZz's Chainsaw prop (https://bzzz.tebex.io/package/5449983)
 						-- This replaces the built in powersaw prop with a chainsaw
 
 	SawSound = true, -- Disable/Enable the saw noise
 
 	Timings = { -- Time it takes to do things
-		["TreeCutting"] = math.random(9000, 11500),
+		["TreeCutting"] = math.random(20000, 23000),
 		["TreeSpawn"] = 300000, -- 5 minutes
-		["LogCutting"] = math.random(9000, 11500),
+		["LogCutting"] = math.random(10000, 11500),
 		["Debark"] = math.random(7000, 8000),
 		["Processing"] = math.random(7000, 9000),
 		["PulpLog"] = math.random(6000, 8000),

@@ -31,7 +31,7 @@ RegisterNetEvent('jim-catcafe:Chair', function(data)
 	end
 	while sitting do
 		if sitting then
-			if IsControlJustReleased(0, 202) and IsPedUsingScenario(ped, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER") then
+			if IsControlJustReleased(0, 203) and IsPedUsingScenario(ped, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER") then
 				sitting = false
 				ClearPedTasks(ped)
 				if catseat then SetEntityCoords(ped, catseat) end

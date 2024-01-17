@@ -4,7 +4,7 @@
 
 
 Config = {
-	Debug = true, -- false to remove green boxes
+	Debug = false, -- false to remove green boxes
 	Lan = "en", -- Pick your language here
 	img = "ps-inventory/html/images/", -- Change this to your inventory's name and image folder (SET TO "" IF YOU HAVE DOUBLE IMAGES)
 
@@ -17,7 +17,7 @@ Config = {
 	MultiCraft = true,
 	MultiCraftAmounts = { [1], [5], [10] },
 
-	JimConsumables = false,
+	JimConsumables = true,
 	JimShop = false, -- Enable this to use jim-shops for buying ingredients
 
 	craftCam = true,		-- Disable this to stop crafting cameras
@@ -36,15 +36,17 @@ Config = {
 			label = "Pop's Diner",
 			autoClock = { enter = false, exit = true },
 			zones = {
-				vec2(1558.0170898438, 6442.4106445312),
-				vec2(1601.52734375, 6424.2348632812),
-				vec2(1610.9509277344, 6449.2001953125),
-				vec2(1613.7552490234, 6464.6137695312),
-				vec2(1575.8428955078, 6482.0229492188)
+				vec2(2557.83, 2611.83),
+				vec2(2568.08, 2584.16),
+				vec2(2560.08, 2574.20),
+				vec2(2542.66, 2570.72),
+				vec2(2517.87, 2574.77),
+				vec2(2516.28, 2600.04),
+				vec2(2545.29, 2606.90)
 			},
-			blip = vec3(1583.98, 6449.49, 25.18), blipcolor = 48, blipsprite = 267, blipdisp = 6, blipscale = 0.7, blipcat = nil,
-			garage = { spawn = vec4(1600.34, 6446.77, 24.75, 157.27),
-						out = vec4(1597.81, 6446.65, 25.23, 247.67),
+			blip = vec3(2539.86, 2584.27, 38.24), blipcolor = 48, blipsprite = 267, blipdisp = 6, blipscale = 0.7, blipcat = nil,
+			garage = { spawn = vec4(2524.05, 2583.8, 37.07, 157.27),
+						out = vec4(2519.3, 2588.78, 36.95, 247.67),
 						list = { "futo", } },
 		},
 	},
@@ -52,14 +54,14 @@ Config = {
 		label = "Food Fridge Store",
 		slots = 8,
 		items = {
-			{ name = "jimsausages", price = 0, amount = 50, info = {}, type = "item", slot = 1, },
-			{ name = "jimeggs", price = 0, amount = 50, info = {}, type = "item", slot = 2, },
-			{ name = "meat", price = 0, amount = 50, info = {}, type = "item", slot = 3, },
-			{ name = "cheddar", price = 0, amount = 50, info = {}, type = "item", slot = 4, },
-			{ name = "chickenbreast", price = 0, amount = 50, info = {}, type = "item", slot = 5, },
-			{ name = "ham", price = 0, amount = 50, info = {}, type = "item", slot = 6, },
-			{ name = "lettuce", price = 0, amount = 50, info = {}, type = "item", slot = 7, },
-			{ name = "fish", price = 0, amount = 50, info = {}, type = "item", slot = 8, },
+			-- name = "jimsausages", price = 0, amount = 50, info = {}, type = "item", slot = 1, },
+			-- name = "jimeggs", price = 0, amount = 50, info = {}, type = "item", slot = 2, },
+			-- name = "meat", price = 0, amount = 50, info = {}, type = "item", slot = 3, },
+			-- name = "cheese", price = 0, amount = 50, info = {}, type = "item", slot = 4, },
+			-- name = "chickenbreast", price = 0, amount = 50, info = {}, type = "item", slot = 5, },
+			-- name = "ham", price = 0, amount = 50, info = {}, type = "item", slot = 6, },
+			-- name = "lettuce", price = 0, amount = 50, info = {}, type = "item", slot = 7, },
+			-- name = "fish", price = 0, amount = 50, info = {}, type = "item", slot = 8, },
 		},
 	},
 	DessertItems = {
@@ -87,22 +89,28 @@ Crafting = {
 	},
 	Oven = {
 		{ ["baconeggs"] = { ["ham"] = 1, ["jimeggs"] = 1, }, },
-		{ ["cheeseburger"] = { ["cheddar"] = 1, ["meat"] = 1, }, },
+		{ ["cheeseburger"] = { ["cheese"] = 1, ["meat"] = 1, }, },
 		{ ["hamburger"] = { ["meat"] = 1, }, },
 		{ ["sausageeggs"] = { ["jimsausages"] = 1, ["jimeggs"] = 1, }, },
 		{ ["steakburger"] = { ["meat"] = 1, }, },
 	},
 	ChoppingBoard = {
 		{ ["bltsandwich"] = { ["ham"] = 1, ["lettuce"] = 1, }, },
-		{ ["cheesesandwich"] = { ["cheddar"] = 1, }, },
+		{ ["cheesesandwich"] = { ["cheese"] = 1, }, },
 		{ ["eggsandwich"] = { ["jimeggs"] = 1, }, },
 		{ ["grilledwrap"] = { ["chickenbreast"] = 1, }, },
-		{ ["hamcheesesandwich"] = { ["ham"] = 1, ["cheddar"] = 1, }, },
+		{ ["hamcheesesandwich"] = { ["ham"] = 1, ["cheese"] = 1, }, },
 		{ ["hamsandwich"] = { ["ham"] = 1, }, },
 		{ ["ranchwrap"] = { ["chickenbreast"] = 1, }, },
 		{ ["toastbacon"] = { ["ham"] = 1, }, },
 		{ ["tunasandwich"] = { ["fish"] = 1, }, },
 		{ ["veggiewrap"] = { ["lettuce"] = 1, }, },
+		{ ['delivery_rexdiner'] = {
+			['baconeggs'] = 1,
+			['ranchwrap'] = 1,
+			['sprunk'] = 1,
+			['hamburger'] = 1,
+		} },
 	},
 	Coffee = {
 		{ ["coffee"] = {}, },

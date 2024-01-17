@@ -11,7 +11,19 @@ RegisterNetEvent('QBCore:Client:SetDuty', function(duty) onDuty = duty end)
 AddEventHandler('onResourceStart', function(r) if GetCurrentResourceName() ~= r then return end
 	QBCore.Functions.GetPlayerData(function(PlayerData)	PlayerJob = PlayerData.job for k, v in pairs(Config.Locations) do if PlayerData.job.name == v.job then onDuty = PlayerJob.onduty end end end)
 end)
-
+function HasMetaItem(items, amount)
+    local amount, count = amount or 1, 0
+    local pData = QBCore.Functions.GetPlayerData()
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+    for _, itemData in pairs(pData.items) do
+        if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
+            if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+            count += itemData.amount
+        end
+    end
+    if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end    return false
+end
 CreateThread(function()
 	for k, v in pairs(Config.Locations) do
 		local bossroles = {}
@@ -58,10 +70,10 @@ CreateThread(function()
 
 				Targets["BeanFridge"] =
 					exports['qb-target']:AddBoxZone("BeanFridge", vec3(124.51, -1037.97, 29.28), 0.85, 0.6, { name="BeanFridge", heading = 340.0, debugPoly=Config.Debug, minZ=29.28, maxZ=30.08 },
-						{ options = { {  event = "jim-beanmachine:Shop", icon = "fas fa-archive", label = Loc[Config.Lan].targetinfo["open_storage"], job = v.job, shop = Config.FoodItems, shopname = "BeanFridge", coords = vec3(124.51, -1037.97, 29.28) }, }, distance = 1.5 })
+						{ options = { {  event = "jim-beanmachine:Stash", icon = "fas fa-archive", label = Loc[Config.Lan].targetinfo["open_storage"], job = v.job, stash = "Ls2", coords = vec3(124.51, -1037.97, 29.28) }, }, distance = 1.5 })
 				Targets["BeanFridge2"] =
 					exports['qb-target']:AddBoxZone("BeanFridge2", vec3(123.5, -1040.74, 29.28), 0.9, 0.6, { name="BeanFridge2", heading = 340.0, debugPoly=Config.Debug, minZ=29.28, maxZ=30.08 },
-						{ options = { {  event = "jim-beanmachine:Shop", icon = "fas fa-archive", label = Loc[Config.Lan].targetinfo["open_storage"], job = v.job, shop = Config.FoodItems, shopname = "BeanFridge2", coords = vec3(123.5, -1040.74, 29.28) }, }, distance = 1.5 })
+						{ options = { {  event = "jim-beanmachine:Stash", icon = "fas fa-archive", label = Loc[Config.Lan].targetinfo["open_storage"], job = v.job, stash = "Ls3", coords = vec3(123.5, -1040.74, 29.28) }, }, distance = 1.5 })
 
 				Targets["BeanDrink"] =
 					exports['qb-target']:AddBoxZone("BeanDrink", vec3(124.56, -1036.88, 29.28), 0.7, 0.4, { name="BeanDrink", heading = 340.0, debugPoly=Config.Debug, minZ=29.08, maxZ=29.88 },
@@ -80,7 +92,7 @@ CreateThread(function()
 
 				Targets["BeanDonut"] =
 					exports['qb-target']:AddBoxZone("BeanDonut", vec3(121.4, -1038.43, 29.28), 1.45, 0.6, { name="BeanDonut", heading = 340.0, debugPoly=Config.Debug, minZ=29.28, maxZ=29.88 },
-						{ options = { { event = "jim-beanmachine:Shop", icon = "fas fa-circle-dot", label = Loc[Config.Lan].targetinfo["grab_food"], job = v.job, shop = Config.DesertItems, shopname = "BeanDonut", coords = vec3(121.4, -1038.43, 29.28) },
+						{ options = {
 									{ event = "jim-beanmachine:Stash", icon = "fas fa-archive", label = Loc[Config.Lan].targetinfo["open_stash"], job = v.job, stash = "LegionStash", coords = vec3(121.4, -1038.43, 29.28) }, }, distance = 2.0 })
 
 				Targets["BeanClockin"] =
@@ -200,15 +212,34 @@ RegisterNetEvent('jim-beanmachine:Crafting:MakeItem', function(data)
 		for k, v in pairs(data.craft[data.item]) do	data.craft[data.item][k] *= data.amount	end
 		bartime *= data.amount bartime *= 0.9
 	end
-	if progressBar({ label = Loc[Config.Lan].progressbar["making"]..QBCore.Shared.Items[data.item].label, time = bartime, cancel = true, dict = "mp_ped_interaction", anim = "handshake_guy_a", flag = 8, icon = data.item }) then
-		CraftLock = false
-		TriggerServerEvent('jim-beanmachine:Crafting:GetItem', data.item, data.craft)
-		Wait(500)
-		TriggerEvent("jim-beanmachine:Crafting", data)
-	else
-		CraftLock = false
-		TriggerEvent('inventory:client:busy:status', false)
-	end
+
+	exports['mdn-extras']:MakeFood(data.item, {
+        controlDisables = { disableMovement = false, disableCarMovement = false, disableMouse = false, disableCombat = true },
+        animation = { animDict = animDictNow, anim = animNow, flags = 1}, prop = nil, propTwo = nil}, _, _, bartime*2, _, _, _, _):next(function(makeFood)
+            if makeFood == 100 then
+                CraftLock = false
+                TriggerServerEvent('jim-beanmachine:Crafting:GetItem', data.item, data.craft)
+                Wait(500)
+                TriggerEvent("jim-beanmachine:Crafting", data)
+            elseif makeFood == 'half' then
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            else
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            end
+            ClearPedTasks(Ped)
+	end)
+
+	-- if progressBar({ label = Loc[Config.Lan].progressbar["making"]..QBCore.Shared.Items[data.item].label, time = bartime, cancel = true, dict = "mp_ped_interaction", anim = "handshake_guy_a", flag = 8, icon = data.item }) then
+	-- 	CraftLock = false
+	-- 	TriggerServerEvent('jim-beanmachine:Crafting:GetItem', data.item, data.craft)
+	-- 	Wait(500)
+	-- 	TriggerEvent("jim-beanmachine:Crafting", data)
+	-- else
+	-- 	CraftLock = false
+	-- 	TriggerEvent('inventory:client:busy:status', false)
+	-- end
 end)
 
 RegisterNetEvent('jim-beanmachine:Crafting', function(data)
@@ -233,7 +264,7 @@ RegisterNetEvent('jim-beanmachine:Crafting', function(data)
 					if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number.."\n" end
 					if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number.."<br>" end
 					settext = text
-					checktable[l] = HasItem(l, b)
+					checktable[l] = HasMetaItem(l, b)
 				end
 				for _, v in pairs(checktable) do if v == false then disable = true break end end
 				if not disable then setheader = setheader.." ✔️" end
@@ -260,7 +291,7 @@ RegisterNetEvent('jim-beanmachine:Crafting:MultiCraft', function(data)
     local success = Config.MultiCraftAmounts local Menu = {}
     for k in pairs(success) do success[k] = true
         for l, b in pairs(data.craft[data.item]) do
-            local has = HasItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
+            local has = HasMetaItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
 		end
 	end
     if Config.Menu == "qb" then Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true } end

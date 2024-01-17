@@ -1,6 +1,6 @@
 Config = {
 	DebugOptions = {
-		Debug = true, -- This turns on boxes if true
+		Debug = false, -- This turns on boxes if true
 		DiscordLog = true, -- This is for Discord logs
 	},
 	CoreOptions = {
@@ -17,7 +17,7 @@ Config = {
 		RenewedBanking = true,
 	},
 	ScriptOptions = {
-		Job = 'all', -- put whatever your farming job is called or leave "all" for everyone can use this
+		Job = nil, -- put whatever your farming job is called or leave "all" for everyone can use this
 		FarmingRep = false, -- turns on rep being given and requires rep for crafting
 		FarmingRepNotifications = false, -- turns on rep notifications
 		ParticleFXEnabled = true, -- Turns on Particle FX this helps if you're using a AC that has issues with Particle FX

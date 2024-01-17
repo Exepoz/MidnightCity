@@ -3,7 +3,7 @@ print("^2Jim^7-^2CatCafe ^7v^41^7.^48^7.^46^5hotfix ^7- ^2CatCafe Script by ^1Ji
 Config = {
 	Debug = false, -- false to remove green boxes
 	Lan = "en",
-	img = "qb-inventory/html/images/", -- Change this to your inventory's name and image folder (SET TO "" IF YOU HAVE DOUBLE IMAGES)
+	img = "ps-inventory/html/images/", -- Change this to your inventory's name and image folder (SET TO "" IF YOU HAVE DOUBLE IMAGES)
 
 	PatHeal = 2, 			--how much you are healed by patting a cat, 2 hp seems resonable, enough not to be over powered and enough to draw people in.
 							--set to 0 if you don't want to use this
@@ -11,14 +11,14 @@ Config = {
 
 	Core = "qb-core", -- set this to your core folder
 	Inv = "qb", -- set to "ox" if using OX Inventory
-	Menu = "qb", -- set to "ox" if using ox_lib context menus
-	Notify = "qb",
+	Menu = "ox", -- set to "ox" if using ox_lib context menus
+	Notify = "ox",
 	ProgressBar = "qb", -- set to "ox" if using ox_lib progressbar
 
 	MultiCraft = true,
 	MultiCraftAmounts = { [1], [5], [10] },
 
-	JimConsumables = false, -- Enable this to disable this scripts control of food/drink items
+	JimConsumables = true, -- Enable this to disable this scripts control of food/drink items
 	JimShop = false, 		-- Enable this to use jim-shops for buying ingredients
 
 	--Simple Toy Reward Support
@@ -53,7 +53,7 @@ Config = {
 		{	zoneEnable = true,
 			job = "catcafe", -- Set this to the required job
 			label = "Cat Cafe",
-			autoClock = { enter = false, exit = true, },
+			autoClock = { enter = true, exit = true, },
 			zones = {
 				vec2(-591.15808105469, -1087.8620605469),
 				vec2(-563.33447265625, -1087.8508300781),
@@ -69,6 +69,20 @@ Config = {
 		},
 	},
 }
+Organic = {
+    ['blueberry'] = true,
+    ['orange'] = true,
+    ['strawberry'] = true,
+	['milk'] = true,
+	['onion'] = true,
+
+}
+HighQuality = {
+    ['bmochi'] = true,
+    ['pancake'] = true,
+	['miso'] = true,
+
+}
 Crafting = {
 	ChoppingBoard = {
 		{ ['bmochi'] = { ['sugar'] = 1, ['flour'] = 1, ['blueberry'] = 1, }, },
@@ -78,6 +92,12 @@ Crafting = {
 		{ ['riceball'] = { ['rice'] = 1, ['nori'] = 1, }, },
 		{ ['bento'] = { ['rice'] = 1, ['nori'] = 1, ['tofu'] = 1, }, },
 		{ ['purrito'] = { ['rice'] = 1, ['flour'] = 1, ['onion'] = 1, }, },
+		{ ['delivery_catcafe'] = {
+			['pancake'] = 1,
+			['obobatea'] = 1,
+			['ramen'] = 1,
+			['cakepop'] = 1,
+		} },
 	},
 	Oven = {
 		{ ['nekocookie'] = { ['flour'] = 1, ['milk'] = 1, }, },

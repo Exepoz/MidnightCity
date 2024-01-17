@@ -18,23 +18,23 @@ for _, Location in pairs(Config.Locations) do
             tablelist[#tablelist+1] = { coords = vector3(-519.88, -688.12, 33.17)}
             tablelist[#tablelist+1] = { coords = vector3(-522.34, -688.07, 33.17)}
         elseif Location.MLO == "AMB" then
-            tablelist[#tablelist+1] = { coords = vector3(-146.17, -267.68, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-145.2, -268.0, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-144.04, -268.4, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-143.1, -268.72, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-141.32, -255.63, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-142.29, -255.29, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-141.57, -262.02, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-142.51, -261.71, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-144.88, -260.9, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-145.73, -260.6, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-144.4, -264.11, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-145.42, -263.9, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-147.01, -263.32, 42.67)}
-            tablelist[#tablelist+1] = { coords = vector3(-147.92, -263.0, 42.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-146.17, -267.68, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-145.2, -268.0, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-144.04, -268.4, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-143.1, -268.72, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-141.32, -255.63, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-142.29, -255.29, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-141.57, -262.02, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-142.51, -261.71, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-144.88, -260.9, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-145.73, -260.6, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-144.4, -264.11, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-145.42, -263.9, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-147.01, -263.32, 43.67)}
+            tablelist[#tablelist+1] = { coords = vector3(-147.92, -263.0, 43.67)}
         elseif Location.MLO == "GN" then
             tablelist[#tablelist+1] = { coords = vector3(-148.93, -257.22, 42.6)}
-            tablelist[#tablelist+1] = { coords = vector3(-145.8, -258.18, 42.6)}
+            tablelist[#tablelist+1] = { coords = vector3(-145.8, -258.18,  42.6)}
             tablelist[#tablelist+1] = { coords = vector3(-144.03, -255.16, 42.6)}
             tablelist[#tablelist+1] = { coords = vector3(-143.11, -257.42, 42.6)}
             tablelist[#tablelist+1] = { coords = vector3(-144.14, -260.43, 42.6)}
@@ -45,9 +45,9 @@ for _, Location in pairs(Config.Locations) do
             tablelist[#tablelist+1] = { coords = vector3(-152.08, -256.08, 42.6)}
             tablelist[#tablelist+1] = { coords = vector3(-153.93, -252.14, 42.6)}
             tablelist[#tablelist+1] = { coords = vector3(-157.05, -254.83, 42.6)}
-            tablelist[#tablelist+1] = { coords = vector3(-163.08, -254.74, 16.8)}
+            tablelist[#tablelist+1] = { coords = vector3(-163.08, -254.74, 46.8)}
             tablelist[#tablelist+1] = { coords = vector3(-164.11, -257.69, 46.8)}
-            tablelist[#tablelist+1] = { coords = vector3(-158.5, -254.34, 46.8)}
+            tablelist[#tablelist+1] = { coords = vector3(-158.5, -254.34,  46.8)}
             tablelist[#tablelist+1] = { coords = vector3(-155.37, -258.73, 46.8)}
             tablelist[#tablelist+1] = { coords = vector3(-152.51, -259.81, 46.8)}
             tablelist[#tablelist+1] = { coords = vector3(-150.43, -258.64, 46.8)}
@@ -56,9 +56,9 @@ for _, Location in pairs(Config.Locations) do
             tablelist[#tablelist+1] = { coords = vector3(-154.01, -252.09, 46.8)}
             tablelist[#tablelist+1] = { coords = vector3(-154.08, -255.91, 46.8)}
         elseif Location.MLO == "KAM" then
-            tablelist[#tablelist+1] = { coords = vector3(-139.8, -260.92, 42.64)}
-            tablelist[#tablelist+1] = { coords = vector3(-140.68, -263.54, 42.64)}
-            tablelist[#tablelist+1] = { coords = vector3(-141.6, -266.05, 42.64)}
+            tablelist[#tablelist+1] = { coords = vector3(-139.8, -260.92, 43.64)}
+            tablelist[#tablelist+1] = { coords = vector3(-140.68, -263.54, 43.64)}
+            tablelist[#tablelist+1] = { coords = vector3(-141.6, -266.05, 43.64)}
         end
 	end
 end

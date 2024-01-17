@@ -67,7 +67,6 @@ local function getMechBoardOption(plate, part)
                     end
                 end
             end
-            QBCore.Debug(d)
             return d
         end
     end

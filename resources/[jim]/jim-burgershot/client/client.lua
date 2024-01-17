@@ -12,6 +12,20 @@ AddEventHandler('onResourceStart', function(r) if GetCurrentResourceName() ~= r 
 	Ped = PlayerPedId()
 end)
 
+function HasMetaItem(items, amount)
+    local amount, count = amount or 1, 0
+    local pData = QBCore.Functions.GetPlayerData()
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+    for _, itemData in pairs(pData.items) do
+        if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
+            if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+            count += itemData.amount
+        end
+    end
+    if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end	return false
+end
+
 CreateThread(function()
 	local propTable = {}
 	if Config.Locations[1].zoneEnable then	-- [[ Main Location ]] --
@@ -37,7 +51,7 @@ CreateThread(function()
 		if loc.MLO == "GN" then
 			CoordTables = {
 				Fridge = { { coords = vec4(-1201.31, -901.69, 13.49, 35.0), minZ = 13.0, maxZ = 14.5, w = 3.8, d = 0.6, }, },
-				Store = { { coords = vec4(-1198.5, -904.02, 12.99, 213.65), minZ = 12.97, maxZ = 15.37, w = 0.4, d = 1.4, }, },
+				Store = nil,
 				Shelf = { { coords = vec4(-1195.29, -897.51, 13.47, 35.0), minZ = 13.7, maxZ = 14.87, w = 3.0, d = 1.0, }, },
 				Prepare = { { coords = vec4(-1196.54, -899.28, 13.0, 35.65), minZ = 13.3, maxZ = 14.5, w = 0.6, d = 1.8, }, },
 				Chop = { { coords = vec4(-1197.19, -898.18, 13.0, 35.65), minZ = 13.3, maxZ = 14.5, w = 0.6, d = 1.8, }, },
@@ -233,7 +247,7 @@ CreateThread(function()
 		elseif loc.MLO == "UNIQX" then
 			CoordTables = {
 				Fridge = { { coords = vec4(-1195.48, -902.45, 12.89, 124.0), minZ = 12.89, maxZ = 15.49, w = 2.6, d = 0.55, }, },
-				Store = { { coords = vec4(-1196.33, -900.89, 12.89, 75.0), minZ = 12.89, maxZ = 15.49, w = 2.6, d = 0.75, }, },
+				Store = { { coords = vec4(0,0,0,0), minZ = 0, maxZ = 0, w = 0, d = 0, }, },
 				Shelf = { { coords = vec4(-1195.14, -896.51, 12.89, 254.0), minZ = 12.89, maxZ = 14.69, w = 3.2, d = 1.15, }, },
 				Prepare = { { coords = vec4(-1196.99, -897.0, 12.89, 254.0), minZ = 12.89, maxZ = 14.69, w = 1.7, d = 0.7, }, },
 				Chop = { { coords = vec4(-1193.8, -897.9, 12.89, 254.0), minZ = 12.89, maxZ = 14.69, w = 1.7, d = 0.7, }, },
@@ -257,7 +271,9 @@ CreateThread(function()
 				},
 				HandWash = { { coords = vec4(-1201.19, -890.91, 12.89, 124.0), minZ = 12.89, maxZ = 14.69, w = 0.8, d = 0.5, }, { coords = vec4(-1205.18, -893.61, 12.89, 124.0), minZ = 12.89, maxZ = 14.69, w = 0.8, d = 0.5, }, },
 				Toilets = { { coords = vec4(-1204.23, -894.99, 12.89, 34.0), minZ = 12.89, maxZ = 14.69, w = 0.6, d = 0.5, }, { coords = vec4(-1200.24, -892.3, 12.89, 34.0), minZ = 12.89, maxZ = 14.69, w = 0.6, d = 0.5, }, },
-				Clockin = {},
+				Clockin = {
+					{ coords = vec4(-1200.41, -902.58, 13.89, 119.00), minZ = 13.6, maxZ = 14.5, w = 0.5, d = 0.6, }
+				},
 			}
 			propTable[#propTable+1] = { prop = "prop_food_bs_bag_04", coords = vec4(-1200.44, -895.26, 13.91+1.03, 300.0) }
 			propTable[#propTable+1] = { prop = "prop_food_bs_bag_04", coords = vec4(-1200.75, -895.08, 13.89+1.03, 180.0) }
@@ -696,7 +712,7 @@ end)
 --[[CRAFTING]]--
 RegisterNetEvent('jim-burgershot:Crafting:MakeItem', function(data)
 	if not CraftLock then CraftLock = true else return end
-	print(data.header, Loc[Config.Lan].menu["drinks_dispenser"])
+	local skillCheck = false
 	if data.header == Loc[Config.Lan].menu["drinks_dispenser"] then
 		bartext = Loc[Config.Lan].progress["pouring"]..QBCore.Shared.Items[data.item].label	bartime = 3500
 		animDictNow = "mp_ped_interaction" animNow = "handshake_guy_a"
@@ -706,36 +722,63 @@ RegisterNetEvent('jim-burgershot:Crafting:MakeItem', function(data)
 	elseif data.item == "slicedpotato" or data.item == "slicedonion" then
 		bartext = Loc[Config.Lan].progress["slicing"]..QBCore.Shared.Items[data.item].label bartime = 3000
 		animDictNow = "anim@heists@prison_heiststation@cop_reactions" animNow = "cop_b_idle"
+		skillCheck = true
 	elseif data.item == "cheesewrap" or data.item == "chickenwrap" then
 		bartext = Loc[Config.Lan].progress["preparing"]..QBCore.Shared.Items[data.item].label bartime = 8000
 		animDictNow = "anim@heists@prison_heiststation@cop_reactions" animNow = "cop_b_idle"
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].targetinfo["use_deepfryer"] then
 		bartext = Loc[Config.Lan].progress["frying"]..QBCore.Shared.Items[data.item].label bartime = 5000
 		animDictNow = "amb@prop_human_bbq@male@base" animNow = "base"
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["grill"] then
 		bartext = Loc[Config.Lan].progress["cooking"]..QBCore.Shared.Items[data.item].label bartime = 5000
         animDictNow = "amb@prop_human_bbq@male@base" animNow = "base"
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["prepare_food"] then
 		bartext = Loc[Config.Lan].progress["preparing"]..QBCore.Shared.Items[data.item].label bartime = 12500
 		animDictNow = "mini@repair" animNow = "fixing_a_ped"
+		skillCheck = true
 	else
 		bartext = Loc[Config.Lan].progress["preparing"]..QBCore.Shared.Items[data.item].label bartime = 12500
 		animDictNow = "mini@repair"	animNow = "fixing_a_ped"
+		skillCheck = true
 	end
 	if (data.amount and data.amount ~= 1) then data.craft["amount"] = data.amount
 		for k, v in pairs(data.craft[data.item]) do	data.craft[data.item][k] *= data.amount	end
 		bartime *= data.amount bartime *= 0.9
 	end
-	if progressBar({ label = bartext, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 1, icon = data.item }) then
-		CraftLock = false
-		TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
-		Wait(500)
-		TriggerEvent("jim-burgershot:Crafting", data)
+
+	if skillCheck then
+		exports['mdn-extras']:MakeFood(data.item, {
+		controlDisables = { disableMovement = false, disableCarMovement = false, disableMouse = false, disableCombat = true },
+		animation = { animDict = animDictNow, anim = animNow, flags = 1}, prop = nil, propTwo = nil}, _, _, bartime*2, _, _, _, _):next(function(makeFood)
+			if makeFood == 100 then
+				CraftLock = false
+				TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
+				Wait(500)
+				TriggerEvent("jim-burgershot:Crafting", data)
+			elseif makeFood == 'half' then
+				CraftLock = false
+				TriggerEvent('inventory:client:busy:status', false)
+			else
+				CraftLock = false
+				TriggerEvent('inventory:client:busy:status', false)
+			end
+			ClearPedTasks(PlayerPedId())
+		end)
 	else
-		CraftLock = false
-		TriggerEvent('inventory:client:busy:status', false)
+		if progressBar({ label = bartext, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 1, icon = data.item }) then
+			CraftLock = false
+			TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
+			Wait(500)
+			TriggerEvent("jim-burgershot:Crafting", data)
+		else
+			CraftLock = false
+			TriggerEvent('inventory:client:busy:status', false)
+		end
+		ClearPedTasks(PlayerPedId())
 	end
-	ClearPedTasks(Ped)
 end)
 
 RegisterNetEvent('jim-burgershot:Crafting', function(data)
@@ -746,6 +789,7 @@ RegisterNetEvent('jim-burgershot:Crafting', function(data)
 		Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true }
 		Menu[#Menu + 1] = { icon = "fas fa-circle-xmark", header = "", txt = Loc[Config.Lan].menu["close"], params = { event = "" } }
 	end
+	Menu[#Menu + 1] = { icon = "fas fa-circle-info", title = "Tip :", description = "Using Ingredients marked with [ * ] will make high quality products when they are organic.", readOnly = true}
 	for i = 1, #data.craftable do
 		for k, v in pairs(data.craftable[i]) do
 			if k ~= "amount" and k ~= "job" then
@@ -757,10 +801,10 @@ RegisterNetEvent('jim-burgershot:Crafting', function(data)
 				for l, b in pairs(data.craftable[i][tostring(k)]) do
 					if b == 0 or b == 1 then number = "" else number = " x"..b end
 					if not QBCore.Shared.Items[l] then print("^3Error^7: ^2Script can't find ingredient item in QB-Core items.lua - ^1"..l.."^7") return end
-					if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number.."\n" end
-					if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number.."<br>" end
+					if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number..(Organic[l] and "*" or "").."\n" end
+					if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number..(Organic[l] and "*" or "").."<br>" end
 					settext = text
-					checktable[l] = HasItem(l, b)
+					checktable[l] = HasMetaItem(l, b)
 				end
 				for _, v in pairs(checktable) do if v == false then disable = true break end end
 				if not disable then setheader = setheader.." ✔️" end

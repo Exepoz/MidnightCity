@@ -15,7 +15,7 @@ Config = {
 	Notify = "ox",
 	ProgressBar = "qb", -- set to "ox" if using ox_lib progressbar
 
-	JimConsumables = false, -- Enable this to disable this scripts control of food/drink items
+	JimConsumables = true, -- Enable this to disable this scripts control of food/drink items
 	JimShop = false, -- If true shops will open in jim-shops
 
 	MultiCraft = true,
@@ -31,16 +31,16 @@ Config = {
 
 	FoodItems = {
 		label = "Food Store",
-		slots = 8,
+		slots = 0,
 		items = {
-			{ name = "water_bottle", price = 0, amount = 50, info = {}, type = "item", slot = 1, },
-			{ name = "orange", price = 0, amount = 50, info = {}, type = "item", slot = 2, },
-			{ name = "sugar", price = 0, amount = 50, info = {}, type = "item", slot = 3, },
-			{ name = "chickenbreast", price = 0, amount = 50, info = {}, type = "item", slot = 4, },
-			{ name = "rhinohorn", price = 0, amount = 50, info = {}, type = "item", slot = 5, },
-			{ name = "oystershell", price = 0, amount = 50, info = {}, type = "item", slot = 6, },
-			{ name = "milk", price = 0, amount = 50, info = {}, type = "item", slot = 7, },
-			{ name = "beancoffee", price = 0, amount = 50, info = {}, type = "item", slot = 8, },
+			--{ name = "water_bottle", price = 0, amount = 50, info = {}, type = "item", slot = 1, },
+			--{ name = "orange", price = 0, amount = 50, info = {}, type = "item", slot = 2, },
+			--{ name = "sugar", price = 0, amount = 50, info = {}, type = "item", slot = 3, },
+			--{ name = "chickenbreast", price = 0, amount = 50, info = {}, type = "item", slot = 4, },
+			--{ name = "rhinohorn", price = 0, amount = 50, info = {}, type = "item", slot = 5, },
+			--{ name = "oystershell", price = 0, amount = 50, info = {}, type = "item", slot = 6, },
+			--{ name = "milk", price = 0, amount = 50, info = {}, type = "item", slot = 7, },
+			--{ name = "beancoffee", price = 0, amount = 50, info = {}, type = "item", slot = 8, },
 		},
 	},
 	DesertItems = {
@@ -67,10 +67,10 @@ Config = {
 	},
 	Locations = {
 		["beangabzlegion"] = {
-			zoneEnable = false,
+			zoneEnable = true,
 			label = "Bean Machine(Legion)",
 			job = "beanmachine",
-			autoClock = { enter = false, exit = true, },
+			autoClock = { enter = true, exit = true, },
 			zones = {
 				vec2(137.44329833984, -1019.5242919922),
 				vec2(122.99235534668, -1058.451171875),
@@ -80,10 +80,10 @@ Config = {
 			garage = { spawn = vec4(130.93, -1032.04, 28.76, 340.2),
 						out = vec4(129.41, -1031.15, 29.43, 253.32),
 						list = { "panto", } },
-			blip = vec3(120.27, -1038.09, 29.28), blipcolor = 56, blipsprite = 106, blipdisp = 6, blipscale = 0.7, blipcat = nil,
+			blip = vec3(120.27, -1038.09, 29.28), blipcolor = 56, blipsprite = 106, blipdisp = 6, blipscale = 0.5, blipcat = nil,
 		},
 		["beanunclejust"] = {
-			zoneEnable = true,
+			zoneEnable = false,
 			label = "Bean Machine(Vinewood)",
 			job = "beanmachine",
 			autoClock = { enter = false, exit = true, },
@@ -116,7 +116,15 @@ Config = {
 		},
 	},
 }
-
+Organic = { -- ingredients
+    ['orange'] = true,
+    ['milk'] = true,
+}
+HighQuality = { -- cooked ingredients
+    ['highnoon'] = true,
+    ['flusher'] = true,
+	['bigfruit'] = true,
+}
 Crafting = {
 	Slush = {
 		{ ['bigfruit'] = { ['watermelon'] = 1, ['water_bottle'] = 1, ['orange'] = 1, ['sugar'] = 1, }, },
@@ -126,9 +134,14 @@ Crafting = {
 		{ ['speedball'] = { ['beancoffee'] = 3, ['sugar'] = 1, }, },
 		{ ['gunkaccino'] = { ['beancoffee'] = 1, ['sugar'] = 2, ['cheesecake'] = 1, }, },
 		{ ['bratte'] = { ['beancoffee'] = 2, ['sugar'] = 5, }, },
-		{ ['flusher'] = { ['beancoffee'] = 1, ['water_bottle'] = 1, ['orange'] = 1, ['chickenbreast'] = 1, }, },
+		{ ['flusher'] = { ['beancoffee'] = 1, ['water_bottle'] = 1, ['orange'] = 1, ['milk'] = 1, }, },
 		{ ['ecocoffee'] = { ['beancoffee'] = 1, ['water_bottle'] = 1, ['milk'] = 1, ['plastic'] = 1, }, },
 		{ ['caffeagra'] = { ['beancoffee'] = 1, ['rhinohorn'] = 2, ['oystershell'] = 1, }, },
+		{ ['delivery_beanmachine'] = {
+			['speedball'] = 1,
+			['ecocoffee'] = 1,
+			['highnoon'] = 1,
+		} },
 	},
 }
 

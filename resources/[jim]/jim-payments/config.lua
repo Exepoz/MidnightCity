@@ -6,14 +6,14 @@ print("^2Jim^7-^2Payments ^7v^42^7.^48^7.^45 ^7- ^2Payments Script by ^1Jimathy^
 
 Config = {
 	Lan = "en",
-	Debug = true,
+	Debug = false,
 	Notify = "qb",
 
 	---------------------------------
 	-- Default Job Payment Systems --
 	---------------------------------
 
-	Banking = "qb", -- qb, renewed, and fd currently default supported
+	Banking = "renewed", -- qb, renewed, and fd currently default supported
 
 	ApGov = false, -- Toggle support for AP-Goverment Tax
 
@@ -62,6 +62,21 @@ Config = {
 	-- Commission is a percentage eg "0.10" becomes 10%
 	Jobs = {
 		['police'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['ambulance'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['realestate'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['taxi'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['cardealer'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['lscustoms'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['tunershop'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['mechanic3'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['beeker'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['bennys'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['catcafe'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['burgershot'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['vanilla'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['bahama'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['cluckinbell'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
+		['popsdiner'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
 		--['lostmc'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, gang = true, }, -- Example of a gang being supported
 	},
 
@@ -71,7 +86,7 @@ Config = {
 	-- This adds the ability to add multiple locations for each job
 	-- Basically adding ready made locations, all you need to a vector4 and to confrim if you need a new prop in that location
     CustomCashRegisters = {
-		["police"] = {{coords = vector4(-693.41, -1084.73, 13.82, 300.81), prop = true, }},
+		--["police"] = {{coords = vector4(-693.41, -1084.73, 13.82, 300.81), prop = true, }},
 	},
 
 	-- The /polcharge command requires specific jobs to be set

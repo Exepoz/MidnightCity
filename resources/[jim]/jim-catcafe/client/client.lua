@@ -11,7 +11,19 @@ AddEventHandler('onResourceStart', function(r) if GetCurrentResourceName() ~= r 
 	QBCore.Functions.GetPlayerData(function(PlayerData) PlayerJob = PlayerData.job if PlayerData.job.onduty then if PlayerData.job.name == Config.Locations[1].job then TriggerServerEvent("QBCore:ToggleDuty") end end end)
 end)
 
-
+function HasMetaItem(items, amount)
+    local amount, count = amount or 1, 0
+    local pData = QBCore.Functions.GetPlayerData()
+    if Config.Debug then print("^5Debug^7: ^3HasMetaItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+    for _, itemData in pairs(pData.items) do
+        if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
+            if Config.Debug then print("^5Debug^7: ^3HasMetaItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+            count += itemData.amount
+        end
+    end
+    if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasMetaItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+    if Config.Debug then print("^5Debug^7: ^3HasMetaItem^7: ^2Items ^1NOT FOUND^7") end    return false
+end
 CreateThread(function()
 	local loc = Config.Locations[1]
 	local bossroles = {}
@@ -49,13 +61,8 @@ CreateThread(function()
 	--WARESTORAGE
 	Targets["CatStorage"] =
 	exports['qb-target']:AddBoxZone("CatStorage", vec3(-598.0, -1068.47, 22.34-1), 4.0, 1.5, { name="CatStorage", heading = 90, debugPoly=Config.Debug, minZ=20.94, maxZ=24.94 },
-		{ options = { {  event = "jim-catcafe:Shop", icon = "fas fa-box-open", label = Loc[Config.Lan].target["store"], job = loc.job, coords = vec3(-598.0, -1068.47, 22.34), }, }, distance = 2.0 })
-	Targets["CatStorage2"] =
-	exports['qb-target']:AddBoxZone("CatStorage2", vec3(-598.25, -1065.61, 22.34-1), 4.0, 1.5, { name="CatStorage2", heading = 90, debugPoly=Config.Debug, minZ=20.94, maxZ=24.94 },
-		{ options = { {  event = "jim-catcafe:Shop", icon = "fas fa-box-open", label = Loc[Config.Lan].target["store"], job = loc.job, coords = vec3(-598.25, -1065.61, 22.34), }, }, distance = 2.0 })
-	Targets["CatStorage3"] =
-	exports['qb-target']:AddBoxZone("CatStorage3", vec3(-598.31, -1062.79, 22.34-1), 4.0, 1.5, { name="CatStorage3", heading = 90, debugPoly=Config.Debug, minZ=20.94, maxZ=24.94 },
-		{ options = { {  event = "jim-catcafe:Shop", icon = "fas fa-box-open", label = Loc[Config.Lan].target["store"], job = loc.job, coords = vec3(-598.31, -1062.79, 22.34), }, }, distance = 2.0 })
+		{ options = { {  event = "jim-catcafe:Stash", icon = "fas fa-box-open", label = Loc[Config.Lan].target["store"], job = loc.job, stash = "Shelf", coords = vec3(-598.0, -1068.47, 22.34), }, }, distance = 2.0 })
+
 	--Sinks
 	Targets["CatWash1"] =
 		exports['qb-target']:AddBoxZone("CatWash1", vec3(-587.89, -1062.58, 22.36-1), 0.7, 0.7, { name="CatWash1", heading = 0, debugPoly=Config.Debug, minZ=19.11, maxZ=23.11 },
@@ -147,25 +154,46 @@ end)
 RegisterNetEvent('jim-catcafe:Crafting:MakeItem', function(data)
 	if not CraftLock then CraftLock = true else return end
 	local bartime = 5000
+	local skillCheck = false
 	if (data.amount and data.amount ~= 1) then data.craft["amount"] = data.amount
 		for k, v in pairs(data.craft[data.item]) do	data.craft[data.item][k] *= data.amount	end
 		bartime *= data.amount bartime *= 0.9
 	end
-	if data.header == Loc[Config.Lan].menu["header_coffee"] then animDictNow = "mp_ped_interaction" animNow = "handshake_guy_a"
-	elseif data.header == Loc[Config.Lan].menu["header_hob"] then animDictNow = "amb@prop_human_bbq@male@base" animNow = "base"
-	elseif data.header == Loc[Config.Lan].menu["header_oven"] then animDictNow = "amb@prop_human_bbq@male@base" animNow = "base"
-	elseif data.header == Loc[Config.Lan].menu["header_chop"] then animDictNow = "anim@heists@prison_heiststation@cop_reactions" animNow = "cop_b_idle"
+	if data.header == Loc[Config.Lan].menu["header_coffee"] then animDictNow = "mp_ped_interaction" animNow = "handshake_guy_a" skillCheck = true
+	elseif data.header == Loc[Config.Lan].menu["header_hob"] then animDictNow = "amb@prop_human_bbq@male@base" animNow = "base" skillCheck = true
+	elseif data.header == Loc[Config.Lan].menu["header_oven"] then animDictNow = "amb@prop_human_bbq@male@base" animNow = "base" skillCheck = true
+	elseif data.header == Loc[Config.Lan].menu["header_chop"] then animDictNow = "anim@heists@prison_heiststation@cop_reactions" animNow = "cop_b_idle" skillCheck = true
 	else animDictNow = "amb@prop_human_parking_meter@male@idle_a" animNow = "idle_a" end
-	if progressBar({ label = Loc[Config.Lan].progressbar["progress_make"]..QBCore.Shared.Items[data.item].label, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 8, icon = data.item }) then
-		CraftLock = false
-		TriggerServerEvent('jim-catcafe:Crafting:GetItem', data.item, data.craft)
-		Wait(500)
-		TriggerEvent("jim-catcafe:Crafting", data)
-	else
-		CraftLock = false
-		TriggerEvent('inventory:client:busy:status', false)
+	if skillCheck then
+        exports['mdn-extras']:MakeFood(data.item, {
+        controlDisables = { disableMovement = false, disableCarMovement = false, disableMouse = false, disableCombat = true },
+        animation = { animDict = animDictNow, anim = animNow, flags = 1}, prop = nil, propTwo = nil}, _, _, bartime*2, _, _, _, _):next(function(makeFood)
+            if makeFood == 100 then
+                CraftLock = false
+                TriggerServerEvent('jim-catcafe:Crafting:GetItem', data.item, data.craft)
+                Wait(500)
+                TriggerEvent("jim-catcafe:Crafting", data)
+            elseif makeFood == 'half' then
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            else
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            end
+            ClearPedTasks(Ped)
+        end)
+    else
+        if progressBar({ label = bartext, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 1, icon = data.item }) then
+            CraftLock = false
+            TriggerServerEvent('jim-catcafe:Crafting:GetItem', data.item, data.craft)
+            Wait(500)
+            TriggerEvent("jim-catcafe:Crafting", data)
+        else
+            CraftLock = false
+            TriggerEvent('inventory:client:busy:status', false)
+        end
+		ClearPedTasks(PlayerPedId())
 	end
-	ClearPedTasks(PlayerPedId())
 end)
 
 RegisterNetEvent('jim-catcafe:Crafting', function(data)
@@ -176,6 +204,7 @@ RegisterNetEvent('jim-catcafe:Crafting', function(data)
 		Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true }
 		Menu[#Menu + 1] = { icon = "fas fa-circle-xmark", header = "", txt = Loc[Config.Lan].menu["close"], params = { event = "" } }
 	end
+	Menu[#Menu + 1] = { icon = "fas fa-circle-info", title = "Tip :", description = "Using Ingredients marked with [ * ] will make high quality products when they are organic.", readOnly = true}
 	for i = 1, #data.craftable do
 		for k, v in pairs(data.craftable[i]) do
 			if k ~= "amount" then
@@ -187,10 +216,10 @@ RegisterNetEvent('jim-catcafe:Crafting', function(data)
 				for l, b in pairs(data.craftable[i][tostring(k)]) do
 					if b == 0 or b == 1 then number = "" else number = " x"..b end
 					if not QBCore.Shared.Items[l] then print("^3Error^7: ^2Script can't find ingredient item in QB-Core items.lua - ^1"..l.."^7") return end
-					if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number.."\n" end
-					if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number.."<br>" end
+					if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number..(HighQuality[k] and Organic[l] and "*" or "").."\n" end
+					if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number..(HighQuality[k] and Organic[l] and "*" or "").."<br>" end
 					settext = text
-					checktable[l] = HasItem(l, b)
+					checktable[l] = HasMetaItem(l, b)
 				end
 				for _, v in pairs(checktable) do if v == false then disable = true break end end
 				if not disable then setheader = setheader.." ✔️" end
@@ -217,7 +246,7 @@ RegisterNetEvent('jim-catcafe:Crafting:MultiCraft', function(data)
     local success = Config.MultiCraftAmounts local Menu = {}
     for k in pairs(success) do success[k] = true
         for l, b in pairs(data.craft[data.item]) do
-            local has = HasItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
+            local has = HasMetaItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
 		end end
     if Config.Menu == "qb" then Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true } end
 	Menu[#Menu + 1] = { icon = "fas fa-arrow-left", title = Loc[Config.Lan].menu["back"], header = "", txt = Loc[Config.Lan].menu["back"], params = { event = "jim-catcafe:Crafting", args = data }, event = "jim-catcafe:Crafting", args = data }

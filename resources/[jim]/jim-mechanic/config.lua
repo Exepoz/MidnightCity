@@ -3,7 +3,7 @@ Config = {
 	System = {
 		Debug = false, -- Set to true to show green debug boxes to help track any issues
 
-		img = "qb-inventory/html/images/", 	-- Set this to the directory for your inventory image files
+		img = "ps-inventory/html/images/", 	-- Set this to the directory for your inventory image files
 											-- "ox_inventory/web/images/", "qb-inventory/html/images", "lj-inventory/html/images"
 		Inv = "qb",  				-- "qb", "ox", "qs"
 		Menu = "ox",  				-- "qb", "ox"
@@ -14,15 +14,15 @@ Config = {
 
 		distkph = false, 			-- Set to false to read distance travelled in Miles.
 
-		RenewedBanking = false, 	-- This is used for manualrepair benches, enable to use
+		RenewedBanking = true, 	-- This is used for manualrepair benches, enable to use
 	},
 	Main = { -- Main variables
-		isVehicleOwned = true, 	-- Keep this true if you only want changes to be made to owned vehicles
+		isVehicleOwned = false, 	-- Keep this true if you only want changes to be made to owned vehicles
 		ItemRequiresJob = true, 	-- Do the specfic items require the mechanic job?
 		JobLocationRequired = true, -- Are the mecahanics locked to specific locations?
 		LocationBlips = true, 		-- Enable to grab the blip locations from locations.lua
 		CosmeticsJob = true, 		-- Do vehicle cosmetics require a mechanic job role?
-		JobRoles = { "mechanic","mechanic2","mechanic3", }, -- These are the job roles who can use items if RequiresJob is enabled.
+		JobRoles = { "mechanic","mechanic2","mechanic3", "lscustoms", "tunershop" }, -- These are the job roles who can use items if RequiresJob is enabled.
 									-- Add your extra job roles here or just leave as "mechanic"
 									-- Example-- --JobRoles = { "mechanic", "tuner" }
 	},

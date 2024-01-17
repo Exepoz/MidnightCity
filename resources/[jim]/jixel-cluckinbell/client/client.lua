@@ -1,5 +1,5 @@
 local Targets, Props, Blips, PlayerJob, alcoholCount, CraftLock = {}, {}, {}, {}, 0, false
-
+local skillCheck = false
 local function jobCheck()
 	canDo = true
 	if not onDuty then triggerNotify(nil, "triangle-exclamation",  Loc[Config.Lan].error["not_clocked_in"], 'error') canDo = false end
@@ -18,6 +18,20 @@ AddEventHandler('onResourceStart', function(r) if GetCurrentResourceName() ~= r 
 		k, v in pairs(Config.Locations) do if PlayerData.job.name == v.job then
 			onDuty = PlayerJob.onduty end end end)
 end)
+
+function HasMetaItem(items, amount)
+    local amount, count = amount or 1, 0
+    local pData = QBCore.Functions.GetPlayerData()
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+    for _, itemData in pairs(pData.items) do
+        if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
+            if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+            count += itemData.amount
+        end
+    end
+    if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end    return false
+end
 
 CreateThread(function()
 	for locationName, Location in pairs(Config.Locations) do
@@ -173,14 +187,14 @@ CreateThread(function()
 					end
 					if Target.Fridge then
 						for i, fridge in ipairs(Target.Fridge) do
-							id = Location.job.." Fridge "..i..locationName
 							local options = {
 								{
-									event = "jixel-cluckinbell:Stash",
+									event = "jixel-cluckinbell:client:shop",
 									icon = "fas fa-archive",
 									label = Loc[Config.Lan].target["open_fridge"],
 									shop = Location.Items,
-									job = Location.job, id = id,
+									job = Location.job,
+									shopname = locationName.."CBFridge" .. i,
 									coords = fridge.coords,
 								}
 							}
@@ -559,37 +573,61 @@ end)
 
 RegisterNetEvent('jixel-cluckinbell:Crafting:MakeItem', function(data)
 	CraftLock = true
+	local item = QBCore.Shared.Items[data.item].label
 	if data.header == Loc[Config.Lan].menu["header_coffee"] then
 		animDictNow = "mp_ped_interaction"
 		animNow = "handshake_guy_a"
-		bartime = 6000
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["header_grill"] then
+		bartext = Loc[Config.Lan].progressbar["cooking"].." "..item
 		animDictNow = "amb@prop_human_bbq@male@base"
 		animNow = "base"
-		bartime = 6000
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["header_oven"] then
 		animDictNow = "amb@prop_human_bbq@male@base"
 		animNow = "base"
-		bartime = 6000
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["header_chop"] then
+		bartext = Loc[Config.Lan].progressbar["slicing"].." "..item
 		animDictNow = "anim@heists@prison_heiststation@cop_reactions"
 		animNow = "cop_b_idle"
-		bartime = 6000
+		skillCheck = true
 	else
+		bartext = Loc[Config.Lan].progressbar["making"].." "..item
 		animDictNow = "amb@prop_human_parking_meter@male@idle_a"
 		animNow = "idle_a"
-		bartime = 9000
+		skillCheck = true
 	end
-	if progressBar({ label = bartext, time = bartime, canel = true, dict = animDictNow, anim = animNow, flag = 1, icon = data.item}) then
-		TriggerServerEvent("jixel-cluckinbell:Crafting:GetItem", data.item, data.craft)
-		ClearPedTasks(PlayerPedId())
-		Wait(500)
-		CraftLock = false
-	else
-		TriggerEvent("inventory:client:busy:status", false)
-		ClearPedTasks(PlayerPedId())
-		CraftLock = false
-	end
+	if skillCheck then
+        exports['mdn-extras']:MakeFood(data.item, {
+        controlDisables = { disableMovement = false, disableCarMovement = false, disableMouse = false, disableCombat = true },
+        animation = { animDict = animDictNow, anim = animNow, flags = 1}, prop = nil, propTwo = nil}, _, _, bartime*2, _, _, _, _):next(function(makeFood)
+            if makeFood == 100 then
+                CraftLock = false
+                TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
+                Wait(500)
+                TriggerEvent("jim-burgershot:Crafting", data)
+            elseif makeFood == 'half' then
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            else
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            end
+            ClearPedTasks(Ped)
+        end)
+    else
+        if progressBar({ label = bartext, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 1, icon = data.item }) then
+            CraftLock = false
+            TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
+            Wait(500)
+            TriggerEvent("jim-burgershot:Crafting", data)
+        else
+            CraftLock = false
+            TriggerEvent('inventory:client:busy:status', false)
+        end
+        ClearPedTasks(Ped)
+    end
 end)
 
 
@@ -604,6 +642,7 @@ RegisterNetEvent('jixel-cluckinbell:Crafting', function(data)
 		Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true }
 		Menu[#Menu + 1] = { icon = "fas fa-circle-xmark", header = "", txt = Loc[Config.Lan].menu["close"], params = { event = "" } }
 	end
+	Menu[#Menu + 1] = { icon = "fas fa-circle-info", title = "Tip :", description = "Using Ingredients marked with [ * ] will make high quality products when they are organic.", readOnly = true}
 	for i = 1, #data.craftable do
 		for k, v in pairs(data.craftable[i]) do
 			if k ~= "amount" then
@@ -618,7 +657,7 @@ RegisterNetEvent('jixel-cluckinbell:Crafting', function(data)
 					if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number.."\n" end
 					if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number.."<br>" end
 					settext = text
-					checktable[l] = HasItem(l, b)
+					checktable[l] = HasMetaItem(l, b)
 				end
 				for _, v in pairs(checktable) do if v == false then disable = true break end end
 				if not disable then setheader = setheader.." ✔️" end
@@ -646,7 +685,7 @@ RegisterNetEvent('jixel-cluckinbell:Crafting:MultiCraft', function(data)
     local success = Config.MultiCraftAmounts local Menu = {}
     for k in pairs(success) do success[k] = true
         for l, b in pairs(data.craft[data.item]) do
-            local has = HasItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
+            local has = HasMetaItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
 		end end
     if Config.Menu == "qb" then Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true } end
 	Menu[#Menu + 1] = { icon = "fas fa-arrow-left", title = Loc[Config.Lan].menu["back"], header = "", txt = Loc[Config.Lan].menu["back"], params = { event = "jixel-cluckinbell:Crafting", args = data }, event = "jixel-cluckinbell:Crafting", args = data }
@@ -662,7 +701,29 @@ RegisterNetEvent('jixel-cluckinbell:Crafting:MultiCraft', function(data)
 	elseif Config.Menu == "qb" then	exports['qb-menu']:openMenu(Menu) end
 end)
 
-RegisterNetEvent('jixel-cluckinbell:client:Consume', function(itemName, type)
+
+
+--[[CONSUME]]--
+local function ConsumeSuccess(itemName, type, status)
+    ExecuteCommand("e c")
+    toggleItem(false, itemName, 1)
+    if status.hunger then
+        --TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + QBCore.Shared.Items[itemName].hunger)
+        TriggerServerEvent("consumables:server:addHunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + status.hunger)
+        if Config.Debug then print("Adding hunger: "..QBCore.Functions.GetPlayerData().metadata["hunger"] + status.hunger) end
+    end
+    if status.thirst then
+        --TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + QBCore.Shared.Items[itemName].thirst)
+        TriggerServerEvent("consumables:server:addThirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + status.thirst)
+    end
+    if type == "alcohol" then alcoholCount += 1
+        if alcoholCount > 1 and alcoholCount < 4 then TriggerEvent("evidence:client:SetStatus", "alcohol", 200)    elseif alcoholCount >= 4 then
+            TriggerEvent("evidence:client:SetStatus", "heavyalcohol", 200) AlienEffect() end
+    end
+    --[[ if Config.RewardItem == itemName then toggleItem(true, Config.RewardPool[math.random(1, #Config.RewardPool)], 1) end ]]
+end
+
+RegisterNetEvent('jixel-cluckinbell:client:Consume', function(itemName, type, status)
 	local emoteTable = {
 		--[[ Food ]]
 		["fowlburger"] = "cbburger", ["mightyclucker"] = "cbburger", ["friedchicken"] = "cbburger", ["meatfree"] = "cbburger", ["csalad"] = "cbburger",
@@ -670,14 +731,14 @@ RegisterNetEvent('jixel-cluckinbell:client:Consume', function(itemName, type)
 		["strawberrycone"] = "donut3", ["chocolatecone"] = "donut3",
 		["cbdonut"] = "donut3",
 		--[[ Drinks ]]
-		["cbcoke"] = "cbcoke", ["cbcoffee"] = "cbcoffee", ["milkshake"] = "glass",
-		["cbrootbeer"] = "cbcoke", ["cborangesoda"] = "cbcoke", ["cblemonlimesoda"] = "cbcoke",
+		["cbcoke"] = "cbsoda", ["cbcoffee"] = "cbcoffee", ["milkshake"] = "glass",
+		["cbrootbeer"] = "cbsoda", ["cborangesoda"] = "cbsoda", ["cblemonlimesoda"] = "cbsoda",
 	}
-	local progstring, defaultemote = Loc[Config.Lan].progressbar["progress_drink"], "drink"
-	if type == "food" then progstring = Loc[Config.Lan].progressbar["progress_eat"] defaultemote = "uwu3" end
+	local progstring, defaultemote = Loc[Config.Lan].progressbar["drinking"], "drink"
+	if type == "food" then progstring = Loc[Config.Lan].progressbar["eating"] defaultemote = "burger" end
 	ExecuteCommand("e "..(emoteTable[itemName] or defaultemote))
 	if progressBar({label = progstring..QBCore.Shared.Items[itemName].label.."..", time = math.random(3000, 6000), cancel = true, icon = itemName}) then
-		ConsumeSuccess(itemName, type)
+		ConsumeSuccess(itemName, type, status)
 	else
 		ExecuteCommand("e c")
 	end

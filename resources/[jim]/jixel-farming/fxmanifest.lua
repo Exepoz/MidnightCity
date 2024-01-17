@@ -1,6 +1,6 @@
 name "jixel-farming"
 author "Taylor"
-version "2.4.9"
+version "2.5.2"
 description "Farming Script by Taylor, Zero, and Jim"
 fx_version "cerulean"
 game "gta5"

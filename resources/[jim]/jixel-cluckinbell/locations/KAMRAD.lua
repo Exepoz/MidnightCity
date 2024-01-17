@@ -1,7 +1,7 @@
 Config.Locations["KAMRAD"] = {
-    zoneEnabled = false,
-    chairsEnabled = false,
-    tablesEnabled =false,
+    zoneEnabled = true,
+    chairsEnabled = true,
+    tablesEnabled = true,
     MLO = "KAM",
     job = "cluckinbell",
     zones = {

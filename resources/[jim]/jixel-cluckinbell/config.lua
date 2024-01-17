@@ -1,7 +1,7 @@
 Config = {
-	Debug = true,  -- True to show debug boxes
+	Debug = false,  -- True to show debug boxes
 	PrintDebug = false, -- True to show debug prints
-	EmoteMenu = "default",
+	EmoteMenu = "rpemotes",
 	Core = "qb-core", -- put your core name here if you chose for some reason to rename your qb-core core. Trust me I will judge you.
 	Lan = "en", -- Pick your language here (English only at the moment, feel free to submit your own translations)
 	img = "ps-inventory/html/images/", -- Change this to your inventory's name and image folder (SET TO "" IF YOU HAVE DOUBLE IMAGES)
@@ -14,7 +14,7 @@ Config = {
 	Menu = "ox", -- change to qb if using qb-menu
 	JimShop = false, 		-- Enable this to use jim-shops for buying ingredients
 	CheckMarks = true, -- If true this will show the player if they have the correct items to be able to craft the items
-	JimConsumables = false,
+	JimConsumables = true,
 }
 
 Crafting = {
@@ -43,6 +43,12 @@ Crafting = {
 		{ ['cbchickenwrap'] = { ['clucknuggets'] = 1, ['lettuce'] = 1, } },
 		{ ['csalad'] = { ['clucknuggets'] = 1, ['lettuce'] = 1, ['slicedtomatoes'] = 1, } },
 		{ ['cbucket'] = { ['friedchicken'] = 4, } },
+		{ ['delivery_cluckinbell'] = {
+			['mightyclucker'] = 1,
+			['cluckfries'] = 1,
+			['friedchicken'] = 1,
+			['cborangesoda'] = 1,
+		} },
 	},
 	Drink = {
 		{ ['water_bottle'] = { } },

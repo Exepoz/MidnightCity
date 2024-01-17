@@ -1,7 +1,7 @@
 print("^2Jim^7-^2Burgershot ^7v^42^7.^46 ^7- ^2BurgerShot Job Script by ^1Jimathy^7")
 
 Config = {
-	Debug = true,  -- True to show debug boxes and messages
+	Debug = false,  -- True to show debug boxes and messages
 
 	--https://i.imgur.com/NIFOsYf.jpeg
 
@@ -14,10 +14,10 @@ Config = {
 	Notify = "ox",
 	ProgressBar = "qb", -- set to "ox" if using ox_lib progressbar
 
-	MultiCraft = true,
+	MultiCraft = false,
 	MultiCraftAmounts = { [1], [5], [10] },
 
-	JimConsumables = false, -- Enable this to disable this scripts control of food/drink items
+	JimConsumables = true, -- Enable this to disable this scripts control of food/drink items
 	JimShop = false, 		-- Enable this to use jim-shops for buying ingredients
 
 
@@ -36,15 +36,15 @@ Config = {
 		label = "Storage",
 		slots = 9,
 		items = {
-			{ name = 'burgerpatty', price = 0, amount = 200, info = {}, type = 'item', slot = 1, },
-			{ name = 'potato', price = 0, amount = 200, info = {}, type = 'item', slot = 2, },
-			{ name = 'onion', price = 0, amount = 200, info = {}, type = 'item', slot = 3, },
-			{ name = 'frozennugget', price = 0, amount = 200, info = {}, type = 'item', slot = 4, },
-			{ name = 'milk', price = 0, amount = 200, info = {}, type = 'item', slot = 5, },
-			{ name = 'icecream', price = 0, amount = 200, info = {}, type = 'item', slot = 6, },
-			{ name = 'burgerbun', price = 0, amount = 200, info = {}, type = 'item', slot = 7, },
-			{ name = 'cheddar', price = 0, amount = 200, info = {}, type = 'item', slot = 8, },
-			{ name = 'lettuce', price = 0, amount = 200, info = {}, type = 'item', slot = 9, },
+			--{ name = 'burgerpatty', price = 0, amount = 200, info = {}, type = 'item', slot = 1, },
+			--{ name = 'potato', price = 0, amount = 200, info = {}, type = 'item', slot = 2, },
+			--{ name = 'onion', price = 0, amount = 200, info = {}, type = 'item', slot = 3, },
+			--{ name = 'frozennugget', price = 0, amount = 200, info = {}, type = 'item', slot = 4, },
+			--{ name = 'milk', price = 0, amount = 200, info = {}, type = 'item', slot = 5, },
+			--{ name = 'icecream', price = 0, amount = 200, info = {}, type = 'item', slot = 6, },
+			--{ name = 'burgerbun', price = 0, amount = 200, info = {}, type = 'item', slot = 7, },
+			--{ name = 'cheese', price = 0, amount = 200, info = {}, type = 'item', slot = 8, },
+			--{ name = 'lettuce', price = 0, amount = 200, info = {}, type = 'item', slot = 9, },
 		},
 	},
 	Locations = {
@@ -52,7 +52,7 @@ Config = {
 			zoneEnable = true,
 			job = "burgershot",
 			label = "Burger Shot",
-			autoClock = { enter = false, exit = true, },
+			autoClock = { enter = true, exit = true, },
 			zones = {
 				vec2(-1153.6727294922, -892.29083251953),
 				vec2(-1174.5604248047, -860.27191162109),
@@ -91,8 +91,8 @@ Config = {
 				list = { "stalion2", "burrito3", } },
 		},
 		{ -- Sandy Shores (GNMODS)
-			zoneEnable = false,
-			job = "burgershot",
+			zoneEnable = true,
+			job = "burgershot2",
 			label = "Burger Shot (Sandy Shores)",
 			autoClock = { enter = false, exit = true, },
 			zones = {
@@ -108,14 +108,34 @@ Config = {
 		},
 	},
 }
+
+Organic = {
+	['rawgroundbeef'] = true,
+	['burgermeat'] = true,
+	['cheese'] = true,
+	['rawbacon'] = true,
+	['cookedbacon'] = true,
+	['onion'] = true,
+	['slicedonion'] = true,
+}
+
+HighQuality = {
+	['heartstopper'] = true,
+	['bleeder'] = true,
+	['torpedo'] = true,
+	['meatfree'] = true,
+	['moneyshot'] = true,
+	['cheesewrap'] = true,
+}
+
 Crafting = {
 	ChopBoard = {
 		{ ['slicedonion'] = { ['onion'] = 1, },
 			['amount'] = 3 },
 		{ ['slicedpotato'] = { ['potato'] = 1, },
 			['amount'] = 3 },
-		{ ['chickenwrap'] = { ['shotnuggets'] = 1, ['lettuce'] = 1, } },
-		{ ['cheesewrap'] = { ['cheddar'] = 1, ['lettuce'] = 1, } },
+		{ ['chickenwrap'] = { ['chickenbreast'] = 1, ['lettuce'] = 1, } },
+		{ ['cheesewrap'] = { ['cheese'] = 1, ['lettuce'] = 1, } },
 	},
 	Fryer = {
 		{ ['shotfries'] = { ['slicedpotato'] = 1, } },
@@ -123,43 +143,52 @@ Crafting = {
 		{ ['shotnuggets'] = { ['frozennugget'] = 1, } },
 	},
 	Grill = {
-		{ ['burgermeat'] = { ['burgerpatty'] = 1, } },
+		{ ['burgermeat'] = { ['rawgroundbeef'] = 1, }, amount = 5 },
+		{ ['cookedbacon'] = { ['rawbacon'] = 1, }, amount = 15 },
 	},
 	Prepare = {
 		{ ['heartstopper'] = {
 				['burgerbun'] = 1,
-				['cheddar'] = 1,
+				['cheese'] = 1,
 				['lettuce'] = 1,
 				['burgermeat'] = 1,
-				['slicedonion'] = 1,
+				['slicedonion'] = 3,
+				['cookedbacon'] = 3,
 		} },
 		{ ['bleeder'] = {
 				['burgerbun'] = 1,
-				['cheddar'] = 1,
+				['cheese'] = 1,
 				['lettuce'] = 1,
 				['burgermeat'] = 1,
 				['slicedonion'] = 1,
 		} },
 		{ ['torpedo'] = {
 				['burgerbun'] = 1,
-				['cheddar'] = 1,
+				['cheese'] = 1,
 				['lettuce'] = 1,
 				['burgermeat'] = 1,
 				['slicedonion'] = 1,
 		} },
 		{ ['meatfree'] = {
 				['burgerbun'] = 1,
-				['cheddar'] = 1,
+				['cheese'] = 1,
 				['lettuce'] = 1,
 				['slicedonion'] = 1,
 		} },
 		{ ['moneyshot'] = {
 				['burgerbun'] = 1,
-				['cheddar'] = 1,
+				['cheese'] = 1,
 				['lettuce'] = 1,
 				['burgermeat'] = 1,
 				['slicedonion'] = 1,
 		} },
+		{ ['delivery_burgershot'] = {
+			['heartstopper'] = 1,
+			['bscoke'] = 1,
+			['shotfries'] = 1,
+			['shotnuggets'] = 1,
+		} },
+
 	},
 	Drink = {
 		{ ['water_bottle'] = { } },

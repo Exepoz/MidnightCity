@@ -1,10 +1,24 @@
 local Targets, Props, Blips, CraftLock, Ped = {}, {}, {}, false, nil
-
+local skillCheck = false
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function() QBCore.Functions.GetPlayerData(function(PlayerData) PlayerJob = PlayerData.job onDuty = PlayerJob.onduty end) Ped = PlayerPedId() end)
 RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo) PlayerJob = JobInfo onDuty = PlayerJob.onduty end)
 RegisterNetEvent('QBCore:Client:SetDuty', function(duty) onDuty = duty end)
 AddEventHandler('onResourceStart', function(r) if GetCurrentResourceName() ~= r then return end QBCore.Functions.GetPlayerData(function(PlayerData) PlayerJob = PlayerData.job onDuty = PlayerJob.onduty end) Ped = PlayerPedId() end)
 
+
+function HasMetaItem(items, amount)
+    local amount, count = amount or 1, 0
+    local pData = QBCore.Functions.GetPlayerData()
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
+    for _, itemData in pairs(pData.items) do
+        if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
+            if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
+            count += itemData.amount
+        end
+    end
+    if count >= amount then if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^5FOUND^7 x^3"..count.."^7") end return true end
+    if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Items ^1NOT FOUND^7") end    return false
+end
 CreateThread(function()
 	local loc = Config.Locations[1]
 	local bossroles = {}
@@ -116,8 +130,10 @@ RegisterNetEvent('jim-popsdiner:Crafting:MakeItem', function(data)
 	local bartext = ""
 	if data.header == Loc[Config.Lan].menu["griddle_menu"] then
 		bartext = Loc[Config.Lan].progress["making"] bartime = 7000 animDictNow = "anim@heists@prison_heiststation@cop_reactions" animNow = "cop_b_idle"
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["chopping_board"] then
 		bartext = Loc[Config.Lan].progress["pouring"] bartime = 5000 animDictNow = "amb@prop_human_bbq@male@base" animNow = "base"
+		skillCheck = true
 	elseif data.header == Loc[Config.Lan].menu["drinks_dispenser"] or data.header == Loc[Config.Lan].menu["coffee_menu"] then
 		bartext = Loc[Config.Lan].progress["pouring"] bartime = 3000
 		animDictNow = "mp_ped_interaction" animNow = "handshake_guy_a"
@@ -128,16 +144,36 @@ RegisterNetEvent('jim-popsdiner:Crafting:MakeItem', function(data)
 	end
 	local cam = createTempCam(PlayerPedId(), data.coords)
 	CreateThread(function() while CraftLock do playAnim(animDictNow, animNow, bartime, 32) Wait(GetAnimDuration(animDictNow, animNow)*1000) end stopAnim(animDictNow, animNow) end)
-	if progressBar({ label = bartext..QBCore.Shared.Items[data.item].label, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 32, icon = data.item, cam = cam }) then
-		CraftLock = false
-		TriggerServerEvent('jim-popsdiner:Crafting:GetItem', data.item, data.craft)
-		Wait(500)
-		TriggerEvent("jim-popsdiner:Crafting", data)
-	else
-		CraftLock = false
-		TriggerEvent('inventory:client:busy:status', false)
+	if skillCheck then
+        exports['mdn-extras']:MakeFood(data.item, {
+        controlDisables = { disableMovement = false, disableCarMovement = false, disableMouse = false, disableCombat = true },
+        animation = { animDict = animDictNow, anim = animNow, flags = 1}, prop = nil, propTwo = nil}, _, _, bartime*2, _, _, _, _):next(function(makeFood)
+            if makeFood == 100 then
+                CraftLock = false
+                TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
+                Wait(500)
+                TriggerEvent("jim-burgershot:Crafting", data)
+            elseif makeFood == 'half' then
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            else
+                CraftLock = false
+                TriggerEvent('inventory:client:busy:status', false)
+            end
+            ClearPedTasks(Ped)
+        end)
+    else
+        if progressBar({ label = bartext, time = bartime, cancel = true, dict = animDictNow, anim = animNow, flag = 1, icon = data.item }) then
+            CraftLock = false
+            TriggerServerEvent('jim-burgershot:Crafting:GetItem', data.item, data.craft)
+            Wait(500)
+            TriggerEvent("jim-burgershot:Crafting", data)
+        else
+            CraftLock = false
+            TriggerEvent('inventory:client:busy:status', false)
+        end
+        ClearPedTasks(Ped)
 	end
-	ClearPedTasks(Ped)
 end)
 
 RegisterNetEvent('jim-popsdiner:Crafting', function(data)
@@ -147,7 +183,8 @@ RegisterNetEvent('jim-popsdiner:Crafting', function(data)
 	if Config.Menu == "qb" then
 		Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true }
 		Menu[#Menu + 1] = { icon = "fas fa-circle-xmark", header = "", txt = Loc[Config.Lan].menu["close"], params = { event = "" } }
-	end
+	end 
+	Menu[#Menu + 1] = { icon = "fas fa-circle-info", title = "Tip :", description = "Using Ingredients marked with [ * ] will make high quality products when they are organic.", readOnly = true}
 	for i = 1, #data.craftable do
 		for k, v in pairs(data.craftable[i]) do
 			if not QBCore.Shared.Items[k] then print("^5Debug^7: ^2Item not found in server^7: '^6"..k.."^7'") else
@@ -156,9 +193,10 @@ RegisterNetEvent('jim-popsdiner:Crafting', function(data)
 					for l, b in pairs(data.craftable[i][tostring(k)]) do
 						if not QBCore.Shared.Items[l] then
 							print("^5Debug^7: ^3Ingredient Item^2 not found in server^7: '^6"..l.."^7'") canShow = false
-						else
+							if Config.Menu == "ox" then text = text..QBCore.Shared.Items[l].label..number..(Organic[l] and "*" or "").."\n" end
+							if Config.Menu == "qb" then text = text.."- "..QBCore.Shared.Items[l].label..number..(Organic[l] and "*" or "").."<br>" end
 							settext = settext..QBCore.Shared.Items[l].label..(b > 1 and " x"..b or "")..(Config.Menu == "ox" and "\n" or "<br>")
-							checktable[l] = HasItem(l, b)
+							checktable[l] = HasMetaItem(l, b)
 						end
 					end
 					if canShow then
@@ -188,7 +226,7 @@ RegisterNetEvent('jim-popsdiner:Crafting:MultiCraft', function(data)
     local success = Config.MultiCraftAmounts local Menu = {}
     for k in pairs(success) do success[k] = true
         for l, b in pairs(data.craft[data.item]) do
-            local has = HasItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
+            local has = HasMetaItem(l, (b * k)) if not has then success[k] = false break else success[k] = true end
 		end end
     if Config.Menu == "qb" then Menu[#Menu + 1] = { header = data.header, txt = "", isMenuHeader = true } end
 	Menu[#Menu + 1] = { icon = "fas fa-arrow-left", title = Loc[Config.Lan].menu["back"], header = "", txt = Loc[Config.Lan].menu["back"], params = { event = "jim-popsdiner:Crafting", args = data }, event = "jim-popsdiner:Crafting", args = data }

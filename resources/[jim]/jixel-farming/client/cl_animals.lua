@@ -97,7 +97,7 @@ if AnimalSettings.Cows.Target then
                 --     end
                 -- },
                 {
-                    num = 1,
+                    --num = 1,
                     action = function(entity)
                         if IsPedAPlayer(entity) then
                             return false
@@ -106,7 +106,7 @@ if AnimalSettings.Cows.Target then
                     end,
                     icon = "fas fa-paw",
                     label = Loc[Config.CoreOptions.Lan].target["milk_cow"],
-                    job = Config.ScriptOptions.Job,
+                    job = nil,--Config.ScriptOptions.Job,
                     canInteract = function(entity)
                         if IsPedAPlayer(entity) then
                             return false
@@ -268,7 +268,7 @@ local function respawnAnimals(animalType)
         parameters = animalData.parameters,
         animalGroup = animalType
     }
-    for k, setup in pairs(animalData.setups) do
+    for _, setup in pairs(animalData.setups) do
         data.setup = setup
         spawnAnimal(data)
     end
@@ -328,6 +328,7 @@ function spawnAnimal(data)
 end
 
 function killCow(animal)
+    print(json.encode(animal))
     local entity = animal.entity
     local animalType = animal.animalType
     if HasItem("weapon_knife", 1) then
@@ -465,11 +466,6 @@ function MilkCow(entity)
             ClearPedTasksImmediately(player)
             milking = false
             print("milking done")
-            -- if Config.DebugOptions.Debug == false then
-            --     Wait(60000 * AnimalSettings.CollectWaitTime)
-            -- else
-            --     milking = false
-            -- end
         else
             destroyProp(milkprop)
             ClearPedTasks(player)

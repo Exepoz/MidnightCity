@@ -10,10 +10,10 @@ Config.Locations["GN"] = {
         vector2(-182.0075378418, -280.62149047852),
         vector2(-148.93226623535, -292.44454956055)
     },
-    autoClock = { enter = false, exit = false, }, -- Turning these on will detect if the person has the job and auto clock them on or off
+    autoClock = { enter = true, exit = true, }, -- Turning these on will detect if the person has the job and auto clock them on or off
     Blip = {
-        label = "Cluckin Bell - Rockford Plaza",
-        coords = vector3(-152.52, -267.16, 43.60),
+        label = "Cluckin Bell - Rockford",
+        coords = vector3(-150.53, -273.36, 43.6),
         sprite = 89,
         color = 5,
     },
@@ -70,19 +70,20 @@ Config.Locations["GN"] = {
     },
     Targets = {
         Storage = {
-            { coords = vec3(-153.13, -268.78, 43.6), l = 1.0, w = 1.0, heading = 162, type = "employee", boxgrab = true,},
-            { coords = vec3(-151.86, -269.33, 43.6), l = 1.0, w = 1.0, heading = 162, type = "employee", boxgrab = true},
-            { coords = vec3(-153.71, -265.92, 43.69),  w = 0.6, l = 0.6, heading = 164, type = "tray", prop = "prop_food_cb_tray_02", propcoords = vec3(-153.71, -265.92, 44.71),},
-            { coords = vec3(-151.94, -266.56, 43.6),  w = 0.6, l = 0.6, heading = 164, type = "tray", },
-            { coords = vec3(-149.29, -267.17, 43.6),  w = 1.0, l = 1.0, heading = 164, type = "tray", },
+            { coords = vec3(-153.13, -268.78, 42.6), l = 1.0, w = 1.0, heading = 162, type = "employee", boxgrab = true,},
+            { coords = vec3(-151.86, -269.33, 42.6), l = 1.0, w = 1.0, heading = 162, type = "employee", boxgrab = true},
+            { coords = vec3(-153.71, -265.92, 42.69),  w = 0.6, l = 0.6, heading = 164, type = "tray", prop = "prop_food_cb_tray_02", propcoords = vec3(-153.71, -265.92, 44.71),},
+            { coords = vec3(-151.94, -266.56, 42.6),  w = 0.6, l = 0.6, heading = 164, type = "tray", },
+            { coords = vec3(-149.29, -267.17, 42.6),  w = 1.0, l = 1.0, heading = 164, type = "tray", },
+            { coords = vec3(-158.32, -274.89, 42.6), l = 2.6, w = 0.6, heading = 160,type = 'employee'},
         },
         Fridge = {
-            { coords = vec3(-158.32, -274.89, 42.6), l = 2.6, w = 0.6, heading = 160,},
+            --{ coords = vec3(-158.32, -274.89, 42.6), l = 2.6, w = 0.6, heading = 160,},
         },
         POS = {
-            { coords = vec3(-154.56, -265.7, 43.6), l = 0.6, w = 0.6, heading = 152},
-            { coords = vec3(-152.91, -266.26, 43.6), l = 0.6, w = 0.6, heading = 152},
-            { coords = vec3(-151.14, -266.86, 43.6), l = 0.6, w = 0.6, heading = 152},
+            { coords = vec3(-154.56, -265.7, 42.6), l = 0.6, w = 0.6, heading = 152},
+            { coords = vec3(-152.91, -266.26, 42.6), l = 0.6, w = 0.6, heading = 152},
+            { coords = vec3(-151.14, -266.86, 42.6), l = 0.6, w = 0.6, heading = 152},
         },
         Drink = {
             { coords = vec3(-157.01, -271.09, 42.6), l = 0.6, w = 0.6, heading = 160, craftable = Crafting.Drink },
@@ -97,7 +98,7 @@ Config.Locations["GN"] = {
             { coords = vec3(-156.59, -270.25, 42.6), l = 1.2, w = 0.6, heading = 340, craftable = Crafting.IceCream },
         },
         Coffee = {
-            { coords = vec3(-157.28, -272.04, 43.6), l = 0.75, w = 0.75, heading = 252, craftable = Crafting.Coffee },
+            { coords = vec3(-157.28, -272.04, 42.6), l = 0.75, w = 0.75, heading = 252, craftable = Crafting.Coffee },
         },
         Fryer = {
             { coords = vec3(-149.4, -270.51, 42.6),  l = 2.0, w = 0.9, heading = 252, craftable = Crafting.Fryer },
@@ -107,8 +108,8 @@ Config.Locations["GN"] = {
         },
         Sink = {
             { coords = vec3(-156.58, -272.79, 42.6), l = 0.6, w = 0.6, heading = 155.7},
-            { coords = vec3(-165.6, -254.15, 44.18),  l = 2.0, w = 0.9, heading = 251,},
-            { coords = vec3(-165.38, -253.37, 44.18),  l = 2.0, w = 0.9, heading = 251,},
+            { coords = vec3(-165.6, -254.15, 42.18),  l = 2.0, w = 0.9, heading = 251,},
+            { coords = vec3(-165.38, -253.37, 42.18),  l = 2.0, w = 0.9, heading = 251,},
         },
     },
 }

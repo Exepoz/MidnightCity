@@ -173,7 +173,6 @@ RegisterNetEvent('jim-mechanic:client:applyNOS', function() local Ped = PlayerPe
 	if DoesEntityExist(vehicle) then
 		--local above = isVehicleLift(vehicle)
 		--if not IsToggleModOn(vehicle, 18) then triggerNotify(nil, Loc[Config.Lan]["nos"].notinstalled, "error") return end
-		QBCore.Debug(VehicleNitrous)
 		local Plate = trim(GetVehicleNumberPlateText(vehicle))
 		if not VehicleNitrous[Plate] then TriggerEvent("QBCore:Notify", "There is no way to fit this bottle here, you might need a special modified turbo...", "error") return end
 		if VehicleNitrous[Plate].hasnitro and VehicleNitrous[Plate].hasnitro == 1 then TriggerEvent("QBCore:Notify", "There is already a bottle installed!", "error") return end

@@ -165,7 +165,6 @@ RegisterServerEvent("jim-payments:server:Charge", function(citizen, price, billt
 end)
 
 RegisterServerEvent("jim-payments:server:PayPopup", function(data)
-	print_table(data)
 	local src = source
     local billed = QBCore.Functions.GetPlayer(src)
     local biller = QBCore.Functions.GetPlayer(tonumber(data.biller))

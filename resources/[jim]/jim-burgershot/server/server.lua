@@ -67,12 +67,17 @@ RegisterServerEvent('jim-burgershot:Crafting:GetItem', function(ItemMake, crafta
     local Player = QBCore.Functions.GetPlayer(src)
 	--This grabs the table from client and removes the item requirements
 	local amount = 1
+	local oNeeded, oAmount = 0, 0
 	if craftable then
 		if craftable["amount"] then amount = craftable["amount"] end
-		for k, v in pairs(craftable[ItemMake]) do TriggerEvent("jim-burgershot:server:toggleItem", false, tostring(k), v, src) end
+		for k, v in pairs(craftable[ItemMake]) do
+			oNeeded, oAmount = cookItem(false, tostring(k), v, src, oNeeded, oAmount)
+			--TriggerEvent("jim-burgershot:server:toggleItem", false, tostring(k), v, src)
+		end
 	end
 	--This should give the item, while the rest removes the requirements
-	TriggerEvent("jim-burgershot:server:toggleItem", true, ItemMake, amount, src)
+	cookItem(true, ItemMake, amount, src, oNeeded, oAmount)
+	--TriggerEvent("jim-burgershot:server:toggleItem", true, ItemMake, amount, src)
 end)
 
 local function dupeWarn(src, item)
@@ -80,6 +85,49 @@ local function dupeWarn(src, item)
 	print("^5DupeWarn: ^1"..P.PlayerData.charinfo.firstname.." "..P.PlayerData.charinfo.lastname.."^7(^1"..tostring(src).."^7) ^2Tried to remove item ^7('^3"..item.."^7')^2 but it wasn't there^7")
 	if not Config.Debug then DropPlayer(src, "^1Kicked for attempting to duplicate items") end
 	print("^5DupeWarn: ^1"..P.PlayerData.charinfo.firstname.." "..P.PlayerData.charinfo.lastname.."^7(^1"..tostring(src).."^7) ^2Dropped from server for item duplicating^7")
+end
+
+function cookItem(give, item, amount, newsrc, oNeeded, oAmount)
+	local organicNeeded = oNeeded or 0
+	local organicAmount = oAmount or 0
+	local src = newsrc
+	local player = QBCore.Functions.GetPlayer(src)
+	local remamount = (amount or 1)
+	if give == 0 or give == false then
+		if HasItem(src, item, amount or 1) then -- check if you still have the item
+			if Organic[item] then organicNeeded += amount end
+			local items = player.Functions.GetItemsByName(item)
+			for _,v in pairs(items) do
+				if remamount < 0 then break end
+				if v.amount < remamount then
+					for i = 1, v.amount do
+						if player.PlayerData.items[v.slot].info.organic then organicAmount += 1 end
+						player.Functions.RemoveItem(item, 1, v.slot)
+						remamount -= 1
+					end
+				else
+					while remamount > 0 do
+						if player.PlayerData.items[v.slot].info.organic then organicAmount += 1 end
+						print(item, v.slot)
+						player.Functions.RemoveItem(item, 1, v.slot)
+						remamount -= 1
+					end
+				end
+			end
+			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "remove", amount or 1)
+			if Config.Debug then print("^5Debug^7: ^1Removing ^2from Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
+			return organicNeeded, organicAmount
+		else dupeWarn(src, item) end -- if not boot the player
+	else
+		local info = {}
+		if oNeeded > 0 and oAmount >= oNeeded then
+			info = HighQuality[item] and {highQuality = true, buffJob = 'burgershot'} or {organic = true}
+		end
+		if player.Functions.AddItem(item, amount or 1, false, info) then
+			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add", amount or 1)
+			if Config.Debug then print("^5Debug^7: ^4Giving ^2Player^7(^2"..src.."^7) '^6"..QBCore.Shared.Items[item].label.."^7(^2x^6"..(amount or "1").."^7)'") end
+		end
+	end
 end
 
 RegisterNetEvent('jim-burgershot:server:toggleItem', function(give, item, amount, newsrc)
@@ -135,7 +183,7 @@ else
 		local Player = QBCore.Functions.GetPlayer(source)
 		if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Checking if player has required item^7 '^3"..tostring(items).."^7'") end
 		for _, itemData in pairs(Player.PlayerData.items) do
-			if itemData and (itemData.name == items) then
+			if itemData and (itemData.name == items) and (itemData.info.quality > 0) then
 				if Config.Debug then print("^5Debug^7: ^3HasItem^7: ^2Item^7: '^3"..tostring(items).."^7' ^2Slot^7: ^3"..itemData.slot.." ^7x(^3"..tostring(itemData.amount).."^7)") end
 				count += itemData.amount
 			end

@@ -1,6 +1,6 @@
 name 'Jixel-CluckinBell'
 author 'Taylor'
-version '2.0.1'
+version '2.0.4'
 description 'CluckinBell Script By Taylor'
 fx_version 'cerulean'
 game 'gta5'
