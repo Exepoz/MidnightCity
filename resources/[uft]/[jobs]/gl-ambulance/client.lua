@@ -452,20 +452,20 @@ RegisterNetEvent('gl-ambulance:spawnPed', function(coords, heading)
     SetEntityInvincible(npc, true)
     SetBlockingOfNonTemporaryEvents(npc, true)
     SetModelAsNoLongerNeeded(hash)
-    exports['qb-target']:AddTargetEntity('nancy', npc, {
-        name = "nancy",
-        heading = GetEntityHeading(npc),
-        debugPoly = false
-    }, {
-        options = {{
-            action = function(entity)
-                TriggerServerEvent('gl-ambulance:revivePlayer', GetPlayerServerId(PlayerId()), 'nancy')
-            end,
-            icon = "fas fa-clipboard-list",
-            label = "Check In"
-        }},
-        distance = 2.5
-    })
+    -- exports['qb-target']:AddTargetEntity(npc, {
+    --     name = "nancy",
+    --     heading = GetEntityHeading(npc),
+    --     debugPoly = false
+    -- }, {
+    --     options = {{
+    --         action = function(entity)
+    --             TriggerServerEvent('gl-ambulance:revivePlayer', GetPlayerServerId(PlayerId()), 'nancy')
+    --         end,
+    --         icon = "fas fa-clipboard-list",
+    --         label = "Check In"
+    --     }},
+    --     distance = 2.5
+    -- })
 end)
 
 -- Interact With Nancy
@@ -495,7 +495,7 @@ RegisterNetEvent('gl-ambulance:spawnGrandmaPed', function(coords, heading)
     SetEntityInvincible(grandma, true)
     SetBlockingOfNonTemporaryEvents(grandma, true)
     SetModelAsNoLongerNeeded(hash)
-    exports['qb-target']:AddEntityZone('grandma', grandma, {
+    exports['qb-target']:AddTargetEntity(grandma, {
         name = "grandma",
         heading = GetEntityHeading(grandma),
         debugPoly = false,
