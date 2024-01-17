@@ -76,7 +76,7 @@ RegisterNetEvent('Renewed-Deliveries:server:StartJob', function(run, coords)
 
     local deliverData = Player.PlayerData.metadata["delivery"] or 0
     if Config.Route[run] > deliverData then TriggerClientEvent('QBCore:Notify', src, "You don't have enough deliveries to do this route!", "error") return end
-    local placeHolder = run == "small" and "boxville4" or run == "medium" and "boxville4" or "pounder"
+    local placeHolder = run == "small" and "boxville2" or run == "medium" and "boxville2" or "pounder"
 
     local v = Config.StopsAmt
     local maxRuns = run == "small" and math.random(v["small"].min, v["small"].max) or run == "medium" and math.random(v["medium"].min, v["medium"].max) or math.random(v["large"].min, v["large"].max)
@@ -130,7 +130,7 @@ RegisterNetEvent('Renewed-Deliveries:server:CollectCheck', function()
 
     if groupSize > Config.MaxMembers then return end
 
-    local buff = groupSize >= Config.GroupPayLimit and Config.GroupPay or 1.0
+    local buff = groupSize >= Config.GroupPayLimit and Config.GroupPay or .5
     local pay = ((CurrentRuns[group].Delivered * Config.PriceBrackets[CurrentRuns[group].status]) * buff) / groupSize
     local MetaData = CurrentRuns[group].Delivered / groupSize
 
@@ -142,7 +142,7 @@ RegisterNetEvent('Renewed-Deliveries:server:CollectCheck', function()
                 local CID = Player.PlayerData.citizenid
                 local deliverData = Player.PlayerData.metadata["delivery"] or 0
 
-                local payBonus = Config.Buffs and exports[Config.BuffExport]:HasBuff(CID, Config.BuffType) and Config.BuffPay or 1.0
+                local payBonus = Config.Buffs and exports[Config.BuffExport]:HasBuff(CID, Config.BuffType) and Config.BuffPay or .5
                 local final = pay * payBonus
 
                 Player.Functions.SetMetaData('delivery', deliverData + MetaData)

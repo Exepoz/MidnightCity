@@ -1,17 +1,17 @@
 Config = Config or {}
 
-Config.RenewedFuel = true
+Config.RenewedFuel = false
 
 
 Config.CoreName = "qb-core"
 
 Config.Menu = "qb-menu" -- Change this to whatever you use, some use qb-menu, others use ps-ui etc. just make sure they are compatible with qb-menu
 
-Config.GarbageVehicle = "trash2"
+Config.GarbageVehicle = "trash"
 
 Config.Route = {
     ["small"] = 0,
-    ["medium"] = 50,
+    ["medium"] = 75,
     ["large"] = 150,
 }
 
@@ -23,13 +23,13 @@ Config.StopsAmt = {
 
 Config.MaterialTicket = true -- Enable or disable MaterialTickets and trades
 Config.Trade = {
-    ["metalscrap"] = 50, -- Name of the material, the amount of materials the player will get for 1 ticket
-    ["steel"] = 50,
-    ["glass"] = 50,
-    ["rubber"] = 50
+    ["metalscrap"] = math.random(15,18), -- Name of the material, the amount of materials the player will get for 1 ticket
+    ["steel"] = math.random(10,12),
+    ["glass"] = math.random(20,23),
+    ["rubber"] = math.random(12,16)
 }
 
-Config.PedLocation = vector4(-322.25, -1545.78, 31.02, 270.41)
+Config.PedLocation = vector4(-322.25, -1545.78, 30.02, 270.41)
 Config.Ped = "s_m_y_garbage"
 
 

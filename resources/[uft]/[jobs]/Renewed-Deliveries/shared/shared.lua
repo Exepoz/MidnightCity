@@ -1,8 +1,8 @@
 Config = Config or {}
 
-Config.RenewedFuel = true
+Config.RenewedFuel = false
 
-Config.Menu = "ps-ui"
+Config.Menu = "qb-menu"
 
 Config.Route = {
     ["small"] = 0,

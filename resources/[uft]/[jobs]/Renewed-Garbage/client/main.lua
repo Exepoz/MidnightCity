@@ -204,7 +204,7 @@ RegisterNetEvent('Renewed-Garbage:client:NewPlace', function(location, NetID, pl
     if NetID and plate then
         CachedNet = NetID
         local vehicle = NetToVeh(NetID)
-        if not Config.RenewedFuel then exports['Legacy-Fuel']:SetFuel(vehicle, 100.0) end
+        if not Config.RenewedFuel then exports['cdn-fuel']:SetFuel(vehicle, 100.0) end
         TriggerServerEvent("qb-vehiclekeys:server:AcquireVehicleKeys", plate)
     end
 
@@ -282,27 +282,50 @@ CreateThread(function()
         },
         distance = 1.0,
     })
+    --local function setupTarget()
+    --    CreateThread(function()
+    --        lib.requestModel(`s_m_y_garbage`)
+    --        taxiPed = CreatePed(3, `s_m_y_garbage`, -322.25, -1545.78, 31.02, 270.41, false, true)
+    --        SetBlockingOfNonTemporaryEvents(taxiPed, true)
+    --        TaskPlayAnim(taxiPed, 'abigail_mcs_1_concat-0', 'csb_abigail_dual-0', 8.0, 8.0, -1, 1, 0, false, false, false)
+    --        TaskStartScenarioInPlace(taxiPed, 'WORLD_HUMAN_AA_COFFEE', 0, false)
+    --        FreezeEntityPosition(taxiPed, true)
+    --        SetEntityInvincible(taxiPed, true)
+    --        exports.ox_target:addLocalEntity(taxiPed, {
+    --            {
+    --                type = 'client',
+    --                event = 'Renewed-Garbage:client:OpenMainMenu',
+    --                icon = 'fa-solid fa-cubes',
+    --                label = Lang:t('Talk to Eddie'),
+    --                job = 'taxi',
+    --            }
+    --        })
+    --    end)
+    --end
+    
 
-    exports['qb-target']:SpawnPed({
-        model = Config.Ped,
-        coords = Config.PedLocation,
-        minusOne = true,
-        freeze = true,
-        invincible = true,
-        blockevents = true,
-        scenario = 'WORLD_HUMAN_AA_COFFEE',
-        target = {
-            options = {
-                {
-                    event = "Renewed-Garbage:client:OpenMainMenu",
-                    icon = 'fa-solid fa-cubes',
-                    label = 'Talk to Eddie',
-                }
-            },
-            distance = 2.5,
+    local model = Config.Ped
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        Wait(0)
+    end
+    local currentCoords = Config.PedLocation
+    local ped = CreatePed(0, model, currentCoords, false, false)
+    SetPedCanBeTargetted(ped, false)
+    FreezeEntityPosition(ped, true)
+    SetEntityInvincible(ped, true)
+    SetBlockingOfNonTemporaryEvents(ped, true)
+    exports['qb-target']:AddTargetEntity(ped,{
+        options = {
+            {
+                event = "Renewed-Garbage:client:OpenMainMenu",
+                icon = 'fa-solid fa-cubes',
+                label = 'Talk to Eddie',
+            }
         },
+        distance = 2.5,
     })
-
+    
       exports['qb-target']:AddTargetModel(Config.Target, {
         options = {
           {

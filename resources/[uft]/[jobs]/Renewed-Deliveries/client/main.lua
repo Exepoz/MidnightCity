@@ -139,7 +139,7 @@ RegisterNetEvent('Renewed-Deliveries:client:NewPlace', function(location, NetID,
     if NetID and plate then
         CachedNet = NetID
         local vehicle = NetToVeh(NetID)
-        if not Config.RenewedFuel then exports['Legacy-Fuel']:SetFuel(vehicle, 100.0) end
+        if not Config.RenewedFuel then exports['cdn-fuel']:SetFuel(vehicle, 100.0) end
         TriggerServerEvent("qb-vehiclekeys:server:AcquireVehicleKeys", plate)
     end
 
@@ -258,7 +258,7 @@ CreateThread(function()
                     if distance > 1.5 then return false end
                     if not doinJob then return false end
                     if jobDone then return false end
-                    if GetEntityModel(entity) ~= joaat("boxville4") and GetEntityModel(entity) ~= joaat("pounder") then return false end
+                    if GetEntityModel(entity) ~= joaat("boxville2") and GetEntityModel(entity) ~= joaat("pounder") then return false end
                     if GetVehicleDoorLockStatus(entity) ~= 1 then return false end
                     if prop then return false end
                     if GetVehicleEngineHealth(entity) <= 0 then return false end
@@ -289,7 +289,7 @@ CreateThread(function()
                 canInteract = function(entity)
                     if not doinJob then return false end
                     if jobDone then return false end
-                    if GetEntityModel(entity) ~= joaat("boxville4") and GetEntityModel(entity) ~= joaat("pounder") then return false end
+                    if GetEntityModel(entity) ~= joaat("boxville2") and GetEntityModel(entity) ~= joaat("pounder") then return false end
                     if GetVehicleDoorLockStatus(entity) ~= 1 then return false end
                     if prop then return false end
                     if GetVehicleEngineHealth(entity) <= 0 then return false end
@@ -328,9 +328,11 @@ RegisterNetEvent('Renewed-Deliveries:client:TakePackage', function()
     if prop then return end
     QBCore.Functions.TriggerCallback('Renewed-Deliveries:server:CanGrabPackage', function(result)
         if result then
-            prop = randomTable[math.random(#randomTable)]
+            local model = `hei_prop_heist_box`
+            loadModel(model)
+            prop = CreateObject(model, GetEntityCoords(PlayerPedId()), true)
             Wait(50)
-            exports['Renewed-Weaponscarry']:carryProp(prop)
+            PickUp()
         end
     end, CachedNet)
 end)
@@ -352,8 +354,65 @@ RegisterNetEvent('Renewed-Deliveries:client:DeliverPackage', function()
     local shop = GetShop()
     QBCore.Functions.TriggerCallback('Renewed-Deliveries:server:DeliverPackage', function(result)
         if result then
-            exports['Renewed-Weaponscarry']:removeProp(prop)
+            Drop()
             prop = nil
         end
     end, shop)
 end)
+
+
+function PickUp()
+    loadAnimDict('anim@heists@box_carry@')
+    DisableControls()
+    CreateThread(function()
+        while prop ~= nil do 
+            if not IsEntityPlayingAnim(PlayerPedId(), 'anim@heists@box_carry@', 'idle', 3) then
+                TaskPlayAnim(PlayerPedId(), 'anim@heists@box_carry@', 'idle', 6.0, -6.0, -1, 49, 0, 0, 0, 0)
+            end
+            if not IsEntityAttachedToEntity(prop, PlayerPedId()) then  AttachEntityToEntity(prop, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 0xEB95), 0.075, -0.09, 0.257, -130.0, 105.0, 0.0, true, true, false, false, 0, true) end
+            Wait(1000)
+        end
+    end)
+end
+
+function loadAnimDict(dict)
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Wait(5)
+    end
+end
+
+function loadModel(model)
+    while (not HasModelLoaded(model)) do
+        RequestModel(model)
+        Wait(5)
+    end
+end
+
+function Drop()
+    ClearPedTasks(PlayerPedId())
+    DeleteObject(prop)
+end
+
+function DisableControls()
+    CreateThread(function()
+        while prop ~= nil do 
+            DisableControlAction(0, 21, true) -- Sprinting
+            DisableControlAction(0, 22, true) -- Jumping
+            DisableControlAction(0, 23, true) -- Vehicle Entering
+            DisableControlAction(0, 36, true) -- Ctrl
+            DisableControlAction(0, 24, true) -- disable attack
+            DisableControlAction(0, 25, true) -- disable aim
+            DisableControlAction(0, 47, true) -- disable weapon
+            DisableControlAction(0, 58, true) -- disable weapon
+            DisableControlAction(0, 263, true) -- disable melee
+            DisableControlAction(0, 264, true) -- disable melee
+            DisableControlAction(0, 257, true) -- disable melee
+            DisableControlAction(0, 140, true) -- disable melee
+            DisableControlAction(0, 141, true) -- disable melee
+            DisableControlAction(0, 142, true) -- disable melee
+            DisableControlAction(0, 143, true) -- disable melee
+            Wait(1)
+        end
+    end)
+end

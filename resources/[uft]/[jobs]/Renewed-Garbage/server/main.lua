@@ -125,7 +125,7 @@ RegisterNetEvent('Renewed-Garbage:server:CollectCheck', function()
 
     local m = exports['qb-phone']:getGroupMembers(group)
     local groupSize = exports['qb-phone']:getGroupSize(group)
-    local buff = groupSize >= Config.GroupPayLimit and Config.GroupPay or 1.0
+    local buff = groupSize >= Config.GroupPayLimit and Config.GroupPay or 0.5
     local pay = ((CurrentRuns[group].Delivered * Config.PriceBrackets[CurrentRuns[group].status]) * buff) / groupSize
     local MetaData = CurrentRuns[group].Delivered / groupSize
 
@@ -139,7 +139,7 @@ RegisterNetEvent('Renewed-Garbage:server:CollectCheck', function()
                 local CID = Player.PlayerData.citizenid
                 local deliverData = Player.PlayerData.metadata["garbage"] or 0
 
-                local payBonus = Config.Buffs and exports[Config.BuffExport]:HasBuff(CID, Config.BuffType) and Config.BuffPay or 1.0
+                local payBonus = Config.Buffs and exports[Config.BuffExport]:HasBuff(CID, Config.BuffType) and Config.BuffPay or 0.5
                 local final = pay * payBonus
 
                 Player.Functions.SetMetaData('garbage', deliverData + MetaData)
