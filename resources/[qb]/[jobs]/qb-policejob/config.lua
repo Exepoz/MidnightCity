@@ -48,17 +48,17 @@ Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
 Config.GaragePedModel = "s_m_y_hwaycop_01"
 Config.Locations = {
     ["duty"] = {
-        [1] = vector3(442.26, -982.49, 30.8), -- LSPD
+        [1] = vector3(441.82, -981.95, 30.84), -- LSPD
        --[2] = vector3(-447.73, 6015.58, 32.28), -- BCSO
        --[3] = vector3(1832.68, 3678.4, 34.28), -- Sandy
     },
     ["vehicle"] = {
-        [1] = vector4(442.1, -1013.92, 28.63, 184.47), -- LSPD
+        [1] = vector4(453.57, -972.97, 25.70, 172.177), -- LSPD
         --[2] = vector4(-458.86, 6031.5, 31.34, 139.15), --BCSO
         --[3] = vector4(1858.95, 3681.95, 33.83, 219.83), -- Sandy
     },
     ["vehspawn"] = { -- The numbers [1] must match the numbers in [vehicle]
-        [1] = vector4(442.4, -1025.02, 28.29, 4.11), -- LSPD
+        [1] = vector4(441.12, -980.61, 25.70, 102.06), -- LSPD
         --[2] = vector4(-474.63, 6030.38, 30.95, 226.12), -- BCSO
         --[3] = vector4(1850.89, 3673.04, 33.37, 211.26), -- Sandy
     },
@@ -80,7 +80,7 @@ Config.Locations = {
         --[2] = vector4(-475.18, 5988.43, 31.72, 317.27), -- BCSO
     },
     ["armory"] = {
-        [1] = vector3(482.51, -995.62, 30.69), -- LSPD
+        [1] = vector3(482.54, -994.56, 30.85), -- LSPD
         --[2] = vector3(-444.12, 6013.53, 37.00), -- BCSO
         --[3] = vector3(1836.2, 3687.01, 34.19), -- Sandy
     },
@@ -88,11 +88,11 @@ Config.Locations = {
         [1] = vector3(440.15, -978.25, 30.66), -- LSPD
     },
     ["fingerprint"] = {
-        [1] = vector3(473.12, -1007.48, 26.27), -- LSPD
+        [1] = vector3(473.14, -1006.91, 26.24), -- LSPD
         --[2] = vector3(-452.22, 5997.96, 27.58), --BCSO
     },
     ["evidence"] = {
-        [1] = vector3(472.79, -993.10, 26.27), -- LSPD
+        [1] = vector3(472.2, -993.81, 26.23), -- LSPD
         --[2] = vector3(-452.87, 5999.38, 37.00), -- BCSO
         --[3] = vector3(1817.97, 3672.25, 34.2), -- Sandy
     },
@@ -107,7 +107,7 @@ Config.Locations = {
 }
 
 Config.RepairStations = {
-    enabled = true,
+    enabled = false,
     withanim = false,
     locations = {
         [1] = {
