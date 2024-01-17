@@ -6,6 +6,14 @@ local Quests = {
 	[2] = {},
 	[3] = {},
 }
+
+local jobStages = {
+    [1] = {name = "Wait to receive the house's location.", isDone = false, id = 1},
+    [2] = {name = "Enter the house.", isDone = false, id = 2},
+    [3] = {name = "Loot the house.", isDone = false, id = 3},
+    [4] = {name = "Leave the area.", isDone = false, id = 4}
+}
+
 GlobalState.CompHRQuests = Quests
 
 local webhook = 'https://discord.com/api/webhooks/1114994318554447882/MhekhZo-FmaKEcMNQWvsqUB7-iHmfSwwpa6vXmkej1Ga0bKcqfXVPKkb4gPsBGqw-rlS' -- Your Discord webhook for logs.
@@ -23,7 +31,7 @@ local cooldownTimer = {}
 local props = {
 	['prop_micro_01'] = {item = 'microwave'},
 	['prop_micro_02'] = {item = 'microwave'},
-	['prop_coffee_mac_02'] = {item = 'coffeemaker'},
+	['sf_prop_sf_esp_machine_01a'] = {item = 'coffeemaker'},
 	['Prop_Tapeplayer_01'] = {item = 'tapeplayer'}
 }
 
@@ -48,9 +56,13 @@ end)
 
 RegisterNetEvent('av_houserobbery:server:extraRep', function()
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-	Player.Functions.SetMetaData('house_robbery_rep', Player.PlayerData.metadata.house_robbery_rep+1)
-	TriggerClientEvent('QBCore:Notify', src, 'You earned extra reputation for grabbing everything inside the house!', 'success')
+	local groupID = exports['qb-phone']:GetGroupByMembers(src)
+	local members = exports['qb-phone']:getGroupMembers(groupID)
+	for k, v in pairs(members) do
+		local Player = QBCore.Functions.GetPlayer(v)
+		Player.Functions.SetMetaData('house_robbery_rep', Player.PlayerData.metadata.house_robbery_rep+1)
+		TriggerClientEvent('QBCore:Notify', v, 'You earned extra reputation for grabbing everything inside the house!', 'success')
+	end
 end)
 
 
@@ -115,23 +127,45 @@ end)
 
 RegisterNetEvent('av_houserobbery:server:InitCooldown', function()
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-	cooldownTimer[Player.PlayerData.citizenid] = os.time()
-	Player.Functions.SetMetaData('house_robbery_rep', Player.PlayerData.metadata.house_robbery_rep+0.5)
+	local groupID = exports['qb-phone']:GetGroupByMembers(src)
+	local stages = exports['qb-phone']:getJobStages(groupID)
+	if stages[2].isDone then return end
 
-	local charinfo = Player.PlayerData.charinfo
-    local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
-    local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
-    local pName = firstName.." "..lastName
-	local logString = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\n"..Player.PlayerData.citizenid.."\nStarted a House Robbery"
-	TriggerEvent("qb-log:server:CreateLog", "houseRob", "Robbery Started", "blue", {ply = GetPlayerName(src), txt = logString})
+	stages[2].isDone = true
+	exports['qb-phone']:setJobStatus(groupID, "House Robbery", stages)
+
+	local members = exports['qb-phone']:getGroupMembers(groupID)
+	local time = os.time()
+	local pStr = 'Players :\n'
+	local plys = {}
+	for k, v in pairs(members) do
+		TriggerClientEvent('av_houserobbery:client:groupSync', v, 'doorOpen')
+		local Player = QBCore.Functions.GetPlayer(v)
+		cooldownTimer[Player.PlayerData.citizenid] = time
+
+		-- Give XP to player
+		Player.Functions.SetMetaData('house_robbery_rep', Player.PlayerData.metadata.house_robbery_rep+Config.RepGains.doorUnlocked)
+
+		-- Log String
+		local charinfo = Player.PlayerData.charinfo
+		local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
+		if src == v then exports['qb-phone']:NotifyGroup(groupID, firstName.." has unlocked the door.", 'info') end
+		local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
+		local pName = firstName.." "..lastName.."\n"
+		plys[#plys+1] = {"Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\n"..Player.PlayerData.citizenid}
+		pStr = pStr..pName
+	end
+
+
+	local logString = pStr.."\nStarted a House Robbery"
+	TriggerEvent("qb-log:server:CreateLog", "houseRob", "Robbery Started", "blue", {group = plys, txt = logString})
 end)
 
 RegisterNetEvent('av_houserobbery:server:lockpickFailed', function()
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	Player.Functions.RemoveItem('advancedlockpick', 1)
-	TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['advancedlockpick'], "remove")
+	Player.Functions.RemoveItem(Config.LockpickName, 1)
+	TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.LockpickName ], "remove")
 end)
 
 local function GenerateLoot(items)
@@ -156,10 +190,10 @@ local function GenerateLoot(items)
     return chosenItem
 end
 
--- RegisterCommand('setHRRep', function(source, args)
--- 	local player = QBCore.Functions.GetPlayer(source)
--- 	player.Functions.SetMetaData('house_robbery_rep', tonumber(args[1]))
--- end)
+RegisterCommand('setHRRep', function(source, args)
+	local player = QBCore.Functions.GetPlayer(source)
+	player.Functions.SetMetaData('house_robbery_rep', tonumber(args[1]))
+end)
 
 RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 	local src = source
@@ -286,28 +320,33 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 		end
 	end
 
-	local charinfo = player.PlayerData.charinfo
-    local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
-    local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
-    local pName = firstName.." "..lastName
-	local logString = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\n"..Player.PlayerData.citizenid.."\n"..itemStr
-	TriggerEvent("qb-log:server:CreateLog", "houseRob", "Item Grabbed", "lightgreen", logString)
+	-- local charinfo = player.PlayerData.charinfo
+    -- local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
+    -- local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
+    -- local pName = firstName.." "..lastName
+	-- local logString = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\n"..Player.PlayerData.citizenid.."\n"..itemStr
+	-- TriggerEvent("qb-log:server:CreateLog", "houseRob", "Item Grabbed", "lightgreen", logString)
 end)
 
-function CheckCooldownTimer(cid)
+local function checkCooldownTimer(cid, time)
 	local onCd = true
-	if cooldownTimer[cid] and cooldownTimer[cid] + (Config.CooldownTime * 60) <= os.time() then onCd = false
+	if cooldownTimer[cid] and cooldownTimer[cid] + (Config.CooldownTime * 60) <= time then onCd = false
 	elseif not cooldownTimer[cid] then onCd = false end
 	return onCd
 end
 
-QBCore.Functions.CreateCallback('av_houserobbery:CheckStartReqs', function(source,cb)
-	local Player = QBCore.Functions.GetPlayer(source)
-	local cid =  Player.PlayerData.citizenid
-	local cdStatus = CheckCooldownTimer(cid)
-	local copStatus = false
-	local copAmount = 0
+local function getHouse(tier)
+	local houseInfo = Config.Houses[tier][math.random(#Config.Houses[tier])]
+	while houseInfo.inUse do houseInfo = Config.Houses[tier][math.random(#Config.Houses[tier])] end
+	houseInfo.inUse = true
+	return houseInfo
+end
 
+RegisterNetEvent('av_houserobbery:server:checkRequirements', function(args)
+	local src = source
+	local tier = args.tier
+	-- Cop Condition Check
+	local copAmount = 0
 	for _, v in pairs(QBCore.Functions.GetQBPlayers()) do
 		for _, jobs in pairs(policeJobs) do
 			if v.PlayerData.job.name == jobs and v.PlayerData.job.onduty then
@@ -315,8 +354,82 @@ QBCore.Functions.CreateCallback('av_houserobbery:CheckStartReqs', function(sourc
 			end
 		end
 	end
-	copStatus = copAmount < Config.CopsNeeded
-	local cantRob = false
-	if copStatus or cdStatus then cantRob = true end
-	cb(cantRob)
+	if copAmount < Config.CopsNeeded[tier] then TriggerClientEvent('QBCore:Notify', src, 'I\'m sorry I don\'t have any jobs for you currently...', 'error') return end
+
+	-- Group / hasJob Condition Check
+	local s = Config.GroupSize[tier]
+	local groupID = exports['qb-phone']:GetGroupByMembers(src)
+	if groupID == nil then TriggerClientEvent('QBCore:Notify', src, 'You need to be in a work group to do this!', 'error') return end
+	if exports['qb-phone']:GetGroupLeader(groupID) ~= src then TriggerClientEvent('QBCore:Notify', src, 'You\'re not the leader of your group.', 'error') return end
+	if exports['qb-phone']:getJobStatus(groupID) ~= 'WAITING' then TriggerClientEvent('QBCore:Notify', src, 'Your group already has a job!', 'error') return end
+	if exports['qb-phone']:getGroupSize(groupID) > s then TriggerClientEvent('QBCore:Notify', src, 'Your group can only have a maximum of '..s..' members for this job...', 'error') return end
+	local members = exports['qb-phone']:getGroupMembers(groupID)
+
+	-- Cooldown Condition Check
+	local cdStatus = false
+	local time = os.time()
+	for _, v in pairs(members) do
+		local Player = QBCore.Functions.GetPlayer(v)
+		local cid = Player.PlayerData.citizenid
+		cdStatus = checkCooldownTimer(cid, time)
+		if cdStatus == true then TriggerClientEvent('QBCore:Notify', src, 'A member in your group has done this too recently!', 'error') return end
+		if tier == 'high' and Player.PlayerData.metadata.house_robbery_rep < Config.HighEndRepNeeded then TriggerClientEvent('QBCore:Notify', src, 'A member in your group doesn\'t have access to high end houses!', 'error') return end
+	end
+
+	Citizen.CreateThread(function()
+		local houseInfo = getHouse(tier)
+		houseInfo.tier = tier
+		local c = {math.random(0,99), math.random(0,99), math.random(0,99)}
+		houseInfo.safe = math.random(100) < Config.SafeChances[tier]
+		houseInfo.laptop = math.random(100) < 40
+		for _, v in pairs(members) do
+			TriggerClientEvent('av_houserobbery:client:resetAll', v)
+			TriggerClientEvent('av_houserobbery:client:setupJob', v, houseInfo, c, src == v)
+		end
+		exports['qb-phone']:NotifyGroup(groupID, Config.Lang['waitcall'], 'info')
+		if not Config.Debug then Wait(Config.CoordsWait * 60000) end
+		local job = lib.table.deepclone(jobStages)
+		job[1].isDone = true
+		exports['qb-phone']:setJobStatus(groupID, "House Robbery", job)
+		for _, v in pairs(members) do
+			TriggerClientEvent('av_houserobbery:client:startJob', v)
+		end
+	end)
 end)
+
+RegisterNetEvent('av_houserobbery:server:playerCaught', function()
+	local src = source
+	local groupID = exports['qb-phone']:GetGroupByMembers(src)
+	if not groupID then return end
+	local members = exports['qb-phone']:getGroupMembers(groupID)
+	exports['qb-phone']:NotifyGroup(groupID, 'Someone triggered the Alarm, run!', 'error')
+	exports['qb-phone']:resetJobStatus(groupID)
+	Wait(2000)
+	for k, v in pairs(members) do TriggerClientEvent('av_houserobbery:client:resetAll', v) end
+end)
+
+RegisterNetEvent('av_houserobbery:server:finishHeist', function()
+	local src = source
+	local groupID = exports['qb-phone']:GetGroupByMembers(src)
+	if not groupID then return end
+	local members = exports['qb-phone']:getGroupMembers(groupID)
+	for k, v in pairs(members) do TriggerClientEvent('av_houserobbery:client:groupSync', v, 'caught') end
+	exports['qb-phone']:resetJobStatus(groupID)
+	Wait(2000) for k, v in pairs(members) do TriggerClientEvent('av_houserobbery:client:resetAll', v) end
+end)
+
+RegisterNetEvent('av_houserobbery:server:groupSync', function(sync, ...)
+	local src = source
+	local groupID = exports['qb-phone']:GetGroupByMembers(src)
+	if not groupID then return end
+	local members = exports['qb-phone']:getGroupMembers(groupID)
+	for k, v in pairs(members) do
+		TriggerClientEvent('av_houserobbery:client:groupSync', v, sync, ...)
+	end
+end)
+
+function debugPrint(...)
+    if not Config.Debug then return end
+	Midnight.Functions.Debug(...)
+end
+

@@ -2,6 +2,7 @@ local suerte = 3
 
 
 local function LoadModel(model)
+	print("Loading .."..model )
 	RequestModel(GetHashKey(model))
 	while not HasModelLoaded(GetHashKey(model)) do Citizen.Wait(1) end
 end
@@ -32,7 +33,6 @@ function HighEnd(entradaCoords)
 	obj[#obj+1] = building
 	-- SetEntityCoords(PlayerPedId(), generator.x - 13.56113,generator.y - 1.84,generator.z+8.00)
 	-- SetEntityHeading(PlayerPedId(), GetEntityHeading(building)-90.0)
-
 	LoadModel('V_16_bed_mesh_windows')
 	obj[#obj+1] = CreateObject('V_16_bed_mesh_windows',generator.x+0.30707600,generator.y-5.44994300,generator.z+0.0,false,false,false)
 
@@ -54,7 +54,7 @@ function HighEnd(entradaCoords)
 
 	LoadModel('V_16_high_bed_over_shadow')
 	obj[#obj+1] = CreateObject('V_16_high_bed_over_shadow',generator.x+2.22250100,generator.y+1.72320200,generator.z-0.12,false,false,false)
-	
+
 	LoadModel('V_16_lgb_rock001')
 	obj[#obj+1] = CreateObject('V_16_lgb_rock001',generator.x+0.30704400,generator.y-5.44356400,generator.z+2.65031600,false,false,false)
 
@@ -108,7 +108,7 @@ function HighEnd(entradaCoords)
 
 	LoadModel('V_16_high_lng_over_shadow')
 	obj[#obj+1] = CreateObject('V_16_high_lng_over_shadow',generator.x+10.16043000,generator.y-4.83294600,generator.z+4.840,false,false,false)
-	
+
 	LoadModel('V_16_high_lng_over_shadow2')
 	obj[#obj+1] = CreateObject('V_16_high_lng_over_shadow2',generator.x-8.00688600,generator.y-1.29692100,generator.z+3.6,false,false,false)
 
@@ -201,7 +201,7 @@ function HighEnd(entradaCoords)
 	obj[#obj+1] = CreateObject('v_res_fh_benchshort',generator.x-3.74095700,generator.y-4.90060600,generator.z+0.1,false,false,false)
 	LoadModel('V_16_shitbench')
 	obj[#obj+1] = CreateObject('V_16_shitbench',generator.x-0.45795000,generator.y+8.45196000,generator.z+0.1,false,false,false)
-	
+
 	--LoadModel('hei_int_heist_bdr_bed')
 	local cama = CreateObject('hei_int_heist_bdr_bed',generator.x+4.96819100,generator.y-0.72599610,generator.z+0.0,false,false,false)
 	obj[#obj+1] = cama
@@ -324,14 +324,11 @@ function HighEnd(entradaCoords)
 	SetEntityHeading(table2,GetEntityHeading(table2)+90)
 	SetEntityHeading(scope,GetEntityHeading(scope)+180)
 	SetEntityHeading(jugos,GetEntityHeading(jugos)+180)
-	if Config.SpawnSafe then
-		suerte = math.random(1,3)
-		if suerte == 2 then
-			local caja = CreateObject('prop_ld_int_safe_01',generator.x+5.536987,generator.y+6.348022,generator.z+0.05,false,false,false)
-			table.insert(items,{object = caja, robbed = false, anim = 'safe', deleteObj = false, dist = 1.0})
-			FreezeEntityPosition(caja,true)
-			SetEntityHeading(caja,GetEntityHeading(caja)-90)
-		end
+	if entradaCoords.safe  then
+		local caja = CreateObject('prop_ld_int_safe_01',generator.x+5.536987,generator.y+6.348022,generator.z+0.05,false,false,false)
+		table.insert(items,{object = caja, robbed = false, anim = 'safe', deleteObj = false, dist = 1.0})
+		FreezeEntityPosition(caja,true)
+		SetEntityHeading(caja,GetEntityHeading(caja)-90)
 	end
 	SetEntityCoords(PlayerPedId(), generator.x - 13.56113,generator.y - 1.84,generator.z+8.00)
 	SetEntityHeading(PlayerPedId(), GetEntityHeading(building)-90.0)
@@ -368,7 +365,7 @@ function MidApt(entradaCoords)
 	FreezeEntityPosition(building,true)
 	Citizen.Wait(2000)
 	SetEntityCoords(PlayerPedId(), generator.x+3.6, generator.y-14.8, generator.z+2.9)
-	SetEntityHeading(PlayerPedId(), 358.106)	
+	SetEntityHeading(PlayerPedId(), 358.106)
 	obj[#obj+1] = building
 	LoadModel('V_16_DT')
 	local dt = CreateObject(GetHashKey("V_16_DT"), generator.x-1.21854400, generator.y-1.04389600, generator.z+1.39068600, false, false, false)
@@ -397,7 +394,7 @@ function MidApt(entradaCoords)
 	LoadModel('V_16_midapt_curts')
 	local curtins = CreateObject(GetHashKey("V_16_midapt_curts"), generator.x-1.96423300, generator.y-0.95958710, generator.z+1.280, false, false, false)
 	obj[#obj+1] = curtins
-	
+
 	LoadModel('V_16_mpmidapart13')
 	local mpmid13 = CreateObject(GetHashKey("V_16_mpmidapart13"), generator.x-4.65580700, generator.y-6.61684000, generator.z+1.259, false, false, false)
 	obj[#obj+1] = mpmid13
@@ -531,7 +528,9 @@ function MidApt(entradaCoords)
 	obj[#obj+1] = basket4
 	x = x + 1
 	local wardrobe2 = CreateObject(GetHashKey("V_Res_Tre_Wardrobe"), generator.x+7.24382000, generator.y+4.53423500, generator.z+1.19625800, false, false, false)
-	obj[#obj+1] = wardrobe2
+	table.insert(items,{object = wardrobe2, robbed = false, anim = 'normal', deleteObj = false, dist = 1.8})
+
+	-- obj[#obj+1] = wardrobe2
 	x = x + 1
 	local basket5 = CreateObject(GetHashKey("v_res_tre_flatbasket"), generator.x+8.03364600, generator.y+4.54835500, generator.z+3.46737300, false, false, false)
 	obj[#obj+1] = basket5
@@ -541,7 +540,7 @@ function MidApt(entradaCoords)
 	x = x + 1
 	local table2 = CreateObject(GetHashKey("V_Res_Tre_BedSideTable"), generator.x+5.84416200, generator.y+2.57377400, generator.z+1.22089100, true, false, false)
 	table.insert(items,{object = table2, robbed = false, anim = 'normal', deleteObj = false, dist = 1.3})
-	
+
 	local lamp3 = CreateObject(GetHashKey("v_res_d_lampa"), generator.x+5.84912100, generator.y+2.58001100, generator.z+1.95311890, false, false, false)
 	obj[#obj+1] = lamp3
 	x = x + 1
@@ -600,12 +599,14 @@ function MidApt(entradaCoords)
 	local toaster = CreateObject(GetHashKey("prop_toaster_01"), generator.x-1.05790700, generator.y-6.59017400, generator.z+2.26793200, false, false, false)
 	obj[#obj+1] = toaster
 	x = x + 1
-	local cafetera = CreateObject(GetHashKey("prop_coffee_mac_02"), generator.x-0.04710700, generator.y-6.59617400, generator.z+2.26793200, true, false, false)	
-	table.insert(items,{object = cafetera, robbed = false, anim = 'prop_coffee_mac_02', deleteObj = false, dist = 1.8})
 
-	suerte = math.random(1,3)
-	if suerte == 2 then
-		local laptop = CreateObject(GetHashKey("prop_laptop_02_closed"), generator.x-0.522, generator.y+3.1421, generator.z+1.80013400, false, false, false)	
+	LoadModel('sf_prop_sf_esp_machine_01a')
+	local cafetera = CreateObject(GetHashKey("sf_prop_sf_esp_machine_01a"), generator.x-0.04710700, generator.y-6.59617400, generator.z+2.26793200, true, false, false)
+	table.insert(items,{object = cafetera, robbed = false, anim = 'sf_prop_sf_esp_machine_01a', deleteObj = false, dist = 1.8})
+	print(GetEntityCoords(cafetera))
+
+	if entradaCoords.laptop then
+		local laptop = CreateObject(GetHashKey("prop_laptop_02_closed"), generator.x-0.522, generator.y+3.1421, generator.z+1.80013400, false, false, false)
 		table.insert(items,{object = laptop, robbed = false, anim = 'laptop', deleteObj = true, dist = 1.8})
 	end
 
@@ -633,13 +634,10 @@ function MidApt(entradaCoords)
 	local hairdryer = CreateObject(GetHashKey("v_club_vuhairdryer"), generator.x+8.12616000, generator.y-2.50562000, generator.z+1.96009390, false, false, false)
 	obj[#obj+1] = hairdryer
 	x = x + 1
-	if Config.SpawnSafe then
-		suerte = math.random(1,3)
-		if suerte == 2 then
-			local caja = CreateObject('prop_ld_int_safe_01', generator.x+6.2, generator.y + 4.52972300, generator.z + 1.32609800, false, false, false)
-			table.insert(items,{object = caja, robbed = false, anim = 'safe', deleteObj = false, dist = 1.0})
-			FreezeEntityPosition(caja,true)
-		end
+	if entradaCoords.safe then
+		local caja = CreateObject('prop_ld_int_safe_01', generator.x+6.2, generator.y + 4.52972300, generator.z + 1.32609800, false, false, false)
+		table.insert(items,{object = caja, robbed = false, anim = 'safe', deleteObj = false, dist = 1.0})
+		FreezeEntityPosition(caja,true)
 	end
 
 	FreezeEntityPosition(dt,true)
