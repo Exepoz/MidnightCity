@@ -80,20 +80,20 @@ Config.Disable = {
 
 Config.Consumables = {
     eat = { -- default food items
-        ['sandwich'] = math.random(5,8),
-        ['tosti'] = math.random(5,8),
-        ['twerks_candy'] = math.random(5,8),
-        ['snikkel_candy'] = math.random(5,8)
+        -- ['sandwich'] = math.random(5,8),
+        -- ['tosti'] = math.random(5,8),
+        -- ['twerks_candy'] = math.random(5,8),
+        -- ['snikkel_candy'] = math.random(5,8)
     },
     drink = { -- default drink items
-        ['water_bottle'] = math.random(5,8),
-        ['kurkakola'] = math.random(5,8),
-        ['coffee'] = math.random(5,8)
+        -- ['water_bottle'] = math.random(5,8),
+        -- ['kurkakola'] = math.random(5,8),
+        -- ['coffee'] = math.random(5,8)
     },
     alcohol = { -- default alcohol items
-        ['whiskey'] = math.random(5,8),
-        ['beer'] = math.random(5,8),
-        ['vodka'] = math.random(5,8),
+        -- ['whiskey'] = math.random(5,8),
+        -- ['beer'] = math.random(5,8),
+        -- ['vodka'] = math.random(5,8),
     },
     custom = { -- put any custom items here
     -- ['newitem'] = {

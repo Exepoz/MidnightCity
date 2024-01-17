@@ -45,6 +45,7 @@ RegisterNetEvent('jim-consumables:server:toggleItem', function(give, item, amoun
 end)
 
 RegisterNetEvent('jim-consumables:server:addNeed', function(amount, type)
+	if amount > 100.0 then amount = 100.0 end
     local Player = QBCore.Functions.GetPlayer(source) if not Player then return end
 	if type == "thirst" then
 		Player.Functions.SetMetaData('thirst', amount)
