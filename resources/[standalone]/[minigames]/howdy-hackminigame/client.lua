@@ -8,10 +8,15 @@ local Result = nil
 Begin = function(icons, time)
     if MinigameActive then return end
 
+    if LocalPlayer.state.foodBuff == 'hacking' then
+        exports['mdn-nighttime']:Notify('You feel more focused...')
+        time = time + time*0.1
+    end
+
     MinigameActive = true
     SetNuiFocus(true, true)
     SendNUIMessage({res = 'BEGIN_MINIGAME', icons = icons, time = time})
-    
+
     while MinigameActive do
         Citizen.Wait(100)
     end

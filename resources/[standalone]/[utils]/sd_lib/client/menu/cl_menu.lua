@@ -90,7 +90,7 @@ function SD.menu.ShowInput(data)
     Wait(150)
     if not data then return end
 
-    if lib ~= nil then
+    if lib ~= nil and Config.OxLibSettings.EnableMenus then
         local options = {
             allowCancel = true,
             rows = {
@@ -117,7 +117,7 @@ function SD.menu.ShowInput(data)
 end
 
 function SD.menu.OpenMenuList(data)
-    if lib ~= nil then
+    if lib ~= nil and Config.OxLibSettings.EnableMenus then
         local contextData = {
             id = "menuList",
             title = "Menu List",
@@ -157,7 +157,7 @@ function SD.menu.OpenMenuList(data)
 end
 
 function SD.menu.CloseMenuList()
-    if lib ~= nil then
+    if lib ~= nil and Config.OxLibSettings.EnableMenus then
         lib.closeInputDialog()
     else
         sendData = nil

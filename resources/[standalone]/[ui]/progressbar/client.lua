@@ -19,6 +19,10 @@ RegisterNetEvent("progressbar:client:faster", function (time)
     Buff(time)
 end)
 
+RegisterNetEvent("progressbar:client:toggleFaster", function (bool)
+    faster = bool
+end)
+
 local Action = {
     name = '',
     duration = 0,
@@ -154,7 +158,8 @@ local function StartProgress(action, onStart, onTick, onFinish)
         Action = action
         local dur = Action.duration
         if faster == true then
-          dur = (Action.duration * 2) / 10
+            --dur = (Action.duration * 2) / 10
+            dur = Action.duration * 0.8 -- (4/5 of time)
         else
           dur = Action.duration
         end

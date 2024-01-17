@@ -98,7 +98,7 @@ end
 -- Function to display a notification
 SD.ShowNotification = function(message, type)
      -- Check if the ox_lib (library) is available
-    if lib ~= nil then
+    if lib ~= nil and Config.OxLibSettings.EnableNotifications then
         -- Display notification using ox_lib
         lib.notify({
             description = message or false,
@@ -155,7 +155,7 @@ end
 -- Function to start a progress bar
 SD.StartProgress = function(identifier, label, duration, completed, notfinished)
     -- Check if the ox_lib (library) is available for progress bar generation
-    if lib ~= nil then
+    if lib ~= nil and Config.OxLibSettings.EnableProgressBar then
         -- Determine the type of progress bar from the configuration settings
         if Config.OxLibSettings.ProgressBarType == 'circular' then
             -- Initiate a circular progress bar using ox_lib functionalities

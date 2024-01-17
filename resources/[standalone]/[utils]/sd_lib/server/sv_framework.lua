@@ -262,6 +262,8 @@ end
 SD.AddItem = function(source, item, count, slot, metadata)
     if not ValidateResource(source) then return end
 
+    if count == nil then count = 1 end
+
     local player = SD.GetPlayer(source)
 
     if Config.EnableLogs and Config.LogType.AddItem then
@@ -307,6 +309,8 @@ end
 -- Define a function to remove an item from a player's inventory
 SD.RemoveItem = function(source, item, count, slot, metadata)
     if not ValidateResource(source) then return end
+    
+    if count == nil then count = 1 end
 
     local player = SD.GetPlayer(source)
 

@@ -1,6 +1,7 @@
 Promise = nil
 
 RegisterNUICallback('close', function()
+    lib.hideTextUI()
     SetNuiFocus(false, false)
     if Promise then
         Promise:resolve(false)
@@ -8,11 +9,13 @@ RegisterNUICallback('close', function()
 end)
 
 RegisterNUICallback('succeed', function()
+    lib.hideTextUI()
     SetNuiFocus(false, false)
     Promise:resolve(true)
 end)
 
 RegisterNUICallback('failed', function()
+    lib.hideTextUI()
     SetNuiFocus(false, false)
     Promise:resolve(false)
 end)
@@ -31,6 +34,9 @@ function startLockpick(strength, difficulty, pins, attempts)
     elseif pins > 9 then
         pins = 9
     end
+
+    lib.showTextUI('[D] Apply Pressure', {position = 'top-center'})
+
     SendNUIMessage({
         action = "startLockpick",
         data = {strength = strength, difficulty = difficulty, pins = pins, atpts = attempts},

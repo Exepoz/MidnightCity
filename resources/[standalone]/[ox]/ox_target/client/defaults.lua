@@ -37,6 +37,29 @@ api.addGlobalVehicle({
             toggleDoor(data.entity, 0)
         end
     },
+    --{
+    --    name = 'ox_target:requesttow',
+    --    icon = 'fa-solid fas fa-truck',
+    --    label = locale('request_tow'),
+    --    type = "client",
+    --    event = "an-tow:requestTow",
+    --    bones = { 'door_dside_f', 'seat_dside_f','door_pside_f', 'seat_pside_f' },
+    --    canInteract = function(entity, distance, coords, name)
+    --        if GetVehicleDoorLockStatus(entity) > 1 then return end
+--
+    --        local boneId = GetEntityBoneIndexByName(entity, 'door_dside_f')
+--
+    --        if IsVehicleDoorDamaged(entity, 0) then return end
+--
+    --        if boneId ~= -1 then
+    --            return #(coords - GetEntityBonePosition_2(entity, boneId)) < 0.5 or
+    --                #(coords - GetEntityBonePosition_2(entity, GetEntityBoneIndexByName(entity, 'seat_dside_f'))) < 0.72
+    --        end
+    --    end,
+    --    onSelect = function(data)
+    --        toggleDoor(data.entity, 0)
+    --    end
+    --},
     {
         name = 'ox_target:passengerF',
         icon = 'fa-solid fa-car-side',

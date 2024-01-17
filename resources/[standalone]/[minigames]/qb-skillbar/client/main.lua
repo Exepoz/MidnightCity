@@ -28,26 +28,33 @@ RegisterNUICallback('Check', function(data, cb)
 end)
 
 Skillbar.Start = function(data, success, fail)
-    if not Skillbar.Data.Active then
-        BarLoop()
-        if success ~= nil then
-            successCb = success
-        end
-        if fail ~= nil then
-            failCb = fail
-        end
-        Skillbar.Data.Data = data
-
-        SendNUIMessage({
-            action = "start",
-            duration = data.duration,
-            pos = data.pos,
-            width = data.width,
-        })
-        TriggerEvent('progressbar:client:ToggleBusyness', true)
+    --local p = promise.new()
+    local suc = exports['malmofish']:MalmoFish()
+    if suc then
+        success()
     else
-        QBCore.Functions.Notify('Your already doing something..', 'error')
+        fail()
     end
+    -- if not Skillbar.Data.Active then
+    --     BarLoop()
+    --     if success ~= nil then
+    --         successCb = success
+    --     end
+    --     if fail ~= nil then
+    --         failCb = fail
+    --     end
+    --     Skillbar.Data.Data = data
+
+    --     SendNUIMessage({
+    --         action = "start",
+    --         duration = data.duration,
+    --         pos = data.pos,
+    --         width = data.width,
+    --     })
+    --     TriggerEvent('progressbar:client:ToggleBusyness', true)
+    -- else
+    --     QBCore.Functions.Notify('Your already doing something..', 'error')
+    -- end
 end
 
 Skillbar.Repeat = function(data)

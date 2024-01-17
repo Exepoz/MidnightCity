@@ -21,12 +21,17 @@ local function convert(data)
 
     local rows, ids = {}, {}
     for _, input in pairs(data.inputs) do
+        local o = {}
+        if input.options then for k_, v_ in ipairs(input.options) do
+            o[#o+1] = {value = v_.value, label = v_.text or nil}
+        end end
         rows[#rows+1] = {
             type = typesConvert[input.type] or 'input',
             label = ConvertText(input.text),
-            required = input.required,
+            required = input.required or false,
             default = ConvertText(input.default),
             password = input.type == 'password' or false,
+            options = input.options and o or nil
         }
         ids[#ids+1] = input.name
     end

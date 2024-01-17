@@ -161,9 +161,67 @@ SD.utils.PoliceDispatch = function(data)
         -- Add your custom dispatch system here
     elseif Config.Dispatch == '' then
         -- If no Dispatch system is selected, do nothing with the data.
-    else
-        -- No dispatch system was found
-        print('No dispatch system was identified - please update your Config.Dispatch')
+    end
+end
+
+-- Email Function
+SD.utils.SendEmail = function(sender, subject, message)
+    if Config.Phone == 'qb-phone' then
+        TriggerServerEvent('qb-phone:server:sendNewMail', {
+            sender = sender,
+            subject = subject,
+            message = message,
+        })
+
+    elseif Config.Phone == 'qs-smartphone' then
+        TriggerServerEvent('qs-smartphone:server:sendNewMail', {
+            sender = sender,
+            subject = subject,
+            message = message,
+            button = {}
+        })
+
+    elseif Config.Phone == 'high-phone' then
+        local senderData = {
+            address = sender.address or "",
+            name = sender,
+            photo = sender.photo or ""
+        }
+        TriggerServerEvent("high_phone:sendMailFromServer", senderData, subject, message, {})
+
+    elseif Config.Phone == 'npwd-phone' then
+        exports["npwd"]:createNotification({
+            notisId = "npwd:emailNotification",
+            appId = "EMAIL",
+            content = message,
+            secondaryTitle = subject,
+            keepOpen = false,
+            duration = 5000,
+            path = "/email",
+        })
+
+    elseif Config.Phone == 'lb-phone' then
+        exports["lb-phone"]:SendNotification({
+            app = "Email",
+            title = subject,
+            content = message,
+        })
+
+    elseif Config.Phone == 'gks-phone' then
+        -- Prepare data for gks-phone
+        local MailData = {
+            sender = sender,
+            image = '/html/static/img/icons/mail.png',
+            subject = subject,
+            message = message
+        }
+        exports["gksphone"]:SendNewMail(MailData)
+
+    elseif Config.Phone == 'custom' then
+        print('No phone system was identified - please update your Config.Phone')
+
+    elseif Config.Phone == '' then
+        print('No phone system was identified - please update your Config.Phone')
     end
 end
 

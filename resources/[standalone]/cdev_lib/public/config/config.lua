@@ -30,7 +30,7 @@ PublicSharedConfig = {
     DiscordLogs = false,
 
     -- ⚙️ Enable debug mode (prints in console)
-    Debug = true,
+    Debug = false,
 
     -- 📄 Change the DrawText font (you can check all the available fonts at the end of this link: https://wiki.rage.mp/index.php?title=Fonts_and_Colors)
     DrawTextConfig = {

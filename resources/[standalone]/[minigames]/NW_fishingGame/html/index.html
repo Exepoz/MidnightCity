@@ -1,0 +1,70 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="reset.css" type="text/css">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+  <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+  <div id="container">
+
+    <div id="controls">
+      
+            <div id="mouse" >
+            <img id="mouse-pic" src="imgs/mouse_left.png"></img>
+      <div id="controls-text-mouse">Hook/Reel</div>
+      </div>
+      </br>  
+      <div id="esc" >
+                  <img id="esc-pic" src="imgs/esc.png"></img>
+      <div id="controls-text-esc">Exit Fishing</div>
+      </div>
+
+      
+      <p id="controls-text"></p>
+    </div>
+    <div id = "circle-container">
+    
+    
+    <div id="circle-outer">
+
+      <div id="reeling">
+        <div id="reeling-circle-border"></div>
+        <div id="line-decor"></div>
+        <div id="line2-decor"></div>
+        <div id="line3-decor"></div>
+        <div id="line4-decor"></div>
+        <div id="line5-decor"></div>
+      </div>
+
+      <div id="hook">
+        <img id="bobber-decor" src="imgs/fish.png"></img>
+      </div>
+
+      <div id="bobber">
+        <div id="line-decor"></div>
+        <div id="bobber-circle-border"></div>
+        <img id="bobber-decor" src="imgs/bobber.png"></img>
+      </div>
+
+      <div id="wrapper">
+        <svg class="progress noselect" data-progress="100" x="0px" y="0px" viewBox="0 0 130 80">
+          <path class="track" d="M5,40a35,35 0 1,0 70,0a35,35 0 1,0 -70,0" />
+          <path class="fill" d="M5,40a35,35 0 1,0 70,0a35,35 0 1,0 -70,0" />
+        </svg>
+      </div>
+      <div id="text-progress">0%</div>
+      <div id="circle-inner" style="width: 1%; height: 1%; border-radius: 50%;"></div>
+    </div>
+  </div>
+  </div>
+  <script src="index.js" type="text/javascript"></script>
+</body>
+
+</html>

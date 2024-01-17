@@ -384,7 +384,7 @@ CustomDP.Emotes = {
     ["copbeacon"] = {"MaleScenario", "WORLD_HUMAN_CAR_PARK_ATTENDANT", "Cop Beacon"},
     ["leafblower"] = {"MaleScenario", "WORLD_HUMAN_GARDENER_LEAF_BLOWER", "Leafblower"},
     ["map"] = {"Scenario", "WORLD_HUMAN_TOURIST_MAP", "Map"},
-    ["phone"] = {"Scenario", "WORLD_HUMAN_STAND_MOBILE", "Phone 3"},
+    ["phone3"] = {"Scenario", "WORLD_HUMAN_STAND_MOBILE", "Phone 3"},
 }
 CustomDP.PropEmotes = {
     		--Winery
@@ -405,6 +405,23 @@ CustomDP.PropEmotes = {
         EmoteLoop = true,
         EmoteMoving = true,
     }},
+    ["chainsaw"] = {"move_weapon@jerrycan@generic", "idle", "Chainsaw", AnimationOptions =
+    {
+     Prop = "bzzz_prop_wood_chainsaw",
+     PropBone = 57005,
+     PropPlacement = {0.21, 0.06, -0.03, -6.0, -90.0, 0.0},
+     EmoteLoop = true,
+     EmoteMoving = true,
+     }},
+	 
+     ["chainsaw2"] = {"bzzz_animation_chainsaw", "animation_chainsaw", "Chainsaw 2", AnimationOptions =
+     {
+         Prop = "bzzz_prop_wood_chainsaw",
+         PropBone = 57005,
+         PropPlacement = {0.22, 0.41, 0.1, -8.0, 309.0, -27.0},
+         EmoteLoop = true,
+         EmoteMoving = true,
+     }},
     	--Jim-CatCafe
 	["uwu1"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "", AnimationOptions =
 	{ Prop = 'uwu_sml_drink', PropBone = 28422, PropPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 130.0},

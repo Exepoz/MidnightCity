@@ -15,12 +15,17 @@ local function StartMinigame(cb, gameName, gameSettings)
             gameSettings = minigamesTable[gameName].settings
         end
 
+        if LocalPlayer.state.foodBuff == 'hacking' then
+            exports['mdn-nighttime']:Notify('You feel more focused...')
+            gameSettings.timeLimit = gameSettings.timeLimit + math.ceil(gameSettings.timeLimit*0.1)
+        end
+
         SendNUIMessage({
             action = "startGame",
             game = gameName,
             settings = gameSettings
         })
-        
+
         SetNuiFocus(true, true)
         inMinigame = true
 

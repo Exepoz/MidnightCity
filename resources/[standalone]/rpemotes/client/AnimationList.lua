@@ -5238,6 +5238,15 @@ RP.Exits = {
             EmoteMoving = true
         }
     },
+    ["uncuff"] = {
+		"mp_arresting",
+		"a_uncuff",
+		"Uncuff",
+			AnimationOptions = {
+			EmoteLoop = true,
+			EmoteMoving = true
+		}
+	},
     ["breakfreeback"] = {
         "mp_arresting",
         "b_uncuff",

@@ -29,6 +29,9 @@ SD.PoliceJobs = { 'police', --[['bsco', 'sheriff']] } -- List of job identifiers
 Config.Dispatch = '' -- ps-dispatch/ps-dispatch-old/linden_outlawalert/cd_dispatch/core_dispatch/qs-dispatch/custom (In client/cl_utils.lua, you can add your own dispatch system into the 'custom' field)
 Config.JobTypes = { 'leo', --[['ems']] } -- List of job types that will checked (This concerns only QBCore & 'ps-dispatch')
 
+-- Phone Email Settings
+Config.Phone = '' -- qb-phone/lb-phone/qs-smartphone/high-phone/npwd-phone/gks-phone/custom -- This is the phone system that will be used for sending emails (or in some cases, notifications)  (In client/cl_utils.lua, you can add your own phone system into the 'custom' field)
+
 -- Target Options
 Config.Targets = {'qtarget', 'qb-target'} -- If you're using 'qb-target' for ex. and have renamed it, update its respective entry in this list!
 Config.OXTarget = 'ox_target' -- If you've renamed 'ox_target', update this entry to match the new name.
@@ -44,8 +47,13 @@ Config.InvName = {
     OX = 'ox_inventory' -- Edit if you've renamed ox_inventory
 }
 
--- If ox_lib is imported into the Manifest of sd_lib, the resource will use ox_lib progressbars & ox_lib notifications automatically, these are the settings
+-- If ox_lib has been imported into sd_lib, you can use the following settings to configure it.
 Config.OxLibSettings = {
+    EnableMenus = true, -- true/false -- If set to true, the resource will use ox_lib menus for all menus.(Contextual/Input), false will use the built-in menus.
+    EnableNotifications = true, -- true/false -- If set to true, the resource will use ox_lib notifications for all notifications, false will use your framework-specific notifications (eg. QBCore.Functions.Notify for ex.)
+    EnableProgressBars = true, -- true/false -- If set to true, the resource will use ox_lib progressbars for all progressbars, false will use your framework-specific progressbars (eg. QBCore.Functions.Progressbar for ex.)
+
+    -- Settings for ox_lib menus/progressbars & notifications
     NotificationPos = 'top-right', -- position?: 'top' or 'top-right' or 'top-left' or 'bottom' or 'bottom-right' or 'bottom-left' or 'center-right' or 'center-left'
     ProgressBarType = 'normal', -- normal/circular
     CircularPos = 'bottom' -- position of the circular progressBar: 'middle' or 'bottom'
