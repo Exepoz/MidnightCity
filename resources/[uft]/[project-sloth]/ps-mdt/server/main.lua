@@ -1319,7 +1319,7 @@ RegisterNetEvent('mdt:server:getPenalCode', function()
 end)
 
 RegisterNetEvent('mdt:server:setCallsign', function(cid, newcallsign)
-	local Player = QBCore.Functions.GetPlayerByCitizenId(cid)
+	local Player = QBCore.Functions.GetPlayerByCitizenId(tostring(cid))
 	Player.Functions.SetMetaData("callsign", newcallsign)
 end)
 
