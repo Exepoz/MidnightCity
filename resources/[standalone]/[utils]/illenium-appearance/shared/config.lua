@@ -575,16 +575,16 @@ Config.Stores = {
 Config.ClothingRooms = {
     {
         job = "police",
-        coords = vector4(454.91, -990.89, 30.69, 193.4),
+        coords = vector4(463.13, -996.37, 30.69, 96.23),
         size = vector3(4, 4, 4),
         rotation = 45,
         usePoly = false,
         points = {}
     },
     {
-        job = "mechanic2", -- Rising Sun
-        coords = vector4(-340.49, -149.07, 39.06, 255.26),
-        size = vector3(1.5, 1.5, 1.5),
+        job = "catcafe",
+        coords = vector4(-587.05, -1050.13, 22.34, 100.83),
+        size = vector3(4, 4, 4),
         rotation = 45,
         usePoly = false,
         points = {}
