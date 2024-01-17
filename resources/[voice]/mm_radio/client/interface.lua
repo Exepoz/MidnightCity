@@ -6,6 +6,7 @@ end
 
 Radio = {
 	playerServerID = GetPlayerServerId(PlayerId()),
+	playerLoaded = false,
 	PlayerJob = 'civilian',
 	PlayerGang = 'none',
 	PlayerDuty = false,
@@ -61,7 +62,7 @@ RegisterNetEvent('mm_radio:client:removedata', function()
 	}
 	if Shared.Core == 'qb' and LocalPlayer.state.isLoggedIn  then
 		Radio:QBInit()
-	elseif Shared.Core == 'qbox' and LocalPlayer.state.isLoggedIn  then
+	elseif Shared.Core == 'qbx' and LocalPlayer.state.isLoggedIn  then
 		Radio:QboxInit()
 	elseif Shared.Core == 'esx' and ESX.IsPlayerLoaded() then
 		Radio:ESXInit()
