@@ -84,7 +84,7 @@ Config.jobs = {
 
 		{ trailer = "armytrailer2", name = "Heavy machinery transport", def = {0,1,1}},
 		{ trailer = "armytrailer2", name = "Tunneling machine transport", def = {0,1,1}},
-		
+
 		{ trailer = "docktrailer", name = "Furniture transport", def = {0,0,0}},
 		{ trailer = "docktrailer", name = "Refrigerator transport", def = {0,1,0}},
 		{ trailer = "docktrailer", name = "Brick transport", def = {0,0,0}},
@@ -101,26 +101,26 @@ Config.jobs = {
 		{ trailer = "docktrailer", name = "Ammo transport", def = {1,0,0}},
 
 		{ trailer = "tr2", name = "Car trailer empty", def = {0,0,0}},
-		
+
 		{ trailer = "trailers4", name = "Naval articles trailer", def = {0,0,0}},
 		{ trailer = "trailers4", name = "Boat trailer", def = {0,1,1}},
-		
+
 		{ trailer = "tr4", name = "Stork", def = {0,1,1}},
-		
+
 		{ trailer = "tvtrailer", name = "Transport of materials for shows", def = {0,0,1}},
 		{ trailer = "tvtrailer", name = "Transport of event materials", def = {0,1,1}},
-		
+
 		{ trailer = "tanker", name = "Fuel tank with additives", def = {3,0,0}},
 		{ trailer = "tanker2", name = "Common fuel tank", def = {3,0,0}},
 		{ trailer = "tanker2", name = "Kerosene tank", def = {3,0,0}},
 		{ trailer = "tanker2", name = "Oil tank", def = {3,0,0}},
-		
+
 		{ trailer = "docktrailer", name = "Transport of exotic materials", def = {0,1,1}},
 		{ trailer = "docktrailer", name = "Transport of rare materials", def = {0,1,1}},
 		{ trailer = "docktrailer", name = "Transport of armaments", def = {0,0,1}},
-		
+
 		{ trailer = "trailerlogs", name = "Log transportation", def = {0,0,0}},
-		
+
 		{ trailer = "trailers", name = "Transport of construction materials", def = {0,0,0}},
 		{ trailer = "trailers", name = "Rubber transport", def = {0,0,0}},
 		{ trailer = "trailers", name = "Appliance transportation", def = {0,1,0}},
@@ -159,7 +159,7 @@ Config.jobs = {
 -- Here is the definition of the drivers that are generated for the players to hire
 Config.drivers = {
 	['cooldown'] = 60,							-- Cooldown time (in minutes) to generate a new driver
-	
+
 	['hiring_costs'] = {						-- Cost of hiring the driver (this amount will only be paid at the time of hiring)
 		['min'] = 20000,							-- This is the minimum base cost of hiring the employee
 		['max'] = 30000,							-- This is the maximum base cost of hiring the employee (this amount will increase according to the employee's skills)
@@ -298,17 +298,17 @@ Config.required_xp_to_levelup = {
 	This indicates that from level 0 to level 10, players can take out a maximum loan of 40 000. From level 10 to 20, the maximum loan amount increases to 100 000...
 ]]
 Config.max_loan_per_level = {
-	[0] = nil,
-	[10] =nil,
-	[20] =nil,
-	[30] =nil
+	[0] = 0,
+	[10] =0,
+	[20] =0,
+	[30] =0
 }
 
 -- Loan amounts and daily interest charges
 Config.loans = {
 	['cooldown'] = 86400, -- Time (in seconds) before daily charges are applied (86400 = 24 hours)
 	['amount'] = {
-		--[[ 
+		--[[
 		You can configure up to 4 loan options, each with its own settings.
 		Example:
 		[1] = {
@@ -317,10 +317,10 @@ Config.loans = {
 			200     -- Base amount for calculating interest: The difference between the above value and this (400 - 200) will be the interest amount, which is $200 per day
 		},
 		]]
-		[1] = nil,
-		[2] = nil,
-		[3] = nil,
-		[4] = nil,
+		[1] = 0,
+		[2] = 0,
+		[3] = 0,
+		[4] = 0,
 	}
 }
 
