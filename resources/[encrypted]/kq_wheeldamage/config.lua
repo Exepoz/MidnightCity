@@ -1,6 +1,6 @@
 Config = {}
 
-Config.debug = true
+Config.debug = false
 
 -- Precise wheel rendering (This can fix the issue with broken wheels flashing in and out) If it doesn't happen on your server
 -- I wouldn't recommend enabling this as it will slightly increase the script resource usage (resmon)
@@ -14,23 +14,23 @@ Config.increaseWheelRenderTiming = false
 Config.alternativeWheelBreak = false
 
 -- The amount of damage the wheels will take on collisions (10-30 seems reasonable to me, for more realistic experience I'd recommend values between 50-100)
-Config.collisionDamageAmount = 30
+Config.collisionDamageAmount = 20
 
 -- If you define a model specific multiplier it will be used instead of the class multiplier
 -- Vehicle classes https://docs.fivem.net/natives/?_0x29439776AAA00A62
 Config.collisionDamageMultiplier = {
     models = {
-      kuruma2 = 0.5
+      --kuruma2 = 0.5
     },
     classes = {
-        [0] = 1.2, -- Compacts
-        [1] = 1, -- Sedans
+        [0] = .4, -- Compacts
+        [1] = .5, -- Sedans
         [2] = 0.8, -- SUVs
-        [3] = 1, -- Coupes
-        [4] = 1, -- Muscle
+        [3] = .5, -- Coupes
+        [4] = .7, -- Muscle
         [5] = 1.25, -- Sports Classics
-        [6] = 1.2, -- Sports
-        [7] = 1.2, -- Super
+        [6] = .6, -- Sports
+        [7] = .6, -- Super
         [8] = 1.1, -- Motorcycles
         [9] = 0.5, -- Off-road
         [10] = 0.5, -- Industrial
@@ -89,7 +89,7 @@ Config.fallDamageMultiplier = {
         [15] = 0, -- Helicopters
         [16] = 0, -- Planes
         [17] = 0.9, -- Service
-        [18] = 0.5, -- Emergency
+        [18] = 1, -- Emergency
         [19] = 0.2, -- Military
         [20] = 0.7, -- Commercial
         [21] = 0, -- Trains

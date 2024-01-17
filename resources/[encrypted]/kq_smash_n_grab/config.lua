@@ -38,7 +38,7 @@ Config.minimumPoliceOnline = 0
 
 
 -- Looting duration in ms
-Config.lootingDuration = 7000
+Config.lootingDuration = 60000
 
 -- Whether or not to lock vehicles which have loot inside them
 Config.lockVehicles = true
@@ -55,7 +55,7 @@ Config.textScale = 1
 Config.dispatch = {
     enabled =true, -- Whether to enable the dispatch
 
-    alertChance = 60, -- chance in %, how often smash n grab events get called
+    alertChance = 100, -- chance in %, how often smash n grab events get called
 
     system = 'ps-dispatch',  -- Setting for the dispatch system to use ('default' for the built-in system or 'cd-dispatch', 'core-dispatch-old', 'core-dispatch-new' or 'ps-dispatch' for external systems)
     policeCode = '10-31',  -- Police code for the smash n grab
@@ -188,7 +188,7 @@ Config.lootTypes = {
             chance = 100,
             amount = {
                 min = 50,
-                max = 1000,
+                max =200,
             }
         }
     },
