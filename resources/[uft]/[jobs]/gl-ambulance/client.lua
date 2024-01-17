@@ -495,18 +495,10 @@ RegisterNetEvent('gl-ambulance:spawnGrandmaPed', function(coords, heading)
     SetEntityInvincible(grandma, true)
     SetBlockingOfNonTemporaryEvents(grandma, true)
     SetModelAsNoLongerNeeded(hash)
-    exports['qb-target']:AddTargetEntity(grandma, {
-        name = "grandma",
-        heading = GetEntityHeading(grandma),
-        debugPoly = false,
-        useZ = true
-    }, {
-        options = {{
-            event = "gl-ambulance:useGrandmas",
-            icon = "fas fa-heart",
-            label = "Revive"
-        }},
-        distance = 2.5
+    exports.ox_target:addLocalEntity(grandma, {
+        event = "gl-ambulance:useGrandmas",
+        icon = "fas fa-heart",
+        label = "Get help from Mammy Lilly"
     })
 end)
 
