@@ -43,7 +43,7 @@ Config.markers = {
 }
 
 Config.target = {
-    enabled = false,
+    enabled = true,
     system = 'ox_target' -- 'qtarget' or 'qb-target' or 'ox_target'  (Other systems might work as well)
 }
 
@@ -702,11 +702,11 @@ Config.locations = {
 Config.sellLocations = {
     {
         locations = {
-            --{
-            --    x = 189.6,
-            --    y = -14.5,
-            --    z = 73.2
-            --},
+            {
+               x = -8789.19,
+               y = 2507.81,
+               z = 341.46
+            },
             --{
             --    x = 189.6,
             --    y = -14.5,
