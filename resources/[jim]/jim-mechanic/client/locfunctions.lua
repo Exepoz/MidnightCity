@@ -36,6 +36,7 @@ function makeLocs()
 		Config.Locations[k].designatedName = "MechZone: "..k
 		JobLocation:onPlayerInOut(function(isPointInside)
 			if isPointInside then inLocation = Config.Locations[k].designatedName
+				if Config.Locations[k].CriminalHub and enforceRestriction("repairs") and (GetEntityCoords(PlayerPedId()).z - 19.0) < 3.0 then triggerNotify('This is a nice workshop...', 'With tools, you could work here! The crew would let you use their parts if you spare a few crumbs...') end
 				if Config.System.Debug then print("^5Debug^7: ^3Entered ^2Mech Zone^7: (^6"..Config.Locations[k].designatedName.."^7)") end
 			else inLocation = ""
 				if Config.System.Debug then print("^5Debug^7: ^3Exited ^2Mech Zone^7: (^6"..Config.Locations[k].designatedName.."^7)") end

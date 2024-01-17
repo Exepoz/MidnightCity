@@ -151,7 +151,7 @@ RegisterNetEvent('jim-mechanic:client:Repair:Check', function(skip) local Ped = 
 	if not enforceRestriction("repairs") then return end
 	if repairing then return end
 	emptyHands(Ped)
-	if not skip then if not jobChecks() then return end if not locationChecks() then return end end
+	if not skip then if not crimHub and not jobChecks() then return end if not locationChecks() then return end end
 	if not inCar() then return end
 	if not nearPoint(GetEntityCoords(Ped)) then return end
 	if not IsPedInAnyVehicle(Ped, false) then vehicle = getClosest(GetEntityCoords(Ped)) pushVehicle(vehicle) lookVeh(vehicle) end
@@ -209,7 +209,7 @@ RegisterNetEvent('jim-mechanic:client:Repair:Check', function(skip) local Ped = 
 	if Config.Repairs.StashRepair and not crimHub then local p = promise.new() QBCore.Functions.TriggerCallback('jim-mechanic:server:GetStashItems', function(cb) p:resolve(cb) end, PlayerJob.name.."Safe") stashItems = Citizen.Await(p) end
 	local RepairMenu = {}
 	local headertxt = Loc[Config.Lan]["check"].plate.." ["..trim(GetVehicleNumberPlateText(vehicle)).."]"..br..(isOx() and br or "")..Loc[Config.Lan]["check"].value..searchPrice(vehicle)..br..(isOx() and br or "")..searchDist(vehicle)
-
+	print()
 	local mechjobTable = {}
 	if (damageTable["wheels"] or 0) >= 1 then mechjobTable[#mechjobTable+1] = { part = "wheels", amount = damageTable["wheels"], header = Loc[Config.Lan]["repair"].tire, icon = "fas fa-compact-disc" } end
 	mechjobTable[#mechjobTable+1] = { part = "engine", amount = costCalc["engine"], cost = costTable["engine"], header = Loc[Config.Lan]["repair"].engine, item = Config.Repairs.Parts["engine"].part, icon = "fas fa-wrench" }

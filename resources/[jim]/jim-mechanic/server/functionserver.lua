@@ -4,7 +4,7 @@ local Previewing, xenonColour, VehicleNitrous, nosColour, DutyList = {}, {}, {},
 	QBCore.Commands.Add("preview", Loc[Config.Lan]["servfunction"].checkmods, {}, false, function(source) TriggerClientEvent("jim-mechanic:client:Preview:Menu", source) end)
 	QBCore.Commands.Add("checkveh", "Check Performance", {}, false, function(source) TriggerClientEvent("jim-mechanic:client:Menu", source, false) end)
 	QBCore.Commands.Add("showodo", "Odometer", {}, false, function(source) TriggerClientEvent("jim-mechanic:ShowOdo", source) end)
-	QBCore.Commands.Add("checkdamage", Loc[Config.Lan]["servfunction"].checkdamage, {}, false, function(source) TriggerClientEvent("jim-mechanic:client:Repair:Check", source, true) end)
+	QBCore.Commands.Add("checkdamage", Loc[Config.Lan]["servfunction"].checkdamage, {}, false, function(source) TriggerClientEvent("jim-mechanic:client:Repair:Check", source) end)
 	QBCore.Commands.Add("checkmods", Loc[Config.Lan]["servfunction"].checkmods, {}, false, function(source) TriggerClientEvent("jim-mechanic:client:Menu:List", source) end)
 	QBCore.Commands.Add("flipvehicle", Loc[Config.Lan]["servfunction"].flipvehicle, {}, false, function(source)	TriggerClientEvent("jim-mechanic:flipvehicle", source) end)
 	QBCore.Commands.Add("togglesound", Loc[Config.Lan]["servfunction"].togglesound, {}, false, function(source)	TriggerClientEvent("jim-mechanic:togglesound", source) end)
