@@ -4,11 +4,20 @@ local blips = {}
 
 Citizen.CreateThread(function()
     for k, v in pairs(Config.OnlineOrders.CustomJobs) do
-        local p = lib.points.new(v.coords, 1.5)
+        local p = lib.points.new(v.coords, 2.5)
         function p:onEnter()
-            if not v.cids[QBCore.Functions.GetPlayerData().citizenid] then return end
+            print('enter')
+            local search = v.isGang and 'Gangs' or 'Jobs'
+            local psearch = v.isGang and 'gang' or 'job'
+            if v.cids then
+                if not v.cids[QBCore.Functions.GetPlayerData().citizenid] then return end
+            else
+                print(search, psearch, QBCore.Functions.GetPlayerData()[psearch].grade.level)
+                if not QBCore.Shared[search][k].grades[tostring(QBCore.Functions.GetPlayerData()[psearch].grade.level)].canOrderOnline then return end
+            end
             lib.addRadialItem({id = "OOTablet", icon = 'tablet', label = 'Order Ingredients',
             onSelect = function()
+                ExecuteCommand('e tablet2')
                 TriggerEvent('OnlineOrders:client:Menu', {name = k, label = v.label})
             end})
         end
@@ -59,6 +68,8 @@ function AddShopItem(item, src, key, job)
     local itemTable = {
         title = QBCore.Shared.Items[item.item].label,
         description = "Stock : ".. GlobalState.OnlineOrders.Stock[item.item].stock .." | Cost: $"..item.price.." | Amt in Cart : "..(GlobalState.OnlineOrders.Jobs[job.name].cart[item.item] and GlobalState.OnlineOrders.Jobs[job.name].cart[item.item].amt or 0),
+        image = "nui://ps-inventory/html/images/"..QBCore.Shared.Items[item.item].image,
+        icon = "nui://ps-inventory/html/images/"..QBCore.Shared.Items[item.item].image,
         onSelect = function()
             local input = lib.inputDialog('Chose Amount', options)
             if not input then  return  lib.showContext('OO_'..src) end
@@ -74,7 +85,6 @@ end
 RegisterNetEvent('OnlineOrders:client:Menu', function(j)
     local pData = QBCore.Functions.GetPlayerData()
     local job = j or pData.job
-    print(job.name)
     if not Config.OnlineOrders.jobs[job.name] then QBCore.Functions.Notify('You do not have the password to the account!', 'error', 7500) return end
     local options = MakeMenu(job)
     lib.registerContext({id = 'onlineOrders', title = "Online Store", canClose = true, options = options})

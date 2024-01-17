@@ -131,6 +131,25 @@ function LoadPfxAsset(Asset)
     end
 end
 
+--- Makes Food relating to a certain difficulty
+---@param item string Food item being made
+---@param action? table Table containing progressbar actions (with keys) {controlDisables, animation, prop, prop2}
+---@param dirChangeChance? number Chance for the block to change directions | 0.96 - 1.0
+---@param pointerSpeed? number Speed at which the pointer moves
+---@param totalTime? integer Total time to make the food
+---@param halfThreshold? integer % needed for "half" status | 0-100
+---@param upSpeed? number Speed at which progress go up | 0.0-1.0
+---@param downSpeed? number Speed at which progress go down when not on the block | 0.0 - 1.0
+---@param blockSpeed? number Speed at which the block moves | 0.0-1.0
+---@return any result NUMBER | Final progress %, 100 if completed.
+local MakeFood = function(item, action, dirChangeChance, pointerSpeed, totalTime, halfThreshold, upSpeed, downSpeed, blockSpeed)
+    local p = promise.new()
+    local sdata =  {difficultyFactor = dirChangeChance or 0.98, lineSpeedUp = pointerSpeed or 1, time = totalTime or 30, halfSuccessMin = halfThreshold or 100,
+    valueUpSpeed = upSpeed or 0.5, valueDownSpeed = downSpeed or 0.3, areaMoveSpeed = blockSpeed or 0.5, img = "nui://ps-inventory/html/images/"..QBCore.Shared.Items[item or 'orange'].image}
+    exports['nakres_skill']:GetMiniGame().Start(sdata, action, function(progress) p:resolve(progress) end)
+    return p
+end exports('MakeFood', MakeFood)
+
 -------------------------
 -- Disable Idle Camera --
 -------------------------

@@ -10,20 +10,49 @@ Config.OnlineOrders.RestockTime = 5
     -- bankAccount          = name of the account to withdraw the money from (Society account or Gang account)
     -- isGang (optional)    = If the account is a Gang, set true
     -- coords               = coords where the order option is displayed in the radial menu
-    -- cids                 = CIDs that have access to order items for that job.
+    -- cids                 = CIDs that have access to order items for that job. (Leave nil if you want to use Shared.Jobs.canOrderOnline, only works for real jobs)
 Config.OnlineOrders.CustomJobs = {
-    ['risingbar'] = {
-        label = "Rising Sun Bar",
-        bankAccount = 'rising',
-        coords = vector3(-339.53, -154.55, 39.06),
-        cids = {['UPY10832'] = true, ['RQN37448'] = true}
+    ['tunershop'] = {
+        label = "Tuner Shop",
+        bankAccount = 'tunershop',
+        coords = vector3(128.21, -3011.18, 7.04),
+        --cids = {['UPY10832'] = true, ['RQN37448'] = true}
     },
-    ['lostmc'] = {
-        label = "Lost MC's Bar",
-        bankAccount = 'lostmc',
-        isGang = true,
+    ['catcafe'] = {
+        label = "UwU Cafe Ordering",
+        bankAccount = 'catcafe',
         coords = vector3(2518.64, 4098.16, 35.59),
-        cids = {['UPY10832'] = true}
+        --cids = {['UPY10832'] = true}
+    },
+    ['beanmachine'] = {
+        label = "Bean Machine Ordering",
+        bankAccount = 'beanmachine',
+        coords = vector3(126.85, -1035.17, 30.02),
+        --cids = {['UPY10832'] = true}
+    },
+    ['burgershot'] = {
+        label = "Burgershot Ordering",
+        bankAccount = 'burgershot',
+        coords = vector3(-1200.84, -901.9, 14.36),
+        --cids = {['UPY10832'] = true}
+    },
+    ['cluckinbell'] = {
+        label = "Cluckinbell Ordering",
+        bankAccount = 'cluckinbell',
+        coords = vector3(-149.64, -261.94, 43.84),
+        --cids = {['UPY10832'] = true}
+    },
+    ['lscustoms'] = {
+        label = "LS Customs Ordering",
+        bankAccount = 'lscustoms',
+        coords = vector3(-350.33, -128.83, 39.25),
+        --cids = {['UPY10832'] = true}
+    },
+    ['burgershot2'] = {
+        label = "Burgershot Ordering",
+        bankAccount = 'burgershot2',
+        coords = vector3(1591.49, 3746.19, 34.49),
+        --cids = {['UPY10832'] = true}
     },
     -- ['vubar'] = {
     --     label = "Vanilla Unicorn Bar",
@@ -60,55 +89,77 @@ Config.OnlineOrders.Shops = {
             [1] = {item = "underglow_controller",   price = 1500,   stock = 25, 	loc = 3, max = 10},
             [2] = {item = "paintcan",               price = 100,    stock = 100, 	loc = 2, max = 25},
             [3] = {item = "cleaningkit",            price = 20,     stock = 100, 	loc = 2, max = 25},
-            [4] = {item = "harness",                price = 500,    stock = 25, 	loc = 15, max = 25, jobs = {['midnightmotors'] = true}},
-            [5] = {item = "noscan",                 price = 500,    stock = 25, 	loc = 15, max = 25, jobs = {['midnightmotors'] = true}},
-            [6] = {item = "horn",                   price = 500,    stock = 25, 	loc = 4, max = 10, exl = {['midnightmotors'] = true}},
+            [4] = {item = "harness",                price = 500,    stock = 25, 	loc = 15, max = 25, exl = {"lscustoms"}  },
+            [5] = {item = "noscan",                 price = 500,    stock = 25, 	loc = 15, max = 25, },
+            [6] = {item = "horn",                   price = 500,    stock = 25, 	loc = 4, max = 10,},
             [7] = {item = "ducttape",               price = 25,     stock = 100, 	loc = 2, max = 25},
-            [8] = {item = "racingtablet",           price = 5000,   stock = 25,     loc = 15,max = 25, jobs = {['midnightmotors'] = true}},
+            [8] = {item = "newoil",                 price = 1500,   stock = 25, 	loc = 3, max = 10},
+            [9] = {item = "sparkplugs",             price = 100,    stock = 100, 	loc = 2, max = 25},
+            [10] = {item = "carbattery",            price = 20,     stock = 100, 	loc = 2, max = 25},
+            [11] = {item = "axleparts",             price = 500,    stock = 25, 	loc = 15, max = 25, },
+            [12] = {item = "sparetire",             price = 500,    stock = 25, 	loc = 15, max = 25, },
+            [13] = {item = "enginekit",             price = 500,    stock = 25, 	loc = 4, max = 10,},
+            [14] = {item = "bodykit",               price = 25,     stock = 100, 	loc = 2, max = 25},
+
         }
     },
     ['performance'] = {
         options = {header = "Performance Items", icon = 'gear'},
         items = {
-            [1] = {item = "engine1",         price = 1250,   	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [2] = {item = "engine2",         price = 1750,    	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [3] = {item = "engine3",         price = 2500,     	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [4] = {item = "engine4",         price = 3500,    	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [5] = {item = "transmission1",   price = 1250,    	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [6] = {item = "transmission2",   price = 1750,    	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [7] = {item = "transmission3",   price = 2500,    	stock = 50,  loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [8] = {item = "brakes1",         price = 1250,   	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [9] = {item = "brakes2",         price = 1750,    	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [10] = {item = "brakes3",        price = 2500,     	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [11] = {item = "suspension1",    price = 1250,    	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [12] = {item = "suspension2",    price = 1750,    	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [13] = {item = "suspension3",    price = 2500,    	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [14] = {item = "suspension4",    price = 3500,    	stock = 50,  loc = 3, max = 15, exl = {['midnightmotors'] = true}},
-            [15] = {item = "turbo",          price = 5000,    	stock = 25,  loc = 1, max = 5, exl = {['midnightmotors'] = true}},
-            [16] = {item = "modified_turbo", price = 7500,    	stock = 20,  loc = 15, max = 10, jobs = {['midnightmotors'] = true}},
-            [17] = {item = "tunachip",       price = 15,    	stock = 100, loc = 7, max = 100, jobs = {['midnightmotors'] = true}},
+            [1] = {item = "engine1",          price = 12500,   	stock = 50,  loc = 1, max = 15, },
+            [2] = {item = "engine2",          price = 17500,    	stock = 50,  loc = 1, max = 15, },
+            [3] = {item = "engine3",          price = 25000,     stock = 50,  loc = 1, max = 15, },
+            [4] = {item = "engine4",          price = 35000,    	stock = 50,  loc = 1, max = 15, },
+            [5] = {item = "transmission1",    price = 12500,    	stock = 50,  loc = 1, max = 15, },
+            [6] = {item = "transmission2",    price = 17500,    	stock = 50,  loc = 1, max = 15, },
+            [7] = {item = "transmission3",    price = 25000,    	stock = 50,  loc = 1, max = 15, },
+            [8] = {item = "brakes1",          price = 12500,   	stock = 50,  loc = 3, max = 15, },
+            [9] = {item = "brakes2",          price = 17500,    	stock = 50,  loc = 3, max = 15, },
+            [10] = {item = "brakes3",         price = 25000,     stock = 50,  loc = 3, max = 15, },
+            [11] = {item = "suspension1",     price = 12500,    	stock = 50,  loc = 3, max = 15, },
+            [12] = {item = "suspension2",     price = 17500,    	stock = 50,  loc = 3, max = 15, },
+            [13] = {item = "suspension3",     price = 25000,    	stock = 50,  loc = 3, max = 15, },
+            [14] = {item = "suspension4",     price = 35000,    	stock = 50,  loc = 3, max = 15, },
+            [15] = {item = "turbo",           price = 50000,    	stock = 25,  loc = 1, max = 5, exl = {"lscustoms"} },
+            [16] = {item = "oilp1",           price = 12500,   	stock = 50,  loc = 1, max = 15, },
+            [17] = {item = "oilp2",           price = 17500,    	stock = 50,  loc = 1, max = 15, },
+            [18] = {item = "oilp3",           price = 25000,     stock = 50,  loc = 1, max = 15, },
+            [19] = {item = "drives1",         price = 35000,    	stock = 50,  loc = 1, max = 15, },
+            [20] = {item = "drives2",         price = 12500,    	stock = 50,  loc = 1, max = 15, },
+            [21] = {item = "drives3",         price = 17500,    	stock = 50,  loc = 1, max = 15, },
+            [22] = {item = "cylind1",         price = 25000,    	stock = 50,  loc = 1, max = 15, },
+            [23] = {item = "cylind2",         price = 12500,   	stock = 50,  loc = 3, max = 15, },
+            [24] = {item = "cylind3",         price = 17500,    	stock = 50,  loc = 3, max = 15, },
+            [25] = {item = "fueltank1",       price = 25000,    	stock = 50,  loc = 1, max = 15, },
+            [26] = {item = "fueltank2",       price = 12500,   	stock = 50,  loc = 3, max = 15, },
+            [27] = {item = "fueltank3",       price = 17500,    	stock = 50,  loc = 3, max = 15, },
+            [28] = {item = "cables1",         price = 25000,     stock = 50,  loc = 3, max = 15, },
+            [29] = {item = "cables2",         price = 12500,    	stock = 50,  loc = 3, max = 15, },
+            [30] = {item = "cables3",         price = 17500,    	stock = 50,  loc = 3, max = 15, },
+            [31] = {item = "antilag",         price = 25000,    	stock = 50,  loc = 3, max = 15, },
+            [32] = {item = "modified_turbo",  price = 60000,    	stock = 25,  loc = 1, max = 5, exl = {"lscustoms"} },
         },
     },
     ['cosmetics'] = {
         options = {header = "Cosmetic Items", icon = 'palette'},
         items = {
-            [1] = {item = "tint_supplies",  price = 150,   	stock = 50, 	loc = 2, max = 15},
-            [2] = {item = "tires",          price = 500,    stock = 50, 	loc = 2, max = 15},
-            [3] = {item = "roof",           price = 300,    stock = 50, 	loc = 1, max = 15, exl = {['midnightmotors'] = true}},
-            [4] = {item = "internals",      price = 250,    stock = 100, 	loc = 2, max = 25, exl = {['midnightmotors'] = true}},
-            [5] = {item = "customplate",    price = 100,    stock = 50, 	loc = 2, max = 15, exl = {['midnightmotors'] = true}},
-            [6] = {item = "seat",           price = 350,    stock = 50, 	loc = 4, max = 15, exl = {['midnightmotors'] = true}},
-            [7] = {item = "rims",           price = 500,    stock = 50, 	loc = 4, max = 15, exl = {['midnightmotors'] = true}},
-            [8] = {item = "hood",           price = 350,   	stock = 50, 	loc = 5, max = 15, exl = {['midnightmotors'] = true}},
-            [9] = {item = "skirts",         price = 250,    stock = 50, 	loc = 5, max = 15, exl = {['midnightmotors'] = true}},
-            [10] = {item = "bumper",        price = 300,    stock = 50, 	loc = 5, max = 15, exl = {['midnightmotors'] = true}},
-            [11] = {item = "externals",     price = 400,    stock = 100, 	loc = 5, max = 25, exl = {['midnightmotors'] = true}},
-            [12] = {item = "headlights",    price = 500,    stock = 50, 	loc = 5, max = 15, exl = {['midnightmotors'] = true}},
-            [13] = {item = "spoiler",       price = 350,    stock = 50, 	loc = 5, max = 15, exl = {['midnightmotors'] = true}},
-            [14] = {item = "rollcage",      price = 350,    stock = 50, 	loc = 5, max = 15, exl = {['midnightmotors'] = true}},
-            [15] = {item = "exhaust",       price = 350,    stock = 25, 	loc = 4, max = 15, exl = {['midnightmotors'] = true}},
-            [16] = {item = "livery",        price = 500,    stock = 10, 	loc = 2, max = 15},
-            [17] = {item = "noscolour",     price = 500,    stock = 25, 	loc = 15, jobs = {['midnightmotors'] = true}}, --
+            [1] = {item = "tint_supplies",  price = 1500,   	stock = 50, 	loc = 2, max = 15},
+            [2] = {item = "tires",          price = 5000,    stock = 50, 	loc = 2, max = 15},
+            [3] = {item = "roof",           price = 3000,    stock = 50, 	loc = 1, max = 15, },
+            [4] = {item = "internals",      price = 2500,    stock = 100, 	loc = 2, max = 25, },
+            [5] = {item = "customplate",    price = 1000,    stock = 50, 	loc = 2, max = 15, },
+            [6] = {item = "seat",           price = 3500,    stock = 50, 	loc = 4, max = 15, },
+            [7] = {item = "rims",           price = 5000,    stock = 50, 	loc = 4, max = 15, },
+            [8] = {item = "hood",           price = 3500,   	stock = 50, 	loc = 5, max = 15, },
+            [9] = {item = "skirts",         price = 2500,    stock = 50, 	loc = 5, max = 15, },
+            [10] = {item = "bumper",        price = 3000,    stock = 50, 	loc = 5, max = 15, },
+            [11] = {item = "externals",     price = 4000,    stock = 100, 	loc = 5, max = 25, },
+            [12] = {item = "headlights",    price = 5000,    stock = 50, 	loc = 5, max = 15, },
+            [13] = {item = "spoiler",       price = 3500,    stock = 50, 	loc = 5, max = 15, },
+            [14] = {item = "rollcage",      price = 3500,    stock = 50, 	loc = 5, max = 15, },
+            [15] = {item = "exhaust",       price = 3500,    stock = 25, 	loc = 4, max = 15, },
+            [16] = {item = "livery",        price = 5000,    stock = 10, 	loc = 2, max = 15},
+            [17] = {item = "noscolour",     price = 5000,    stock = 25, 	loc = 15, }, --
         },
     },
 
@@ -116,156 +167,154 @@ Config.OnlineOrders.Shops = {
     ['fish'] = {
         options = {header = "Sea Products", icon = 'fish'},
         items = {
-            [1] = {item = "oystershell",    price = 15, stock = 300, loc = 10, max = 100},
-            [2] = {item = "squid",          price = 15, stock = 300, loc = 10, max = 100},
-            [3] = {item = "fish",           price = 15, stock = 300, loc = 10, max = 100},
+            [1] = {item = "oystershell",    price = 55, stock = 300, loc = 10, max = 100},
+            [2] = {item = "squid",          price = 55, stock = 300, loc = 10, max = 100},
+            [3] = {item = "fish",           price = 55, stock = 300, loc = 10, max = 100},
         }
     },
     ['meats'] = {
         options = {header = "Butchery", icon = 'drumstick-bite'},
         items = {
-            [1] = {item = "chickenbreast",  price = 15, stock = 300, loc = 9, max = 100},
-            [2] = {item = "burgerpatty",    price = 15, stock = 300, loc = 9, max = 100},
-            [3] = {item = "meat",           price = 15, stock = 300, loc = 9, max = 100},
-            [4] = {item = "ham",            price = 15, stock = 300, loc = 9, max = 100},
-            [5] = {item = "jimsausages",    price = 15, stock = 300, loc = 9, max = 100},
-            [6] = {item = "egg",            price = 15, stock = 300, loc = 9, max = 100},
-            [7] = {item = "frozennugget",   price = 15, stock = 300, loc = 9, max = 100},
+            [1] = {item = "chickenbreast",  price = 45, stock = 300, loc = 9, max = 100},
+            [2] = {item = "burgerpatty",    price = 45, stock = 300, loc = 9, max = 100},
+            [3] = {item = "meat",           price = 45, stock = 300, loc = 9, max = 100},
+            [4] = {item = "ham",            price = 45, stock = 300, loc = 9, max = 100},
+            [5] = {item = "jimsausages",    price = 45, stock = 300, loc = 9, max = 100},
+            [6] = {item = "egg",            price = 45, stock = 300, loc = 9, max = 100},
+            [7] = {item = "frozennugget",   price = 45, stock = 300, loc = 9, max = 100},
         }
     },
     ['fruits'] = {
         options = {header = "Fruits", icon = 'apple-whole'},
         items = {
-            [1] = {item = "orange",     price = 10, stock = 300, loc = 8, max = 100},
-            [2] = {item = "peach",      price = 10, stock = 300, loc = 8, max = 100},
-            [3] = {item = "strawberry", price = 10, stock = 300, loc = 8, max = 100},
-            [4] = {item = "blueberry",  price = 10, stock = 300, loc = 8, max = 100},
-            [5] = {item = "lime",       price = 10, stock = 300, loc = 8, max = 100},
-            [6] = {item = "lemon",      price = 10, stock = 300, loc = 8, max = 100},
-            [7] = {item = "medfruits",  price = 10, stock = 300, loc = 8, max = 100, jobs = {['pizzathis'] = true}},
-            [8] = {item = "watermelon", price = 10, stock = 300, loc = 8, max = 100, jobs = {['beanmachine'] = true}},
-            [9] = {item = "cherry",     price = 10, stock = 300, loc = 8, max = 100, jobs = {['vanilla'] = true}},
+            [1] = {item = "orange",     price = 30, stock = 300, loc = 8, max = 100},
+            [2] = {item = "peach",      price = 30, stock = 300, loc = 8, max = 100},
+            [3] = {item = "strawberry", price = 30, stock = 300, loc = 8, max = 100},
+            [4] = {item = "blueberry",  price = 30, stock = 300, loc = 8, max = 100},
+            [5] = {item = "lime",       price = 30, stock = 300, loc = 8, max = 100},
+            [6] = {item = "lemon",      price = 30, stock = 300, loc = 8, max = 100},
+            [7] = {item = "medfruits",  price = 30, stock = 300, loc = 8, max = 100, jobs = {['pizzathis'] = true}},
+            [8] = {item = "watermelon", price = 30, stock = 300, loc = 8, max = 100, jobs = {['beanmachine'] = true}},
+            [9] = {item = "cherry",     price = 30, stock = 300, loc = 8, max = 100, jobs = {['vanilla'] = true}},
         }
     },
     ['veggies'] = {
         options = {header = "Vegetables & Fine Herbs", icon = 'carrot'},
         items = {
-            [1] = {item = "potato",         price = 10, stock = 300, loc = 8, max = 100},
-            [2] = {item = "onion",          price = 10, stock = 300, loc = 8, max = 100},
-            [3] = {item = "lettuce",        price = 10, stock = 300, loc = 8, max = 100},
-            [4] = {item = "olives",         price = 10, stock = 300, loc = 8, max = 100},
-            [5] = {item = "pizzmushrooms",  price = 10, stock = 300, loc = 8, max = 100},
+            [1] = {item = "potato",         price = 30, stock = 300, loc = 8, max = 100},
+            [2] = {item = "onion",          price = 30, stock = 300, loc = 8, max = 100},
+            [3] = {item = "lettuce",        price = 30, stock = 300, loc = 8, max = 100},
+            [4] = {item = "olives",         price = 30, stock = 300, loc = 8, max = 100},
+            [5] = {item = "pizzmushrooms",  price = 30, stock = 300, loc = 8, max = 100},
 
-            [6] = {item = "basil",          price = 7, stock = 300, loc = 8, max = 100},
-            [7] = {item = "cubasil",        price = 7, stock = 300, loc = 8, max = 100},
-            [8] = {item = "mintleaf",       price = 7, stock = 300, loc = 8, max = 100},
+            [6] = {item = "basil",          price = 27, stock = 300, loc = 8, max = 100},
+            [7] = {item = "cubasil",        price = 27, stock = 300, loc = 8, max = 100},
+            [8] = {item = "mintleaf",       price = 27, stock = 300, loc = 8, max = 100},
         }
     },
     ['dairy'] = {
         options = {header = "Dairy", icon = 'cow'},
         items = {
-            [1] = {item = "milk",        price = 12, stock = 300, loc = 8, max = 100},
-            [2] = {item = "cheddar",     price = 10, stock = 300, loc = 8, max = 100},
-            [3] = {item = "mozz",        price = 10, stock = 300, loc = 8, max = 100},
-            [4] = {item = "gelato",      price = 12, stock = 300, loc = 11, max = 100, jobs = {['pizzathis'] = true}},
-            [5] = {item = "popicecream", price = 12, stock = 300, loc = 11, max = 100, jobs = {['popsdiner'] = true}},
-            [6] = {item = "icecream",    price = 12, stock = 300, loc = 11, max = 100, jobs = {['vanilla'] = true, ['burgershot'] = true}},
+            [1] = {item = "milk",        price = 42, stock = 300, loc = 8, max = 100},
+            [2] = {item = "cheese",      price = 40, stock = 300, loc = 8, max = 100},
+            [3] = {item = "mozz",        price = 40, stock = 300, loc = 8, max = 100},
+            [4] = {item = "gelato",      price = 42, stock = 300, loc = 11, max = 100, },
+            [5] = {item = "popicecream", price = 42, stock = 300, loc = 11, max = 100, },
+            [6] = {item = "icecream",    price = 42, stock = 300, loc = 11, max = 100, },
         }
     },
     ['desserts'] = {
         options = {header = "Premade Desserts", icon = 'cake-candles'},
         items = {
-            [1] = {item = "tiramisu",     price = 25, stock = 300, loc = 11, max = 100, jobs = {['pizzathis'] = true}}, -- +pizza
-            [2] = {item = "cheesecake",   price = 25, stock = 300, loc = 11, max = 100, jobs = {['popsdiner'] = true, ['beanmachine'] = true}}, -- +pops +beanmachine
-            [3] = {item = "carrotcake",   price = 25, stock = 300, loc = 11, max = 100, jobs = {['popsdiner'] = true}},
-            [4] = {item = "jelly",        price = 25, stock = 300, loc = 7, max = 100, jobs = {['popsdiner'] = true}},
-            [5] = {item = "chocpudding",  price = 25, stock = 300, loc = 7, max = 100, jobs = {['popsdiner'] = true}},
-            [6] = {item = "popdonut",     price = 25, stock = 300, loc = 7, max = 100, jobs = {['popsdiner'] = true}},
+            [1] = {item = "tiramisu",     price = 45, stock = 300, loc = 11, max = 100,}, -- +pizza
+            [2] = {item = "cheesecake",   price = 45, stock = 300, loc = 11, max = 100,}, -- +pops +beanmachine
+            [3] = {item = "carrotcake",   price = 45, stock = 300, loc = 11, max = 100,},
+            [4] = {item = "jelly",        price = 45, stock = 300, loc = 7, max = 100, },
+            [5] = {item = "chocpudding",  price = 45, stock = 300, loc = 7, max = 100, },
+            [6] = {item = "popdonut",     price = 45, stock = 300, loc = 7, max = 100, },
         }
     },
     ['processed'] = {
         options = {header = "Processed Goods", icon = 'industry'},
         items = {
-            [1] = {item = "cranberry",      price = 7, stock = 300, loc = 7, max = 100, exl = {['popsdiner'] = true, ['pizzathis'] = true, ['beanmachine'] = true}},
-            [2] = {item = "pinejuice",      price = 7, stock = 300, loc = 7, max = 100, exl = {['popsdiner'] = true}},
-            [3] = {item = "sprunk",         price = 7, stock = 300, loc = 7, max = 100, exl = {['popsdiner'] = true}},
-            [4] = {item = "sprunklight",    price = 7, stock = 300, loc = 7, max = 100, exl = {['popsdiner'] = true}},
-            [5] = {item = "ecola",          price = 7, stock = 300, loc = 7, max = 100, exl = {['popsdiner'] = true}},
-            [6] = {item = "ecolalight",     price = 7, stock = 300, loc = 7, max = 100, exl = {['popsdiner'] = true}},
-            [7] = {item = "crisps",         price = 7, stock = 300, loc = 7, max = 100, exl = {['pizzathis'] = true, ['beanmachine'] = true}},
-            [8] = {item = "chocolate",      price = 7, stock = 300, loc = 7, max = 100},
-            [9] = {item = "glizzy",         price = 25, stock = 300, loc = 7, max = 100, jobs = {['risingbar'] = true}},
-            [10] = {item = "slimeade",      price = 7, stock = 300, loc = 7, max = 100, jobs = {['pizzathis'] = true}},
+            [1] = {item = "cranberry",      price = 27, stock = 300, loc = 7, max = 100, },
+            [2] = {item = "pinejuice",      price = 27, stock = 300, loc = 7, max = 100, },
+            [3] = {item = "sprunk",         price = 27, stock = 300, loc = 7, max = 100, },
+            [4] = {item = "sprunklight",    price = 27, stock = 300, loc = 7, max = 100, },
+            [5] = {item = "ecola",          price = 27, stock = 300, loc = 7, max = 100, },
+            [6] = {item = "ecolalight",     price = 27, stock = 300, loc = 7, max = 100, },
+            [7] = {item = "crisps",         price = 27, stock = 300, loc = 7, max = 100, },
+            [8] = {item = "chocolate",      price = 27, stock = 300, loc = 7, max = 100},
         }
     },
     ['baking'] = {
         options = {header = "Baking Ingredients", icon = 'cookie-bite'},
         items = {
-            [1] = {item = "sugar",          price = 12, stock = 250, loc = 7, max = 100},
-            [2] = {item = "flour",          price = 12, stock = 300, loc = 7, max = 100},
-            [3] = {item = "butter",         price = 12, stock = 300, loc = 7, max = 100},
-            [4] = {item = "gelatine",       price = 12, stock = 300, loc = 7, max = 100},
-            [5] = {item = "chocolatechips", price = 12, stock = 300, loc = 7, max = 100},
-            [6] = {item = "peanutbutter",   price = 12, stock = 300, loc = 7, max = 100},
-            [7] = {item = "gummymould",     price = 500, stock = 10, loc = 7, max = 100, jobs = {['whitewidow'] = true}},
-            [8] = {item = "egg",            price = 15, stock = 100, loc = 9, max = 100, jobs = {['whitewidow'] = true}},
-            [9] = {item = "yeast",          price = 100, stock = 100, loc = 7, max = 100, jobs = {['winery'] = true}},
+            [1] = {item = "sugar",          price = 32, stock = 250, loc = 7, max = 100},
+            [2] = {item = "flour",          price = 32, stock = 300, loc = 7, max = 100},
+            [3] = {item = "butter",         price = 32, stock = 300, loc = 7, max = 100},
+            [4] = {item = "gelatine",       price = 32, stock = 300, loc = 7, max = 100},
+            [5] = {item = "chocolatechips", price = 32, stock = 300, loc = 7, max = 100},
+            [6] = {item = "peanutbutter",   price = 32, stock = 300, loc = 7, max = 100},
+            [7] = {item = "gummymould",     price = 500, stock = 10, loc = 7, max = 100, },
+            [8] = {item = "egg",            price = 35, stock = 100, loc = 9, max = 100, },
+            --[9] = {item = "yeast",          price = 100, stock = 100, loc = 7, max = 100,},
         }
     },
     ['gengoods'] = {
         options = {header = "General Goods", icon = 'basket-shopping'},
         items = {
-            [1] =  {item = "water_bottle",  price = 7, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
-            [2] = {item = "tosti",          price = 7, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
-            [3] = {item = "burgerbun",      price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [4] = {item = "tofu",           price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [5] = {item = "rice",           price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [6] = {item = "sauce",          price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [7] = {item = "pasta",          price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [8] = {item = "nachos",         price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [9] = {item = "cereal",         price = 7, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [1] =  {item = "water_bottle",  price = 37, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
+            [2] = {item = "tosti",          price = 37, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
+            [3] = {item = "burgerbun",      price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [4] = {item = "tofu",           price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [5] = {item = "rice",           price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [6] = {item = "sauce",          price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [7] = {item = "pasta",          price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [8] = {item = "nachos",         price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [9] = {item = "cereal",         price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
         }
     },
     ['alcohol'] = {
         options = {header = "Alcohol", icon = 'martini-glass'},
         items = {
-            [1] = {item = "schnapps",    price = 12, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
-            [2] = {item = "gin",         price = 12, stock = 200, loc = 12, max = 100, exl = {['pizzathis'] = true, ['catcafe'] = true}},
-            [3] = {item = "scotch",      price = 12, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
-            [4] = {item = "rum",         price = 12, stock = 200, loc = 12, max = 100, exl = {['pizzathis'] = true, ['catcafe'] = true}},
-            [5] = {item = "amaretto",    price = 12, stock = 200, loc = 12, max = 100, exl = {['pizzathis'] = true, ['catcafe'] = true}},
-            [6] = {item = "curaco",      price = 12, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
-            [7] = {item = "icream",      price = 12, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
-            [8] = {item = "vodka",       price = 12, stock = 200, loc = 12, max = 100, exl = {['catcafe'] = true}},
-            [9] = {item = "sake",        price = 12, stock = 200, loc = 12, max = 100, jobs = {['catcafe'] = true}},
-            [10] = {item = "amarone",    price = 15, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
-            [11] = {item = "barbera",    price = 15, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
-            [12] = {item = "dolceto",    price = 15, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
-            [13] = {item = "housered",   price = 15, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
-            [14] = {item = "housewhite", price = 15, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
-            [15] = {item = "rosso",      price = 15, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
-            [16] = {item = "midori",     price = 15, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true}},
-            [17] = {item = "prosecco",   price = 15, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true}},
-            [18] = {item = "tequila",    price = 12, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true, ['club77'] = true}},
-            [19] = {item = "triplsec",   price = 12, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true, ['club77'] = true}},
-            [20] = {item = "whiskey",    price = 12, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true, ['club77'] = true}},
+            [1] = {item = "schnapps",    price = 72, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
+            [2] = {item = "gin",         price = 72, stock = 200, loc = 12, max = 100, exl = {['pizzathis'] = true, ['catcafe'] = true}},
+            [3] = {item = "scotch",      price = 72, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
+            [4] = {item = "rum",         price = 72, stock = 200, loc = 12, max = 100, exl = {['pizzathis'] = true, ['catcafe'] = true}},
+            [5] = {item = "amaretto",    price = 72, stock = 200, loc = 12, max = 100, exl = {['pizzathis'] = true, ['catcafe'] = true}},
+            [6] = {item = "curaco",      price = 72, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
+            [7] = {item = "icream",      price = 72, stock = 200, loc = 12, max = 100, exl = {['vanilla'] = true, ['pizzathis'] = true, ['catcafe'] = true}},
+            [8] = {item = "vodka",       price = 72, stock = 200, loc = 12, max = 100, exl = {['catcafe'] = true}},
+            [9] = {item = "sake",        price = 72, stock = 200, loc = 12, max = 100, jobs = {['catcafe'] = true}},
+            [10] = {item = "amarone",    price = 75, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
+            [11] = {item = "barbera",    price = 75, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
+            [12] = {item = "dolceto",    price = 75, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
+            [13] = {item = "housered",   price = 75, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
+            [14] = {item = "housewhite", price = 75, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
+            [15] = {item = "rosso",      price = 75, stock = 200, loc = 12, max = 100, jobs = {['pizzathis'] = true}},
+            [16] = {item = "midori",     price = 75, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true}},
+            [17] = {item = "prosecco",   price = 75, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true}},
+            [18] = {item = "tequila",    price = 72, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true, ['club77'] = true}},
+            [19] = {item = "triplsec",   price = 72, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true, ['club77'] = true}},
+            [20] = {item = "whiskey",    price = 72, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true, ['club77'] = true}},
             [21] = {item = "champagnebottle",    price = 75, stock = 200, loc = 12, max = 100, jobs = {['vanilla'] = true}},
         }
     },
     ['beanmachine'] = {
         options = {header = "Bean Machine Exclusives", icon = 'pagelines'},
         items = {
-            [1] = {item = "beancoffee", price = 15, stock = 300, loc = 13, max = 100},
-            [2] = {item = "beandonut",  price = 12, stock = 300, loc = 13, max = 100},
-            [3] = {item = "rhinohorn",  price = 12, stock = 300, loc = 13, max = 100},
+            [1] = {item = "beancoffee", price = 45, stock = 300, loc = 13, max = 100},
+            [2] = {item = "beandonut",  price = 42, stock = 300, loc = 13, max = 100},
+            [3] = {item = "rhinohorn",  price = 42, stock = 300, loc = 13, max = 100},
         }
     },
     ['catcafe'] = {
         options = {header = "Cat Cafe Exclusives", icon = 'cat'},
         items = {
-            [1] = {item = "nori",       price = 12, stock = 300, loc = 13, max = 100},
-            [2] = {item = "boba",       price = 15, stock = 300, loc = 13, max = 100},
-            [3] = {item = "noodles",    price = 10, stock = 300, loc = 13, max = 100},
+            [1] = {item = "nori",       price = 42, stock = 300, loc = 13, max = 100},
+            [2] = {item = "boba",       price = 45, stock = 300, loc = 13, max = 100},
+            [3] = {item = "noodles",    price = 40, stock = 300, loc = 13, max = 100},
         }
     },
     ['whitewidow'] = {
@@ -290,74 +339,74 @@ Config.OnlineOrders.Shops = {
     },
 
     -- Ammunation
-    ['ammo'] = {
-        options = {header = "Ammunition", icon = 'ellipsis'},
-        items = {
-            [1] = {item = "pistol_ammo",  price = 100, stock = 500, loc = 6, max = 100},
-            [2] = {item = "smg_ammo",  price = 300, stock = 500, loc = 6, max = 100},
-            [3] = {item = "shotgun_ammo",  price = 250, stock = 500, loc = 6, max = 100},
-            [4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
-        }
-    },
-    ['pistols'] = {
-        options = {header = "Pistols", icon = 'gun'},
-        items = {
-            [1] = {item = "weapon_dp9",  price = 3250, stock = 25, loc = 6, max = 25},
-            [2] = {item = "weapon_fnx45",  price = 4500, stock = 25, loc = 6, max = 25},
-            [3] = {item = "weapon_m1911",  price = 5200, stock = 25, loc = 6, max = 25},
-            [4] = {item = "weapon_browning",  price = 9375, stock = 25, loc = 6, max = 25},
-            [5] = {item = "weapon_de",  price = 14650, stock = 25, loc = 6, max = 25},
-        }
-    },
-    ['smgs'] = {
-        options = {header = "SMGs", icon = 'bars-staggered'},
-        items = {
-            [1] = {item = "weapon_mp5",  price = 18350, stock = 25, loc = 6, max = 25},
-            [2] = {item = "weapon_mp9",  price = 24650, stock = 25, loc = 6, max = 25},
-        }
-    },
-    ['hunting'] = {
-        options = {header = "Hunting", icon = 'bullseye'},
-        items = {
-            [1] = {item = "weapon_huntingrifle",  price = 500, stock = 25, loc = 6, max = 25},
-        }
-    },
-    ['shotguns'] = {
-         options = {header = "Shotguns", icon = 'gun'},
-         items = {
-             [1] = {item = "weapon_mossberg",  price = 15275, stock = 25, loc = 6, max = 25},
-             --[2] = {item = "weapon_doublebarrel",  price = 82000, stock = 25, loc = 6, max = 25}, NOT A WEAPON
-         }
-    },
-    ['protection'] = {
-        options = {header = "Self Protection", icon = 'shield'},
-        items = {
-            [1] = {item = "armor",  price = 500, stock = 50, loc = 6, max = 25},
-            [2] = {item = "heavyarmor",  price = 1000, stock = 25, loc = 6, max = 15},
-        }
-    },
-    ['melee'] = {
-        options = {header = "Melee Weapon", icon = 'shield'},
-        items = {
-            [1] = {item = "weapon_knife",  price = 100, stock = 75, loc = 6, max = 25},
-            [2] = {item = "weapon_bat",  price = 100, stock = 75, loc = 6, max = 25},
-            [3] = {item = "weapon_hatchet",  price = 100, stock = 75, loc = 6, max = 25},
-            [4] = {item = "weapon_crowbar",  price = 100, stock = 75, loc = 6, max = 25},
-        }
-    },
-
-    -- digital den
-    ['electronics'] = {
-        options = {header = "Electronics", icon = 'wifi'},
-        items = {
-            [1] = {item = "electronickit",  price = 200, stock = 50, loc = 14, max = 25},
-            [2] = {item = "speakerparts",  price = 400, stock = 25, loc = 14, max = 15},
-            [3] = {item = "phone_module",  price = 250, stock = 50, loc = 14, max = 15},
-            [4] = {item = "glue",  price = 150, stock = 50, loc = 14, max = 25},
-            [5] = {item = "pd_screwdriver",  price = 150, stock = 10, loc = 14, max = 10},
-            [6] = {item = "pd_scanner",  price = 5500, stock = 2, loc = 14, max = 1},
-        }
-    },
+    --['ammo'] = {
+    --    options = {header = "Ammunition", icon = 'ellipsis'},
+    --    items = {
+    --        [1] = {item = "pistol_ammo",  price = 100, stock = 500, loc = 6, max = 100},
+    --        [2] = {item = "smg_ammo",  price = 300, stock = 500, loc = 6, max = 100},
+    --        [3] = {item = "shotgun_ammo",  price = 250, stock = 500, loc = 6, max = 100},
+    --        [4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
+    --    }
+    --},
+    --['pistols'] = {
+    --    options = {header = "Pistols", icon = 'gun'},
+    --    items = {
+    --        [1] = {item = "weapon_dp9",  price = 3250, stock = 25, loc = 6, max = 25},
+    --        [2] = {item = "weapon_fnx45",  price = 4500, stock = 25, loc = 6, max = 25},
+    --        [3] = {item = "weapon_m1911",  price = 5200, stock = 25, loc = 6, max = 25},
+    --        [4] = {item = "weapon_browning",  price = 9375, stock = 25, loc = 6, max = 25},
+    --        [5] = {item = "weapon_de",  price = 14650, stock = 25, loc = 6, max = 25},
+    --    }
+    --},
+    --['smgs'] = {
+    --    options = {header = "SMGs", icon = 'bars-staggered'},
+    --    items = {
+    --        [1] = {item = "weapon_mp5",  price = 18350, stock = 25, loc = 6, max = 25},
+    --        [2] = {item = "weapon_mp9",  price = 24650, stock = 25, loc = 6, max = 25},
+    --    }
+    --},
+    --['hunting'] = {
+    --    options = {header = "Hunting", icon = 'bullseye'},
+    --    items = {
+    --        [1] = {item = "weapon_huntingrifle",  price = 500, stock = 25, loc = 6, max = 25},
+    --    }
+    --},
+    --['shotguns'] = {
+    --     options = {header = "Shotguns", icon = 'gun'},
+    --     items = {
+    --         [1] = {item = "weapon_mossberg",  price = 15275, stock = 25, loc = 6, max = 25},
+    --         --[2] = {item = "weapon_doublebarrel",  price = 82000, stock = 25, loc = 6, max = 25}, NOT A WEAPON
+    --     }
+    --},
+    --['protection'] = {
+    --    options = {header = "Self Protection", icon = 'shield'},
+    --    items = {
+    --        [1] = {item = "armor",  price = 500, stock = 50, loc = 6, max = 25},
+    --        [2] = {item = "heavyarmor",  price = 1000, stock = 25, loc = 6, max = 15},
+    --    }
+    --},
+    --['melee'] = {
+    --    options = {header = "Melee Weapon", icon = 'shield'},
+    --    items = {
+    --        [1] = {item = "weapon_knife",  price = 100, stock = 75, loc = 6, max = 25},
+    --        [2] = {item = "weapon_bat",  price = 100, stock = 75, loc = 6, max = 25},
+    --        [3] = {item = "weapon_hatchet",  price = 100, stock = 75, loc = 6, max = 25},
+    --        [4] = {item = "weapon_crowbar",  price = 100, stock = 75, loc = 6, max = 25},
+    --    }
+    --},
+--
+    ---- digital den
+    --['electronics'] = {
+    --    options = {header = "Electronics", icon = 'wifi'},
+    --    items = {
+    --        [1] = {item = "electronickit",  price = 200, stock = 50, loc = 14, max = 25},
+    --        [2] = {item = "speakerparts",  price = 400, stock = 25, loc = 14, max = 15},
+    --        [3] = {item = "phone_module",  price = 250, stock = 50, loc = 14, max = 15},
+    --        [4] = {item = "glue",  price = 150, stock = 50, loc = 14, max = 25},
+    --        [5] = {item = "pd_screwdriver",  price = 150, stock = 10, loc = 14, max = 10},
+    --        [6] = {item = "pd_scanner",  price = 5500, stock = 2, loc = 14, max = 1},
+    --    }
+    --},
 
     -- Winery
     ['wine_equipment'] = {
@@ -370,8 +419,8 @@ Config.OnlineOrders.Shops = {
 
 -- Jobs & Which category do they have access to
 Config.OnlineOrders.jobs = {
-    ["midnightmotors"]  = {AvailableShops = {'tools', 'performance', 'cosmetics'}},
-	["rising"]          = {AvailableShops = {'tools', 'performance', 'cosmetics'}},
+    ["tunershop"]  = {AvailableShops = {'tools', 'performance', 'cosmetics'}, loc = vector3(127.32, -3011.33, 7.04)},
+	["lscustoms"]       = {AvailableShops = { 'tools','performance', 'cosmetics'}},
 	["lostmcmotor"]     = {AvailableShops = {'tools', 'performance', 'cosmetics'}},
 	["bennys"]          = {AvailableShops = {'tools', 'performance', 'cosmetics'}},
 	["eastcustoms"]     = {AvailableShops = {'tools', 'performance', 'cosmetics'}},
@@ -388,6 +437,7 @@ Config.OnlineOrders.jobs = {
     ["pizzathis"]       = {AvailableShops = {'meats', 'fish', 'dairy', 'fruits', 'veggies', 'desserts', 'gengoods', 'alcohol',  'processed'}},
     ["catcafe"]         = {AvailableShops = {'dairy', 'fruits', 'veggies', 'baking', 'gengoods', 'alcohol', 'catcafe'}},
     ["burgershot"]      = {AvailableShops = {'meats','dairy','veggies', 'gengoods'}},
+    ["cluckinbell"]      = {AvailableShops = {'meats','dairy','veggies', 'gengoods'}},
     ["beanmachine"]     = {AvailableShops = {'meats', 'fish', 'dairy', 'fruits', 'baking', 'desserts', 'processed', 'gengoods', 'beanmachine',}},
     -- (jim bars) Bars
     ["eclipse"]         = {AvailableShops = {'fruits', 'processed', 'alcohol'}},
@@ -401,6 +451,9 @@ Config.OnlineOrders.jobs = {
     ["winery"]          = {AvailableShops = {'baking', 'wine_equipment'}},
 }
 
+Config.Foodpacks = {
+    'foodpack_egg'
+}
 
 -- Locations to go pick up the order
 -- ped      = ped hash

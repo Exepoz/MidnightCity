@@ -177,3 +177,20 @@ QBCore.Functions.CreateUseableItem("boxcutter", function(source, item)
         TriggerClientEvent('QBCore:Notify', source, "The box is empty!", "error")
     end
 end)
+
+for k, v in pairs(Config.Foodpacks) do
+    QBCore.Functions.CreateUseableItem(v, function(source, item)
+        print('used')
+        QBCore.Debug(item)
+        local Player = QBCore.Functions.GetPlayer(source)
+        local oItem = Player.PlayerData.items[item.slot].info.packedItems
+        local info = {organic = Player.PlayerData.items[item.slot].info.organic or false}
+        if Player.Functions.AddItem(oItem, Player.PlayerData.items[item.slot].info.qty or 1, false, info) then
+            if not Player.Functions.RemoveItem(item.name, 1) then Player.Functions.RemoveItem(oItem, Player.PlayerData.items[item.slot].info.qty) return end
+            TriggerClientEvent('OnlineOrders:OpenInv', source)
+            TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[oItem], "add", Player.PlayerData.items[item.slot].info.qty)
+        else
+            TriggerClientEvent('QBCore:Notify', source, "You cant carry these!", "error") return
+        end
+    end)
+end

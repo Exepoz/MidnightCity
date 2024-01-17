@@ -12,7 +12,7 @@ Config.Fence = {
     },
     NPC = {
         [1] = {
-            location = vector3(1143.08, -2130.74, 29.98),
+            location = vector3(0,0,0),
             heading = 313.17,
             model = "u_m_y_militarybum"
         },
