@@ -145,7 +145,7 @@ end
 
 QBCore.Functions.CreateUseableItem('lootbag', function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
-    if Player.Functions.HasItem('lootbag') then useLootBag(source, item) end
+    if Player.Functions.GetItemByName('lootbag') then useLootBag(source, item) end
 end)
 
 for k, v in pairs(Config.Blueprints) do
