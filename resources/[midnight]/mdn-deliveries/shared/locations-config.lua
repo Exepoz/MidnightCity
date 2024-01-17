@@ -17,12 +17,12 @@ KloudDev.Locations = {
             money_type = "cash",
             deposit = {
                 enabled = true,
-                amount = 200
+                amount = 30
             },
             reward = {
                 enabled = true,
-                min = 300,
-                max = 350
+                min = 70,
+                max = 80
                 -- Real reward = `this - deposit.amount`
             }
         },
@@ -33,7 +33,7 @@ KloudDev.Locations = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
                 min = 100,
-                max = 200
+                max = 150
                 -- Players receive pay tickets
             }
         },
@@ -89,12 +89,12 @@ KloudDev.Locations = {
             money_type = "cash",
             deposit = {
                 enabled = true,
-                amount = 200
+                amount = 30
             },
             reward = {
                 enabled = true,
-                min = 300,
-                max = 350
+                min = 70,
+                max = 80
                 -- Real reward = `this - deposit.amount`
             }
         },
@@ -105,7 +105,7 @@ KloudDev.Locations = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
                 min = 100,
-                max = 200
+                max = 150
                 -- Players receive pay tickets
             }
         },
@@ -161,12 +161,12 @@ KloudDev.Locations = {
             money_type = "cash",
             deposit = {
                 enabled = true,
-                amount = 200
+                amount = 30
             },
             reward = {
                 enabled = true,
-                min = 300,
-                max = 350
+                min = 70,
+                max = 80
                 -- Real reward = `this - deposit.amount`
             }
         },
@@ -177,7 +177,7 @@ KloudDev.Locations = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
                 min = 100,
-                max = 200
+                max = 150
                 -- Players receive pay tickets
             }
         },
@@ -233,12 +233,12 @@ KloudDev.Locations = {
             money_type = "cash",
             deposit = {
                 enabled = true,
-                amount = 200
+                amount = 30
             },
             reward = {
                 enabled = true,
-                min = 300,
-                max = 350
+                min = 70,
+                max = 80,
                 -- Real reward = `this - deposit.amount`
             }
         },
@@ -249,7 +249,7 @@ KloudDev.Locations = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
                 min = 100,
-                max = 200
+                max = 150
                 -- Players receive pay tickets
             }
         },
@@ -305,12 +305,12 @@ KloudDev.Locations = {
             money_type = "cash",
             deposit = {
                 enabled = true,
-                amount = 200
+                amount = 30
             },
             reward = {
                 enabled = true,
-                min = 300,
-                max = 350
+                min = 70,
+                max = 80
                 -- Real reward = `this - deposit.amount`
             }
         },
@@ -321,7 +321,7 @@ KloudDev.Locations = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
                 min = 100,
-                max = 200
+                max = 150
                 -- Players receive pay tickets
             }
         },
@@ -377,12 +377,12 @@ KloudDev.Locations = {
             money_type = "crumbs",
             deposit = {
                 enabled = true,
-                amount = 100
+                amount = 0
             },
             reward = {
                 enabled = true,
-                min = 150,
-                max = 175
+                min = 100,
+                max = 115
                 -- Real reward = `this - deposit.amount`
             }
         },
