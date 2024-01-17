@@ -9,26 +9,27 @@ local comma_value = function(n) -- credit http://richard.warburton.it
 end
 
 RegisterNetEvent('qb-rental:client:LicenseCheck', function(data)
-    license = data.LicenseType
-    if license == "driver" then
-        QBCore.Functions.TriggerCallback("qb-rentals:server:getDriverLicenseStatus", function(hasLicense)
-            if hasLicense  then
-                TriggerEvent('qb-rental:client:openMenu', data)
-                MenuType = "vehicle"
-            else
-                QBCore.Functions.Notify(Lang:t("error.no_driver_license"), "error", 4500)
-            end
-        end)
-    elseif license == "pilot" then
-        QBCore.Functions.TriggerCallback("qb-rentals:server:getPilotLicenseStatus", function(hasLicense)
-            if hasLicense  then
-                TriggerEvent('qb-rental:client:openMenu', data)
-                MenuType = "aircraft"
-            else
-                QBCore.Functions.Notify(Lang:t("error.no_pilot_license"), "error", 4500)
-            end
-        end)
-    end
+    TriggerEvent('qb-rental:client:openMenu', data)
+    -- license = data.LicenseType
+    -- if license == "driver" then
+    --     QBCore.Functions.TriggerCallback("qb-rentals:server:getDriverLicenseStatus", function(hasLicense)
+    --         if hasLicense  then
+    --             TriggerEvent('qb-rental:client:openMenu', data)
+    --             MenuType = "vehicle"
+    --         else
+    --             QBCore.Functions.Notify(Lang:t("error.no_driver_license"), "error", 4500)
+    --         end
+    --     end)
+    -- elseif license == "pilot" then
+    --     QBCore.Functions.TriggerCallback("qb-rentals:server:getPilotLicenseStatus", function(hasLicense)
+    --         if hasLicense  then
+    --             TriggerEvent('qb-rental:client:openMenu', data)
+    --             MenuType = "aircraft"
+    --         else
+    --             QBCore.Functions.Notify(Lang:t("error.no_pilot_license"), "error", 4500)
+    --         end
+    --     end)
+    -- end
 end)
 
 RegisterNetEvent('qb-rental:client:openMenu', function(data)
@@ -39,7 +40,7 @@ RegisterNetEvent('qb-rental:client:openMenu', function(data)
             header = "Rental Vehicles",
             isMenuHeader = true,
         },
-    
+
         [2] = {
             id = 1,
             header = "Return Vehicle ",
@@ -49,7 +50,7 @@ RegisterNetEvent('qb-rental:client:openMenu', function(data)
             }
         }
     }
-    
+
     if menu == "vehicle" then
         for k=1, #Config.Vehicles.land do
             local veh = QBCore.Shared.Vehicles[Config.Vehicles.land[k].model]
@@ -108,25 +109,25 @@ end)
 
 local CreateNPC = function()
     -- Vehicle Rentals
-    created_ped = CreatePed(5, Config.Locations.vehicle.pedhash, Config.Locations.vehicle.coords.x, Config.Locations.vehicle.coords.y, Config.Locations.vehicle.coords.z, Config.Locations.vehicle.coords.w, false, true)
-    FreezeEntityPosition(created_ped, true)
-    SetEntityInvincible(created_ped, true)
-    SetBlockingOfNonTemporaryEvents(created_ped, true)
-    TaskStartScenarioInPlace(created_ped, 'WORLD_HUMAN_CLIPBOARD', 0, true)
+    created_ped_1 = CreatePed(5, Config.Locations.vehicle.pedhash, Config.Locations.vehicle.coords.x, Config.Locations.vehicle.coords.y, Config.Locations.vehicle.coords.z, Config.Locations.vehicle.coords.w, false, true)
+    FreezeEntityPosition(created_ped_1, true)
+    SetEntityInvincible(created_ped_1, true)
+    SetBlockingOfNonTemporaryEvents(created_ped_1, true)
+    TaskStartScenarioInPlace(created_ped_1, 'WORLD_HUMAN_CLIPBOARD', 0, true)
 
     -- Aircraft Rentals
-    created_ped = CreatePed(5, Config.Locations.aircraft.pedhash, Config.Locations.aircraft.coords.x, Config.Locations.aircraft.coords.y, Config.Locations.aircraft.coords.z, Config.Locations.aircraft.coords.w, false, true)
-    FreezeEntityPosition(created_ped, true)
-    SetEntityInvincible(created_ped, true)
-    SetBlockingOfNonTemporaryEvents(created_ped, true)
-    TaskStartScenarioInPlace(created_ped, 'WORLD_HUMAN_CLIPBOARD', 0, true)
+    created_ped_2 = CreatePed(5, Config.Locations.aircraft.pedhash, Config.Locations.aircraft.coords.x, Config.Locations.aircraft.coords.y, Config.Locations.aircraft.coords.z, Config.Locations.aircraft.coords.w, false, true)
+    FreezeEntityPosition(created_ped_2, true)
+    SetEntityInvincible(created_ped_2, true)
+    SetBlockingOfNonTemporaryEvents(created_ped_2, true)
+    TaskStartScenarioInPlace(created_ped_2, 'WORLD_HUMAN_CLIPBOARD', 0, true)
 
     -- Boat Rentals
-    created_ped = CreatePed(5, Config.Locations.boat.pedhash, Config.Locations.boat.coords.x, Config.Locations.boat.coords.y, Config.Locations.boat.coords.z, Config.Locations.boat.coords.w, false, true)
-    FreezeEntityPosition(created_ped, true)
-    SetEntityInvincible(created_ped, true)
-    SetBlockingOfNonTemporaryEvents(created_ped, true)
-    TaskStartScenarioInPlace(created_ped, 'WORLD_HUMAN_CLIPBOARD', 0, true)
+    created_ped_3 = CreatePed(5, Config.Locations.boat.pedhash, Config.Locations.boat.coords.x, Config.Locations.boat.coords.y, Config.Locations.boat.coords.z, Config.Locations.boat.coords.w, false, true)
+    FreezeEntityPosition(created_ped_3, true)
+    SetEntityInvincible(created_ped_3, true)
+    SetBlockingOfNonTemporaryEvents(created_ped_3, true)
+    TaskStartScenarioInPlace(created_ped_3, 'WORLD_HUMAN_CLIPBOARD', 0, true)
 end
 
 local SpawnNPC = function()
@@ -146,7 +147,7 @@ local SpawnNPC = function()
         while not HasModelLoaded(Config.Locations.boat.pedhash) do
             Wait(1)
         end
-        CreateNPC() 
+        CreateNPC()
     end)
 end
 
@@ -159,21 +160,23 @@ RegisterNetEvent('qb-rental:client:spawncar', function(data)
     local money = data.money
     local model = data.model
     local label = Lang:t("error.not_enough_space", {vehicle = menu:sub(1,1):upper()..menu:sub(2)})
+    if SpawnVehicle == true then QBCore.Functions.Notify('You already have a rented vehicle!', 'error') return end
+
     if menu == "vehicle" then
         if IsAnyVehicleNearPoint(Config.Locations.vehicle.spawnpoint.x, Config.Locations.vehicle.spawnpoint.y, Config.Locations.vehicle.spawnpoint.z, 2.0) then
-            QBCore.Functions.Notify(label, "error", 4500)
+            QBCore.Functions.Notify('There is a vehicle in the way!', "error", 4500)
             return
         end
     elseif menu == "aircraft" then
-        if IsAnyVehicleNearPoint(Config.Locations.aircraft.spawnpoint.x, Config.Locations.aircraft.spawnpoint.y, Config.Locations.aircraft.spawnpoint.z, 15.0) then 
-            QBCore.Functions.Notify(label, "error", 4500)
+        if IsAnyVehicleNearPoint(Config.Locations.aircraft.spawnpoint.x, Config.Locations.aircraft.spawnpoint.y, Config.Locations.aircraft.spawnpoint.z, 15.0) then
+            QBCore.Functions.Notify('There is a vehicle in the way!', "error", 4500)
             return
-        end 
+        end
     elseif menu == "boat" then
-        if IsAnyVehicleNearPoint(Config.Locations.boat.spawnpoint.x, Config.Locations.boat.spawnpoint.y, Config.Locations.boat.spawnpoint.z, 10.0) then 
-            QBCore.Functions.Notify(label, "error", 4500)
+        if IsAnyVehicleNearPoint(Config.Locations.boat.spawnpoint.x, Config.Locations.boat.spawnpoint.y, Config.Locations.boat.spawnpoint.z, 10.0) then
+            QBCore.Functions.Notify('There is a vehicle in the way!', "error", 4500)
             return
-        end  
+        end
     end
 
     QBCore.Functions.TriggerCallback("qb-rental:server:CashCheck",function(money)
@@ -186,8 +189,7 @@ RegisterNetEvent('qb-rental:client:spawncar', function(data)
                     SetVehicleEngineOn(vehicle, true, true)
                     SetVehicleDirtLevel(vehicle, 0.0)
                     exports[Config.FuelExport]:SetFuel(vehicle, 100)
-                    SpawnVehicle = true
-                    print()
+                    SpawnVehicle = vehicle
                 end, Config.Locations.vehicle.spawnpoint, true)
             elseif menu == "aircraft" then
                 QBCore.Functions.SpawnVehicle(model, function(vehicle)
@@ -197,7 +199,7 @@ RegisterNetEvent('qb-rental:client:spawncar', function(data)
                     SetVehicleEngineOn(vehicle, true, true)
                     SetVehicleDirtLevel(vehicle, 0.0)
                     exports[Config.FuelExport]:SetFuel(vehicle, 100)
-                    SpawnVehicle = true
+                    SpawnVehicle = vehicle
                 end, Config.Locations.aircraft.spawnpoint, true)
             elseif menu == "boat" then
                 QBCore.Functions.SpawnVehicle(model, function(vehicle)
@@ -207,9 +209,9 @@ RegisterNetEvent('qb-rental:client:spawncar', function(data)
                     SetVehicleEngineOn(vehicle, true, true)
                     SetVehicleDirtLevel(vehicle, 0.0)
                     exports[Config.FuelExport]:SetFuel(vehicle, 100)
-                    SpawnVehicle = true
+                    SpawnVehicle = vehicle
                 end, Config.Locations.boat.spawnpoint, true)
-            end 
+            end
             Wait(1000)
             local vehicle = GetVehiclePedIsIn(player, false)
             local vehicleLabel = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
@@ -225,13 +227,14 @@ end)
 RegisterNetEvent('qb-rental:client:return', function()
     if SpawnVehicle then
         local Player = QBCore.Functions.GetPlayerData()
+        local car = GetVehiclePedIsIn(PlayerPedId(),true)
+        if car ~= SpawnVehicle or #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(SpawnVehicle)) > 10.0 then QBCore.Functions.Notify('Where is your rented vehicle?', 'error') return end
         QBCore.Functions.Notify(Lang:t("task.veh_returned"), 'success')
         TriggerServerEvent('qb-rental:server:removepapers')
-        local car = GetVehiclePedIsIn(PlayerPedId(),true)
         NetworkFadeOutEntity(car, true,false)
         Citizen.Wait(2000)
         QBCore.Functions.DeleteVehicle(car)
-    else 
+    else
         QBCore.Functions.Notify(Lang:t("error.no_vehicle"), "error")
     end
     SpawnVehicle = false

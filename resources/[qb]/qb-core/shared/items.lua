@@ -398,6 +398,9 @@ QBShared.Items = {
     newsmic                      = { name = 'newsmic', label = 'News Microphone', weight = 100, type = 'item', image = 'newsmic.png', unique = true, useable = true, shouldClose = true, combinable = nil, description = 'A microphone for the news' },
     newsbmic                     = { name = 'newsbmic', label = 'Boom Microphone', weight = 100, type = 'item', image = 'newsbmic.png', unique = true, useable = true, shouldClose = true, combinable = nil, description = 'A Useable BoomMic' },
 
+    ['keys'] 				 	 = {['name'] = 'keys', 			    		['label'] = 'Motel Key', 				['weight'] = 75, 		['type'] = 'item', 		['image'] = 'lab_key.png', 			['unique'] = true, 	['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = "Don't forget which room this key is for!"},
+
+
 	['vpn']                      = { ['name'] = 'vpn',                          ['label'] = 'VPN',                      ['weight'] = 100,       ['type'] = 'item',      ['image'] = 'vpn.png',                      ['unique'] = true,          ['useable'] = false,    ['shouldClose'] = true,     ['combinable'] = nil,  ['description'] = "Hmm", },
 
     ["syphoningkit"]		     = {["name"] = "syphoningkit", 					["label"] = "Syphoning Kit", 			["weight"] = 5000, 		["type"] = "item", 		["image"] = "syphoningkit.png", 		    ["unique"] = true, 		    ["useable"] = true, 	["shouldClose"] = false,    ["combinable"] = nil,   ["description"] = "A kit made to siphon gasoline from vehicles."},
@@ -1319,7 +1322,7 @@ cokebaggystagetwo 			 = {name = 'cokebaggystagetwo', 			label = 'Bag of Good Cok
 cokebaggystagethree 		 = {name = 'cokebaggystagethree', 			label = 'Bag of Great Coke', 				weight = 100, 		type = 'item', 		image = 'cocaine_baggystagethree.png', 		unique = false, 	useable = true, 	shouldClose = true,    combinable = nil,   description = 'To get happy real quick'},
 cokestagetwo 		 	 	 = {name = 'cokestagetwo',           		label = 'Better Raw Cocaine', 				weight = 100,		type = 'item', 		image = 'cokestagetwo.png', 				unique = false, 	useable = false, 	shouldClose = false,   combinable = nil,   expire = 90,  description = 'Processed cocaine'},
 cokestagethree 		 	 	 = {name = 'cokestagethree',           		label = 'Best Raw Cocaine', 				weight = 100,		type = 'item', 		image = 'cokestagethree.png', 				unique = false, 	useable = false, 	shouldClose = false,   combinable = nil,   expire = 90,  description = 'Processed cocaine'},
- 
+
  ----md-lsd
 lysergic_acid 			 	 = {name = 'lysergic_acid', 			  		label = 'Lysergic Acid', 				weight = 100, 		type = 'item', 		image = 'lysergic_acid.png', 			unique = false, 	useable = false, 	shouldClose = true,	   combinable = nil, 					 description = ''},
 diethylamide 			 	 = {name = 'diethylamide', 			  			label = 'Diethylamide', 				weight = 100, 		type = 'item', 		image = 'diethylamide.png', 			unique = false, 	useable = false, 	shouldClose = true,	   combinable = nil, 					 description = ''},
@@ -1368,7 +1371,7 @@ crackrockstagethree 		 	 = {name = 'crackrockstagethree',           	label = 'Be
 baggedcracked 		 	 	 	 = {name = 'baggedcracked',           			label = 'Bag Of Crack',	 			weight = 250, 		type = 'item', 		image = 'crackbag1.png', 				unique = false, 	useable = true, 	shouldClose = false,   combinable = nil,   		 description = ''},
 baggedcrackedstagetwo 		 	 = {name = 'baggedcrackedstagetwo',           	label = 'Better Bag Of Crack',	 	weight = 250, 		type = 'item', 		image = 'crackbag2.png', 				unique = false, 	useable = true, 	shouldClose = false,   combinable = nil,  	     description = ''},
 baggedcrackedstagethree 		 = {name = 'baggedcrackedstagethree',           label = 'Best Bag Of Crack',	 	weight = 250, 		type = 'item', 		image = 'crackbag3.png', 				unique = false, 	useable = true, 	shouldClose = false,   combinable = nil,  	     description = ''},
----- shrooms 
+---- shrooms
 shrooms 					 = {name = 'shrooms',           label = 'Shrooms',	 	weight = 250, 		type = 'item', 		image = 'shrooms.png', 				unique = false, 	useable = true, 	shouldClose = false,   combinable = nil,  	     description = ''},
 -- pharma
 prescription_pad 		     = {name = 'prescription_pad', 			    label = 'Prescription Pad',        		     weight = 10,       type = 'item',     image = 'prescriptionpad.png',         	unique = true,    	useable = true,     shouldClose = false,   combinable = nil,   					 description = ''},
@@ -1384,7 +1387,7 @@ adderalbottle 			     = {name = 'adderalbottle', 			  	label = 'Madderal Bottle'
 vicodinbottle 			     = {name = 'vicodinbottle', 			  	label = 'Vicie Bottle', 					 weight = 100, 		type = 'item', 		image = 'pillbottle.png', 				unique = false, 	useable = true, 	shouldClose = true,	   combinable = nil, 					 description = ''},
 morphinebottle 			     = {name = 'morphinebottle', 			  	label = 'Morphin Bottle', 					 weight = 100, 		type = 'item', 		image = 'pillbottle.png', 				unique = false, 	useable = true, 	shouldClose = true,	   combinable = nil, 					 description = ''},
 xanaxbottle 			     = {name = 'xanaxbottle', 			  		label = 'Zany Bottle', 					 weight = 100, 		type = 'item', 		image = 'pillbottle.png', 				unique = false, 	useable = true, 	shouldClose = true,	   combinable = nil, 					 description = ''},
----------------- XTC	
+---------------- XTC
 isosafrole 			 		 = {name = 'isosafrole', 			  		label = 'isosafrole', 						 weight = 100, 		type = 'item', 		image = 'isosafrole.png', 				unique = false, 	useable = false, 	shouldClose = true,	   combinable = nil,					 description = ''},
 mdp2p 			 			 = {name = 'mdp2p', 			  			label = 'mdp2p', 							 weight = 100, 		type = 'item', 		image = 'mdp2p.png', 					unique = false, 	useable = false, 	shouldClose = true,	   combinable = nil,				     description = ''},
 raw_xtc 				     = {name = 'raw_xtc', 			    		label = 'Raw XTC', 			       			 weight = 100, 		type = 'item', 		image = 'raw_xtc.png', 			   		unique = false, 	useable = true, 	shouldClose = true,	   combinable = nil,                     description = ''},

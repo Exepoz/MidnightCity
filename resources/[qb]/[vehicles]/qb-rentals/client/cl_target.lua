@@ -1,6 +1,6 @@
 CreateThread(function(data)
-    exports['qb-target']:AddCircleZone("VehiclePed",vector3(1014.4, -2320.43, 30.82), 0.4, { 
-        name = "vehicleped", 
+    exports['qb-target']:AddCircleZone("VehiclePed",vector3(1015.89, -2319.89, 30.51), 0.5, {
+        name = "vehicleped",
         debugPoly = false,
       }, {
         options = {
@@ -15,9 +15,9 @@ CreateThread(function(data)
         },
         distance = 3.0
       })
-    
-    exports['qb-target']:AddCircleZone("AircraftPed", vector3(-1686.57, -3149.22, 12.99), 0.4, { 
-        name = "aircraftped", 
+
+    exports['qb-target']:AddCircleZone("AircraftPed", vector3(-220.64, -1167.85, 23.01), 0.5, {
+        name = "aircraftped",
         debugPoly = false,
       }, {
         options = {
@@ -25,7 +25,7 @@ CreateThread(function(data)
                 type = "client",
                 event = "qb-rental:client:LicenseCheck",
                 icon = "fas fa-car",
-                label = "Rent Aircraft",
+                label = "Rent Vehicle",
                 LicenseType = "pilot",
                 MenuType = "aircraft",
             },
@@ -33,8 +33,8 @@ CreateThread(function(data)
         distance = 3.0
         })
 
-    exports['qb-target']:AddCircleZone("BoatPed", vector3(-753.5, -1512.27, 4.02), 0.4, { 
-        name = "boatped", 
+    exports['qb-target']:AddCircleZone("BoatPed", vector3(1852.88, 2582.35, 45.67), 0.5, {
+        name = "boatped",
         debugPoly = false,
         }, {
         options = {
@@ -42,7 +42,7 @@ CreateThread(function(data)
                 type = "client",
                 event = "qb-rental:client:openMenu",
                 icon = "fas fa-car",
-                label = "Rent Aircraft",
+                label = "Rent Vehicle",
                 MenuType = "boat"
             },
         },
