@@ -15,7 +15,7 @@ Config.Jobs = { -- Job Types that can access the dispatch menu
 
 Config.DefaultAlertsDelay = 5 -- Delay between each default alert, prevent spamming
 Config.DefaultAlerts = {
-    Speeding = true,
+    Speeding = false,
     Shooting = true,
     Autotheft = true,
     Melee = true,

@@ -2412,6 +2412,10 @@ QBCore.Commands.Add("giveitem", "Give An Item (Admin Only)", {{name="id", help="
 					info.lab = exports["qb-methlab"]:GenerateRandomLab()
 				elseif itemData["name"] == "syphoningkit" then
 					info.gasamount = 0
+				elseif itemData["name"] == "fishinglure" then
+					info.uses = 1000
+				elseif itemData["name"] == "fishinglure2" then
+					info.uses = 1500
 				elseif itemData["name"] == "jerrycan" then
 					info.gasamount = 0
 				elseif itemData["name"] == "printerdocument" then

@@ -61,27 +61,28 @@ end)
 RegisterNetEvent('ps-adminmenu:server:SetJob', function(data, selectedData)
     if not CheckPerms(data.perms) then return end
     local src = source
+    if not selectedData["Player"] or not selectedData["Job"] or not selectedData["Grade"] then TriggerClientEvent('QBCore:Notify', source, "You're missing some information...", 'error') return end
     local playerId, Job, Grade = selectedData["Player"].value, selectedData["Job"].value, selectedData["Grade"].value
     local Player = QBCore.Functions.GetPlayer(playerId)
     local name = Player.PlayerData.charinfo.firstname..' '..Player.PlayerData.charinfo.lastname
     local jobInfo = QBCore.Shared.Jobs[Job]
     local grade = jobInfo["grades"][selectedData["Grade"].value]
-    
+
     if not jobInfo then
         TriggerClientEvent('QBCore:Notify', source, "Not a valid job", 'error')
         return
     end
-    
+
     if not grade then
         TriggerClientEvent('QBCore:Notify', source, "Not a valid grade", 'error')
         return
      end
-    
+
     Player.Functions.SetJob(tostring(Job), tonumber(Grade))
             if Config.RenewedPhone then
                 exports['qb-phone']:hireUser(tostring(Job), Player.PlayerData.citizenid, tonumber(Grade))
             end
-            
+
             QBCore.Functions.Notify(src, locale("jobset", name, Job, Grade), 'success', 5000)
 end)
 
@@ -104,7 +105,7 @@ RegisterNetEvent('ps-adminmenu:server:SetGang', function(data, selectedData)
         TriggerClientEvent('QBCore:Notify', source, "Not a valid grade", 'error')
         return
     end
-    
+
     Player.Functions.SetGang(tostring(Gang), tonumber(Grade))
     QBCore.Functions.Notify(src, locale("gangset", name, Gang, Grade), 'success', 5000)
 end)
@@ -116,12 +117,12 @@ RegisterNetEvent("ps-adminmenu:server:SetPerms", function (data, selectedData)
     local rank = selectedData["Permissions"].value
     local targetId = selectedData["Player"].value
     local tPlayer = QBCore.Functions.GetPlayer(tonumber(targetId))
-    
+
     if not tPlayer then
         QBCore.Functions.Notify(src, locale("not_online"), "error", 5000)
         return
     end
-    
+
     local name = tPlayer.PlayerData.charinfo.firstname..' '..tPlayer.PlayerData.charinfo.lastname
 
     QBCore.Functions.AddPermission(tPlayer.PlayerData.source, tostring(rank))
@@ -134,7 +135,7 @@ RegisterNetEvent("ps-adminmenu:server:RemoveStress", function (data, selectedDat
     local src = source
     local targetId = selectedData['Player (Optional)'] and tonumber(selectedData['Player (Optional)'].value) or src
     local tPlayer = QBCore.Functions.GetPlayer(tonumber(targetId))
-    
+
     if not tPlayer then
         QBCore.Functions.Notify(src, locale("not_online"), "error", 5000)
         return

@@ -753,3 +753,381 @@ local function SignRobbery()
     TriggerServerEvent('ps-dispatch:server:notify', dispatchData)
 end
 exports('SignRobbery', SignRobbery)
+
+local function BarrelAlarm(pos)
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "barrelcaught",
+        dispatchCode = '10-17',
+        firstStreet = locationInfo,
+        gender = gender,
+        camId = 0,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = 'Factory Security Alarm Triggered!', -- message
+        job = {'police'} -- jobs that will get the alerts
+    })
+end exports('BarrelAlarm', BarrelAlarm)
+
+local function QuarryCaught()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "quarrycaught",
+        dispatchCode = '10-17',
+        firstStreet = locationInfo,
+        gender = gender,
+        camId = 0,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = 'Quarry Security Alarm Triggered!', -- message
+        job = {'police'} -- jobs that will get the alerts
+    })
+end exports('QuarryCaught', QuarryCaught)
+
+local function CRBurnerphones(coords, tenCode, message, policejobs)
+    local currentPos = coords
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "crburnerphones",
+        dispatchCode = tenCode,
+        firstStreet = locationInfo,
+        gender = gender,
+        camId = 0,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = message, -- message
+        job = {'police'} -- jobs that will get the alerts
+    })
+end exports('CRBurnerphones', CRBurnerphones)
+
+local function EMSDown()
+    local plyData = QBCore.Functions.GetPlayerData()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local callsign = QBCore.Functions.GetPlayerData().metadata["callsign"]
+    TriggerServerEvent("dispatch:server:notify", {
+        dispatchcodename = "emsdown", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-99",
+        firstStreet = locationInfo,
+        name = "EMS - " .. plyData.charinfo.firstname:sub(1, 1):upper() .. plyData.charinfo.firstname:sub(2) .. " " .. plyData.charinfo.lastname:sub(1, 1):upper() .. plyData.charinfo.lastname:sub(2),
+        model = nil,
+        plate = nil,
+        callsign = callsign,
+        priority = 1, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = "An Medical Personel has activated their panic button!", -- message
+        job = {"FirstResponder", "ambulance"} -- type or jobs that will get the alerts
+    })
+end exports('EMSDown', EMSDown)
+RegisterNetEvent("ps-dispatch:client:emsdown", function () EMSDown() end)
+
+local function DrugPackageSell()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify", {
+        dispatchcodename = "drugpackagesell", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-13",
+        firstStreet = locationInfo,
+        gender = gender,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = 'Someone has witnessed a suspicious package exchange.', -- message
+        job = {"LEO", "police"} -- type or jobs that will get the alerts
+    })
+end exports('DrugPackageSell', DrugPackageSell)
+
+local function WarehouseHeist()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify", {
+        dispatchcodename = "warehouseheist", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-31",
+        firstStreet = locationInfo,
+        gender = gender,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = _U('criminal activity'), -- message
+        job = {"LEO", "police"} -- type or jobs that will get the alerts
+    })
+end exports('WarehouseHeist', WarehouseHeist)
+
+local function OilRigHeist()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify", {
+        dispatchcodename = "oilrigheist", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-31",
+        firstStreet = locationInfo,
+        gender = gender,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = _U('criminal activity'), -- message
+        job = {"LEO", "police"} -- type or jobs that will get the alerts
+    })
+end exports('OilRigHeist', OilRigHeist)
+
+local function BankTruckRobbery()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "banktruckrobbery", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-90",
+        firstStreet = locationInfo,
+        gender = gender,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = 'Groupe 6 Truck Robbery', -- message
+        job = {"police"} -- jobs that will get the alerts
+    })
+end exports('BankTruckRobbery', BankTruckRobbery)
+
+local function MerryweatherTruckSpotted()
+    local vehdata = vehicleData(vehicle)
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local heading = getCardinalDirectionFromHeading()
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "merryweathertruckspotted", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "911",
+        message = "Civilians have spotted an unusual Merryweather Armored Truck roaming the streets.",
+        firstStreet = locationInfo,
+        --gender = gender,
+        model = nil,
+        plate = vehdata.plate,
+        firstColor = vehdata.colour,
+        heading = heading,
+        radius = 500.0,
+        offset = 15.0,
+        priority = 2, -- priority
+        dispatchMessage = 'Merryweather Truck Spotted', -- message
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        job = {"police"} -- jobs that will get the alerts
+    })
+end exports('MerryWeatherTruckSpotted', MerryweatherTruckSpotted)
+
+local function MerryweatherTruckExpl()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "merryweathertruckrobbery", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-26A",
+        message = "An Armored Merryweather Truck has been disabled and a "..gender.." is placing an explosive device on the back doors near",
+        gender = gender,
+        --firstStreet = locationInfo,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        priority = 2, -- priority
+        dispatchMessage = 'Merryweather Truck Robbery', -- message
+        job = {"police"} -- jobs that will get the alerts
+    })
+end exports('MerryWeatherTruckExpl', MerryweatherTruckExpl)
+
+local function BobcatRobbery()
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "bobcatrobbery", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "10-68",
+        firstStreet = locationInfo,
+        gender = gender,
+        model = nil,
+        plate = nil,
+        priority = 1, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = "Armed Robbery at Bobcat Security!", -- message
+        job = {"police"} -- jobs that will get the alerts
+    })
+end exports('BobcatRobbery', BobcatRobbery)
+
+---------------------------
+---- ps-signrobbery -------
+---------------------------
+
+local function MethRun(vehicle, jobs)
+    local vehdata = vehicleData(vehicle)
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local heading = getCardinalDirectionFromHeading()
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "crmethrun", -- has to match the codes in sv_dispatchcodes.lua so that it generates the right blip
+        dispatchCode = "911",
+        firstStreet = locationInfo,
+        gender = gender,
+        model = vehdata.name,
+        plate = vehdata.plate,
+        priority = 2, -- priority
+        firstColor = vehdata.colour,
+        heading = heading,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = "Security Car Automatic Distress Signal", -- message
+        job = {'police'}
+    })
+end exports('MethRun', MethRun)
+
+local function CRPaletoBankRobbery(tenCode, message, policeJobs, camId)
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "crpaletobankrobbery",
+        dispatchCode = tenCode,
+        firstStreet = locationInfo,
+        gender = gender,
+        camId = camId,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = message, -- message
+        job = {'police'} -- jobs that will get the alerts
+    })
+end exports('CRPaletoBankRobbery', CRPaletoBankRobbery)
+
+local function CRFleecaBankRobbery(tenCode, message, policeJobs, camId)
+    local currentPos = GetEntityCoords(PlayerPedId())
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "crfleecabankrobbery",
+        dispatchCode = tenCode,
+        firstStreet = locationInfo,
+        gender = gender,
+        camId = camId,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = message, -- message
+        job = {'police'} -- jobs that will get the alerts
+    })
+end exports('CRFleecaBankRobbery', CRFleecaBankRobbery)
+
+local function RacingLineUp(coords)
+    local currentPos = coords
+    local locationInfo = GetStreetAndZone(currentPos)
+    local gender = GetPlayerGender()
+    TriggerServerEvent("dispatch:server:notify",{
+        dispatchcodename = "racerslining",
+        dispatchCode = "10-17",
+        firstStreet = locationInfo,
+        gender = gender,
+        camId = 0,
+        model = nil,
+        plate = nil,
+        priority = 2, -- priority
+        firstColor = nil,
+        automaticGunfire = false,
+        origin = {
+            x = currentPos.x,
+            y = currentPos.y,
+            z = currentPos.z
+        },
+        dispatchMessage = "Race Lineup in progress!",
+        job = {'police'} -- jobs that will get the alerts
+    })
+end exports('RacingLineUp', RacingLineUp)

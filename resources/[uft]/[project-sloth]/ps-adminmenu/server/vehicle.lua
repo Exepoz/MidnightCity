@@ -5,14 +5,15 @@ RegisterNetEvent('ps-adminmenu:server:SaveCar', function(mods, vehicle, _, plate
     local result = MySQL.query.await('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
 
     if result[1] == nil then
-        MySQL.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+        MySQL.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, in_garage, garage_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', {
             Player.PlayerData.license,
             Player.PlayerData.citizenid,
             vehicle.model,
             vehicle.hash,
             json.encode(mods),
             plate,
-            0
+            0,
+            "Legion Square"
         })
         TriggerClientEvent('QBCore:Notify', src, locale("veh_owner"), 'success', 5000)
     else
@@ -31,7 +32,7 @@ RegisterNetEvent("ps-adminmenu:server:givecar", function (data, selectedData)
 
     local vehmodel = selectedData['Vehicle'].value
     local vehicleData = lib.callback.await("ps-adminmenu:client:getvehData", src, vehmodel)
-    
+
     if not next(vehicleData) then
         return
     end

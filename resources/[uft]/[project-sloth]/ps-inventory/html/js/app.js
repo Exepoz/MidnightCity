@@ -523,6 +523,16 @@ function FormatItemInfo(itemData, dom) {
                 itemData.info.birthdate +
                 "</span></p>"
             );
+        } else if (itemData.name == "fishinglure") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html( // might need to come back
+                "<p>" + itemData.info.uses + "% durability left.</p><p style=\"font-size:11px\"><b>Weight: </b>" + itemData.weight + " | <b>Amount: </b> " + itemData.amount + " | <b>Quality: </b> " + "<a style=\"font-size:11px;color:green\">" + Math.floor(itemData.info.quality) + "</a>"
+            );
+        } else if (itemData.name == "fishinglure2") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html( // might need to come back
+                "<p>" + itemData.info.uses + "% durability left.</p><p style=\"font-size:11px\"><b>Weight: </b>" + itemData.weight + " | <b>Amount: </b> " + itemData.amount + " | <b>Quality: </b> " + "<a style=\"font-size:11px;color:green\">" + Math.floor(itemData.info.quality) + "</a>"
+            );
         } else if (itemData.name == "lawyerpass") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html(
@@ -541,43 +551,45 @@ function FormatItemInfo(itemData, dom) {
             $(".item-info-description").html(
                 "<p>" + itemData.info.uses + " uses left.</p>"
             );
-        } else if (itemData.type == "weapon") {
-            $(".item-info-title").html("<p>" + itemData.label + "</p>");
-            if (itemData.info.ammo == undefined) {
-                itemData.info.ammo = 0;
-            } else {
-                itemData.info.ammo != null ? itemData.info.ammo : 0;
-            }
-            if (itemData.info.attachments != null) {
-                var attachmentString = "";
-                $.each(itemData.info.attachments, function(i, attachment) {
-                    if (i == itemData.info.attachments.length - 1) {
-                        attachmentString += attachment.label;
-                    } else {
-                        attachmentString += attachment.label + ", ";
-                    }
-                });
-                $(".item-info-description").html(
-                    "<p><strong>Serial: </strong><span>" +
-                    itemData.info.serie +
-                    "</span></p><p><strong>Ammo: </strong><span>" +
-                    itemData.info.ammo +
-                    "</span></p><p><strong>Attachments: </strong><span>" +
-                    attachmentString +
-                    "</span></p>"
-                );
-            } else {
-                $(".item-info-description").html(
-                    "<p><strong>Serial: </strong><span>" +
-                    itemData.info.serie +
-                    "</span></p><p><strong>Ammo: </strong><span>" +
-                    itemData.info.ammo +
-                    "</span></p><p>" +
-                    itemData.description +
-                    "</p>"
-                );
-            }
-        } else if (itemData.name == "filled_evidence_bag") {
+        }
+        // else if (itemData.type == "weapon") {
+        //     $(".item-info-title").html("<p>" + itemData.label + "</p>");
+        //     if (itemData.info.ammo == undefined) {
+        //         itemData.info.ammo = 0;
+        //     } else {
+        //         itemData.info.ammo != null ? itemData.info.ammo : 0;
+        //     }
+        //     if (itemData.info.attachments != null) {
+        //         var attachmentString = "";
+        //         $.each(itemData.info.attachments, function(i, attachment) {
+        //             if (i == itemData.info.attachments.length - 1) {
+        //                 attachmentString += attachment.label;
+        //             } else {
+        //                 attachmentString += attachment.label + ", ";
+        //             }
+        //         });
+        //         $(".item-info-description").html(
+        //             "<p><strong>Serial: </strong><span>" +
+        //             itemData.info.serie +
+        //             "</span></p><p><strong>Ammo: </strong><span>" +
+        //             itemData.info.ammo +
+        //             "</span></p><p><strong>Attachments: </strong><span>" +
+        //             attachmentString +
+        //             "</span></p>"
+        //         );
+        //     } else {
+        //         $(".item-info-description").html(
+        //             "<p><strong>Serial: </strong><span>" +
+        //             itemData.info.serie +
+        //             "</span></p><p><strong>Ammo: </strong><span>" +
+        //             itemData.info.ammo +
+        //             "</span></p><p>" +
+        //             itemData.description +
+        //             "</p>"
+        //         );
+        //     }
+        // }
+        else if (itemData.name == "filled_evidence_bag") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             if (itemData.info.type == "casing") {
                 $(".item-info-description").html(
@@ -648,6 +660,12 @@ function FormatItemInfo(itemData, dom) {
                 itemData.info.cash +
                 "</span></p>"
             );
+        } else if (itemData.name == "stickynote") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p>' + itemData.info.label + '</p>');
+        } else if (itemData.name == "rentalpapers") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p><strong>Name: </strong><span>'+ itemData.info.firstname + '</span></p><p><strong>Last Name: </strong><span>'+ itemData.info.lastname+ '</span></p><p><strong>Plate: </strong><span>'+ itemData.info.plate + '<p><strong>Model: </strong><span>'+ itemData.info.model +'</span></p>');
         } else if (itemData.name == "markedbills") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html(
@@ -717,24 +735,52 @@ function FormatItemInfo(itemData, dom) {
 
     var c = ""
     var isContraband = contraband.includes(itemData.name);
-    if (isContraband) {c = "<p style=\"font-size:11px;color:FireBrick\"><b>Marked for Police Seizure</b>"}
+    if (isContraband)
+    {c = "<p style=\"font-size:11px;color:FireBrick\"><b>Marked for Police Seizure</b>"}
 
-    if (itemData.info.fromAmmu) {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Bought from Ammunation</b>"}
-    if (itemData.info.fromWW) {c = c + "<p style=\"font-size:11px;color:Orange\"><b>Can only be planted at White Widow </b>"}
+    if (itemData.info.fromAmmu)
+    {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Bought from Ammunation</b>"}
+
+    if (itemData.info.fromWW)
+    {c = c + "<p style=\"font-size:11px;color:Orange\"><b>Can only be planted at White Widow </b>"}
 
     if (itemData.info.gasamount) {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>" + itemData.info.gasamount + " Liters Inside.</b>"}
 
-    if (itemData.name == 'wateringcan') {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>Waterings Left : </b>" + itemData.info?.uses ?? 0}
-    if (itemData.name == 'prerollpack' || itemData.name == 'cigarette_pack') {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Amount Left : </b>" + itemData.info.amountLeft}
-    if (itemData.name == 'methylamine' || itemData.name == 'thorium_oxide' || itemData.name == 'shredded_aluminum') {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Quantity : </b>" + itemData.info.qty*10 + "%"}
-    if (itemData.name == 'blueprint') {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>Blueprint for : " + itemData.info.bpLabel + "</b>"}
+    if (itemData.name == 'wateringcan')
+    {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>Waterings Left : </b>" + itemData.info?.uses ?? 0}
 
-    if (itemData.info.methStrainName) {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>" + itemData.info.methStrainName + "</b>"}
-    if ((itemData.info.isWeedPlant && itemData.info.dry) || itemData.info.showStrain) {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Strain : </b>" + itemData.info.strainlbl}
-    if (itemData.info.isWeedPlant) {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Purity : </b>" + itemData.info.purity + "%"}
-    if (itemData.info.forged && randomNum < 25) {c = c + "<p style=\"font-size:11px;color:FireBrick\"><b>Looks Fake...</b>"}
-    if (itemData.info.wine) {c = c + "<p style=\"font-size:11px;color:MediumOrchid\"><b>Wine : " + itemData.info.grapeLabel + "</b>"}
-    if (itemData.info.drinks) {c = c + "<p style=\"font-size:11px;color:MediumOrchid\"><b>Drinks Left : " + itemData.info.drinks + "</b>"}
+    if (itemData.name == 'prerollpack' || itemData.name == 'cigarette_pack')
+    {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Amount Left : </b>" + itemData.info.amountLeft}
+
+    if (itemData.name == 'methylamine' || itemData.name == 'thorium_oxide' || itemData.name == 'shredded_aluminum')
+    {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Quantity : </b>" + itemData.info.qty*10 + "%"}
+
+    if (itemData.name == 'blueprint')
+    {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>Blueprint for : " + itemData.info.bpLabel + "</b>"}
+
+    if (itemData.info.methStrainName)
+    {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>" + itemData.info.methStrainName + "</b>"}
+
+    if ((itemData.info.isWeedPlant && itemData.info.dry) || itemData.info.showStrain)
+    {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Strain : </b>" + itemData.info.strainlbl}
+
+    if (itemData.info.isWeedPlant)
+    {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Purity : </b>" + itemData.info.purity + "%"}
+
+    if (itemData.info.forged && randomNum < 25)
+    {c = c + "<p style=\"font-size:11px;color:FireBrick\"><b>Looks Fake...</b>"}
+
+    if (itemData.info.wine)
+    {c = c + "<p style=\"font-size:11px;color:MediumOrchid\"><b>Wine : " + itemData.info.grapeLabel + "</b>"}
+
+    if (itemData.info.drinks)
+    {c = c + "<p style=\"font-size:11px;color:MediumOrchid\"><b>Drinks Left : " + itemData.info.drinks + "</b>"}
+
+    if (itemData.info.organic)
+    {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>Organic Ingredient</b>"}
+
+    if (itemData.info.highQuality && Math.floor(itemData.info.quality) > 90)
+    {c = c + "<p style=\"font-size:11px;color:GoldenRod\"><b>High Quality</b>"}
 
     var qstr = ""
     if (Math.floor(itemData.info.quality) < 100) {qstr =  "| <b>Qual: </b> " + "<a style=\"font-size:11px;color:green\">" + Math.floor(itemData.info.quality) + "%</a>"}
