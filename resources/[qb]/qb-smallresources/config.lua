@@ -307,48 +307,48 @@ Config.Elevators = {
             },
         }
     },
-    ['arcadius'] = {
-        --Group = {"police", "ambulance"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
-        Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
-        Name = "Arcadius Center Elevator",
-        Floors = {
-            [1] = {
-                Label = "Office",
-                FloorDesc = "Take The Elevator to the office",
-                Restricted = false,
-                Coords = vector3(-139.75, -617.4, 168.82),
-                ExitHeading = 98.64
-            },
-            [2] = {
-                Label = "Garage",
-                FloorDesc = "Take The Elevator to the garage",
-                Restricted = false,
-                Coords = vector3(-143.95, -575.91, 32.42),
-                ExitHeading = 157.59
-            },
-        }
-    },
-    ['eclipse'] = {
-        --Group = {"police", "ambulance"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
-        Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
-        Name = "Eclipse Nightclub Elevator",
-        Floors = {
-            [1] = {
-                Label = "Eclipse Night Club",
-                FloorDesc = "Where the Light and Dark Collide",
-                Restricted = false,
-                Coords = vector3(-815.63, -683.37, 123.42),
-                ExitHeading = 275.00
-            },
-            [2] = {
-                Label = "Ground Level",
-                FloorDesc = "Leaving so soon?",
-                Restricted = false,
-                Coords = vector3(-814.4, -692.57, 28.06),
-                ExitHeading = 275.00
-            },
-        }
-    },
+    -- ['arcadius'] = {
+    --     --Group = {"police", "ambulance"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
+    --     Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
+    --     Name = "Arcadius Center Elevator",
+    --     Floors = {
+    --         [1] = {
+    --             Label = "Office",
+    --             FloorDesc = "Take The Elevator to the office",
+    --             Restricted = false,
+    --             Coords = vector3(-139.75, -617.4, 168.82),
+    --             ExitHeading = 98.64
+    --         },
+    --         [2] = {
+    --             Label = "Garage",
+    --             FloorDesc = "Take The Elevator to the garage",
+    --             Restricted = false,
+    --             Coords = vector3(-143.95, -575.91, 32.42),
+    --             ExitHeading = 157.59
+    --         },
+    --     }
+    -- },
+    -- ['eclipse'] = {
+    --     --Group = {"police", "ambulance"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
+    --     Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
+    --     Name = "Eclipse Nightclub Elevator",
+    --     Floors = {
+    --         [1] = {
+    --             Label = "Eclipse Night Club",
+    --             FloorDesc = "Where the Light and Dark Collide",
+    --             Restricted = false,
+    --             Coords = vector3(-815.63, -683.37, 123.42),
+    --             ExitHeading = 275.00
+    --         },
+    --         [2] = {
+    --             Label = "Ground Level",
+    --             FloorDesc = "Leaving so soon?",
+    --             Restricted = false,
+    --             Coords = vector3(-814.4, -692.57, 28.06),
+    --             ExitHeading = 275.00
+    --         },
+    --     }
+    -- },
     ['midnight'] = {
         --Group = {"midnight"},                                -- Leave blank if you don't want to use Player Job - You can add jobs or gangs groups
         Sound = "liftSoundBellRing",                                                -- Leave blank if you don't want to use Custom Sound
@@ -357,21 +357,21 @@ Config.Elevators = {
             [1] = {
                 Label = "3rd Floor",
                 FloorDesc = "Studio",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-613.37, -1627.48, 37.01),
                 ExitHeading = 171.73
             },
             [2] = {
                 Label = "2nd Floor",
                 FloorDesc = "Conference Room",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-613.54, -1627.5, 33.01),
                 ExitHeading = 169.16
             },
             [3] = {
                 Label = "1st Floor",
                 FloorDesc = "Warehouse",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-595.07, -1612.7, 26.75),
                 ExitHeading = 355.00
             },
@@ -385,28 +385,28 @@ Config.Elevators = {
             [1] = {
                 Label = "3rd Floor",
                 FloorDesc = "Planning Room",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-575.43, -1623.43, 33.01),
                 ExitHeading = 183.7
             },
             [2] = {
                 Label = "2nd Floor",
                 FloorDesc = "Storage Room",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-595.07, -1612.7, 26.75),
                 ExitHeading = 355.00
             },
             [3] = {
                 Label = "1st Floor",
                 FloorDesc = "Warehouse",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-580.22, -1613.84, 27.01),
                 ExitHeading = 351.89
             },
             [4] = {
                 Label = "Basement",
                 FloorDesc = "Workshop",
-                Restricted = true,
+                Restricted = false,
                 Coords = vector3(-576.29, -1614.35, 19.32),
                 ExitHeading = 176.82
             },
@@ -496,4 +496,15 @@ Config.Elevators = {
             },
         }
     },
+}
+
+Config.UseLanguage = 'en'
+
+Config.Language = {
+    ["en"] = {
+        Call = "~g~E~w~ - Call Elevator",
+        Waiting = "Waiting for Elevator...",
+        Restricted = "Restricted Floor!",
+        CurrentFloor = "Current Floor: "
+    }
 }

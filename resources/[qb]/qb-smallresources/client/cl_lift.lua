@@ -150,7 +150,6 @@ end
 function IsAuthorized(lift)
     local pData = QBCore.Functions.GetPlayerData()
     for a=1, #Config.Elevators[lift].Group do
-        print(pData.job.name, pData.gang.name, Config.Elevators[lift].Group[a])
         if pData.job.name == Config.Elevators[lift].Group[a] or pData.gang.name == Config.Elevators[lift].Group[a] then
             return true
         end
