@@ -378,7 +378,10 @@ RegisterNetEvent("wert-ambulancejob:sebil", function()
             flags = 49,
         }, {}, {}, function() -- Bitiş Mert
             sebil = false
-            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + 4)
+            local newThirst = QBCore.Functions.GetPlayerData().metadata["thirst"] + 4
+            if newThirst > 100.0 then newThirst = 100.0 end
+            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", newThirst)
+            TriggerEvent('hud:client:UpdateNeeds', QBCore.Functions.GetPlayerData().metadata["hunger"], newThirst)
         end, function() -- İptal Mert
             sebil = false
         end)

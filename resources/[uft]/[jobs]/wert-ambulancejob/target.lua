@@ -319,9 +319,9 @@ CreateThread(function()
                     distance = 1.5
                 })
             end
-            
+
         end
-    
+
         local headerDrawn = false
         local garageOne = BoxZone:Create(vector3(326.07, -588.53, 28.8), 6.0, 19.0, {
             name="park1",
@@ -353,7 +353,7 @@ CreateThread(function()
                 end
             end
         end)
-    
+
         local garageTwo = BoxZone:Create(vector3(318.63, -571.96, 28.8), 18.2, 9.8, {
             name="park2",
             heading=340,
