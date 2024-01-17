@@ -1,0 +1,12 @@
+in your server files, open: [qb] > qb-core > shared > items.lua
+for older qbcore versions, open: [qb] > qb-core > shared.lua
+
+and add these lines to the bottom:
+
+['pd_ringset'] 			= {['name'] = 'pd_ringset', 				['label'] = 'Set of rings', 			['weight'] = 0, 		['type'] = 'item', 		['image'] = 'pd_ringset.png', 		['unique'] = true, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Set of rings!'},
+['pd_watch'] 			= {['name'] = 'pd_watch', 				['label'] = 'Exquisite watch', 			['weight'] = 0, 		['type'] = 'item', 		['image'] = 'pd_watch.png', 		['unique'] = true, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Exquisite watch'},
+['pd_necklace'] 		= {['name'] = 'pd_necklace', 				['label'] = 'Pearl necklace', 			['weight'] = 0, 		['type'] = 'item', 		['image'] = 'pd_neklace.png', 		['unique'] = true, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'A nice necklace'},
+['pd_laptop'] 			= {['name'] = 'pd_laptop', 				['label'] = 'Laptop', 				['weight'] = 0, 		['type'] = 'item', 		['image'] = 'pd_laptop.png', 		['unique'] = true, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'A nice laptop'},
+
+
+Finally, put all images located in this folder in: [qb] > qb-inventory > html > images

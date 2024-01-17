@@ -1,0 +1,51 @@
+.find {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    user-select: none;
+    margin-top: 10px;
+}
+
+.find>div {
+    display: inline-block;
+    margin: 0 8px;
+}
+
+.timer {
+    text-align: center;
+    color: green;
+    font-size: 18px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.codes {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    margin: auto;
+}
+
+.codes>div {
+    flex: 1 0 10%;
+    margin: 7px 0;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.codes>div.current {
+    color: red;
+}
+
+.codes>div.correct {
+    color: green;
+}
+
+.hack.mirrored .find>div,
+.hack.mirrored .codes>div {
+    -moz-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+}

@@ -1,0 +1,19 @@
+.splash {
+    display: inline-block;
+    width: 100%;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 16px;
+}
+
+svg {
+    height: 70px;
+    fill: white;
+    margin-bottom: 30px;
+}
+
+.text {
+    font-weight: 600;
+    color: white;
+    letter-spacing: 3px;
+}

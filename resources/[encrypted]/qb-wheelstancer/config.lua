@@ -37,7 +37,7 @@ Config.Webhooks            = {
 
 -- Menu Text Customization
 
-Menu.heading               = "6STR Tuner Shop"
+Menu.heading               = "LS Customs"
 Menu.subheading            = "Adjust Wheel Stance"
 
 -- SubMenu Text Customization
@@ -92,68 +92,68 @@ Config.Polyzone            = {
   -- //Gabz Los Santos TunerShop Location//
   {
     data    = { id = "1" },
-    coords  = vector3(124.47, -3047.29, 7.04),
-    length  = 5.0,
-    width   = 3.0,
-    minZ    = 6.04,
-    maxZ    = 8.84,
-    heading = 270.0,
+    coords  = vector3(-333.12, -133.05, 39.01),
+    length  = 3.0,
+    width   = 5.0,
+    minZ    = 36.04,
+    maxZ    = 39.84,
+    heading = 250.0,
   },
   --=================================================
   -- // Hayes Autos Location 1
-  {
-    data    = { id = "2" },
-    coords  = vector3(-1423.64, -450.21, 35.19),
-    length  = 5.0,
-    width   = 3.0,
-    minZ    = 32.79,
-    maxZ    = 36.79,
-    heading = 31.32,
-  },
+  --{
+  --  data    = { id = "2" },
+  --  coords  = vector3(-1423.64, -450.21, 35.19),
+  --  length  = 5.0,
+  --  width   = 3.0,
+  --  minZ    = 32.79,
+  --  maxZ    = 36.79,
+  --  heading = 31.32,
+  --},
   --=================================================
   -- // Hayes Autos Location 2
-  {
-    data    = { id = "3" },
-    coords  = vector3(-1417.08, -446.44, 35.56),
-    length  = 5.0,
-    width   = 3.0,
-    minZ    = 33.36,
-    maxZ    = 37.36,
-    heading = 30.78,
-  },
+  --{
+  --  data    = { id = "3" },
+  --  coords  = vector3(-1417.08, -446.44, 35.56),
+  --  length  = 5.0,
+  --  width   = 3.0,
+  --  minZ    = 33.36,
+  --  maxZ    = 37.36,
+  --  heading = 30.78,
+  --},
   --=================================================
   -- // Default Bennys Workshop Location
-  {
-    data    = { id = "4" },
-    coords  = vector3(-222.65, -1329.33, 30.54),
-    length  = 5.0,
-    width   = 3.0,
-    minZ    = 28.14,
-    maxZ    = 32.14,
-    heading = 268.87,
-  },
+  --{
+  --  data    = { id = "4" },
+  --  coords  = vector3(-222.65, -1329.33, 30.54),
+  --  length  = 5.0,
+  --  width   = 3.0,
+  --  minZ    = 28.14,
+  --  maxZ    = 32.14,
+  --  heading = 268.87,
+  --},
   --=================================================
   -- //Gabz MRPD Police Station Location//
-  {
-    data    = { id = "5" },
-    coords  = vector3(435.41, -975.99, 25.7),
-    length  = 5.0,
-    width   = 3.0,
-    minZ    = 24.5,
-    maxZ    = 27.1,
-    heading = 89.03,
-  },
+  --{
+  --  data    = { id = "5" },
+  --  coords  = vector3(435.41, -975.99, 25.7),
+  --  length  = 5.0,
+  --  width   = 3.0,
+  --  minZ    = 24.5,
+  --  maxZ    = 27.1,
+  --  heading = 89.03,
+  --},
   --=================================================
   -- //AutoCare Mechanic Location//
-  {
-    data    = { id = "6" },
-    coords  = vector3(-324.21, -138.46, 39.01),
-    length  = 5.0,
-    width   = 3.0,
-    minZ    = 36.01,
-    maxZ    = 40.01,
-    heading = 69.44,
-  },
+  --{
+  --  data    = { id = "6" },
+  --  coords  = vector3(-324.21, -138.46, 39.01),
+  --  length  = 5.0,
+  --  width   = 3.0,
+  --  minZ    = 36.01,
+  --  maxZ    = 40.01,
+  --  heading = 69.44,
+  --},
   --=================================================
   -- /*-*/ Add More Below /*-*/
 
@@ -179,81 +179,18 @@ Config.WheelZones          = {
   --=================================================
   -- Gabz Los Santos TunerShop Location
   ["wheel:zone1"] = {
-    coords      = vector3(124.47, -3047.29, 7.54),
-    heading     = 270.0,
+    coords      = vector3(-333.12, -133.05, 39.01),
+    heading     = 340.0,
     jobRequired = true,
     jobs        = {
-      { name = "mechanic", grades = { 1, 2, 3, 4 } },
+      { name = "lscustoms", grades = { 1, 2, 3, 4 } },
       { name = "tuner",    grades = { 1, 2, 3, 4 } },
     },
     blips       = false,
     price       = 100
   },
   --=================================================
-  -- Hayes Autos Location 1
-  ["wheel:zone2"] = {
-    coords      = vector3(-1423.64, -450.21, 35.19),
-    heading     = 31.32,
-    jobRequired = true,
-    jobs        = {
-      { name = "mechanic", grades = { 1, 2, 3, 4 } },
-      { name = "tuner",    grades = { 1, 2, 3, 4 } },
-    },
-    blips       = false,
-    price       = 100
-  },
-  --=================================================
-  --  Hayes Autos Location 2
-  ["wheel:zone3"] = {
-    coords = vector3(-1417.08, -446.44, 35.56),
-    heading = 30.78,
-    jobRequired = false,
-    jobs = {
-      { name = "mechanic", grades = { 1, 2, 3, 4 } },
-      { name = "tuner",    grades = { 1, 2, 3, 4 } },
-    },
-    blips = false,
-    price = 100
-  },
-  --=================================================
-  -- Default Bennys Workshop Location
-  ["wheel:zone4"] = {
-    coords = vector3(-222.65, -1329.33, 30.54),
-    heading = 268.87,
-    jobRequired = true,
-    jobs = {
-      { name = "mechanic", grades = { 1, 2, 3, 4 } },
-      { name = "tuner",    grades = { 1, 2, 3, 4 } },
-    },
-    blips = false,
-    price = 100
-  },
-  --=================================================
-  -- Mrpd Default Map Location
-  ["wheel:zone5"] = {
-    coords = vector3(435.41, -975.99, 25.7),
-    heading = 89.03,
-    jobRequired = true,
-    jobs = {
-      { name = "mechanic", grades = { 1, 2, 3, 4 } },
-      { name = "tuner",    grades = { 1, 2, 3, 4 } },
-    },
-    blips = false,
-    price = 100
-  },
-  --=================================================
-  -- AutoCare Mechanic Location
-  ["wheel:zone6"] = {
-    coords = vector3(-324.21, -138.46, 39.01),
-    heading = 69.44,
-    jobRequired = false,
-    jobs = {
-      { name = "mechanic", grades = { 1, 2, 3, 4 } },
-      { name = "tuner",    grades = { 1, 2, 3, 4 } },
-    },
-    blips = false,
-    price = 100
-  },
+  
   -- /*-*/ Add More Below /*-*/
 
 

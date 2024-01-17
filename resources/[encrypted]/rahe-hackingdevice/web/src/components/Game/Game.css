@@ -1,0 +1,11 @@
+.minigame {
+    background: #282c34;
+    width: 540px;
+    height: 540px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    flex-direction: column;
+}
