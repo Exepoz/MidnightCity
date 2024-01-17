@@ -23,4 +23,4 @@ Config.Explosions = {-1813897027, 741814745, -1420407917, -1600701090, 615608432
 
 Config.Grandmas = true -- A Blackmarket place for crims to revive
 Config.GrandmasCost = 0
-Config.GrandmaCoords = vector3(3316.93, 5182.15, 19.61) --This has been set (Danny)
+Config.GrandmaCoords = vector3(3316.93, 5182.15, 18.61) --This has been set (Danny)
