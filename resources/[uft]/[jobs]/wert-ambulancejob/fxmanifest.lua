@@ -5,7 +5,7 @@ description 'wert-ambulancejob'
 version '1.0.0'
 
 ui_page {'html/index.html'}
-    
+
 files {
 	'data.json',
     'html/index.html',
@@ -16,7 +16,8 @@ files {
 
 shared_scripts {
     'config.lua',
-    'lang.lua'
+    'lang.lua',
+    '@ox_lib/init.lua',
 }
 
 client_scripts {
@@ -27,7 +28,7 @@ client_scripts {
     'garage.lua',
     'npcdoctor.lua',
     'blood.lua'
-} 
+}
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',

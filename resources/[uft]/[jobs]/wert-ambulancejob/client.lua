@@ -75,6 +75,7 @@ local function goxrayormrbed(type, coord)
 		WertSharedRequestAnimDict("anim@gangops@morgue@table@", function()
 			TaskPlayAnim(playerPed, "anim@gangops@morgue@table@", "ko_front", 8.0, 8.0, -1, 33, 0, 0, 0, 0)
 		end)
+        lib.showTextUI('[E] Get Up')
 		CreateThread(function()
 			while yatakta do
 				if not IsEntityPlayingAnim(playerPed, "anim@gangops@morgue@table@", "ko_front", 3) then
@@ -85,6 +86,7 @@ local function goxrayormrbed(type, coord)
 				DisablePlayerFiring(playerPed, true)
 				SetPedCanPlayGestureAnims(playerPed, false)
 				disablemrxrayactions()
+                if IsControlJustPressed(0, 38) then goxrayormrbed('kalk', coord) lib.hideTextUI() end
 				Wait(1)
 			end
 		end)
@@ -153,7 +155,7 @@ RegisterNetEvent("wert-ambulancejob:ambulance-bill", function()
     end, 8, GetEntityCoords(PlayerPedId()))
 end)
 
-RegisterNetEvent("wert-ambulancejob:send-bill", function(data) 
+RegisterNetEvent("wert-ambulancejob:send-bill", function(data)
     local dialog = exports['qb-input']:ShowInput({
         header = LLANG["billheader"],
         submitText = LLANG["confirm"],
@@ -187,14 +189,13 @@ end)
 -- Mr
 RegisterNetEvent("wert-ambulancejob:mr-panel", function()
     local checkcoord = vector3(Config.MrCoord.x, Config.MrCoord.y, Config.MrCoord.z)
+    local nameTxt, subText =  LLANG["selectplan"], LLANG["confirm"]
     local dialogtwo = exports['qb-input']:ShowInput({
         header = "MRI",
-        submitText = LLANG["confirm"],
         inputs = {
-            {
-                text = LLANG["selectplan"],
-                name = "plan",
+            { text = nameTxt, name = "plan",
                 type = "select",
+                default = "tabdomen",
                 options = {
                     { value = "beyin", text = "Brain" },
                     { value = "kalca", text = "Pelvis" },
@@ -366,7 +367,7 @@ end)
 RegisterNetEvent("wert-ambulancejob:sebil", function()
     if not sebil then
         sebil = true
-        QBCore.Functions.Progressbar("wert_sebil", LLANG["waterprogress"], 10000, false, true, { 
+        QBCore.Functions.Progressbar("wert_sebil", LLANG["waterprogress"], 10000, false, true, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
@@ -446,8 +447,8 @@ RegisterNetEvent("wert-ambulancejob:use-elevator", function(currentFloor)
                 event = "qb-menu:closeMenu",
             }
         }
-            
-        
+
+
         exports['qb-menu']:openMenu(Menu)
     end
 end)

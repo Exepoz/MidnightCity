@@ -1,6 +1,6 @@
 Config = {}
 
-Config.DebugPoly = true -- Show target polys (true or false)
+Config.DebugPoly = false -- Show target polys (true or false)
 
 Config.CoffeItem = "coffee"
 
@@ -9,13 +9,13 @@ Config.ReviveClientEvent = 'hospital:client:Revive'
 Config.Locale = "en"
 
 --MRI desk
-Config.MrCoord = vector4(310.39, -567.49, 43.27, 64.98)
+Config.MrCoord = vector4(309.88, -566.90, 43.30, 157.14)
 --Xray desk
-Config.Xray = vector4(319.72, -570.86, 44.09, 75.92)
+Config.Xray = vector4(319.72, -570.86, 43.09, 157.14)
 
 Config.TargetInfos = {
     ["EMSWertAmbulanceDuty"] = {
-        Coord = vector3(313.43, -576.45, 43.27),
+        Coord = vector3(0, 0, 0),
         Heading = 340,
         Lenght = 1.0,
         Width = 1,
@@ -53,12 +53,12 @@ Config.TargetInfos = {
     },
     ["EMSWertMrComputer"] = {
         --Don't tuch event value
-        Coord = vector3(314.23, -567.86, 43.27),
+        Coord = vector3(313.41, -568.42, 43.21),
         Heading = 340,
         Lenght = 1.4,
         Width = 1.0,
-        Minz = 42.0,
-        Maxz = 45.0,
+        Minz = 43.0,
+        Maxz = 43.5,
         Event = "wert-ambulancejob:mr-panel",
         Icon = "fas fa-desktop",
         Label = "MRI Computer",
@@ -66,12 +66,12 @@ Config.TargetInfos = {
     },
     ["EMSWertMrDesk"] = {
         --Don't tuch event value
-        Coord = vector3(310.39, -567.49, 43.27),
-        Heading = 64,
+        Coord = vector3(309.81, -567.13, 42.3),
+        Heading = 160,
         Lenght = 2.6,
         Width = 1.0,
-        Minz = 42.0,
-        Maxz = 45.0,
+        Minz = 43.0,
+        Maxz = 44.0,
         Event = nil,
         Icon = nil,
         Label = nil,
@@ -79,12 +79,12 @@ Config.TargetInfos = {
     },
     ["EMSWertXrayComputer"] = {
         --Don't tuch event value
-        Coord = vector3(315.51, -569.78, 43.27),
+        Coord = vector3(316.17, -569.48, 43.21),
         Heading = 340,
         Lenght = 1.4,
-        Width = 0.8,
-        Minz = 42.0,
-        Maxz = 45.0,
+        Width = 1.0,
+        Minz = 43.0,
+        Maxz = 43.5,
         Event = "wert-ambulancejob:xray-panel",
         Icon = "fas fa-desktop",
         Label = "XRAY Computer",
@@ -92,12 +92,12 @@ Config.TargetInfos = {
     },
     ["EMSWertXrayDesk"] = {
         --Don't tuch event value
-        Coord = vector3(319.37, -570.13, 43.27),
+        Coord = vector3(319.81, -570.81, 42.09),
         Heading = 340,
         Lenght = 2.6,
         Width = 1.0,
         Minz = 42.0,
-        Maxz = 45.0,
+        Maxz = 43.2,
         Event = nil,
         Icon = nil,
         Label = nil,
@@ -137,110 +137,110 @@ Config.Items = {
     label = "Ambulance Armory",
     slots = 8,
     items = {
-        [1] = {
-            name = "radio",
-            price = 250,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 1,
-        },
-        [2] = {
-            name = "bandage",
-            price = 10,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 2,
-        },
-        [3] = {
-            name = "weapon_flashlight",
-            price = 30,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 3,
-        },
-        [4] = {
-            name = "weapon_stungun",
-            price = 250,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 4,
-        },
-        [5] = {
-            name = "painkillers",
-            price = 10,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 5,
-        },
-        [6] = {
-            name = "emptytube",
-            price = 10,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 6,
-        },
-        [7] = {
-            name = "emptysyringe",
-            price = 10,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 7,
-        },
-        [8] = {
-            name = "emptybaggy",
-            price = 10,
-            amount = 10,
-            info = {},
-            type = "item",
-            slot = 8,
-        },
+        --[1] = {
+        --    name = "radio",
+        --    price = 250,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 1,
+        --},
+        --[2] = {
+        --    name = "bandage",
+        --    price = 10,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 2,
+        --},
+        --[3] = {
+        --    name = "weapon_flashlight",
+        --    price = 30,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 3,
+        --},
+        --[4] = {
+        --    name = "weapon_stungun",
+        --    price = 250,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 4,
+        --},
+        --[5] = {
+        --    name = "painkillers",
+        --    price = 10,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 5,
+        --},
+        --[6] = {
+        --    name = "emptytube",
+        --    price = 10,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 6,
+        --},
+        --[7] = {
+        --    name = "emptysyringe",
+        --    price = 10,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 7,
+        --},
+        --[8] = {
+        --    name = "emptybaggy",
+        --    price = 10,
+        --    amount = 10,
+        --    info = {},
+        --    type = "item",
+        --    slot = 8,
+        --},
     }
 }
 
 -- Elevator coords
 Config.ElevatorInfos = {
-    [-1] = {
-        Coord = vector3(339.88, -586.28, 28.8),
-        Heading = 340,
-        Lenght = 0.2,
-        Width = 0.4,
-        Minz = 29.0,
-        Maxz = 29.3,
-        Distance = 1.5,
-        Tpcoord = vector4(339.82, -584.66, 28.8, 75.64),
-    },
-    [1] = {
-        Coord = vector3(325.57, -603.57, 43.28),
-        Heading = 70,
-        Lenght = 0.2,
-        Width = 0.4,
-        Minz = 43.5,
-        Maxz = 43.8,
-        Distance = 1.5,
-        Tpcoord = vector4(327.29, -603.33, 43.28, 340.34),
-    },
-    [2] = {
-        Coord = vector3(338.13, -583.64, 74.16),
-        Heading = 340,
-        Lenght = 2.8,
-        Width = 0.4,
-        Minz = 73.80,
-        Maxz = 74.56,
-        Distance = 1.5,
-        Tpcoord = vector4(339.12, -584.01, 74.16, 251.08),
-    },
+    --[-1] = {
+    --    Coord = vector3(339.88, -586.28, 28.8),
+    --    Heading = 340,
+    --    Lenght = 0.2,
+    --    Width = 0.4,
+    --    Minz = 29.0,
+    --    Maxz = 29.3,
+    --    Distance = 1.5,
+    --    Tpcoord = vector4(339.82, -584.66, 28.8, 75.64),
+    --},
+    --[1] = {
+    --    Coord = vector3(325.57, -603.57, 43.28),
+    --    Heading = 70,
+    --    Lenght = 0.2,
+    --    Width = 0.4,
+    --    Minz = 43.5,
+    --    Maxz = 43.8,
+    --    Distance = 1.5,
+    --    Tpcoord = vector4(327.29, -603.33, 43.28, 340.34),
+    --},
+    --[2] = {
+    --    Coord = vector3(338.13, -583.64, 74.16),
+    --    Heading = 340,
+    --    Lenght = 2.8,
+    --    Width = 0.4,
+    --    Minz = 73.80,
+    --    Maxz = 74.56,
+    --    Distance = 1.5,
+    --    Tpcoord = vector4(339.12, -584.01, 74.16, 251.08),
+    --},
 }
 
 --Garage config
 
-Config.GarageEnabled = true -- If you want don't use garage change false
+Config.GarageEnabled = false -- If you want don't use garage change false
 
 Config.GarageNpcInfos = {
     --Pillbox
@@ -282,7 +282,7 @@ Config.NpcDoctors = {
     {coord = vector4(0,0,0,0), name = "John" }, -- Gabz
 }
 
-Config.UseCheckOnlineDoc = true
+Config.UseCheckOnlineDoc = false
 
 Config.ReviveTime = 70000
 Config.RestTime = 50000

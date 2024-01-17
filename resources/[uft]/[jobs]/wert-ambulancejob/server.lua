@@ -174,7 +174,7 @@ RegisterNetEvent('wert-ambulancejob:kan-paket', function()
                 else
                     print("Item not have blood data")
                 end
-                
+
             else
                 print(item.info.bloodtype)
                 TriggerClientEvent('wert-ambulancejob:kan-paketle', src, item.info.bloodtype, item.slot)
@@ -198,7 +198,7 @@ RegisterNetEvent('wert-ambulancejob:kan-load-bank', function()
                 else
                     print("Item not have blood data")
                 end
-                
+
             else
                 print(item.info.bloodtype)
                 TriggerClientEvent('wert-ambulancejob:kan-setup', src, item.info.bloodtype, item.slot)
@@ -281,6 +281,7 @@ RegisterNetEvent("Wert-Ambulance:AddItem", function(name, amount, slot, info)
     local Player = QBCore.Functions.GetPlayer(src)
     if Player then
         Player.Functions.AddItem(name, amount, slot, info)
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[name], "add", amount)
     end
 end)
 
