@@ -1,4 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local Midnight = exports['mdn-nighttime']:GetMidnightCore()
 local transactionInProgress = false
 local gState = {}
 local Stock = {}
@@ -48,11 +49,18 @@ RegisterNetEvent('mdn-fence:server:sellToFence', function(data)
     TriggerClientEvent('inventory:client:ItemBox',src, QBCore.Shared.Items['midnight_crumbs'], "add", moneyRec)
     local a = MySQL.update.await('UPDATE midnight_fence SET stock = ? WHERE item = ?', {Config.FenceItems[item].stock, item})
     if a == 0 then MySQL.insert.await('INSERT INTO `midnight_fence` (stock, item) VALUES (?, ?)', {Config.FenceItems[item].stock, item}) end
+
+    local pName = Midnight.Functions.GetCharName(src)
+    local txt = "Sold stuff to fence : "..item.." | x"..info.am.."\nCrumbs Received : "..moneyRec
+    local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n"..txt}
+    TriggerEvent("qb-log:server:CreateLog", "fence", "Item Sold", "green", logString)
+
     transactionInProgress = false
     Wait(50) TriggerClientEvent('fence:client:backToSelling', src)
 end)
 
 RegisterNetEvent('mdn-fence:server:buyItem', function(itemTable, item, am, k, subt, shop)
+    QBCore.Debug(itemTable)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local crumbs = Player.Functions.GetItemByName('midnight_crumbs')
@@ -62,14 +70,19 @@ RegisterNetEvent('mdn-fence:server:buyItem', function(itemTable, item, am, k, su
     if not Player.Functions.RemoveItem('midnight_crumbs', price) then TriggerClientEvent('QBCore:Notify', src, "You don't have enough gold crumbs...", "error") return end
     --if crumbs.amount < (itemTable.items[k].price * am) then TriggerClientEvent('QBCore:Notify', src, "You don't have enough gold crumbs...", "error") return end
 
-    local info = {ordereditem = item, qty = am, itemName = QBCore.Shared.Items[item].label, itemImage = QBCore.Shared.Items[item].image, subtype = subt}
-
+    local info = {ordereditem = item, qty = am, itemName = QBCore.Shared.Items[item].label, itemImage = QBCore.Shared.Items[item].image, subtype = subt, scratched = itemTable.items[k].scratched or false}
+    QBCore.Debug(info)
     if Player.Functions.AddItem("fencepackage", 1, false, info) then
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['midnight_crumbs'], "remove", price)
         Citizen.Wait(500)
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['fencepackage'], "add", 1)
         gState.Stock[item].stock = gState.Stock[item].stock - am
         GlobalState.FenceShop = gState
+
+        local pName = Midnight.Functions.GetCharName(src)
+        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n\nBought stuff from fence : "..item.." | x"..info.qty..(itemTable.items[k].scratched and "\nScratched Weapon" or "")}
+        TriggerEvent("qb-log:server:CreateLog", "fence", "Item Bought", "green", logString)
+
     else Player.Functions.AddItem("midnight_crumbs", price) end
 end)
 
@@ -164,15 +177,17 @@ end)
 
 QBCore.Functions.CreateUseableItem("fencepackage", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
-    if Player.PlayerData.items[item.slot].info.qty > 0 then
-        local oItem = Player.PlayerData.items[item.slot].info.ordereditem
-        Player.PlayerData.items[item.slot].info.qty = Player.PlayerData.items[item.slot].info.qty - 1
+    local itemInfo = Player.PlayerData.items[item.slot].info
+    QBCore.Debug(itemInfo)
+    if itemInfo.qty > 0 then
+        local oItem = itemInfo.ordereditem
+        itemInfo.qty = itemInfo.qty - 1
         Player.Functions.SetInventory(Player.PlayerData.items)
         local info = {}
         if QBCore.Shared.SplitStr(oItem, "_")[1] == "weapon" then
-            info.serie = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+            info.serie = itemInfo.scratched and "||/|////|||/||" or tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
             info.quality = 100
-            info.fromAmmu = true
+            -- info.fromAmmu = true
         elseif oItem == "seedpack" then
             local getConfig = exports['malmo-weedharvest']:fetchConfig()
             info.strain = Player.PlayerData.items[item.slot].info.subtype
@@ -190,7 +205,7 @@ end)
 -- Resource Start/Stop
 AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName() ~= resource then return end
     for _, v in pairs(Config.Shop) do
-        for _, b in pairs(v.items) do Stock[b.item] = {stock = b.stock, price = b.price, maxStock = b.stock, loc = b.loc, max = b.max, subt = b.subt or nil} end
+        for _, b in pairs(v.items) do Stock[b.item] = {stock = b.stock, price = b.price, maxStock = b.stock, loc = b.loc, max = b.max, subt = b.subt or nil, b.scratched or false} end
     end
     gState.Stock = Stock
     GlobalState.FenceShop = gState
@@ -216,7 +231,7 @@ AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName(
     end
 
     local function UpdateBounties()
-        print("Updating Bounties...")
+        print("Updating Fence Bounties...")
         local totalStock = 0
         local stockSplit = {}
         local usedKeys = {}
@@ -240,7 +255,8 @@ AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName(
     lib.cron.new('*/15 * * * *', UpdateBounties)
 end)
 
-lib.cron.new('* */3 * * *', function() -- Happens every 3 hours
+-- lib.cron.new('* */3 * * *', function() -- Happens every 3 hours
+lib.cron.new('15 23 */3 * *', function() -- Happens every 3 hours
     print('Updating Current Fence Stock...')
     fenceData = MySQL.query.await('SELECT * FROM `midnight_fence`')
     if fenceData and fenceData[1] ~= nil then

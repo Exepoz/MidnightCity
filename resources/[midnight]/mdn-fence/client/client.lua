@@ -1,4 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local Midnight = exports['mdn-nighttime']:GetMidnightCore()
 local BMPed
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
@@ -73,7 +74,8 @@ local checkBounties = function()
 end
 
 -- Buying
-function AddShopItem(item, src, key, shop)
+function AddShopItem(item, src, key, shop, itemTable)
+    QBCore.Debug(item)
     local options = {{type = 'number', label = 'Amount', description = 'Amount you want to buy.', required = true, default = 1, min = 1, max = GlobalState.FenceShop.Stock[item.item].stock}}
     if GlobalState.FenceShop.Stock[item.item].subt then options[#options+1] = {type = 'select', label = 'Type', description = 'Chose the item subtype.', required = true, options = GlobalState.FenceShop.Stock[item.item].subt} end
     local itemTable = {
@@ -82,7 +84,9 @@ function AddShopItem(item, src, key, shop)
         onSelect = function()
             local input = lib.inputDialog('Chose Amount', options)
             if not input then  return  lib.showContext('OO_'..src) end
-            TriggerServerEvent('mdn-fence:server:buyItem', src, item.item, input[1], key, input[2] or nil, shop)
+            print(item, item.item, input[1], key, input[2] or nil, shop)
+            QBCore.Debug(item)
+            TriggerServerEvent('mdn-fence:server:buyItem', itemTable, item.item, input[1], key, input[2] or nil, shop)
         end
     }
     return itemTable
@@ -90,11 +94,10 @@ end
 
 local function MakeMenu()
     local options = {}
-    for k, v in pairs(Config.Shop) do
-        local shop = v
+    for k, v in ipairs(Config.ShopOrder) do
+        local shop = Config.Shop[v]
         local shopItems = {}
-        for a, item in ipairs(shop.items) do shopItems[#shopItems+1] = AddShopItem(item, v, a, k)
-        end
+        for a, item in ipairs(shop.items) do print(item, v, a, k) shopItems[#shopItems+1] = AddShopItem(item, v, a, k, shop) end
         lib.registerContext({id = 'OO_'..k, title = shop.options.header.." Store", canClose = true, menu = 'fenceStore', options = shopItems})
         options[#options+1] = {title = shop.options.header, icon = shop.options.icon, menu = 'OO_'..k}
     end
@@ -120,8 +123,8 @@ end
 -- Each delivery updates the list with either onTime or tooLate.
 -- return the list to fence to cash in rewards.
 
-local getMission = function()
-
+local getMission = function(data)
+    TriggerEvent("delivery:start_delivery", {job = 'fence', pedID = 'fence start_delivery', entity = data.entity})
 end
 
 local returnPackage = function()
@@ -131,25 +134,29 @@ local returnList = function()
 
 end
 
-local TalkToFence = function()
-    local count = 0
-    local pData = QBCore.Functions.GetPlayerData()
-    for _, v in pairs(pData.items) do if v.name == "midnight_crumbs" then count = count + v.amount end end
-    local options = {
-        {title = 'Account Holder : '..pData.charinfo.firstname.." "..pData.charinfo.lastname.."\nCurrent Crumbs : "..count, readOnly = true},
-        {title = 'See Item Bounties', onSelect = checkBounties, icon = 'fa-solid fa-fire', arrow = true, description = 'Check out which hot item the Night Market is currently looking for.'},
-        {title = 'Sell Acquisitions', onSelect = sellToFence, icon = 'fa-solid fa-coins', arrow = true, description = 'Sell some of your items to fence.'},
-        {title = 'Check the Market', onSelect = openShop, icon = 'fa-solid fa-basket-shopping', arrow = true, description = 'Take a look a what\'s for sale.'}
-    }
-    if GetClockHours() > 19 or GetClockHours() < 7 then
-        options[#options+1] = {title = 'Work as Courrier', onSelect = getMission, icon = 'fa-solid fa-person-running', description = 'Deliver some packages in exchange of some gold crumbs.'}
-        options[#options+1] = {title = 'Return Lost Package', onSelect = returnPackage, icon = 'fa-solid fa-box', description = 'Return any lost packages you may have "found" on your journey.'}
-    end
-    if QBCore.Functions.HasItem('fencelist') then
-        options[#options+1] = {title = 'Return Deliver List', onSelect = returnList, icon = 'fa-solid fa-clipboard-list', description = 'Return your courrier list and collect your payment.'}
-    end
-    lib.registerContext({ id = 'fenceMainMenu', title = "The Night Market", options = options})
-    lib.showContext('fenceMainMenu')
+local TalkToFence = function(data)
+
+    Midnight.Functions.IsBlackListed():next(function(isBlacklisted)
+        if isBlacklisted then QBCore.Functions.Notify('I won\'t talk to you, bloody scum!', 'error') return end
+        local count = 0
+        local pData = QBCore.Functions.GetPlayerData()
+        for _, v in pairs(pData.items) do if v.name == "midnight_crumbs" then count = count + v.amount end end
+        local options = {
+            {title = 'Account Holder : '..pData.charinfo.firstname.." "..pData.charinfo.lastname.."\nCurrent Crumbs : "..count, readOnly = true},
+            {title = 'See Item Bounties', onSelect = checkBounties, icon = 'fa-solid fa-fire', arrow = true, description = 'Check out which hot item the Night Market is currently looking for.'},
+            {title = 'Sell Acquisitions', onSelect = sellToFence, icon = 'fa-solid fa-coins', arrow = true, description = 'Sell some of your items to fence.'},
+            {title = 'Check the Market', onSelect = openShop, icon = 'fa-solid fa-basket-shopping', arrow = true, description = 'Take a look a what\'s for sale.'}
+        }
+        if GetClockHours() > 19 or GetClockHours() < 7 then
+            options[#options+1] = {title = 'Work as Courrier', onSelect = getMission, args = {entity = data.entity}, icon = 'fa-solid fa-person-running', description = 'Deliver some packages in exchange of some gold crumbs.'}
+            options[#options+1] = {title = 'Return Lost Package', onSelect = returnPackage, icon = 'fa-solid fa-box', description = 'Return any lost packages you may have "found" on your journey.'}
+        end
+        if QBCore.Functions.HasItem('fencelist') then
+            options[#options+1] = {title = 'Return Deliver List', onSelect = returnList, icon = 'fa-solid fa-clipboard-list', description = 'Return your courrier list and collect your payment.'}
+        end
+        lib.registerContext({ id = 'fenceMainMenu', title = "The Night Market", options = options})
+        lib.showContext('fenceMainMenu')
+    end)
 end
 
 function SetupMarket()
