@@ -277,3 +277,9 @@ RegisterNetEvent('qb-phone:server:SaveMetaData', function(MData)
 
     Player.Functions.SetMetaData("phone", MData)
 end)
+
+RegisterNetEvent('qb-phone:server:updateDiscordName', function(MData)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+end)

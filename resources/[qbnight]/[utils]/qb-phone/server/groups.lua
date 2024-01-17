@@ -8,7 +8,12 @@ local EmploymentGroup = {}
 -- All the utility Functions to help us developer have a funner job
 local function GetPlayerCharName(src)
     local player = QBCore.Functions.GetPlayer(src)
-    return player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname
+    if player.Functions.GetItemByName('vpn') then
+        local sex = player.PlayerData.charinfo.gender == 0 and "male" or "female"
+        return Config.VPN_Names.first[sex][math.random(#Config.VPN_Names.first[sex])].. " "..Config.VPN_Names.last[math.random(#Config.VPN_Names.last)]
+    else
+        return player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname
+    end
 end
 
 local function NotifyGroup(group, msg, type)
@@ -43,6 +48,7 @@ local function RemoveBlipForGroup(groupID, name)
     if not groupID then return print("CreateBlipForGroup was sent an invalid groupID :"..groupID) end
 
     for i=1, #EmploymentGroup[groupID].members do
+        print('removing blip', EmploymentGroup[groupID].members[i].Player, name)
         TriggerClientEvent("groups:removeBlip", EmploymentGroup[groupID].members[i].Player, name)
     end
 end exports('RemoveBlipForGroup', RemoveBlipForGroup)
@@ -100,14 +106,18 @@ local function DestroyGroup(groupID)
 end exports("DestroyGroup", DestroyGroup)
 
 local function RemovePlayerFromGroup(src, groupID, disconnected)
+    QBCore.Debug(Players)
+    QBCore.Debug(EmploymentGroup)
     if not Players[src] or not EmploymentGroup[groupID] then return print("RemovePlayerFromGroup was sent an invalid groupID :"..groupID) end
     local g = EmploymentGroup[groupID].members
     for k,v in pairs(g) do
         if v.Player == src then
+            print(1)
             table.remove(EmploymentGroup[groupID].members, k)
             EmploymentGroup[groupID].Users -= 1
             Players[src] = false
             pNotifyGroup(groupID, "Job Center", v.name.." Has left the group", "fas fa-users", "#FFBF00", 7500)
+            print(2)
             TriggerClientEvent('qb-phone:client:RefreshGroupsApp', -1, EmploymentGroup)
             if not disconnected then TriggerClientEvent("QBCore:Notify", src, "You have left the group", "primary") end
 
@@ -159,6 +169,11 @@ local function getJobStatus(groupID)
     if not groupID then return print("getJobStatus was sent an invalid groupID :"..groupID) end
     return EmploymentGroup[groupID].status
 end exports('getJobStatus', getJobStatus)
+
+local function getJobStages(groupID)
+    if not groupID then return print("getJobStages was sent an invalid groupID :"..groupID) end
+    return EmploymentGroup[groupID].stage
+end exports('getJobStages', getJobStages)
 
 local function resetJobStatus(groupID)
     if not groupID then return print("setJobStatus was sent an invalid groupID :"..groupID) end
@@ -290,6 +305,8 @@ end)
 
 RegisterNetEvent('qb-phone:server:jobcenter_leave_grouped', function(data)
     local src = source
+    print(1)
+    QBCore.Debug(Players)
     if not Players[src] then return end
     RemovePlayerFromGroup(src, data.id)
 end)

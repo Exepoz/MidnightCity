@@ -478,7 +478,7 @@ for k, v in pairs(Config.Safes) do
     exports['qb-target']:AddBoxZone("StoreSafe_"..k, v.coords, w, l, {
         name = "StoreSafe_"..k,
         heading = v.heading,
-        debugPoly = true,
+        debugPoly = false,
         minZ = v.minZ,
         maxZ = v.maxZ,
         }, {

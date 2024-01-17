@@ -483,6 +483,14 @@ RegisterNUICallback('SetBackground', function(data, cb)
     cb('ok')
 end)
 
+
+RegisterNUICallback('updateDiscordName', function(data, cb)
+    local name = data.name
+    PhoneData.MetaData.discordName = name
+    TriggerServerEvent('qb-phone:server:SaveMetaData', PhoneData.MetaData)
+    cb('ok')
+end)
+
 RegisterNUICallback('GetMissedCalls', function(_, cb)
     cb(PhoneData.RecentCalls)
 end)

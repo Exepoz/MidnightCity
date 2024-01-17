@@ -1,0 +1,221 @@
+body {
+    background: transparent !important;
+}
+
+#gangpage,#jobpage,#serverpage,#playerpage,#playerlistpage,#resourcelistpage,#banpage,#logviewerpage,#characterspage,#itemspage,#vehiclespage,#adminchatpage,#reportbox,#reportspage{
+    display:none;
+}
+
+#mainbox {
+    overflow: hidden;
+    position:absolute;
+    left:5vw;
+    top:5vh;
+    border-radius:15px;
+    width: 90vw;
+    height:90vh;
+    overflow-y:scroll;
+    display:none;
+    opacity:100%;
+    transition: all 0.2 ease;
+}
+
+.playerwarning {
+    display:none;
+    position:absolute;
+    top:0;
+    height:100%;
+    width:100%;
+    background-color:rgba(139, 0, 0, 0.8);
+    color:#eee;
+}
+
+.warning-title {
+    padding-top:25%;
+    margin:auto;
+    width:60%;
+    font-weight:bolder;
+    text-align:center;
+}
+.warning-body {
+    margin:auto;
+    width:60%;
+    font-weight:bolder;
+    text-align:center;
+}
+
+.btn {
+    vertical-align: baseline !important;
+}
+
+.modal-backdrop {
+    display: none !important;
+}
+
+.modal-backdrop .show {
+    display: none !important;
+}
+
+
+.btn-group-xs > .btn, .btn-xs {
+    padding: .25rem .4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: .2rem;
+}
+
+#logo:hover {
+    text-decoration: none;
+    cursor:default;
+    color:white;
+}
+
+.player:hover {
+    background-color:#D7A027;
+    cursor:pointer;
+}
+
+.action {
+    margin:3px !important;
+}
+
+.just-padding {
+    padding: 15px;
+}
+
+.list-group.list-group-root {
+    padding: 0;
+    overflow: hidden;
+}
+
+.list-group.list-group-root .list-group {
+    margin-bottom: 0;
+}
+
+.list-group.list-group-root .list-group-item {
+    border-radius: 0;
+    border-width: 1px 0 0 0;
+}
+
+.list-group.list-group-root > .list-group-item:first-child {
+    border-top-width: 0;
+}
+
+.list-group.list-group-root > .list-group > .list-group-item {
+    padding-left: 30px;
+}
+
+.list-group.list-group-root > .list-group > .list-group > .list-group-item {
+    padding-left: 45px;
+}
+
+.list-group-item .glyphicon {
+    margin-right: 5px;
+}
+
+.loadingspinner {
+    margin-left: auto;
+    width: 50%;
+    height: 50%;
+    padding-top: 25%;
+}
+
+.fancySearchRow input {
+    border-radius:5px;
+    border:1px solid #444;
+}
+
+.fancySearchRow input:active {
+    border:1px solid rgb(215, 160, 150);
+}
+
+.listactionbutton {
+    font-size: 1.5rem;
+    font-weight:400;
+}
+
+.serverlogBox {
+    min-height:270px;
+    max-height:270px;
+    overflow-y:scroll;
+    background-color:#444;
+    border:1px solid #777;
+    border-radius:0.35em;
+    padding-left:10px;
+}
+
+code {
+    color: #adadad !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;  
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+#adminchatboxul {
+    min-height:55vh;
+    height:55vh;
+    max-height:55vh;
+    overflow-y:scroll;
+}
+
+#adminchatboxul li {
+    border: 1px solid grey;
+    padding: 4px;
+    border-radius: 10px;
+    margin-top: 6px;
+}
+
+.reportbox {
+    background:rgba(20, 20, 20, 0.6);
+    border-radius:10px;
+    width:30%;
+    height:50%;
+    margin:auto;
+    color:#999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.reporttitle {
+    font-size:20pt;
+    border-bottom:1px solid grey;
+    margin-bottom:10px;
+}
+
+.reportbox form {
+    margin:10px;
+}
+
+.reportbox input,textarea {
+    opacity: 0.6;
+}
+
+.reportbox textarea {
+    resize:none;
+}
+
+.reportclosebtn {
+    background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    opacity: 0.6;
+    color: #eee;
+}
+.reportclosebtn:before { content:"\2716"; }
+.reportclosebtn:hover {
+    opacity: 1;
+}

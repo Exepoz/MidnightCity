@@ -51,6 +51,8 @@ exports['qb-phone']:setJobStatus(groupID, status, stages)
 
 exports['qb-phone']:getJobStatus(groupID)
 
+exports['qb-phone']:getJobStages(groupID)
+
 exports['qb-phone']:resetJobStatus(groupID)
 
 --------------------------------------------------

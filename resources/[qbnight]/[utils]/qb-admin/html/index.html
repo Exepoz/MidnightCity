@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>919DESIGN QBCore Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="assets/css/sb-admin-2.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/toggle-bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/toggle-bootstrap-dark.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap-toaster.css" rel="stylesheet">
+    <link href="assets/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="assets/css/jquery.minicolors.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body class="bootstrap" id="page-top">
+    <div class="playerwarning" id="playerwarning">
+        <div class="warning-title">
+            <h1 id="warningTitleh1"></h1>
+            <h3><span id="warningTitleReason"></span>  <span id="warnreason"></span></h3>
+            <h3><span id="warningTitleBy"></span>  <span id="warnadmin"></span></h3>
+            <h3><span id="warningTitleReadRules"></span></h3>
+        </div>
+        <div class="warning-body">
+            <h6><span id="warningBodyPressHold"></span></h6>
+        </div>
+    </div>
+    <div class="reportbox bootstrap-dark" id="reportbox">
+        <form id="reportform">
+            <div class="reporttitle">
+                <span id="reportTitle"></span> 
+                <button type="button" id="reportscreenclose" style="float:right" class="reportclosebtn" aria-label="Close"></button>
+            </div>
+            <div class="row mb-3">
+                <label for="inputSubject" class="col-sm-2 col-form-label"><span id="inputSubjectTranslate"></span></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputSubject">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputInfo" class="col-sm-2 col-form-label"><span id="inputInfoTranslation"></span></label>
+                <div class="col-sm-10">
+                    <textarea type="text" class="form-control" id="inputInfo" rows="10"></textarea>
+                </div>
+            </div>
+            <fieldset class="row mb-3">
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="typeoption" id="supportoption" value="Support"
+                            checked>
+                        <label class="form-check-label" for="supportoption">
+                            <span id="supportoptionTranslation"></span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="typeoption" id="reportoption" value="PlayerReport">
+                        <label class="form-check-label" for="reportoption">
+                            <span id="reportoptionTranslate"></span>
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <button id="reportsubmit" class="btn btn-primary"><span id="SendReportTranslation"></span></button>
+        </form>
+    </div>
+    <div id="mainbox">
+        <div id="wrapper">
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                <a id="logo" class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                    <div class="sidebar-brand-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">919ADMIN <sup id="roleName"></sup></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <li class="nav-item active" id="dashboardpagebtn">
+                    <a class="nav-link" href="#" id="dashboardpagebtn">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span id="DashboardTranslation"></span></a>
+                </li>
+                <li class="nav-item" id="adminchatbtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-comment-dots"></i>
+                        <span id="adminChatTranslation"></span></a>
+                </li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    <span id="AdministrationTranslate"></span>
+                </div>
+                <li class="nav-item" id="playerlistpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span id="PlayersTranslate"></span></a>
+                </li>
+                <li class="nav-item" id="reportspagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-clipboard"></i>
+                        <span id="ReportsTranslate"></span></a>
+                </li>
+                <li class="nav-item" id="jobpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-user-md"></i>
+                        <span id="JobsTranslate"></span></a>
+                </li>
+                <li class="nav-item" id="gangpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span id="GangsTranslate"></span></a>
+                </li>
+                <li class="nav-item" id="resourcelistpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span id="ResourcesTranslate"></span></a>
+                </li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    <span id="databaseInteractionTranslate"></span>
+                </div>
+                <li class="nav-item" id="banpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-gavel"></i>
+                        <span id="BansTranslate"></span></a>
+                </li>
+                <li class="nav-item" id="characterspagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-users-cog"></i>
+                        <span id="CharactersTranslate"></span></a>
+                </li>
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    <span id="serverInformationTranslate"></span>
+                </div>
+                <li class="nav-item" id="serverpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-server"></i>
+                        <span id="ServerMetricsTranslation"></span></a>
+                </li>
+                <li class="nav-item" id="logviewerpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-info-circle"></i>
+                        <span id="LogViewerTranslation"></span></a>
+                </li>
+                <li class="nav-item" id="itemspagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-box-open"></i>
+                        <span id="ItemsListTranslation"></span></a>
+                </li>
+                <li class="nav-item" id="vehspagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-car"></i>
+                        <span id="VehiclesListTranslation"></span></a>
+                </li>
+
+                <li class="nav-item" id="leaderboardpagebtn">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-info-circle"></i>
+                        <span id="LeaderboardsTranslation"></span></a>
+                </li>
+                </li>
+            </ul>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <div class="">
+                            <h1 class="h3" id="heading"><span id="DashboardTranslation2"></span></h1>
+                        </div>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                    aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                placeholder="Search for..." aria-label="Search"
+                                                aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="adminname"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" id="settingsPanelBtn" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <span id="settingsTranslate"></span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" id="closePanelBtn">
+                                        <i class="fas fa-window-close fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <span id="closePanelTranslate"></span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="pagealert" class="container-fluid" style="display:none">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div id="pagealerttype" class="alert alert-dismissible" role="alert">
+                                    <span id="alerttext"></span>
+                                    <button type="button" id="hidealert" class="close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loadingspinner" id="loading">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only" id="loadingTranslate"></span>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="dashboardpage">
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 mb-6">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                    <span id="totalPlayersOnlineTranslate"></span>
+                                                </div>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="h5 mb-0 mr-3 font-weight-bold" id="playersonline">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="progress progress-sm mr-2">
+                                                            <div class="progress-bar bg-info" id="playersonlinebar"
+                                                                role="progressbar" style="width: 50%" aria-valuenow="50"
+                                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 mb-6">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    <span id="totalStaffOnlineTranslate"></span>
+                                                </div>
+                                                <div class="h5 mb-0 font-weight-bold" id="staffcount">13</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body" id="actionsField">
+                                            <h5>Self Actions</h5>
+                                            <button class="btn btn-success action" data-action="revives"><span id="ReviveTranslate"></span></button>
+                                            <button class="btn btn-primary action" data-action="uncuffSelf"><span id="unCuffTranslate"></span></button>
+                                            <button class="btn btn-primary action" data-action="goback"><span id="GoBackTranslate"></span></button>
+                                            <button class="btn btn-primary action" data-action="tpm"><span id="GoToMarkerTranslate"></span></button>
+                                            <button class="btn btn-primary action" data-action="sclothing"><span id="ClothingMenuTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="invisible"><span id="invisibleTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="togblips"><span id="playerBlipsTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="tognames"><span id="playerNamesTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="togspeed"><span id="fastRunTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="noclip"><span id="noclipTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="god"><span id="godTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="togradar"><span id="togradarTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="superjump"><span id="superjumpTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="noragdoll"><span id="noragdollTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="infinitestam"><span id="infinitestamTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="clearblood"><span id="clearbloodTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="wetclothes"><span id="wetclothesTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="dryclothes"><span id="dryclothesTranslate"></button>
+                                            <br /><br />
+                                            <h5><span id="serverActionsTranslateSelf"></span></h5>
+                                            <button class="btn btn-success action" data-action="reviveall"><span id="reviveallTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="messageall"><span id="messageallTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="setweather" id="setWeatherButton"><span id="setweatherTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="settime" id="setTimeButton"><span id="settimeTranslate"></button>
+                                            <br /><br />
+                                            <h5><span id="vehicleActionsTranslateSelf"></span></h5>
+                                            <button class="btn btn-success action" data-action="repairv"><span id="repairvTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="filltank"><span id="filltankTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="wash"><span id="washTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="maxpupgrades"><span id="maxpupgradesTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="randvisualparts"><span id="randvisualpartsTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="setcolor"><span id="setcolorTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="setlivery"><span id="setliveryTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="setmedriver"><span id="setmedriverTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="setmepass"><span id="setmepassTranslate"></button>
+                                            <button class="btn btn-success action" data-action="unlockv"><span id="unlockvTranslate"></button>
+                                            <button class="btn btn-danger action" data-action="lockv"><span id="lockvTranslate"></button>
+    
+                                            <br /><br />
+                                            <h5><span id="developerActionsTranslateSelf"></span></h5>
+                                            <button class="btn btn-primary action" data-action="vec3"><span id="vec3Translate"></button>
+                                            <button class="btn btn-primary action" data-action="vec4"><span id="vec4Translate"></button>
+                                            <button class="btn btn-primary action" data-action="heading"><span id="headingTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="loadipl"><span id="loadiplTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="unloadipl"><span id="unloadiplTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="setViewDistance"><span id="setViewDistanceTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="copyEntityInfo"><span id="copyEntityInfoTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="freeaimMode"><span id="freeaimModeTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="displayVehicles"><span id="displayVehiclesTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="displayPeds"><span id="displayPedsTranslate"></button>
+                                            <button class="btn btn-primary action" data-action="displayObjects"><span id="displayObjectsTranslate"></button>
+                                            <br /><br />
+                                            <h5><span id="entityActionsTranslateSelf"></span></h5>
+                                            <button class="btn btn-success action" data-action="spawnvehicle"><span id="spawnvehicleTranslate"></button>
+                                            <button class="btn btn-warning action" data-action="deleteclosestveh"><span id="deleteclosestvehTranslate"></button>
+                                            <button class="btn btn-warning action" data-action="deleteclosestped"><span id="deleteclosestpedTranslate"></button>
+                                            <button class="btn btn-warning action" data-action="deleteclosestobj"><span id="deleteclosestobjTranslate"></button>
+                                            <button class="btn btn-danger action" data-action="massdv"><span id="massdvTranslate"></button>
+                                            <button class="btn btn-danger action" data-action="massdp"><span id="massdpTranslate"></button>
+                                            <button class="btn btn-danger action" data-action="massdo"><span id="massdoTranslate"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="gangpage">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 float-left font-weight-bold text-primary"><span id="gangListTranslation"></span></h6>
+                                        <div class="btn btn-xs m-0 btn-success float-right" id="refreshgangbtn"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                    </div>
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="list-group list-group-root well" id="ganglist">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid" id="resourcelistpage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><span id="resourceListTranslation"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="clearbtnres"><span id="clearTranslation"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="resourcesearch" onkeyup="AdminPanel.SearchResources()"
+                                                            placeholder="Search" aria-label=""
+                                                            aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="list-group list-group-root well" id="resourcelist">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="logviewerpage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><span id="logsTranslation"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="clearbtnlg"><span id="clearTranslation2"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="logsearch" onkeyup="AdminPanel.SearchLogs()"
+                                                            placeholder="Search" aria-label=""
+                                                            aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="logslist">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <table class="table table-sm table" id="logslisttable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="logTimeTranslation"></span></th>
+                                                                <th scope="col"><span id="logTypeTranslation"></span></th>
+                                                                <th scope="col"><span id="logMessageTranslation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="logslisttbody">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="vehiclespage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><span id="VehiclesListTranslation2"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="clearbtnvehs"><span id="clearTranslation3"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="vehiclesearch" onkeyup="AdminPanel.SearchVehicles()"
+                                                            placeholder="Search" aria-label=""
+                                                            aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="vehicleslist">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <table class="table table-sm table" id="vehicleslisttable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="vehspawnNameTranslation"></span></th>
+                                                                <th scope="col"><span id="vehmakeTranslation"></span></th>
+                                                                <th scope="col"><span id="vehCategoryTranslation"></span></th>
+                                                                <th scope="col"><span id="vehShopTranslation"></span></th>
+                                                                <th scope="col"><span id="vehPriceTranslation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="vehicleslisttbody">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="itemspage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><span id="itemListTranslation2"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="clearbtnitems"><span id="clearTranslation4"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="itemsearch" onkeyup="AdminPanel.SearchItems()"
+                                                            placeholder="Search" aria-label=""
+                                                            aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="itemslist">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <table class="table table-sm table" id="itemslisttable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="itemNameTranslation"></span></th>
+                                                                <th scope="col"><span id="itemSpawnTranslation"></span></th>
+                                                                <th scope="col"><span id="itemDescriptionTranslation"></span></th>
+                                                                <th scope="col"><span id="itemWeightTranslation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="itemslisttbody">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="characterspage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><span id="charactersTranslation"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="clearbtnch"><span id="clearTranslation5"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="charactersearch" onkeyup="AdminPanel.SearchCharacters()"
+                                                            placeholder="Search" aria-label=""
+                                                            aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="characterslist">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <table class="table table-sm table" id="characterslisttable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="NamecharactersTranslation"></span></th>
+                                                                <th scope="col"><span id="CharNamecharactersTranslation"></span></th>
+                                                                <th scope="col"><span id="CitIdcharactersTranslation"></span></th>
+                                                                <th scope="col"><span id="ActionscharactersTranslation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="characterslisttbody">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid" id="jobpage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 float-left font-weight-bold text-primary"><span id="jobListTranslate"></span></h6>
+                                        <div class="btn btn-xs m-0 btn-success float-right" id="refreshjobbtn"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="list-group list-group-root well" id="joblist">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid" id="serverpage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 float-left font-weight-bold text-primary"><span id="ServerMetricsTranslation2"></span></h6>
+                                        <div class="btn btn-xs m-0 btn-success float-right collapsebtn"
+                                            data-toggle="collapse" title="Collapse" href="#servermetricslist"><i class="fas fa-window-minimize"></i></div>
+                                        <div class="btn btn-xs m-0 btn-success float-right" id="refreshdbbtn"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="list-group list-group-root well" id="servermetricslist">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-md-8 mb-4">
+                                                        <div class="card border-left-primary shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                                            <span id="MetricsOwnedVehiclesTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricsvehiclescount">645</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-car fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-md-8 mb-4">
+                                                        <div class="card border-left-danger shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                                            <span id="MetricsBansTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricsbanscount">645</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-gavel fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-md-8 mb-4">
+                                                        <div class="card border-left-warning shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                            <span id="MetricsCharactersTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricscharactercount">3,431</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i
+                                                                            class="fas fa-comments fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-md-6 mb-4">
+                                                        <div class="card border-left-primary shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                                            <span id="MetricsUniquePlayersTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricsunique">3,431</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-3 col-md-6 mb-4">
+                                                        <div class="card border-left-success shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                                            <span id="MetricsCashTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricscash">3,431</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i
+                                                                            class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 mb-4">
+                                                        <div class="card border-left-success shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                                            <span id="MetricsBankTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricsbank">3,431</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i
+                                                                            class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 mb-4">
+                                                        <div class="card border-left-primary shadow h-100 py-2">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div
+                                                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                                            <span id="MetricsInvTranslation"></span>
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold"
+                                                                            id="metricsitems">3,431</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-box fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="banpage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 float-left font-weight-bold text-primary"><span id="BanListTranslation"></span></h6>
+                                        <div class="btn btn-xs m-0 btn-success float-right" id="refreshbansbtn"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="list-group list-group-root well">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-lg-12">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-danger" type="button"
+                                                                    id="clearbtnbans"><span id="clearTranslation6"></span></button>
+                                                            </div>
+                                                            <input type="text" class="form-control" type="text"
+                                                                id="bansearch" onkeyup="AdminPanel.SearchBans()"
+                                                                placeholder="Search" aria-label=""
+                                                                aria-describedby="basic-addon1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="banslist">
+                                                    <div class="col-xl-12 col-lg-12">
+                                                        <table class="table table-sm table" id="banslisttable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col"><span id="BanListIdTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListSteamTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListLicenseTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListIPTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListReasonTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListBannedTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListExpireTranslation"></span></th>
+                                                                    <th scope="col"><span id="BanListActionsTranslation"></span></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="banslisttbody">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="adminchatpage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 float-left font-weight-bold text-primary"><span id="adminChatTranslation2"></span></h6>
+                                        <!--
+                                                <div class="btn btn-xs m-0 btn-success float-right" id="refreshbansbtn" data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                            -->
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="adminChatCard">
+                                        <div class="card-body">
+                                            <!--
+                                                    <div class="row">
+                                                        <div class="col-xl-12 col-lg-12">
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <button class="btn btn-danger" type="button" id="clearbtnbans">Clear</button>
+                                                                </div>
+                                                                <input type="text" class="form-control"  type="text" id="bansearch" onkeyup="AdminPanel.SearchBans()" placeholder="Search" aria-label="" aria-describedby="basic-addon1">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                -->
+                                            <div class="row" id="adminchatrow">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div id="adminchatbox" style="padding-bottom:2.5rem !important">
+                                                        <ul id="adminchatboxul"
+                                                            style="list-style-type:none;padding-left:0;">
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="input-group mt-2 position-absolute bottom-0 start-0"
+                                                        style="width:98% !important">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-primary" type="button"
+                                                                id="adminchatsend"><span id="sendTranslation"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="adminchattext" placeholder="Type a message here..."
+                                                            aria-label="" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" id="reportspage">
+                        <!-- Content Row -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 float-left font-weight-bold text-primary"><span id="ReportsTranslation"></span></h6>
+                                        <div class="btn btn-xs m-0 btn-success float-right" id="refreshreportsbtn"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="quickActionsCard">
+                                        <div class="card-body">
+                                            <div class="list-group list-group-root well">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-lg-12">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-danger" type="button"
+                                                                    id="clearbtnreports"><span id="clearTranslation7"></span></button>
+                                                            </div>
+                                                            <input type="text" class="form-control" type="text"
+                                                                id="reportsearch" onkeyup="AdminPanel.SearchReports()"
+                                                                placeholder="Search" aria-label=""
+                                                                aria-describedby="basic-addon1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="reportslist">
+                                                    <div class="col-xl-12 col-lg-12">
+                                                        <table class="table table-sm table" id="reportslisttable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col"><span id="ReportIdTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportReporterTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportTimeTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportClaimedTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportTypeTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportSubjectTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportInfoTranslation"></span></th>
+                                                                    <th scope="col"><span id="ReportActionsTranslation"></span></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="reportslisttbody">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                    <div class="container-fluid" id="playerlistpage">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 font-weight-bold text-primary float-left" id="numplayers"></h6>
+                                        <div class="btn btn-xs m-0 btn-success float-right" id="refreshbtn"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="playerListCard">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="clearbtn"><span id="clearTranslation8"></span></button>
+                                                        </div>
+                                                        <input type="text" class="form-control" type="text"
+                                                            id="playersearch" onkeyup="AdminPanel.SearchPlayers()"
+                                                            placeholder="Search" aria-label=""
+                                                            aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="mainplayerlist">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <table class="table table-sm table" id="playerlisttable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="PlayerIdTranslation"></span></th>
+                                                                <th scope="col"><span id="PlayerSteamTranslation"></span></th>
+                                                                <th scope="col"><span id="PlayerCharacterTranslation"></span></th>
+                                                                <th scope="col"><span id="PlayerGameTranslation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="mainplayerlist2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid" id="playerpage">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="card shadow">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <div class="btn btn-xs m-0 btn-danger float-left" id="goback"
+                                            data-toggle="tooltip" title="Go Back"><i class="fas fa-undo-alt"></i></div>
+                                        <div class="btn btn-xs m-0 btn-success float-left ml-1" id="refresh"
+                                            data-toggle="tooltip" title="Refresh"><i class="fas fa-sync-alt"></i></div>
+                                        <h6 class="ml-3 font-weight-bold text-primary float-left mt-2"><span id="PlayerInformationTranslation"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="playerInformationCard">
+                                        <div class="card-body">
+                                            <!-- Content Row -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerCharNameTranslation"></span></strong> <span
+                                                                    id="charname"></span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerCitizenTranslation"></span></strong> <span
+                                                                    id="citizenid"></span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerGenderTranslation"></span></strong> <span id="gender"></span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerNationalityTranslation"></span></strong> <span
+                                                                    id="nationality"></span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerCashTranslation"></span></strong> <span style="color:limegreen"
+                                                                    id="cash"></span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerBankTranslation"></span></strong> <span style="color:limegreen"
+                                                                    id="bank"></span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerPhoneTranslation"></span></strong> <span
+                                                                    id="phoneno"></span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerJailTranslation"></span></strong> <span id="injail"></span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerJobTranslation"></span></strong> <span id="job"></span> <span id="rank"></span> (<span id="PlayerDutyTranslation"></span> <span id="duty"></span> - <span id="PlayerBossTranslation"></span> <span id="jobboss"></span>)
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerJobTranslation"></span>Last online:</strong> <span id="lastOnline"></span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerGangTranslation"></span></strong> <span id="gang"></span> <span id="gangrank"></span> (<span id="PlayerBossTranslation2"></span> <span id="gangboss"></span>)
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerVehiclesTranslation"></span></strong> <span id="amountofVehicles"></span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerHealthTranslation"></span></strong> <span id="health"></span>
+                                                            </h5>
+                                                            <div class="progress">
+                                                                <div id="healthprogress"
+                                                                    class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                                                    role="progressbar" aria-valuenow="75"
+                                                                    aria-valuemin="0" aria-valuemax="100"
+                                                                    style="width: 75%"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerArmourTranslation"></span></strong> <span id="armour"></span>
+                                                            </h5>
+                                                            <div class="progress">
+                                                                <div id="armourprogress"
+                                                                    class="progress-bar bg-light progress-bar-striped progress-bar-animated"
+                                                                    role="progressbar" aria-valuenow="75"
+                                                                    aria-valuemin="0" aria-valuemax="100"
+                                                                    style="width: 75%"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div><br />
+                                                    <div class="row">
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerFoodTranslation"></span></strong> <span id="hunger"></span>
+                                                            </h5>
+                                                            <div class="progress">
+                                                                <div id="foodprogress"
+                                                                    class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                                                    role="progressbar" aria-valuenow="75"
+                                                                    aria-valuemin="0" aria-valuemax="100"
+                                                                    style="width: 75%"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerWaterTranslation"></span></strong> <span id="thirst"></span>
+                                                            </h5>
+                                                            <div class="progress">
+                                                                <div id="waterprogress"
+                                                                    class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                    role="progressbar" aria-valuenow="75"
+                                                                    aria-valuemin="0" aria-valuemax="100"
+                                                                    style="width: 75%"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div><br />
+                                                    <div class="row">
+                                                        <div class="col-md-12 identifier">
+                                                            <h5>
+                                                                <strong><span id="PlayerIdentifiersTranslation"></span></strong> <code
+                                                                    id="identifiers"></code>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card shadow">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary float-left"><span id="PlayerInteractionTranslation"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="playerInteractionCard">
+                                        <div class="card-body">
+                                            <!-- Content Row -->
+                                            <div class="row" style="padding-left:15px">
+                                                <div id="onlineactions">
+                                                    <span id="PlayerGeneralActionTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Revive" data-action="revive">
+                                                        <i class="fa fa-medkit fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Max Food/Water" data-action="feed">
+                                                        <i class="fa fa-utensils fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Relieve Stress" data-action="stress" id="relieveStress">
+                                                        <i class="fa fa-grin-beam-sweat fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Set Player Ped Model" data-action="setpedmodel">
+                                                        <i class="fa fa-male fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Give Clothing Menu" data-action="clothing">
+                                                        <i class="fa fa-tshirt fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Add Current Vehicle to Player's Garage"
+                                                        data-action="savecar" id="saveCar">
+                                                        <i class="fa fa-car fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Save Player to Database" data-action="save" id="savePlayer">
+                                                        <i class="fa fa-save fa-lg"></i>
+                                                    </button><br />
+                                                    <span id="PlayerTeleportActionsTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Goto" data-action="goto">
+                                                        <i class="fa fa-sign-in-alt fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Bring" data-action="bring">
+                                                        <i class="fa fa-sign-out-alt fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary action" data-toggle="tooltip"
+                                                        title="Send Back" data-action="sendback">
+                                                        <i class="fa fa-hiking fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-primary dropdown-toggle"
+                                                        data-toggle="dropdown" data-toggle-second="tooltip"
+                                                        title="Send to Location">
+                                                        <i class="fa fa-map-pin fa-lg"></i>
+                                                    </button>
+                                                    <button class="dropdown-menu" role="menu">
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtopillbox">Pillbox</a>
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtolegion">Legion Square</a>
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtolsia">LS International Airport</a>
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtolsc">LS Customs</a>
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtosandy">Sandy Shores</a>
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtograpeseed">Grapeseed</a>
+                                                        <a class="dropdown-item action" href="#"
+                                                            data-action="sendtopaleto">Paleto Bay</a>
+                                                    </button>
+                                                    <br />
+                                                    <span id="PlayerSurveillanceActionTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-warning action" data-toggle="tooltip"
+                                                        title="Screenshot" data-action="screenshot">
+                                                        <i class="fa fa-file-image fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-warning action" data-toggle="tooltip"
+                                                        title="Spectate" data-action="spectate">
+                                                        <i class="fa fa-eye fa-lg"></i>
+                                                    </button><br />
+                                                    <span id="PlayerMonetaryActionTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Give Cash" data-action="givecash">
+                                                        <i class="fas fa-money-bill fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action" data-toggle="tooltip"
+                                                        title="Remove Cash" data-action="removecash">
+                                                        <i class="fas fa-money-bill fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Give Bank Money" data-action="givebank">
+                                                        <i class="fas fa-money-check-alt fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action" data-toggle="tooltip"
+                                                        title="Remove Bank Money" data-action="removebank">
+                                                        <i class="fas fa-money-check-alt fa-lg"></i>
+                                                    </button><br />
+                                                    <span id="PlayerJobGangActionTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Set Job" data-action="setjob">
+                                                        <i class="fas fa-user-plus fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action" data-toggle="tooltip"
+                                                        title="Remove from Job" data-action="removejob">
+                                                        <i class="fas fa-user-minus fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Set Gang" data-action="setgang" id="setGangButton">
+                                                        <i class="fas fa-users fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action" data-toggle="tooltip"
+                                                        title="Remove from Gang" data-action="removegang" id="setGangButton">
+                                                        <i class="fas fa-users-slash fa-lg"></i>
+                                                    </button><br />
+                                                    <span id="PlayerInventoryActionTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-success action" data-toggle="tooltip"
+                                                        title="Give Item" data-action="giveitem">
+                                                        <i class="fa fa-plus-square fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-warning action" data-toggle="tooltip"
+                                                        title="Open Inventory" data-action="openinv">
+                                                        <i class="fa fa-box-open fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Clear Inventory"
+                                                        data-action="clearinv">
+                                                        <i class="fa fa-trash-alt fa-lg"></i>
+                                                    </button><br />
+                                                    <span id="PlayerPunishmentActionTranslation"></span><br />
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Cuff/Uncuff" data-action="cuff">
+                                                        <i class="fa fa-handcuffs fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Freeze/Unfreeze" data-action="freeze">
+                                                        <i class="fa fa-icicles fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Kill" data-action="kill">
+                                                        <i class="fa fa-skull-crossbones fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Kick" data-action="kick">
+                                                        <i class="fa fa-user-minus fa-lg"></i>
+                                                    </button>
+                                                </div>
+                                                <br />
+                                                <span id="PlayerOfflineActionTranslation" style="width:100%"></span>
+                                                <div id="offlineactions">
+                                                    <button class="btn btn-lg btn-primary action action-danger"
+                                                        data-toggle="tooltip" title="Check Warnings"
+                                                        data-action="checkwarn">
+                                                        <i class="fa fa-user-tag fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Warn" data-action="warn">
+                                                        <i class="fa fa-user-tag fa-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-lg btn-danger action action-danger"
+                                                        data-toggle="tooltip" title="Ban" data-action="ban">
+                                                        <i class="fa fa-user-slash fa-lg"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- /.container-fluid -->
+                    <div class="container-fluid" id="leaderboardPage">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-12">
+                                    <!-- Card Header - Accordion -->
+                                    <div class="d-block card-header py-3">
+                                        <h6 class="mt-2 font-weight-bold text-primary float-left" id="numplayers"><span id="LeaderboardsTranslation"></span></h6>
+                                    </div>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse show" id="Leaderboardcard">
+                                        <!-- This is the cash -->
+                                        <div class="card-body">
+                                            <!-- COME BACK HERE -->
+                                            <div class="row" id="mainleaderboard">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <h5><span id="cashLeaderboardTranslation"></span></h5>
+                                                    <table class="table table-sm table" id="cashLeaderboardtable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="cashLeaderboard1Translation"></span></th>
+                                                                <th scope="col"><span id="cashLeaderboard2Translation"></span></th>
+                                                                <th scope="col"><span id="cashLeaderboard3Translation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="maincashleaderboard2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- This is the bank -->
+                                        <div class="card-body">
+                                            <!-- COME BACK HERE -->
+                                            <div class="row" id="mainleaderboard2">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <h5><span id="bankLeaderboardTranslation"></span></h5>
+                                                    <table class="table table-sm table" id="bankLeaderboardtable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="BankLeaderboard1Translation"></span></th>
+                                                                <th scope="col"><span id="BankLeaderboard2Translation"></span></th>
+                                                                <th scope="col"><span id="BankLeaderboard3Translation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="mainbankleaderboard2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- This is the crpyto -->
+                                        <div class="card-body">
+                                            <!-- COME BACK HERE -->
+                                            <div class="row" id="mainleaderboard3">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <h5><span id="CryptoLeaderboardTranslation"></span></h5>
+                                                    <table class="table table-sm table" id="cryptoLeaderboardtable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="CryptoLeaderboard1Translation"></span></th>
+                                                                <th scope="col"><span id="CryptoLeaderboard2Translation"></span></th>
+                                                                <th scope="col"><span id="CryptoLeaderboard3Translation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="maincryptoleaderboard2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- This is the bank -->
+                                        <div class="card-body coinHidden" hidden="true">
+                                            <!-- COME BACK HERE -->
+                                            <div class="row" id="mainleaderboard4">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <h5><span id="CoinLeaderboardTranslation"></span></h5>
+                                                    <table class="table table-sm table" id="coinLeaderboardtable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="CoinLeaderboard1Translation"></span></th>
+                                                                <th scope="col"><span id="CoinLeaderboard2Translation"></span></th>
+                                                                <th scope="col"><span id="CoinLeaderboard3Translation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="maincoinleaderboard2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- COME BACK HERE -->
+                                            <!-- This is the vehicles -->
+                                            <div class="row" id="mainleaderboard5">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <h5><span id="VehiclesLeaderboardTranslation"></span></h5>
+                                                    <table class="table table-sm table" id="vehiclesLeaderboardtable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="VehiclesLeaderboard1Translation"></span></th>
+                                                                <th scope="col"><span id="VehiclesLeaderboard2Translation"></span></th>
+                                                                <th scope="col"><span id="VehiclesLeaderboard3Translation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="mainvehiclesleaderboard2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- COME BACK HERE -->
+                                            <!-- This is the vehicles -->
+                                            <div class="row" id="mainleaderboard6">
+                                                <div class="col-xl-12 col-lg-12">
+                                                    <h5><span id="LSLeaderboardTranslation"></span></h5>
+                                                    <table class="table table-sm table" id="lastseenLeaderboardtable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span id="LSLeaderboard1Translation"></span></th>
+                                                                <th scope="col"><span id="LSLeaderboard2Translation"></span></th>
+                                                                <th scope="col"><span id="LSLeaderboard3Translation"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="mainlastseenleaderboard2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <!-- End of Main Content -->
+                <div class="hide justify-content-center h-100 modal fade" tabindex="-1" role="dialog"
+                    data-backdrop="static" id="confirm">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><span id="AreYouSureTranslation"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="confirm-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn confirm-yes btn-success"><span id="ContinueTranslation"></span></button>
+                                <button type="button" class="btn confirm-no btn-secondary"
+                                    data-dismiss="modal"><span id="CancelTranslation"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hide justify-content-center h-100 modal fade" tabindex="-1" role="dialog"
+                    data-backdrop="static" id="settings">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><span id="SettingsTranslation"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="confirm-body">
+                                <div class="form-check pl-0">
+                                    <label for="themesel"><span id="ThemeTranslation"></span></label><br />
+                                    <select class="form-select" id="themesel" aria-label="Theme">
+                                        <option value="0" selected>Default Theme</option>
+                                        <option value="1">Silver</option>
+                                        <option value="2">Green</option>
+                                        <option value="3">Blue Day</option>
+                                        <option value="4">Red Hot</option>
+                                        <option value="5">Dark Night</option>
+                                        <option value="6">Blue Banana</option>
+                                    </select><br/><br/>
+                                    <label for="darkmode"><span id="DarkModeTranslation"></span></label><br />
+                                    <input id="darkmode" type="checkbox" data-toggle="toggle"><br />
+                                    <label for="seethroughmode"><span id="SeeModeTranslation"></span></label><br />
+                                    <input id="seethroughmode" type="checkbox" data-toggle="toggle"><br />
+                                    <label for="Notifications"><span id="NotificationsTranslation"></span></label><br />
+                                    <input id="Notifications" type="checkbox" data-toggle="toggle"><br />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><span id="CloseTranslation"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide justify-content-center h-100 modal fade" tabindex="-1" role="dialog"
+                    data-backdrop="static" id="warningsmodal">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><span id="WarningsTranslation"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="warnings-body">
+                                <div class="row" id="warninglist">
+                                    <div class="col-xl-12 col-lg-12">
+                                        <table class="table table-sm table" id="warninglisttable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"><span id="WarningsIDTranslation"></span></th>
+                                                    <th scope="col"><span id="WarningsReasonTranslation"></span></th>
+                                                    <th scope="col"><span id="WarningsWarnedTranslation"></span></th>
+                                                    <th scope="col"><span id="WarningsIssueTranslation"></span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="warninglistbody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><span id="CloseTranslation2"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide justify-content-center h-100 modal fade" tabindex="-1" role="dialog" data-backdrop="static" id="reportmodal">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><span id="ReportInfoTranslation2"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="warnings-body">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12" id="reportinfobox">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" id="reportsFooter">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><span id="CloseTranslation3"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>919ADMIN <span id="919adminversion"></span><br />Copyright &copy; 2021-2023 919DESIGN <img
+                                    src="assets/img/ca.png" class="mb-1" /></span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+            </div>
+            <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Page Wrapper -->
+    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Bootstrap core JavaScript-->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap4-toggle.min.js"></script>
+    <script src="assets/js/bootstrap-toaster.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/sb-admin-2.js"></script>
+    <script src="assets/js/fancyTable.min.js"></script>
+    <script src="assets/js/jquery.minicolors.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -140,20 +140,20 @@ $(document).on('click', '#employment-job-extras-icon', function(e){
 
     if (QB.Phone.Data.PhoneJobs[job].grades[grade].isboss){
         if (onDuty && currentJob == job) {
-            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Go Off Duty</div>
+            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Switch Job</div>
             <div class="list-content" id='hire-fucker' ><i class="fas fa-user-plus"></i>Hire</div>
             <div class="list-content" id='charge-mf'><i class="fas fa-credit-card"></i>Charge Customer</div>`
         } else {
-            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Go On Duty</div>
+            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Switch Job</div>
             <div class="list-content" id='hire-fucker' ><i class="fas fa-user-plus"></i>Hire</div>
             <div class="list-content" id='charge-mf'><i class="fas fa-credit-card"></i>Charge Customer</div>`
         }
     }else{
         if (onDuty && currentJob == job) {
-            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Go Off Duty</div>
+            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Switch Job</div>
             <div class="list-content" id='charge-mf'><i class="fas fa-credit-card"></i>Charge Customer</div>`
         } else {
-            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Go On Duty</div>
+            var AddOption = `<div class="list-content" id='clock-in' ><i class="fas fa-clock"></i>Switch Job</div>
             <div class="list-content" id='charge-mf'><i class="fas fa-credit-card"></i>Charge Customer</div>`
         }
     }

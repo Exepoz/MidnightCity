@@ -38,9 +38,10 @@ $(document).on('click', '#settings-app-submit', function(e){
 
     var checkbox = document.getElementById("checkbox").checked;
     var customurl = $('.settings-customurl').val()
+    var discordUsername = $('.settings-discordname').val()
 
     if (checkbox != false && customurl != ''){
-        QB.Phone.Notifications.Add("fas fa-cog", "SETTINGS", "You can only pick one option!")
+        QB.Phone.Notifications.Add("fas fa-cog", "SETTINGS", "You can only pick one background option!")
         return
     }
 
@@ -57,6 +58,16 @@ $(document).on('click', '#settings-app-submit', function(e){
             background: customurl,
         }))
     }
+
+    if (discordUsername) {
+        QB.Phone.Notifications.Add("fas fa-user", "SETTINGS", "Discord Username Updated!")
+        $.post('https://qb-phone/updateDiscordName', JSON.stringify({
+            name: discordUsername,
+        }))
+    }
+
+
     $('.settings-customurl').val("")
+    $('.settings-discordname').val("")
     $('#settings-app-menu').fadeOut(350);
 });

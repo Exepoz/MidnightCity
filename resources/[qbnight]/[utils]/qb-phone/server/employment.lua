@@ -217,8 +217,9 @@ end)
 
 ---- ** Handles the changing of someone grade within the job ** ----
 
-RegisterNetEvent('qb-phone:server:gradesHandler', function(Job, CID, grade)
-    local src = source
+RegisterNetEvent('qb-phone:server:gradesHandler', function(Job, CID, grade, serversource)
+    print('changeing grade', Job, CID, grade, serversource)
+    local src = serversource or source
     local srcPlayer = QBCore.Functions.GetPlayer(src)
 
     if not srcPlayer then return print("no source") end
@@ -262,16 +263,17 @@ RegisterNetEvent('qb-phone:server:clockOnDuty', function(Job)
     local CID = Player.PlayerData.citizenid
 
     if CachedPlayers[CID][Job] and CachedJobs[Job].employees[CID] then
+        if Player.PlayerData.job.name == Job then notifyPlayer(src, "You're already working here.") TriggerClientEvent('qb-phone:client:clearAppAlerts', src) return end
         local grade = type(CachedJobs[Job].employees[CID].grade) ~= "number" and tonumber(CachedJobs[Job].employees[CID].grade) or CachedJobs[Job].employees[CID].grade
         Player.Functions.SetJob(Job, grade)
         Wait(50)
-        if Player.PlayerData.job.onduty then
-            notifyPlayer(src, "You have signed off duty")
-            Player.Functions.SetJobDuty(false)
-        else
-            notifyPlayer(src, "You have signed on duty")
-            Player.Functions.SetJobDuty(true)
-        end
+        notifyPlayer(src, "You have switched jobs.")
+        Player.Functions.SetJobDuty(false)
+        -- if Player.PlayerData.job.onduty then
+        -- else
+        --     notifyPlayer(src, "You have signed on duty")
+        --     Player.Functions.SetJobDuty(true)
+        -- end
         TriggerClientEvent('qb-phone:client:clearAppAlerts', src)
     end
 end)

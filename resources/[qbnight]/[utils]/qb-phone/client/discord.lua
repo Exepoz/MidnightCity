@@ -194,7 +194,7 @@ end)
 RegisterNUICallback('SendGroupChatMessage', function(data, cb)
     local Player = PhoneData.PlayerData.citizenid
     local Message = {
-        memberName = PhoneData.PlayerData.charinfo.firstname .. ' ' ..  PhoneData.PlayerData.charinfo.lastname,
+        memberName = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. ' ' ..  PhoneData.PlayerData.charinfo.lastname,
         message = data.message,
         room_id = data.roomID
     }
@@ -228,7 +228,7 @@ RegisterNUICallback('JoinGroupChat', function(data, cb)
     local Player = PhoneData.PlayerData.citizenid
     local room = doesRoomExist(roomID)
     local members, member
-    local playerName = PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname
+    local playerName = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname
 
     if not room then
         cb(false)
@@ -245,7 +245,7 @@ RegisterNUICallback('JoinGroupChat', function(data, cb)
                             member  = {}
                             member[Player] = {
                                 cid = PhoneData.PlayerData.citizenid,
-                                name = PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
+                                name = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
                                 notify = true
                             }
 
@@ -275,7 +275,7 @@ RegisterNUICallback('JoinGroupChat', function(data, cb)
                             member = {}
                             member[Player] = {
                                 cid = PhoneData.PlayerData.citizenid,
-                                name = PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
+                                name = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
                                 notify = true
                             }
                             for k, room2 in pairs(PhoneData.ChatRooms) do
@@ -308,7 +308,7 @@ RegisterNUICallback('JoinGroupChat', function(data, cb)
                     member  = {}
                     member[Player] = {
                         cid = PhoneData.PlayerData.citizenid,
-                        name = PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
+                        name = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
                         notify = true
                     }
 
@@ -340,7 +340,7 @@ RegisterNUICallback('JoinGroupChat', function(data, cb)
 
                     member[Player] = {
                         cid = PhoneData.PlayerData.citizenid,
-                        name = PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
+                        name = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
                         notify = true
                     }
 
@@ -485,7 +485,7 @@ end)
 
 RegisterNUICallback('CreateDiscordRoom', function(data, cb)
     local roomData = {
-        room_owner_name = PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
+        room_owner_name = PhoneData.MetaData.discordName or PhoneData.PlayerData.charinfo.firstname .. " " .. PhoneData.PlayerData.charinfo.lastname,
         room_name = data.name,
         room_pin = data.pass and data.pass ~= '' and data.pass or false,
     }
