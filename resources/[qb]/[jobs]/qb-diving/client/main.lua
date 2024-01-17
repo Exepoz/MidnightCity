@@ -274,8 +274,10 @@ local function CreateGroupPed()
         exports['qb-target']:AddTargetEntity(ped,{
             options = {
                 {
-                    type = 'client',
-                    event = '',
+                    type = 'server',
+                    action = function()
+                        TriggerServerEvent('qb-diving:server:startgroup', k)
+                    end,
                     icon = 'fas fa-fish',
                     label = 'Create A Group!',
                 },
@@ -313,23 +315,22 @@ RegisterNetEvent('qb-diving:client:NewLocations', function()
     QBCore.Functions.TriggerCallback('qb-diving:server:GetDivingConfig', function(config, area)
         Config.CoralLocations = config
         setDivingLocation(area)
-        TriggerServerEvent('qb-phone:server:sendNewMail', {
-            sender = 'Dave The Diver',
-            subject = 'Diving',
-            message = 'Located a cool spot for you to dive in, find it on the gps.',
-            button = {}
-        })
     end)
 end)
 
-RegisterNetEvent('qb-diving:client:Start', function(id)
+RegisterNetEvent('qb-diving:client:Start', function(getspawn)
+    TriggerServerEvent('qb-phone:server:sendNewMail', {
+        sender = 'Dave The Diver',
+        subject = 'Diving',
+        message = 'Located a cool spot for you to dive in, find it on the gps.',
+        button = {}
+    })
     TriggerEvent('qb-diving:client:NewLocations')
     local model = `dinghy`
     RequestModel(model)
     while not HasModelLoaded(model) do
         Wait(0)
     end
-    local getspawn = Config.SpawnBoat[id][math.random(1,#Config.SpawnBoat[id])]
     boat = CreateVehicle(model, getspawn.x, getspawn.y, getspawn.z, getspawn.w, true, false)
     QBCore.Functions.Notify('Head Over To The Boat Marked On Your GPS.', 'success')
     local blip = AddBlipForCoord(getspawn.x, getspawn.y, getspawn.z)
@@ -339,6 +340,7 @@ RegisterNetEvent('qb-diving:client:Start', function(id)
     while not IsPedInVehicle(PlayerPedId(),boat) do 
         Wait(10)
     end
+    TriggerServerEvent('qb-diving:server:yes')
     RemoveBlip(blip)
 end)
 
@@ -349,6 +351,7 @@ end)
 RegisterNetEvent('qb-diving:client:UpdateBox', function(area, box, bool)
     Config.CoralLocations[area].coords.Box[box].PickedUp = bool
 end)
+
 
 RegisterNetEvent('qb-diving:client:CallCops', function(coords, msg)
     PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)

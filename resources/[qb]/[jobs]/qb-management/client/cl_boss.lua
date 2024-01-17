@@ -101,6 +101,14 @@ RegisterNetEvent('qb-bossmenu:client:OpenMenu', function()
         },
     }
 
+
+    -- if exports['mdn-extras']:CheckCanDoOnlineOrders(PlayerJob.name) then
+    --     bossMenu[#bossMenu + 1] = {
+    --         header = "Order Online",
+    --         txt = "www.BorealExpress.net",
+    --         icon = "fa-solid fa-computer",
+    --         params = {event = "OnlineOrders:client:Menu"}}
+    -- end
     for _, v in pairs(DynamicMenuItems) do
         bossMenu[#bossMenu + 1] = v
     end
@@ -128,7 +136,7 @@ RegisterNetEvent('qb-bossmenu:client:employeelist', function()
         for _, v in pairs(cb) do
             EmployeesMenu[#EmployeesMenu + 1] = {
                 header = v.name,
-                txt = v.grade.name,
+                txt = (v.duty and "On Duty  | " or "Off Duty | ")..QBCore.Shared.Jobs[PlayerJob.name].grades[tostring(v.grade)].name,
                 icon = "fa-solid fa-circle-user",
                 params = {
                     event = "qb-bossmenu:client:ManageEmployee",

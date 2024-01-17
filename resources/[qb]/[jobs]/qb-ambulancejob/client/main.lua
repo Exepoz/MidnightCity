@@ -55,6 +55,7 @@ local function GetAvailableBed(bedId)
     if bedId == nil then
         for k, _ in pairs(Config.Locations['beds']) do
             if not Config.Locations['beds'][k].taken then
+                print(#(pos - vector3(Config.Locations['beds'][k].coords.x, Config.Locations['beds'][k].coords.y, Config.Locations['beds'][k].coords.z)))
                 if #(pos - vector3(Config.Locations['beds'][k].coords.x, Config.Locations['beds'][k].coords.y, Config.Locations['beds'][k].coords.z)) < 500 then
                     retval = k
                 end

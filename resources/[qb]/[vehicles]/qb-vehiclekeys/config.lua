@@ -10,7 +10,7 @@ Config.RemoveLockpickAdvanced = 0.2 -- Chance to remove advanced lockpick on fai
 Config.LockPickDoorEvent = function(item) -- This function is called when a player attempts to lock pick a vehicle
     local attempts = 2
     if item == 'advanced-lockpick' then attempts = 3 end
-    local s = exports["t3_lockpick"]:startLockpick(item, 1, 3, attempts)
+    local s = exports["lockpick"]:startLockpick(item, 1, 3, attempts)
     LockpickFinishCallback(s)
 end
 

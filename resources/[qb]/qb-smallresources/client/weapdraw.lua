@@ -87,6 +87,7 @@ local weapons = {
     'WEAPON_CARBINERIFLE_MK2',
     'WEAPON_COMBATMG_MK2',
     'WEAPON_HEAVYSNIPER_MK2',
+    'WEAPON_HUNGTINGRIFLE',
     'WEAPON_KNUCKLE',
     'WEAPON_MARKSMANRIFLE_MK2',
     'WEAPON_PRECISIONRIFLE',
@@ -233,6 +234,7 @@ RegisterNetEvent('weapons:client:DrawWeapon', function()
                             holstered = false
                             canFire = true
                         else
+                            print(1)
                             canFire = false
                             CeaseFire()
                             TaskPlayAnimAdvanced(ped, 'reaction@intimidation@1h', 'outro', pos.x, pos.y, pos.z, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
@@ -266,6 +268,7 @@ RegisterNetEvent('weapons:client:DrawWeapon', function()
                             holstered = false
                             canFire = true
                         else
+                            print(2)
                             SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
                             TaskPlayAnimAdvanced(ped, 'reaction@intimidation@1h', 'intro', pos.x, pos.y, pos.z, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(1000)

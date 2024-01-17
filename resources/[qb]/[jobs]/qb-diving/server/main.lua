@@ -1,6 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local currentDivingArea = math.random(1, #Config.CoralLocations)
 local availableCoral = {}
+local currentdivegroup = {}
 
 -- Functions
 
@@ -28,6 +29,54 @@ local function hasCoral(src)
 end
 
 -- Events
+
+RegisterNetEvent('qb-diving:server:startgroup', function(passed)
+    local src = source
+
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    if not Player then return end
+    local group = exports['qb-phone']:GetGroupByMembers(src) or exports['qb-phone']:CreateGroup(src, "Diving-"..Player.PlayerData.citizenid)
+
+    if not group then return end
+
+    local groupSize = exports['qb-phone']:getGroupSize(group)
+
+    if groupSize > Config.MaxMembers then TriggerClientEvent('QBCore:Notify', src, "Your group cannot have more than "..Config.MaxMembers.." Group Members for this job!", "error") return end
+
+    if exports['qb-phone']:getJobStatus(group) ~= "WAITING" then TriggerClientEvent('QBCore:Notify', src, "Your group is currently busy with a different job...", "error") return end
+    if not exports['qb-phone']:isGroupLeader(src, group) then TriggerClientEvent('QBCore:Notify', src, "I cannot give you a job if you're not the group leader...", "error") return end
+    
+    local getspawn = Config.SpawnBoat[passed][math.random(1,#Config.SpawnBoat[passed])]
+
+
+    currentdivegroup[group] = {
+        location = getspawn,
+        members = exports['qb-phone']:getGroupMembers(group),
+        coralamount = 0,
+        boxamount = 0,
+        stages = {
+            {name = "Go to the Location", isDone = false, id = 1},
+            {name = "Collect all the Coral "..coralamount.."/", isDone = false, id = 2},
+        },
+    }
+
+    exports['qb-phone']:setJobStatus(group, "Diver Group", currentdivegroup[group].stages)
+
+    local m = currentdivegroup[group].members
+    for i=1, #m do
+        TriggerClientEvent('qb-diving:client:Start', m[i], getspawn)
+    end
+end)
+
+RegisterNetEvent('qb-diving:server:SetJobStatus', function(data)
+    local src = source
+    local group = exports['qb-phone']:GetGroupByMembers(src)
+
+    currentdivegroup[group] = data
+
+    exports['qb-phone']:setJobStatus(group, "Diver Group", currentdivegroup[group].stages)
+end)
 
 RegisterNetEvent('qb-diving:server:CallCops', function(coords)
     for _, Player in pairs(QBCore.Functions.GetQBPlayers()) do
@@ -84,9 +133,9 @@ RegisterNetEvent('qb-diving:server:TakeCoral', function(area, coral, bool, isBox
         end
         TriggerClientEvent('qb-diving:client:UpdateCoral', -1, area, coral, bool)
     else
-        local coralType = math.random(1, #Config.CoralTypes)
-        local amount = math.random(1, Config.CoralTypes[coralType].maxAmount)
-        local ItemData = QBCore.Shared.Items[Config.CoralTypes[coralType].item]
+        local coralType = math.random(1, #Config.Items)
+        local amount = math.random(1, Config.Items[coralType].maxAmount)
+        local ItemData = QBCore.Shared.Items[Config.Items[coralType].item]
         if amount > 1 then
             for _ = 1, amount, 1 do
                 Player.Functions.AddItem(ItemData["name"], 1)

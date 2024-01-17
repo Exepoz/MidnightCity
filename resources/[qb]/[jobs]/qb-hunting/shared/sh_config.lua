@@ -3,16 +3,16 @@ Config = {}
 --- Compatibility settings
 
 Config.Resource = GetCurrentResourceName()
-Config.Notify = 'qb' -- 'ox' for ox_lib or 'qb' for QBCore.Functions.Notify
+Config.Notify = 'ox' -- 'ox' for ox_lib or 'qb' for QBCore.Functions.Notify
 Config.Inventory = 'qb' -- 'ox_inventory' or 'qb'
-Config.Target = 'qb' -- 'ox' or 'qb'
+Config.Target = 'ox' -- 'ox' or 'qb'
 Config.Log = 'qb' -- 'ox' or 'qb'
 
 --- Hunting Script Settings
 Config.Huntingrifle = `weapon_huntingrifle`
 
 Config.Area = vector3(-1367.81, 4594.12, 133.65) -- Blip location
-Config.Sell = vector4(1708.68, 4727.69, 42.16, 118.91) -- Taxidermist
+Config.Sell = vector4(0,0,0,0) -- Taxidermist
 
 Config.Hunting = 'all' -- 'bait' if you only want to hunt baited animals or 'all' if you want to skin all dead animals
 Config.OnlyHuntingRifle = true -- Setting this to true only allows players to skin the animal if the animal was killed by a huntingrifle
@@ -20,18 +20,34 @@ Config.OnlyHuntingRifle = true -- Setting this to true only allows players to sk
 --- Script
 
 Config.Prices = { -- Item sale prices
-	carcass = 115,
-	carcass2 = 120,
-	carcass3 = 135,
-	redcarcass = 195,
-	redcarcass2 = 200,
-	redcarcass3 = 230,
-	deerhide = 40,
-	antlers = 350,
-	mtlionpelt = 410,
-	mtlionfang = 410,
-	coyotepelt = 160,
-	boarmeat = 150
+	carcass = math.random(30,55),
+	carcass2 = math.random(40,80),
+	carcass3 = math.random(100,125),
+	redcarcass = math.random(195,224),
+	redcarcass2 = math.random(195,230),
+	redcarcass3 = math.random(195,234),
+	deerhide = math.random(25,50),
+	antlers = math.random(120,170),
+	mtlionpelt = math.random(400,420),
+	mtlionfang = math.random(400,420),
+	coyotepelt = math.random(100,150),
+	boarmeat = math.random(100,150),
+	fish = math.random(25,50),
+	stripedbass = math.random(30,55),
+    bluefish = math.random(40,80),
+    redfish= math.random(100,150),
+    goldfish = math.random(100,125),
+    largemouthbass = math.random(150,170),
+    swordfish = math.random(150,170),
+   	salmon = math.random(150,170),
+    catfish = math.random(150,170),
+	rainbowtrout = math.random(300,360),
+	tigershark =   math.random(300,360),
+	stingraymeat = math.random(400,420),
+	tunafish =     math.random(355,420),
+	killerwhale =  math.random(330,350),
+
+
 }
 
 HuntingZone = lib.zones.poly({ -- Hunting Zone

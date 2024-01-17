@@ -1,0 +1,13 @@
+{
+    "target_blow_fuses": "Zekeringen Opblazen",
+    "target_destroy_generator": "Generator Vernietigen",
+    "missing_items": "Je mist enkele items..",
+    "thermite_failed": "Thermiet mislukt..",
+    "not_enough_cops": "Niet genoeg Politie.. (%s) vereist",
+    "fuses_already_blown": "Het lijkt erop dat de zekeringen al zijn opgeblazen..",
+    "powerplant_hit_title": "[LS Water & Power]",
+    "powerplant_hit_text": "Stroomstoring in de stad, we werken eraan!",
+    "powerplant_restored_text": "De stroom in de stad is hersteld!",
+    "command_help": "Powerplant uitschakelen (Admin)",
+    "command_arg_help": "city of east"
+}

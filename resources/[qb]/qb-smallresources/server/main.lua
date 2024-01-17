@@ -1,6 +1,19 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local vehNitrous = {}
 
+-- Lifts
+RegisterNetEvent('qb-lift:server:BringOthers', function(data)
+    TriggerClientEvent('qb-lift:client:BringOthers', -1, data)
+end)
+
+RegisterNetEvent('malmo-liftRes', function()
+	TriggerClientEvent('hospital:client:Revive', source)
+	TriggerClientEvent("hospital:client:HealInjuries", source, "full")
+end)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
+
 -- Tackle Players
 RegisterNetEvent('tackle:server:TacklePlayer', function(playerId)
     TriggerClientEvent('tackle:client:GetTackled', playerId)

@@ -1,6 +1,7 @@
 Config = Config or {}
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
 Config.CopsChance = 0.5 -- The chance of the cops getting called when a coral gets picked up, this ranges from 0.0 to 1.0
+Config.MaxMembers = 4
 Config.oxygenlevel = 200 -- this is oxygen level you can change this number as you like 
 Config.CoralLocations = {
     [1] = {
@@ -302,6 +303,18 @@ Config.CoralTypes = {
         item = "antipatharia_coral",
         maxAmount = math.random(2, 7),
         price = math.random(50, 70),
+    }
+}
+
+
+Config.Items = {
+    [1] = {
+        item = "lockpick",
+        maxAmount = math.random(1, 5),
+    },
+    [2] = {
+        item = "bandage",
+        maxAmount = math.random(2, 7),
     }
 }
 

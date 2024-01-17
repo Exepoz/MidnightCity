@@ -48,66 +48,66 @@ Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
 Config.GaragePedModel = "s_m_y_hwaycop_01"
 Config.Locations = {
     ["duty"] = {
-        [1] = vector3(442.30, -985.45, 30.28), -- LSPD
-        [2] = vector3(-447.73, 6015.58, 32.28), -- BCSO
-        [3] = vector3(1832.68, 3678.4, 34.28), -- Sandy
+        [1] = vector3(441.91, -981.93, 30.84), -- LSPD
+       --[2] = vector3(-447.73, 6015.58, 32.28), -- BCSO
+       --[3] = vector3(1832.68, 3678.4, 34.28), -- Sandy
     },
     ["vehicle"] = {
-        [1] = vector4(442.1, -1013.92, 28.63, 184.47), -- LSPD
-        [2] = vector4(-458.86, 6031.5, 31.34, 139.15), --BCSO
-        [3] = vector4(1858.95, 3681.95, 33.83, 219.83), -- Sandy
+        [1] = vector4(454.52, -972.94, 25.70, 185.32), -- LSPD
+        --[2] = vector4(-458.86, 6031.5, 31.34, 139.15), --BCSO
+        --[3] = vector4(1858.95, 3681.95, 33.83, 219.83), -- Sandy
     },
     ["vehspawn"] = { -- The numbers [1] must match the numbers in [vehicle]
-        [1] = vector4(440.50, -1026.82, 28.75, 357.24), -- LSPD
-        [2] = vector4(-474.63, 6030.38, 30.95, 226.12), -- BCSO
-        [3] = vector4(1850.89, 3673.04, 33.37, 211.26), -- Sandy
+        [1] = vector4(431.47, -987.51, 25.70, 175.52), -- LSPD
+        --[2] = vector4(-474.63, 6030.38, 30.95, 226.12), -- BCSO
+        --[3] = vector4(1850.89, 3673.04, 33.37, 211.26), -- Sandy
     },
     ["stash"] = {
-        [1] = vector3(467.58, -985.56, 35.06), -- LSPD
-        [2] = vector3(-438.73, 6008.25, 36.99), -- BCSO
-        [3] = vector3(1837.89, 3688.08, 34.19), -- Sandy
+        [1] = vector3(461.13, -995.88, 30.69), -- LSPD
+        --2] = vector3(-438.73, 6008.25, 36.99), -- BCSO
+        --3] = vector3(1837.89, 3688.08, 34.19), -- Sandy
     },
     ["impound"] = {
-        [1] = vector3(473.47, -1001.83, 25.14),
+        [1] = vector3(479.08, -1022.54, 28.01),
         [2] = vector3(1822.14, 3689.16, 33.97),
     },
     ["helicopter"] = {
         [1] = vector4(460.24, -980.18, 43.69, 181.43), -- LSPD
-        [2] = vector4(-462.15, 5994.77, 31.25, 134.84), -- BCSO
+        --[2] = vector4(-462.15, 5994.77, 31.25, 134.84), -- BCSO
     },
     ["helispawn"] = { -- The numbers [1] must match the numbers in [helicopter]
         [1] = vector4(449.16, -981.23, 43.69, 165.79), -- LSPD
-        [2] = vector4(-475.18, 5988.43, 31.72, 317.27), -- BCSO
+        --[2] = vector4(-475.18, 5988.43, 31.72, 317.27), -- BCSO
     },
     ["armory"] = {
-        [1] = vector3(454.71, -1000.20, 35.06), -- LSPD
-        [2] = vector3(-444.12, 6013.53, 37.00), -- BCSO
-        [3] = vector3(1836.2, 3687.01, 34.19), -- Sandy
+        [1] = vector3(482.33, -994.88, 30.71), -- LSPD
+        --[2] = vector3(-444.12, 6013.53, 37.00), -- BCSO
+        --[3] = vector3(1836.2, 3687.01, 34.19), -- Sandy
     },
     ["trash"] = {
-        [1] = vector3(473.88, -991.15, 30.46), -- LSPD
+        [1] = vector3(440.15, -978.25, 30.66), -- LSPD
     },
     ["fingerprint"] = {
-        [1] = vector3(476.70, -990.65, 30.46), -- LSPD
-        [2] = vector3(-452.22, 5997.96, 27.58), --BCSO
+        [1] = vector3(473.14, -1007.01, 26.24), -- LSPD
+        --[2] = vector3(-452.22, 5997.96, 27.58), --BCSO
     },
     ["evidence"] = {
-        [1] = vector3(464.41, -1001.40, 30.46), -- LSPD
-        [2] = vector3(-452.87, 5999.38, 37.00), -- BCSO
-        [3] = vector3(1817.97, 3672.25, 34.2), -- Sandy
+        [1] = vector3(472.09, -994.18, 26.14), -- LSPD
+        --[2] = vector3(-452.87, 5999.38, 37.00), -- BCSO
+        --[3] = vector3(1817.97, 3672.25, 34.2), -- Sandy
     },
     ["labs"] = {
-        [1] = vector3(484.92, -1009.41, 25.47), -- LSPD
+        [1] = vector3(483.26, -988.64, 31.02), -- LSPD
     },
     ["stations"] = {
         [1] = {label = "Los Santos Police Department", coords = vector4(428.23, -984.28, 29.76, 3.5), sprite= 137, scale= 0.7, colour= 29},
-        [2] = {label = "San Andreas State Prison", coords = vector4(1845.903, 2585.873, 45.672, 272.249), sprite= 137, scale= 0.7, colour= 1},
-        [3] = {label = "Blaine County Sheriffs Office", coords = vector4(-448.26, 6007.83, 44.01, 225.93), sprite= 137, scale= 0.7, colour= 47},
+        --[2] = {label = "San Andreas State Prison", coords = vector4(1845.903, 2585.873, 45.672, 272.249), sprite= 137, scale= 0.7, colour= 1},
+        --[3] = {label = "Blaine County Sheriffs Office", coords = vector4(-448.26, 6007.83, 44.01, 225.93), sprite= 137, scale= 0.7, colour= 47},
     },
 }
 
 Config.RepairStations = {
-    enabled = true,
+    enabled = false,
     withanim = false,
     locations = {
         [1] = {
@@ -188,29 +188,29 @@ Config.CarExtras = { -- Extra options to be enabled / disabled
 Config.AuthorizedVehicles = {
     -- Garage 1 vehicles (LSPD)
     [1] = {
-        ["police"] = {label = "Police Car 1", ranks = {1,2}, livery = 1, price = 10},
-        ["police2"] = {label = "Police Car 2", ranks = {1,2}, livery = 1, price = 10},
-        ["police3"] = {label = "Police Car 3", ranks = {3}, livery = 1, price = 10},
-        ["police4"] = {label = "Police Car 4", ranks = {3}, livery = 1, price = 10},
-        ["policeb"] = {label = "Police Car 5", ranks = {3,4}, livery = 1, price = 10},
-        ["policet"] = {label = "Police Car 6", ranks = {3,4}, livery = 1, price = nil},
-        ["fbi"] = {label = "Unmarked FBI", ranks = {3,4}, livery = 1, price = 15},
-        ["fbi2"] = {label = "Unmarked FBI2", ranks = {3,4}, livery = 1, price = nil},
+        ["police"] = {label = "Vic", ranks = {0, 1, 2, 3, 4, 5, 6, 7, 8 , 9, 10}, livery = 1, price = 75},
+        ["police3"] = {label = "Vapid", ranks = {2,3,4,5,6,7,8,9,10}, livery = 1, price = 75},
+        ["police4"] = {label = "Vic Under", ranks = {4,5,6,7,8,9,10}, livery = 1, price = 75},
+        ["Polscout2"] = {label = "Scout", ranks = {4,5,6,7,8,9,10}, livery = 1, price = 75},
+        ["Polpenumbra"] = {label = "Penumbra", ranks = {4,5,6,7,8,9,10}, livery = 1, price = 75},
+        ["Polcoquette"] = {label = "Coquette", ranks = {6,7,8,9,10}, livery = 1, price = 15},
+        ["Polcaracara"] = {label = "CaraCara", ranks = {6,7,8,9,10}, livery = 1, price = 75},
+        ["Polvstr"] = {label = "VSTR", ranks = {6,7,8,9,10}, livery = 1, price = 75},
     },
     -- Garage 2 vehicles (BCSO)
-    [2] = {
-        ["sheriff"] = {label = "Sheriff Car 1", ranks = {1,2}, livery = 1, price = 10},
-        ["sheriff2"] = {label = "Sheriff Car 2", ranks = {2,3,4}, livery = 1, price = 10},
-        ["fbi"] = {label = "Unmarked FBI", ranks = {3,4}, livery = 1, price = 10},
-        ["fbi2"] = {label = "Unmarked FBI2", ranks = {3,4}, livery = 1, price = nil},
-    },
-    -- Garage 1 vehicles (Sandy)
-    [3] = {
-        ["sheriff"] = {label = "Sheriff Car 1", ranks = {1,2}, livery = 1, price = 10},
-        ["sheriff2"] = {label = "Sheriff Car 2", ranks = {2,3,4}, livery = 1, price = 10},
-        ["fbi"] = {label = "Unmarked FBI", ranks = {3,4}, livery = 1, price = 10},
-        ["fbi2"] = {label = "Unmarked FBI2", ranks = {3,4}, livery = 1, price = nil},
-    },
+    --[2] = {
+    --    ["sheriff"] = {label = "Sheriff Car 1", ranks = {1,2}, livery = 1, price = 10},
+    --    ["sheriff2"] = {label = "Sheriff Car 2", ranks = {2,3,4}, livery = 1, price = 10},
+    --    ["fbi"] = {label = "Unmarked FBI", ranks = {3,4}, livery = 1, price = 10},
+    --    ["fbi2"] = {label = "Unmarked FBI2", ranks = {3,4}, livery = 1, price = nil},
+    --},
+    ---- Garage 1 vehicles (Sandy)
+    --[3] = {
+    --    ["sheriff"] = {label = "Sheriff Car 1", ranks = {1,2}, livery = 1, price = 10},
+    --    ["sheriff2"] = {label = "Sheriff Car 2", ranks = {2,3,4}, livery = 1, price = 10},
+    --    ["fbi"] = {label = "Unmarked FBI", ranks = {3,4}, livery = 1, price = 10},
+    --    ["fbi2"] = {label = "Unmarked FBI2", ranks = {3,4}, livery = 1, price = nil},
+    --},
 }
 
 Config.AmmoLabels = {
@@ -237,7 +237,7 @@ Config.Radars = {
 }
 
 Config.CarItems = {
-    [1] = {name = "heavyarmor", amount = 2, info = {}, type = "item", slot = 1,},
+    [1] = {name = "armor", amount = 2, info = {}, type = "item", slot = 1,},
     [2] = {name = "empty_evidence_bag", amount = 10, info = {}, type = "item", slot = 2,},
     [3] = {name = "police_stormram", amount = 1, info = {}, type = "item", slot = 3,},
 }
@@ -248,8 +248,8 @@ Config.Items = {
     items = {
         [1] = {
             name = "weapon_pistol",
-            price = 0,
-            amount = 1,
+            price = 250,
+            amount = 10,
             info = {
                 serie = "",
                 attachments = {
@@ -262,8 +262,8 @@ Config.Items = {
         },
         [2] = {
             name = "weapon_stungun",
-            price = 0,
-            amount = 1,
+            price = 100,
+            amount = 10,
             info = {
                 serie = "",
             },
@@ -273,8 +273,8 @@ Config.Items = {
         },
         [3] = {
             name = "weapon_pumpshotgun",
-            price = 0,
-            amount = 1,
+            price = 500,
+            amount = 10,
             info = {
                 serie = "",
                 attachments = {
@@ -287,8 +287,8 @@ Config.Items = {
         },
         [4] = {
             name = "weapon_smg",
-            price = 0,
-            amount = 1,
+            price = 400,
+            amount = 10,
             info = {
                 serie = "",
                 attachments = {
@@ -302,8 +302,8 @@ Config.Items = {
         },
         [5] = {
             name = "weapon_carbinerifle",
-            price = 0,
-            amount = 1,
+            price = 600,
+            amount = 10,
             info = {
                 serie = "",
                 attachments = {
@@ -318,7 +318,7 @@ Config.Items = {
         [6] = {
             name = "weapon_nightstick",
             price = 0,
-            amount = 1,
+            amount = 10,
             info = {},
             type = "weapon",
             slot = 6,
@@ -326,7 +326,7 @@ Config.Items = {
         },
         [7] = {
             name = "pistol_ammo",
-            price = 0,
+            price = 25,
             amount = 5,
             info = {},
             type = "item",
@@ -335,7 +335,7 @@ Config.Items = {
         },
         [8] = {
             name = "smg_ammo",
-            price = 0,
+            price = 30,
             amount = 5,
             info = {},
             type = "item",
@@ -344,7 +344,7 @@ Config.Items = {
         },
         [9] = {
             name = "shotgun_ammo",
-            price = 0,
+            price = 30,
             amount = 5,
             info = {},
             type = "item",
@@ -353,7 +353,7 @@ Config.Items = {
         },
         [10] = {
             name = "rifle_ammo",
-            price = 0,
+            price = 35,
             amount = 5,
             info = {},
             type = "item",
@@ -362,8 +362,8 @@ Config.Items = {
         },
         [11] = {
             name = "handcuffs",
-            price = 0,
-            amount = 1,
+            price = 10,
+            amount = 10,
             info = {},
             type = "item",
             slot = 11,
@@ -371,8 +371,8 @@ Config.Items = {
         },
         [12] = {
             name = "weapon_flashlight",
-            price = 0,
-            amount = 1,
+            price = 10,
+            amount = 10,
             info = {},
             type = "weapon",
             slot = 12,
@@ -380,7 +380,7 @@ Config.Items = {
         },
         [13] = {
             name = "empty_evidence_bag",
-            price = 0,
+            price = 10,
             amount = 50,
             info = {},
             type = "item",
@@ -389,7 +389,7 @@ Config.Items = {
         },
         [14] = {
             name = "police_stormram",
-            price = 0,
+            price = 600,
             amount = 50,
             info = {},
             type = "item",
@@ -398,8 +398,8 @@ Config.Items = {
         },
         [15] = {
             name = "armor",
-            price = 0,
-            amount = 50,
+            price = 75,
+            amount = 5,
             info = {},
             type = "item",
             slot = 15,
@@ -407,7 +407,7 @@ Config.Items = {
         },
         [16] = {
             name = "radio",
-            price = 0,
+            price = 10,
             amount = 50,
             info = {},
             type = "item",
@@ -416,12 +416,21 @@ Config.Items = {
         },
         [17] = {
             name = "heavyarmor",
-            price = 0,
-            amount = 50,
+            price = 250,
+            amount = 5,
             info = {},
             type = "item",
             slot = 17,
             authorizedJobGrades = {4, 5, 6, 7, 8, 9, 10}
+        },
+        [18] = {
+            name = "leo-gps",
+            price = 0,
+            amount = 5,
+            info = {},
+            type = "item",
+            slot = 18,
+            authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8 , 9, 10}
         }
     }
 }

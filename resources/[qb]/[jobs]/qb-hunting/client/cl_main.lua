@@ -226,14 +226,14 @@ CreateThread(function()
     SetBlipAlpha(blip2, 100)
     SetBlipColour(blip2, 10)
 	
-	local blip3 = AddBlipForCoord(Config.Sell.xyz)
-	SetBlipSprite(blip3, 463)
-	SetBlipColour(blip3, 25)
-	SetBlipScale(blip3, 0.8)
-	SetBlipAsShortRange(blip3, true)
-	BeginTextCommandSetBlipName('STRING')
-	AddTextComponentString(Locales['blip_sale'])
-	EndTextCommandSetBlipName(blip3)
+	--local blip3 = AddBlipForCoord(Config.Sell.xyz)
+	--SetBlipSprite(blip3, 463)
+	--SetBlipColour(blip3, 25)
+	--SetBlipScale(blip3, 0.8)
+	--SetBlipAsShortRange(blip3, true)
+	--BeginTextCommandSetBlipName('STRING')
+	--AddTextComponentString(Locales['blip_sale'])
+	--EndTextCommandSetBlipName(blip3)
 
 	-- Sale Ped
 	local pedModel = `csb_chef`

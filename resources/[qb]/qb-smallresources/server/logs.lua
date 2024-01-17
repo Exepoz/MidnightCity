@@ -65,12 +65,14 @@ RegisterNetEvent('qb-log:server:CreateLog', function(name, title, color, message
     }
     if type(message) == "table" then
         sentDesc.description = message.txt
-        sentDesc.Amount = message.amt
+        sentDesc.MoneyAmount = message.amt
         sentDesc.Player = message.ply
         sentDesc.Item = message.item
         sentDesc.status = message.status or "Info"
         sentDesc.stash = message.stash
         sentDesc.Plate = message.plate
+        sentDesc.Group = message.plys
+        sentDesc.HunterAlias = message.huntA
     end
     lib.logger(source or -1, name, sentDesc, player)
 end)

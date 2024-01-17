@@ -30,7 +30,7 @@ Config.MenuItems = {
                 title = 'Corner Selling',
                 icon = 'cannabis',
                 type = 'client',
-                event = 'qb-drugs:client:cornerselling',
+                event = 'md-drugs:client:cornerselling',
                 shouldClose = true
             }, {
                 id = 'togglehotdogsell',
@@ -295,6 +295,14 @@ Config.MenuItems = {
             }
         }
     },
+    [3] = {
+        id = 'openStyles',
+        title = 'Walks & Mood',
+        icon = 'masks-theater',
+        type = 'client',
+        event = 'is-playerstyles:client:OpenStylesMenu',
+        shouldClose = true
+    },
 }
 
 Config.VehicleDoors = {
@@ -545,24 +553,34 @@ Config.JobInteractions = {
             title = 'Toggle NPC',
             icon = 'toggle-on',
             type = 'client',
-            event = 'jobs:client:ToggleNpc',
+            event = 'an-towjob:client:ToggleNpc',
             shouldClose = true
         }, {
             id = 'towvehicle',
             title = 'Tow vehicle',
             icon = 'truck-pickup',
             type = 'client',
-            event = 'qb-tow:client:TowVehicle',
+            event = 'an-tow:client:TowVehicle',
             shouldClose = true
         }
     },
-    ["mechanic"] = {
+    ["lscustoms"] = {
         {
             id = 'towvehicle',
             title = 'Tow vehicle',
             icon = 'truck-pickup',
             type = 'client',
-            event = 'qb-tow:client:TowVehicle',
+            event = 'an-tow:client:TowVehicle',
+            shouldClose = true
+        }
+    },
+    ["tuners"] = {
+        {
+            id = 'towvehicle',
+            title = 'Tow vehicle',
+            icon = 'truck-pickup',
+            type = 'client',
+            event = 'an-tow:client:TowVehicle',
             shouldClose = true
         }
     },

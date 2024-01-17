@@ -200,6 +200,11 @@ end, 'god')
 -- Items
 
 -- AMMO
+
+QBCore.Functions.CreateUseableItem('hunting_ammo', function(source, item)
+    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_HUNTING', 12, item)
+end)
+
 QBCore.Functions.CreateUseableItem('pistol_ammo', function(source, item)
     TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_PISTOL', 12, item)
 end)

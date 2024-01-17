@@ -317,8 +317,8 @@ CreateThread(function()
         Wait(30000)
         local isDay = nightTime
         local hour = math.floor(((baseTime+timeOffset)/60)%24)
-        if hour == 18 and not pre then exports['mdn-nighttime']:ToggleDayNight(nightTime, true) pre = true end
-        if hour < 7 or hour >= 19 then nightTime = true pre = false
+        if hour == 20 and not pre then exports['mdn-nighttime']:ToggleDayNight(nightTime, true) pre = true end
+        if hour < 6 or hour >= 21 then nightTime = true pre = false
         else nightTime = false end
         if isDay ~= nightTime then exports['mdn-nighttime']:ToggleDayNight(nightTime) end
     end

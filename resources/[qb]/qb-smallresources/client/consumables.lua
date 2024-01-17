@@ -183,9 +183,9 @@ RegisterNetEvent('consumables:client:Drink', function(itemName)
         rotation = vec3(0.0, 0.0, -40),
     }, {}, function() -- Done
         TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[itemName], "remove")
-        if Config.Coffees[itemName] then
-            TriggerEvent("progressbar:client:faster", Config.Coffees[itemName])
-        end
+        -- if Config.Coffees[itemName] then
+        --     TriggerEvent("progressbar:client:faster", Config.Coffees[itemName])
+        -- end
         TriggerEvent('animations:client:EmoteCommandStart', {"c"})
         TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumeablesDrink[itemName])
     end)
@@ -436,7 +436,7 @@ RegisterNetEvent('consumables:client:ResetParachute', function()
 end)
 
 RegisterNetEvent('consumables:client:UseArmor', function()
-    if GetPedArmour(PlayerPedId()) >= 75 then
+    if GetPedArmour(PlayerPedId()) >= 50 then
         QBCore.Functions.Notify(Lang:t('consumables.armor_full'), 'error')
         return
     end
@@ -447,9 +447,9 @@ RegisterNetEvent('consumables:client:UseArmor', function()
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items['armor'], 'remove')
-        TriggerServerEvent('hospital:server:SetArmor', 75)
+        TriggerServerEvent('hospital:server:SetArmor', 50)
         TriggerServerEvent('consumables:server:useArmor')
-        SetPedArmour(PlayerPedId(), 75)
+        SetPedArmour(PlayerPedId(), 50)
     end)
 end)
 
