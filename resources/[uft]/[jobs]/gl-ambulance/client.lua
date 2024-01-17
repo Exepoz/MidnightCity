@@ -89,7 +89,7 @@ RegisterNetEvent('gl-ambulance:useStretcher', function()
     local PlayerPed = PlayerPedId()
     local PlayerPos = GetOffsetFromEntityInWorldCoords(PlayerPed, 0.0, 3.0, 0.5)
     local hash = GetHashKey('prop_ld_binbag_01')
-    
+
     QBCore.Functions.LoadModel(hash)
     local stretcher = CreateObjectNoOffset(hash, PlayerPos.x, PlayerPos.y, PlayerPos.z, true, false)
     if stretcher ~= nil or stretcher ~= 0 then
@@ -115,21 +115,21 @@ RegisterNetEvent('gl-ambulance:pushstretcher', function()
     local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
     local objCoords = GetEntityCoords(closestObject)
     QBCore.Functions.RequestAnimDict("anim@heists@box_carry@")
-    
+
     AttachEntityToEntity(closestObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -0.9, -0.52, 195.0, 180.0,
         180.0, 0.0, false, false, false, false, 2, false)
-    
+
     while IsEntityAttachedToEntity(closestObject, PlayerPed) do
         Wait(5)
-        
+
         if not IsEntityPlayingAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 3) then
             TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
         end
-        
+
         if IsPedDeadOrDying(PlayerPed) then
             DetachEntity(closestObject, false, false)
         end
-        
+
         if IsControlJustPressed(0, 38) then
             DetachEntity(closestObject, false, false)
             FreezeEntityPosition(closestObject, true)
@@ -260,20 +260,20 @@ end)
 -- Use Item
 RegisterNetEvent('gl-ambulance:useItem', function(itemName)
     exports['qb-menu']:closeMenu()
-    
+
     if itemName == 'medikit' then
         local lib, anim = 'anim@heists@narcotics@funding@gang_idle', 'gang_chatting_idle01'
         local playerPed = PlayerPedId()
-        
+
         QBCore.Functions.RequestAnimDict(lib)
         TaskPlayAnim(playerPed, lib, anim, 8.0, -8.0, -1, 0, 0, false, false, false)
-        
+
         Wait(500)
         while IsEntityPlayingAnim(playerPed, lib, anim, 3) do
             Wait(0)
             DisableAllControlActions(0)
         end
-        
+
         TriggerEvent('gl-ambulance:heal', 'full', true)
         QBCore.Functions.Notify('You have used 1x MediKit', 'success', 2000)
     end
@@ -446,13 +446,13 @@ end)
 RegisterNetEvent('gl-ambulance:spawnPed', function(coords, heading)
     local hash = GetHashKey('s_f_y_scrubs_01')
     QBCore.Functions.LoadModel(hash)
-    
+
     npc = CreatePed(5, hash, coords, heading, false, false)
     FreezeEntityPosition(npc, true)
     SetEntityInvincible(npc, true)
     SetBlockingOfNonTemporaryEvents(npc, true)
     SetModelAsNoLongerNeeded(hash)
-    exports['qb-target']:AddEntityZone('nancy', npc, {
+    exports['qb-target']:AddTargetEntity('nancy', npc, {
         name = "nancy",
         heading = GetEntityHeading(npc),
         debugPoly = false
@@ -489,7 +489,7 @@ end)
 RegisterNetEvent('gl-ambulance:spawnGrandmaPed', function(coords, heading)
     local hash = GetHashKey('ig_mrs_thornhill')
     QBCore.Functions.LoadModel(hash)
-    
+
     grandma = CreatePed(5, hash, coords, heading, false, false)
     FreezeEntityPosition(grandma, true)
     SetEntityInvincible(grandma, true)
@@ -551,7 +551,7 @@ RegisterNetEvent('gl-ambulance:tryRevivePlayer', function()
                     TriggerServerEvent('gl-ambulance:revivePlayer', playerID)
                 end
             end, playerID)
-        
+
         else
             playerID = GetPlayerServerId(player)
             QBCore.Functions.TriggerCallback('gl-ambulance:isPlayerDead', function(isdead)
@@ -608,12 +608,12 @@ RegisterNetEvent('gl-ambulance:setWound', function(wound)
         curWound = 'bullet'
         isShot = true
     end
-    
+
     if wound == "stitch" then
         curWound = 'stitch'
         isMeleed = true
     end
-    
+
     if wound == "burn" then
         curWound = 'burn'
         isBurned = true
@@ -643,7 +643,7 @@ CreateThread(function()
     local medical = {'xm_prop_x17_bag_med_01a'}
     local stretch = {'prop_ld_binbag_01'}
     local bodybag = {'xm_prop_body_bag'}
-    
+
     -- Medical Bag
     exports['qb-target']:AddTargetModel(medical, {
         options = {{
@@ -661,7 +661,7 @@ CreateThread(function()
         }},
         distance = 1.5
     })
-    
+
     -- Body Bag
     exports['qb-target']:AddTargetModel(bodybag, {
         options = {{
@@ -678,13 +678,13 @@ CreateThread(function()
                     DetachEntity(ped)
                     TriggerServerEvent('gl-ambulance:deleteBag', netid)
                 end
-            
+
             end,
             job = "ambulance",
         }},
         distance = 1.5
     })
-    
+
     -- Vehicle
     exports['qb-target']:AddGlobalVehicle({
         options = {{
@@ -783,7 +783,7 @@ CreateThread(function()
         }},
         distance = 2
     })
-    
+
     -- Player
     exports['qb-target']:AddGlobalPlayer({
         options = {{
@@ -842,7 +842,7 @@ CreateThread(function()
         }},
         distance = 2.0
     })
-    
+
     -- Stretcher
     exports['qb-target']:AddTargetModel(stretch, {
         options = {{
@@ -872,11 +872,11 @@ CreateThread(function()
         }},
         distance = 2.5
     })
-    
+
     -- Beds
     if Config.UseBeds then
         local pillboxBeds = {'v_med_bed1'}
-        
+
         exports['qb-target']:AddTargetModel(pillboxBeds, {
             options = {{
                 event = "gl-ambulance:useTheBed",
@@ -886,14 +886,14 @@ CreateThread(function()
             distance = 2.5
         })
     end
-    
+
     -- Spawn NPC When you get close, delete when you leave
     while true do
         Wait(1000)
         local pedCoords = GetEntityCoords(PlayerPedId())
         local NPCspawnCoords = Config.NancyPos
         local dst = #(NPCspawnCoords - pedCoords)
-        
+
         if dst < 100 and pedSpawned == false then
             TriggerEvent('gl-ambulance:spawnPed', NPCspawnCoords, 66.08)
             pedSpawned = true
@@ -902,12 +902,12 @@ CreateThread(function()
             pedSpawned = false
             DeleteEntity(npc)
         end
-        
+
         if Config.Grandmas then
             local pedCoords = GetEntityCoords(PlayerPedId())
             local grandmasCoords = Config.GrandmaCoords
             local dst = #(grandmasCoords - pedCoords)
-            
+
             if dst < 100 and grandmaSpawned == false then
                 TriggerEvent('gl-ambulance:spawnGrandmaPed', grandmasCoords, 134.07)
                 grandmaSpawned = true

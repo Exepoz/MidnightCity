@@ -15,7 +15,7 @@ elseif Framework == "ESX" then
 end
 ----------
 ----------
-Config.Debug = true -- enables debug poly for zones and prints
+Config.Debug = false -- enables debug poly for zones and prints
 ----------
 Config.InventoryType = 'ps' -- (qb, ox, lj, neither) What inventory you are using? if you are using a renamed resource you can adjust the event in server.lua "Pug:server:GivePaintballItems".
 Config.Target = "ox_target" -- (ox_target, qb-target) if you have change the resource name of qb-target you can use there here as well
@@ -155,7 +155,7 @@ Config.CokePlanes = {
     },
     --⚠️ DO NOT CHANGE THIS ^^^ ⚠️
 
-    -- YOU CAN CHANGE ANYTHING BELOW THIS BUT YOU WILL NEED TO FIND THE POSITIONS YOURSELF IF YOU WANT TO CHANGE THEM. 
+    -- YOU CAN CHANGE ANYTHING BELOW THIS BUT YOU WILL NEED TO FIND THE POSITIONS YOURSELF IF YOU WANT TO CHANGE THEM.
     -- ALSO DO NOT CHANGE THIS AFTER PEOPLE HAVE ALREADY BEEN USING THE SCRIPT BECAUSE THEN EVERYTHING WILL BE OUT OF SYNC.
     -- TO FIND THE RIGHT POSITIONS I MADE A TESTING TEMPLATE AT THE BOTTOM OF THE OPEN.LUA CHANGE THIS AT YOUR OWN DISCRETION! (SUPPORT IS NOT PROVIDED TO CHANGE THESE AS IT IS VERY DIFFICULT AND HOURS OF WORK)
     [1] = {
@@ -261,12 +261,12 @@ Config.PickupPlaneLocations = { -- This table handles the random boat spawns tab
             vector4(1741.55, 3314.72, 41.22, 288.5),
             vector4(1742.61, 3312.95, 41.22, 295.78),
             vector4(1743.33, 3311.48, 41.22, 279.9),
-            
+
         },
     },
 }
 ----------
-Config.ReturnPlaneLocations = { -- Random location where you return the plane to and the peds location to take the plane and exchange the drugs. 
+Config.ReturnPlaneLocations = { -- Random location where you return the plane to and the peds location to take the plane and exchange the drugs.
     [1] = {
         PedLocation = vector4(1700.72, 3286.77, 41.15, 201.88),
         PlaneLocation = vector4(1702.45, 3273.56, 41.16, 238.97),
@@ -279,36 +279,36 @@ Config.ReturnPlaneLocations = { -- Random location where you return the plane to
 ----------
 ----------
 Config.PickupPlaneBlip = { -- Picking up plane blip
-    Type = 9, 
-    Size = 0.2, 
+    Type = 9,
+    Size = 0.2,
     Color = 3,
     Opacity = 120,
 }
 ----------
 Config.PickupBoxBlip = { -- Picking up box blip
-    Type = 9, 
-    Size = 0.1, 
+    Type = 9,
+    Size = 0.1,
     Color = 3,
     Opacity = 150,
 }
 ----------
 Config.BoatDropOffBlip = { -- Boat drop off blip
-    Type = 9, 
-    Size = 0.55, 
+    Type = 9,
+    Size = 0.55,
     Color = 3,
     Opacity = 120,
 }
 ----------
 Config.PlaneDropOffBlip = { -- Dropping off plane blip
-    Type = 9, 
-    Size = 0.1, 
+    Type = 9,
+    Size = 0.1,
     Color = 3,
     Opacity = 150,
 }
 ----------
 Config.PersonalCokeLabBlip = { -- Players personal coke lab blip
-    Type = 497, 
-    Size = 0.7, 
+    Type = 497,
+    Size = 0.7,
     Color = 0,
     Opacity = 500,
 }
@@ -316,15 +316,15 @@ Config.PersonalCokeLabBlip = { -- Players personal coke lab blip
 ----------
 Config.MarkerBoxLocations = { -- The draw marker where you pickup boxes at
     ShowDrawMarker = true, -- Make this false if you do not want the draw marker to show.
-    Type = 25, 
-    Scale = {x = 1.0, y = 1.0, z = 1.0}, 
+    Type = 25,
+    Scale = {x = 1.0, y = 1.0, z = 1.0},
     Color ={r = 51, g = 153, b = 255, a = 200}, -- Marker configuration
 }
 ----------
 Config.MarkerBoatLocations = { -- The draw marker where drop the boxes off at above the boats
     ShowDrawMarker = true, -- Make this false if you do not want the draw marker to show.
-    Type = 6, 
-    Scale = {x = 4.0, y = 4.0, z = 4.0}, 
+    Type = 6,
+    Scale = {x = 4.0, y = 4.0, z = 4.0},
     Color ={r = 37, g = 150, b = 190, a = 180}, -- Marker configuration
 }
 ----------
@@ -426,7 +426,7 @@ Config.LangT = { -- All translation options are here.
     ["SuccessAddedMember"]  = "Successfuly Added Member",
     ["SuccessShutDownLab"]  = "Successfuly Shut Down Lab",
     ["YourCokeLabHasBeenRaided"]  = "Your coke lab has been raided and shut down!",
-    ["CantRemoveOwner"] = "You cannot remove the garage owner",		
+    ["CantRemoveOwner"] = "You cannot remove the garage owner",
     ["SuccessUpgradeAirPlane"] = "Successfuly ugraded airplane to",
     ["NeedToUpgadeFirst"] = "You need to upgrade to the plane before this one before you can buy this",
     ["CanNotDoThis"] = "Can not do this",
@@ -481,18 +481,18 @@ Config.FrameworkFunctions = {
             if(player ~= nil) then
                 self.source = source
                 self.PlayerData = { charinfo = { firstname = player.PlayerData.charinfo.firstname, lastname = player.PlayerData.charinfo.lastname}, money = player.PlayerData.money, citizenid = player.PlayerData.citizenid, source =  player.PlayerData.source, items = player.PlayerData.items, job = {name = player.PlayerData.job.name }}
-                self.AddMoney = function(currency, amount) 
+                self.AddMoney = function(currency, amount)
                     player.Functions.AddMoney(currency, amount)
                 end
-                self.RemoveMoney = function(currency, amount) 
+                self.RemoveMoney = function(currency, amount)
                     player.Functions.RemoveMoney(currency, amount)
                 end
 
-                self.RemoveItem = function(item, amount) 
+                self.RemoveItem = function(item, amount)
                     player.Functions.RemoveItem(item, amount, false)
                 end
 
-                self.AddItem = function(item, amount, info) 
+                self.AddItem = function(item, amount, info)
                     player.Functions.AddItem(item, amount, false, info)
                 end
 
@@ -517,18 +517,18 @@ Config.FrameworkFunctions = {
             if (player ~= nil) then
                 self.source = source
                 self.PlayerData = { charinfo = { firstname = player.get('firstName'), lastname = player.get('lastName')}, money = {cash = player.getAccount('money').money, bank = player.getAccount('bank').money}, job = { name = player.job.name }, citizenid = FWork.GetIdentifier(source)}
-                self.AddMoney = function(currency, amount) 
+                self.AddMoney = function(currency, amount)
                     player.addMoney(amount)
                 end
-                self.RemoveMoney = function(currency, amount) 
+                self.RemoveMoney = function(currency, amount)
                     player.removeMoney(amount)
                 end
 
-                self.RemoveItem = function(item, amount) 
+                self.RemoveItem = function(item, amount)
                     player.removeInventoryItem(item, amount)
                 end
 
-                self.AddItem = function(item, amount, info) 
+                self.AddItem = function(item, amount, info)
                     player.addInventoryItem(item, amount, false, info)
                 end
 

@@ -665,9 +665,9 @@ function NoiseZone()
             if stopAll or StopNoiseCheck or not nearManor then SendNUIMessage({closeProgress = true}) return end
             noiseNUI(noiseLvl)
             if IsPedShooting(ped) then noiseLvl = noiseLvl + 20 end
-            if GetEntitySpeed(ped) > 1.5 then noiseLvl = noiseLvl + 10
-                if GetEntitySpeed(ped) > 2.5 then noiseLvl = noiseLvl + 15 end
-                if GetEntitySpeed(ped) > 3.0 then noiseLvl = noiseLvl + 20 end
+            if GetEntitySpeed(ped) > 1.5 then noiseLvl = noiseLvl + LocalPlayer.state.foodBuff == 'sneaky' and 5 or 10
+                if GetEntitySpeed(ped) > 2.5 then noiseLvl = noiseLvl + LocalPlayer.state.foodBuff == 'sneaky' and 10 or 15 end
+                if GetEntitySpeed(ped) > 3.0 then noiseLvl = noiseLvl + LocalPlayer.state.foodBuff == 'sneaky' and 15 or 20 end
                 Citizen.Wait(300)
             else
                 noiseLvl = noiseLvl - 2
