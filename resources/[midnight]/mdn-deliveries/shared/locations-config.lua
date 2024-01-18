@@ -381,8 +381,8 @@ KloudDev.Locations = {
             },
             reward = {
                 enabled = true,
-                min = 100,
-                max = 115
+                min = 65,
+                max = 85
                 -- Real reward = `this - deposit.amount`
             }
         },

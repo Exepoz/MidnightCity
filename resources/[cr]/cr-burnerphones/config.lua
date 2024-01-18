@@ -90,33 +90,7 @@ Config.Burnerphones = {
             vector3(-859.9, -354.12, 38.68)
         },
         Rewards = {
-            [1] = {item = 'm9_mag',          qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [2] = {item = 'm9_barrel',         qty = {min = 1, max = 1}, weight = 50, prop = "ba_prop_battle_bag_01b", emote = "mechanic4"},
-            [3] = {item = 'm9_slide',         qty = {min = 1, max = 1}, weight = 50, prop = "ba_prop_battle_bag_01b", emote = "mechanic4"},
-            [4] = {item = 'm9_body',         qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [5] = {item = 'm45_barrel',      qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [6] = {item = 'm45_mag',        qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [7] = {item = 'm45_slide',       qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [8] = {item = 'm45_body',     qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [9] = {item = 'g18_mag',        qty = {min = 1, max = 1}, weight = 25, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [10] = {item = 'g18_barrel', qty = {min = 1, max = 1}, weight = 25, prop = "ba_prop_battle_bag_01b", emote = "mechanic4"},
-            [11] = {item = 'g18_slide',        qty = {min = 1, max = 1}, weight = 40, prop = "ba_prop_battle_bag_01b", emote = "mechanic4"},
-            [12] = {item = 'g18_body',          qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [13] = {item = 'g18_switch',          qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [14] = {item = 'uzi_mag',             qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [15] = {item = 'uzi_barrel',        qty = {min = 1, max = 1}, weight = 25, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [16] = {item = 'uzi_reciever', qty = {min = 1, max = 1}, weight = 25, prop = "ba_prop_battle_bag_01b", emote = "mechanic4"},
-            [17] = {item = 'm10_mag',        qty = {min = 1, max = 1}, weight = 40, prop = "ba_prop_battle_bag_01b", emote = "mechanic4"},
-            [18] = {item = 'm10_barrel',          qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [19] = {item = 'm10_reciever',          qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [20] = {item = 'm10_stock',             qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [21] = {item = 'ironsight',             qty = {min = 1, max = 1}, weight = 50, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [22] = {item = 'bp_m9',             qty = {min = 1, max = 1}, weight = 20, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [23] = {item = 'bp_m45',             qty = {min = 1, max = 1}, weight = 20, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [24] = {item = 'bp_g18',             qty = {min = 1, max = 1}, weight = 20, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [25] = {item = 'bp_uzi',             qty = {min = 1, max = 1}, weight = 20, prop = "prop_cs_package_01", emote = "mechanic4"},
-            [26] = {item = 'bp_m10',             qty = {min = 1, max = 1}, weight = 20, prop = "prop_cs_package_01", emote = "mechanic4"},
-
+  
         }
     },
     ['burnerphone_mat'] = {

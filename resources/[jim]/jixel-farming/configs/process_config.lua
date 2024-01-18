@@ -83,7 +83,7 @@ Process = {
 	ChickenProcess = {
         Enabled = true,
         BlipSettings = {
-            BlipEnabled = false,  Label = "Chicken Process",
+            BlipEnabled = true,  Label = "Chicken Process",
             BlipSprite = 274, BlipColor = 5,
             BlipLoc = vec4(-95.1, 6207.73, 32.28, 134.26),
         },
