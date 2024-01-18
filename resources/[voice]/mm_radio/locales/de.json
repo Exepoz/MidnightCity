@@ -9,8 +9,7 @@
     "restricted_notify_description": "Du darfst nicht der Station %.2f MHz beitreten",
     "volume_notify_title": "Lautstärke",
     "volume_notify_description": "Lautstärke auf %d%% gesetzt",
-    
-    "ui": {
+
         "header": "IM RADIO",
         "frequency": "Frequenz",
         "disconnect": "TRENNEN",
@@ -23,5 +22,4 @@
         "clear": "KLAR",
         "hide_overlay": "OVERLAY VERSTECKEN",
         "show_overlay": "OVERLAY ANZEIGEN"
-    }
 }

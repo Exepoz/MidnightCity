@@ -25,7 +25,7 @@ function Radio:getCrossroads()
     local player = cache.ped
     local pos = GetEntityCoords(player)
     local street1, street2 = GetStreetNameAtCoord(pos.x, pos.y, pos.z)
-    
+
     if street2 == 0 then
         return GetStreetNameFromHashKey(street1)
     else
@@ -85,7 +85,7 @@ function Radio:update()
         userData = Radio.userData,
         time = self:CalculateTimeToDisplay(),
         street = self:getCrossroads(),
-        locale = self.locale.ui
+        locale = self.locale
     })
 end
 

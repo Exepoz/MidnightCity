@@ -9,8 +9,7 @@
     "restricted_notify_description": "Vous n'êtes pas autorisé à rejoindre la station %.2f MHz",
     "volume_notify_title": "Volume",
     "volume_notify_description": "Volume réglé sur %d%%",
-    
-    "ui": {
+
         "header": "À LA RADIO",
         "frequency": "Fréquence",
         "disconnect": "DÉCONNECTER",
@@ -23,5 +22,4 @@
         "clear": "EFFACER",
         "hide_overlay": "MASQUER LA SUPERPOSITION",
         "show_overlay": "AFFICHER LA SUPERPOSITION"
-    }
 }

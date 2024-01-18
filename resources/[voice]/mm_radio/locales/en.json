@@ -10,18 +10,16 @@
     "volume_notify_title": "Volume",
     "volume_notify_description": "Volume set to %d%%",
 
-    "ui": {
-        "header": "IN RADIO",
-        "frequency": "Frequency",
-        "disconnect": "DISCONNECT",
-        "notconnected": "NOT CONNECTED",
-        "channels": "Channels",
-        "radio": "Radio",
-        "members": "Members",
-        "favorites": "Favorites",
-        "recommended": "Recommended",
-        "clear": "CLEAR",
-        "hide_overlay": "CHANGE NAME",
-        "show_overlay": "CHANGE NAME"
-    }
+    "header": "IN RADIO",
+    "frequency": "Frequency",
+    "disconnect": "DISCONNECT",
+    "notconnected": "NOT CONNECTED",
+    "channels": "Channels",
+    "radio": "Radio",
+    "members": "Members",
+    "favorites": "Favorites",
+    "recommended": "Recommended",
+    "clear": "CLEAR",
+    "hide_overlay": "CHANGE NAME",
+    "show_overlay": "CHANGE NAME"
 }
