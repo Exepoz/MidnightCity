@@ -27,7 +27,6 @@ if Shared.Core == "qb" then
 
     RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
         Radio:QBInit()
-        Radio.playerLoaded = true
     end)
 
     -- Resets state on logout, in case of character change.
@@ -35,7 +34,6 @@ if Shared.Core == "qb" then
         Radio.PlayerItems = {}
         Radio.hasRadio = false
         Radio:leaveradio()
-        Radio.playerLoaded = false
     end)
 
     RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)

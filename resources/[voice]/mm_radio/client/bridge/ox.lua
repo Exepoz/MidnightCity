@@ -4,7 +4,7 @@ if Shared.Inventory == "ox" then
             Radio:ESXInit()
         elseif Shared.Core == "qb" then
             Radio:QBInit()
-        elseif Shared.Core == "qbx" then
+        elseif Shared.Core == "qbox" then
             Radio:QboxInit()
         end
     end)

@@ -85,7 +85,7 @@ function Radio:update()
         userData = Radio.userData,
         time = self:CalculateTimeToDisplay(),
         street = self:getCrossroads(),
-        locale = self.locale
+        locale = self.locale.ui
     })
 end
 
@@ -173,7 +173,7 @@ lib.addKeybind({
 CreateThread(function()
     while true do
         Wait(1000)
-        if Radio.playerLoaded then
+        if LocalPlayer.state.isLoggedIn then
             if not Radio.hasRadio and Radio.onRadio and Shared.Inventory then
                 Radio:leaveradio()
             end

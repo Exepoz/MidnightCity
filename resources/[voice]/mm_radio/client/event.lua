@@ -9,13 +9,10 @@ AddEventHandler('onResourceStart', function(resource)
     if GetCurrentResourceName() == resource then
         if Shared.Core == 'qb' and LocalPlayer.state.isLoggedIn  then
             Radio:QBInit()
-            Radio.playerLoaded = true
-        elseif Shared.Core == 'qbx' and LocalPlayer.state.isLoggedIn then
+        elseif Shared.Core == 'qbox' and LocalPlayer.state.isLoggedIn  then
             Radio:QboxInit()
-            Radio.playerLoaded = true
         elseif Shared.Core == 'esx' and ESX.IsPlayerLoaded() then
             Radio:ESXInit()
-            Radio.playerLoaded = true
         end
     end
 end)
@@ -43,7 +40,7 @@ RegisterNetEvent('mm_radio:client:use', function()
         time = Radio:CalculateTimeToDisplay(),
         street = Radio:getCrossroads(),
         maxChannel = Shared.MaxFrequency,
-        locale = Radio.locale
+        locale = Radio.locale.ui
     })
 
     updateTime()

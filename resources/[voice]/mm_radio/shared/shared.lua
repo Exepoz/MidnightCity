@@ -41,18 +41,6 @@ Shared.RestrictedChannels = {
         type = 'job', -- job/gang
         name = {"police", "ambulance"}
     },
-    --[420] = { -- channel id
-    --    type = 'gang', -- job/gang
-    --    name = {"ballas"}
-    --},
-    --[421] = { -- channel id
-    --    type = 'gang', -- job/gang
-    --    name = {"lostmc"}
-    --},
-    --[422] = {
-    --    type = 'gang', -- job/gang
-    --    name = {"vagos"}
-    --},
 }
 
 lib.locale()

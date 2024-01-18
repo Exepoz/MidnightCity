@@ -1,4 +1,4 @@
-if Shared.Core == "qbx" then
+if Shared.Core == "qbox" then
     function Radio:QboxInit(data)
         local PlayerData = data or exports.qbx_core:GetPlayer()
         if PlayerData then
@@ -26,7 +26,6 @@ if Shared.Core == "qbx" then
 
     RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function()
         Radio:QboxInit()
-        Radio.playerLoaded = true
     end)
 
     -- Resets state on logout, in case of character change.
@@ -34,7 +33,6 @@ if Shared.Core == "qbx" then
         Radio.PlayerItems = {}
         Radio.hasRadio = false
         Radio:leaveradio()
-        Radio.playerLoaded = false
     end)
 
     RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
