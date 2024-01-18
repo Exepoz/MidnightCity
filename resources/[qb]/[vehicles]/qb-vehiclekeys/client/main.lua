@@ -590,18 +590,17 @@ function LockpickFinishCallback(success)
         end
 
     else
+        if usingAdvanced then
+            if chance <= Config.RemoveLockpickAdvanced then
+                TriggerServerEvent("qb-vehiclekeys:server:breakLockpick", "advancedlockpick")
+            end
+        else
+            if chance <= Config.RemoveLockpickNormal then
+                TriggerServerEvent("qb-vehiclekeys:server:breakLockpick", "lockpick")
+            end
+        end
         TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
         AttemptPoliceAlert("steal")
-    end
-
-    if usingAdvanced then
-        if chance <= Config.RemoveLockpickAdvanced then
-            TriggerServerEvent("qb-vehiclekeys:server:breakLockpick", "advancedlockpick")
-        end
-    else
-        if chance <= Config.RemoveLockpickNormal then
-            TriggerServerEvent("qb-vehiclekeys:server:breakLockpick", "lockpick")
-        end
     end
 end
 
