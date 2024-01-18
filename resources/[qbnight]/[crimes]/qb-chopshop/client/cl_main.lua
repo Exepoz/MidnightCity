@@ -210,8 +210,8 @@ local ChopVehicle = function(veh)
     end
 
     -- Finishing up
-    --TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', "You've successfully chopped the vehicle..", 'fas fa-car', '#F9FF5E', 8000)
-    TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "You've successfully chopped the vehicle..", icon = "./img/apps/whatsapp.png", timeout = 8000})
+    TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', "You've successfully chopped the vehicle..", 'fas fa-car', '#F9FF5E', 8000)
+    --TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "You've successfully chopped the vehicle..", icon = "./img/apps/whatsapp.png", timeout = 8000})
 
     -- Cash reward
     TriggerServerEvent('qb-chopshop:server:Reward', 'cash')
@@ -318,8 +318,8 @@ RegisterNetEvent('qb-chopshop:client:AcceptMission', function(data)
     local model = data.model
     local plate = data.plate
 
-    --TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Make your way towards the spot where to find the vehicle..', 'fas fa-car', '#F9FF5E', 600000)
-    TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Make your way towards the spot where to find the vehicle..", icon = "./img/apps/whatsapp.png", timeout = 600000})
+    TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Make your way towards the spot where to find the vehicle..', 'fas fa-car', '#F9FF5E', 600000)
+    --TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Make your way towards the spot where to find the vehicle..", icon = "./img/apps/whatsapp.png", timeout = 600000})
     -- Random Location
     local randLoc = math.random(#Shared.Locations)
     local vehLoc = Shared.Locations[randLoc]
@@ -342,8 +342,8 @@ RegisterNetEvent('qb-chopshop:client:AcceptMission', function(data)
             -- Destroy Zone
             areaZone:destroy()
             -- Notify
-            --TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Find and steal the wanted vehicle..', 'fas fa-car', '#F9FF5E', 600000)
-            TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Find and steal the wanted vehicle..", icon = "./img/apps/whatsapp.png", timeout = 600000})
+            TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Find and steal the wanted vehicle..', 'fas fa-car', '#F9FF5E', 600000)
+            --TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Find and steal the wanted vehicle..", icon = "./img/apps/whatsapp.png", timeout = 600000})
         end
     end)
 
@@ -357,8 +357,8 @@ RegisterNetEvent('qb-chopshop:client:AcceptMission', function(data)
             exports[Shared.FuelScript]:SetFuel(chopVehicle, 80.00)
             -- Alert Cops
             AlertPolice(chopVehicle)
-            --TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Bring the vehicle to the drop-off zone..', 'fas fa-car', '#F9FF5E', 600000)
-            TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Bring the vehicle to the drop-off zone..", icon = "./img/apps/whatsapp.png", timeout = 600000})
+            TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Bring the vehicle to the drop-off zone..', 'fas fa-car', '#F9FF5E', 600000)
+            --TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Bring the vehicle to the drop-off zone..", icon = "./img/apps/whatsapp.png", timeout = 600000})
             RemoveBlip(areaBlip)
             madeDropOffZone = true
         end
@@ -384,8 +384,8 @@ RegisterNetEvent('qb-chopshop:client:AcceptMission', function(data)
                     while inZone and chopVehicle == veh do
                         if IsControlJustPressed(0, 38) then
                             exports['qb-core']:HideText()
-                            --TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Start chopping the vehicle..', 'fas fa-car', '#F9FF5E', 8000)
-                            TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Start chopping the vehicle..", icon = "./img/apps/whatsapp.png", timeout = 600000})
+                            TriggerEvent('qb-phone:client:CustomNotification', 'CURRENT', 'Start chopping the vehicle..', 'fas fa-car', '#F9FF5E', 8000)
+                            --TriggerEvent('qs-smartphone:client:notify', { title = 'CURRENT', text = "Start chopping the vehicle..", icon = "./img/apps/whatsapp.png", timeout = 600000})
 
                             dropOffZone:destroy()
                             RemoveBlip(dropOffBlip)
