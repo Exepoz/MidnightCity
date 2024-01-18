@@ -79,7 +79,6 @@ local function getBankData(source)
     local jobs = GetJobs(Player)
     if #jobs > 0 then
         for k=1, #jobs do
-            debugl(jobs[k])
             if cachedAccounts[jobs[k].label] and IsJobAuth(jobs[k].name, jobs[k].grade) then
                 bankData[#bankData+1] = cachedAccounts[jobs[k].label]
             end

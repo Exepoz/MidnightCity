@@ -19,19 +19,19 @@ Config.Electronics = {
 } Config.BPOrder = {'store', 'fleeca', 'banktruck', 'paleto', 'paleto2', 'vault', 'vault2'}
 
 Config.HeistEquip = {
-    {item = 'drill', i_cost = 200, bp_cost = 1000},
-    {item = 'cutter', i_cost = 500, bp_cost = 2500},
-    {item = 'thermite', i_cost = 500, bp_cost = 2500},
-    {item = 'camera_looper', i_cost = 500, bp_cost = 2500},
+    {item = 'drill', i_cost = 200, bp_cost = 9800},
+    {item = 'cutter', i_cost = 500, bp_cost = 10700},
+    {item = 'thermite', i_cost = 500, bp_cost = 8600},
+    {item = 'camera_looper', i_cost = 500, bp_cost = 5500},
 }
 
 Config.CrimHub = {
     BHExchangeRate = 500, -- Crumbs received for every Bounty Points Redeemed
     CurrencyExchange = {
         ['cash'] = {
-            rec = 1100, -- Amount of cash received
+            rec = 2000, -- Amount of cash received
             ['crumbs'] = 200, -- Amount of crumbs to receive `rec`
-            ['scoins'] = 50 -- Amount of sCoins to receive `rec`
+            ['scoins'] = 10 -- Amount of sCoins to receive `rec`
         },
         ['crumbs'] = {
             rec = 1100, -- Amount of crumbs received
@@ -52,7 +52,14 @@ Config.CrimHub = {
             icon = 'fas fa-cart-shopping', shopId = 'heistItemsGuy',
             --categories = {'heist_equip', 'heist_equip_bp', 'illegal_electronics', 'illegal_electronics_BP',
             categories = {'heist_equip', 'illegal_electronics',}
-        }
+        },
+        -- [2] = {
+        --     ped = 'mp_m_waremech_01', coords = vector4(-584.24, -1619.84, 19.32, 218.64),
+        --     targetLabel = 'The Car Guy', menuLabel = 'Purchase Illegal Vehicle Equipment',
+        --     icon = 'fas fa-cart-shopping', shopId = 'carItemsGuy',
+        --     --categories = {'heist_equip', 'heist_equip_bp', 'illegal_electronics', 'illegal_electronics_BP',
+        --     categories = {'racing_items'}
+        -- },
     },
     ShopCategories = {
         ['heist_equip'] = {
@@ -108,7 +115,7 @@ Config.CrimHub = {
                 {item = 'hackingdevice',    cost = 200, },
                 {item = 'gpshackingdevice', cost = 200, },
                 {item = 'harness',          cost = 200, },
-                {item = 'nosbottle',        cost = 200, },
+                {item = 'noscan',        cost = 200, },
             }
         },
     },

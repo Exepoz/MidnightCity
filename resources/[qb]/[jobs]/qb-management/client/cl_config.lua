@@ -1,11 +1,11 @@
 -- Zones for Menues
 Config = Config or {}
 
-Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
-
+Config.UseTarget = true--GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
+Config.DebugPoly = false
 Config.BossMenus = {
     ['police'] = {
-        vector3(447.23, -974.3, 29.47),
+        vector3(461.47, -986.2, 30.0),
     },
     ['ambulance'] = {
         vector3(329.78, -602.13, 43.2),
@@ -26,7 +26,7 @@ Config.BossMenus = {
 
 Config.BossMenuZones = {
     ['police'] = {
-        { coords = vector3(447.23, -974.3, 29.47), length = 1.35, width = 1.45, heading = 351.0, minZ = 30.00, maxZ = 31.73 },    },
+        { coords = vector3(461.47, -986.2, 30.0), length = 1.35, width = 1.45, heading = 351.0, minZ = 30.8, maxZ = 31.73 },    },
     ['ambulance'] = {
         { coords = vector3(329.78, -602.13, 43.2), length = 1.2, width = 1.6, heading = 341.0, minZ = 41.13, maxZ = 45.73 },
     },

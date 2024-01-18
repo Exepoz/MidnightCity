@@ -331,7 +331,7 @@ CreateThread(function()
                 exports['qb-target']:AddBoxZone(job.."-BossMenu-"..index, data.coords, data.length, data.width, {
                     name = job.."-BossMenu-"..index,
                     heading = data.heading,
-                    -- debugPoly = true,
+                    debugPoly = Config.DebugPoly,
                     minZ = data.minZ,
                     maxZ = data.maxZ,
                 }, {
