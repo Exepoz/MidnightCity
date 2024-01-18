@@ -163,11 +163,11 @@ Config.SettingsLocale = { -- Settings texts
 }
 
 -------------------------------------------- Fuel --------------------------------------------
-Config.UseLegacyFuel = false --Enable this if you use legacy fuel
+Config.UseLegacyFuel = true --Enable this if you use legacy fuel
 
 Config.GetVehicleFuel = function(vehicle) -- you can change LegacyFuel export if you use another fuel system
     if Config.UseLegacyFuel then
-        return exports["cnd-fuel"]:SetFuel(vehicle)
+        return exports["cdn-fuel"]:GetFuel(vehicle)
     else
         return GetVehicleFuelLevel(vehicle)
     end
