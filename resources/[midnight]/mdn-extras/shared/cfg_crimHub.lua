@@ -19,14 +19,14 @@ Config.Electronics = {
 } Config.BPOrder = {'store', 'fleeca', 'banktruck', 'paleto', 'paleto2', 'vault', 'vault2'}
 
 Config.HeistEquip = {
-    {item = 'drill', i_cost = 200, bp_cost = 9800},
-    {item = 'cutter', i_cost = 500, bp_cost = 10700},
-    {item = 'thermite', i_cost = 500, bp_cost = 8600},
-    {item = 'camera_looper', i_cost = 500, bp_cost = 5500},
+    {item = 'drill', i_cost = 2000, bp_cost = 19800},
+    {item = 'cutter', i_cost = 5000, bp_cost = 20700},
+    {item = 'thermite', i_cost = 5000, bp_cost = 18600},
+    {item = 'camera_looper', i_cost = 5000, bp_cost = 18500},
 }
 
 Config.CrimHub = {
-    BHExchangeRate = 500, -- Crumbs received for every Bounty Points Redeemed
+    BHExchangeRate = 1000, -- Crumbs received for every Bounty Points Redeemed
     CurrencyExchange = {
         ['cash'] = {
             rec = 1000, -- Amount of cash received
@@ -66,10 +66,10 @@ Config.CrimHub = {
             label = 'Heist Equipment',
             description = 'Thinking of doing some big crime? I might have some useful stuff for you.',
             items = {
-                {item = 'drill', cost = 200},
-                {item = 'cutter', cost = 500},
-                {item = 'thermite', cost = 500},
-                {item = 'camera_looper', cost = 500},
+                {item = 'drill', cost = 7000},
+                {item = 'cutter', cost = 6000},
+                {item = 'thermite', cost = 1000},
+                {item = 'camera_looper', cost = 2000},
             }
         },
         ['heist_equip_bp'] = {
@@ -86,36 +86,36 @@ Config.CrimHub = {
             label = 'Rare Electronic Devices',
             description = 'Got some electronics? I\'ll sell you some rare devices...',
             items = {
-                {item = 'lime_hacking', cost = 200, needed = {{'lime_electronics_1', 200}}},
-                {item = 'green_hacking', cost = 200, needed = {{'green_electronics_2', 250}}},
-                {item = 'blue_hacking', cost = 200, needed = {{'blue_electronics_3', 300}}},
-                {item = 'cyan_hacking', cost = 200, needed = {{'cyan_electronics_4', 350}}},
-                {item = 'yellow_hacking', cost = 200, needed = {{'yellow_electronics_5', 400}}},
-                {item = 'orange_hacking', cost = 200, needed = {{'orange_electronics_6', 500}}},
+                {item = 'lime_hacking', cost = 2000, needed = {{'lime_electronics_1', 200}}},
+                {item = 'green_hacking', cost = 2000, needed = {{'green_electronics_2', 250}}},
+                {item = 'blue_hacking', cost = 2000, needed = {{'blue_electronics_3', 300}}},
+                {item = 'cyan_hacking', cost = 2000, needed = {{'cyan_electronics_4', 350}}},
+                {item = 'yellow_hacking', cost = 2000, needed = {{'yellow_electronics_5', 400}}},
+                {item = 'orange_hacking', cost = 6000, needed = {{'orange_electronics_6', 500}}},
             }
         },
         ['illegal_electronics_BP'] = {
             label = 'Rare Devices Blueprints',
             description = 'Got some rare items from your heists? I can sell you some rare blueprints...',
             items = {
-                {item = 'lime_hacking', cost = 200, isBP = true, needed = {{'supplier_details', 1}}},
-                {item = 'green_hacking', cost = 200,isBP = true,  needed = {{'blackmail_papers', 1}}},
-                {item = 'blue_hacking', cost = 200, isBP = true, needed = {{'groupe6case', 1}}},
-                {item = 'cyan_hacking', cost = 200, isBP = true, needed = {{'insider_information', 1}}},
-                {item = 'yellow_hacking', cost = 200, isBP = true, needed = {{'money_orders', 1}}},
-                {item = 'orange_hacking', cost = 200, isBP = true, needed = {{'trade_secrets', 1}}},
+                {item = 'lime_hacking', cost = 18000, isBP = true, needed = {{'supplier_details', 1}}},
+                {item = 'green_hacking', cost = 22000,isBP = true,  needed = {{'blackmail_papers', 1}}},
+                {item = 'blue_hacking', cost = 25200, isBP = true, needed = {{'groupe6case', 1}}},
+                {item = 'cyan_hacking', cost = 31200, isBP = true, needed = {{'insider_information', 1}}},
+                {item = 'yellow_hacking', cost = 37200, isBP = true, needed = {{'money_orders', 1}}},
+                {item = 'orange_hacking', cost = 40200, isBP = true, needed = {{'trade_secrets', 1}}},
             }
         },
         ['racing_items'] = {
             label = 'Illegal Vehicle Items',
             description = 'Think you\'re ready for the big leagues?', -- change this plz lmao (i could hear this being said in a NFS/Fastfurious trailer lol)
             items = {
-                {item = 'racingtablet',     cost = 500, },
-                {item = 'boostingtablet',   cost = 500, },
-                {item = 'hackingdevice',    cost = 200, },
-                {item = 'gpshackingdevice', cost = 200, },
-                {item = 'harness',          cost = 200, },
-                {item = 'noscan',        cost = 200, },
+                {item = 'racingtablet',     cost = 13500, },
+                {item = 'boostingtablet',   cost = 11500, },
+                {item = 'hackingdevice',    cost = 5200, },
+                {item = 'gpshackingdevice', cost = 4700, },
+                {item = 'harness',          cost = 4200, },
+                {item = 'noscan',        cost = 4000, },
             }
         },
     },

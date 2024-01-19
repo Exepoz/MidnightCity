@@ -36,6 +36,7 @@ Config.Products = {
         {name = 'weapon_hammer',     price = 250, amount = 25, info = {}, type = 'item'},
         {name = 'screwdriverset',    price = 360, amount = 40,  info = {}, type = 'item'},
         {name = 'radio',             price = 400, amount = 40,  info = {}, type = 'item'},
+        {name = 'phone',             price = 200, amount = 40,  info = {}, type = 'item'},
         {name = 'cleaningkit',       price = 150, amount = 150, info = {}, type = 'item'},
         {name = 'fishingrod',        price = 500,  amount = 50,  info = {}, type = 'item'},
         {name = 'fishingbait',       price = 4, amount = 150, info = {}, type = 'item'},

@@ -9,7 +9,7 @@ Config.Shop = {
         items = {
             [1] = {item = "pistol_ammo",  price = 100, stock = 50, loc = 6, max = 100},
             [2] = {item = "smg_ammo",  price = 300, stock = 50, loc = 6, max = 100},
-            [3] = {item = "shotgun_ammo",  price = 250, stock = 50, loc = 6, max = 100},
+            [3] = {item = "shotgun_ammo",  price = 850, stock = 50, loc = 6, max = 100},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
@@ -17,14 +17,14 @@ Config.Shop = {
         options = {header = "Protection", icon = 'shield'},
         items = {
             [1] = {item = "armor",  price = 100, stock = 10, loc = 6, max = 100},
-            [2] = {item = "heavyarmor",  price = 300, stock = 5, loc = 6, max = 100},
+            [2] = {item = "heavyarmor",  price = 1000, stock = 5, loc = 6, max = 100},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
     ['cleanweapon'] = {
         options = {header = "Clean Weapons", icon = 'gun'},
         items = {
-            [1] = {item = "weapon_pistol",  price = 100, stock = 10, loc = 6, max = 100},
+            [1] = {item = "weapon_pistol",  price = 600, stock = 10, loc = 6, max = 100},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
@@ -32,7 +32,7 @@ Config.Shop = {
         options = {header = "Scratched Weapons", icon = 'gun'},
         -- Add `scratched = true` to all these weapons
         items = {
-            [1] = {item = "weapon_pistol",  price = 300, stock = 15, loc = 6, max = 100, scratched = true},
+            [1] = {item = "weapon_pistol",  price = 1700, stock = 15, loc = 6, max = 100, scratched = true},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
@@ -40,8 +40,8 @@ Config.Shop = {
         options = {header = "Medical", icon = 'kit-medical'},
         -- Add `scratched = true` to all these weapons
         items = {
-            [1] = {item = "bandage",  price = 100, stock = 50, loc = 6, max = 3},
-            [2] = {item = "ifaks",  price = 500, stock = 50, loc = 6, max = 3},
+            [1] = {item = "bandage",  price = 300, stock = 50, loc = 6, max = 3},
+            [2] = {item = "ifaks",  price = 800, stock = 50, loc = 6, max = 3},
             [3] = {item = "speed_injector",  price = 5000, stock = 5, loc = 6, max = 3},
             [4] = {item = "health_injector",  price = 5000, stock = 5, loc = 6, max = 3},
             [5] = {item = "armor_injector",  price = 5000, stock = 5, loc = 6, max = 3},
@@ -56,7 +56,6 @@ Config.Shop = {
 -- @removed : Amount of stock removed every *Cron Time* <-- Default is 3 hours in the server.lua
 -- @stock : Don't touch, leave it to 0
 Config.FenceItems = {
-    ['phone'] = {price = 20, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['vpn'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['tablet'] = {price = 40, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['10kgoldchain'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},

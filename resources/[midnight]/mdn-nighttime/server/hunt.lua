@@ -101,7 +101,7 @@ RegisterNetEvent('nighttime:server:leaveHunt', function(serversource, quit)
         if Player(src).state.Bloody and not quit then break
         else
             Player(src).state.isPrey = false
-            preys[k] = nil break end
+            preys[k] = nil end
     end end
     GlobalState.BountyTargets = preys
     Midnight.Functions.Debug(src..' has left the hunt')

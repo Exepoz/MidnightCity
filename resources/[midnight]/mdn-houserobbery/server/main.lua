@@ -190,10 +190,10 @@ local function GenerateLoot(items)
     return chosenItem
 end
 
-RegisterCommand('setHRRep', function(source, args)
-	local player = QBCore.Functions.GetPlayer(source)
-	player.Functions.SetMetaData('house_robbery_rep', tonumber(args[1]))
-end)
+-- RegisterCommand('setHRRep', function(source, args)
+-- 	local player = QBCore.Functions.GetPlayer(source)
+-- 	player.Functions.SetMetaData('house_robbery_rep', tonumber(args[1]))
+-- end)
 
 RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 	local src = source
@@ -232,9 +232,10 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 			end
 		end
 	elseif tipo == 'safe' then
-		local info = { type = 'houseRobbery', typeName = 'House Robbery'}
-		player.Functions.AddItem('lootbag', 1, false, info)
-		TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['lootbag'], "add")
+		exports['mdn-extras']:GiveLootBag(src, 'houseRobbery')
+		-- local info = { type = 'houseRobbery', typeName = 'House Robbery'}
+		-- player.Functions.AddItem('lootbag', 1, false, info)
+		-- TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['lootbag'], "add")
 		itemStr = "\n\n**Item :** "..QBCore.Shared.Items['lootbag'].label.."\n**Amount :** "..1
 	elseif tipo == 'tv' then
 		local trunkItems = exports['ps-inventory']:fetchTrunkItems(trunk.plate)
@@ -380,7 +381,8 @@ RegisterNetEvent('av_houserobbery:server:checkRequirements', function(args)
 		local houseInfo = getHouse(tier)
 		houseInfo.tier = tier
 		local c = {math.random(0,99), math.random(0,99), math.random(0,99)}
-		houseInfo.safe = math.random(100) < Config.SafeChances[tier]
+		--houseInfo.safe = math.random(100) < Config.SafeChances[tier]
+		houseInfo.safe = true
 		houseInfo.laptop = math.random(100) < 40
 		for _, v in pairs(members) do
 			TriggerClientEvent('av_houserobbery:client:resetAll', v)

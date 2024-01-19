@@ -146,13 +146,13 @@ RegisterNetEvent('Renewed-Garbage:server:CollectCheck', function()
                 xPlayer.Functions.AddMoney("bank", final, "Sanitation")
 
                 if Config.MaterialTicket and MaterialCheck > 0 then
-                    if Player.Functions.AddItem('matticket', MaterialCheck) then
+                    if xPlayer.Functions.AddItem('matticket', MaterialCheck) then
                         TriggerClientEvent('inventory:client:ItemBox', xPlayer.PlayerData.source, QBCore.Shared.Items['matticket'], "add", MaterialCheck)
                      end
                 end
 
                 if Config.RenewedBanking then
-                    local name = ("%s %s"):format(xPlayer.PlayerData.charinfo.firstname, PlayexPlayerr.PlayerData.charinfo.lastname)
+                    local name = ("%s %s"):format(xPlayer.PlayerData.charinfo.firstname, xPlayer.PlayerData.charinfo.lastname)
                     local text = "Sanitation PaySlip for turning in "..CurrentRuns[group].Delivered.." Trash Bags"
                     exports['Renewed-Banking']:handleTransaction(CID, "Sanitation", final, text, "Los Santos Sanitation", name, "deposit")
                 end

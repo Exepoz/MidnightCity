@@ -51,7 +51,7 @@ RegisterNetEvent('mdn-fence:server:sellToFence', function(data)
     if a == 0 then MySQL.insert.await('INSERT INTO `midnight_fence` (stock, item) VALUES (?, ?)', {Config.FenceItems[item].stock, item}) end
 
     local pName = Midnight.Functions.GetCharName(src)
-    local txt = "Sold stuff to fence : "..item.." | x"..info.am.."\nCrumbs Received : "..moneyRec
+    local txt = "Sold stuff to fence : "..item.." | x"..am.."\nCrumbs Received : "..moneyRec
     local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n"..txt}
     TriggerEvent("qb-log:server:CreateLog", "fence", "Item Sold", "green", logString)
 

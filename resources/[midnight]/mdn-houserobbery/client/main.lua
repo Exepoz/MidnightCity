@@ -25,8 +25,6 @@ local televisionObj
 local canEnter = true
 local Leader = false
 
-
-
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
 	local pData = QBCore.Functions.GetPlayerData()
 	local rep = pData.metadata.house_robbery_rep
@@ -80,59 +78,56 @@ end
 
 local function GetTrunkSlots(vehicle)
 	local vehicleClass = GetVehicleClass(vehicle)
-	local maxweight = 0
-	local slots = 0
+	local maxweight
+	local slots
 	if vehicleClass == 0 then
-		maxweight = 100000
-		slots = 350
+		maxweight = 38000
+		slots = 10
 	elseif vehicleClass == 1 then
-		maxweight = 100000
-		slots = 350
+		maxweight = 50000
+		slots = 15
 	elseif vehicleClass == 2 then
-		maxweight = 700000
-		slots = 1200
+		maxweight = 100000
+		slots = 30
 	elseif vehicleClass == 3 then
-		maxweight = 100000
-		slots = 350
+		maxweight = 35000
+		slots = 15
 	elseif vehicleClass == 4 then
-		maxweight = 100000
-		slots = 300
+		maxweight = 32000
+		slots = 20
 	elseif vehicleClass == 5 then
-		maxweight = 90000
-		slots = 550
+		maxweight = 30000
+		slots = 15
 	elseif vehicleClass == 6 then
-		maxweight = 90000
-		slots = 550
+		maxweight = 30000
+		slots = 10
 	elseif vehicleClass == 7 then
-		maxweight = 90000
-		slots = 550
+		maxweight = 20000
+		slots = 10
 	elseif vehicleClass == 8 then
 		maxweight = 15000
-		slots = 10000
+		slots = 5
 	elseif vehicleClass == 9 then
-		maxweight = 300000
-		slots = 750
+		maxweight = 60000
+		slots = 20
 	elseif vehicleClass == 12 then
-		maxweight = 700000
-		slots = 750
-	elseif vehicleClass == 13 then
-		maxweight = 0
-		slots = 0
+		maxweight = 120000
+		slots = 35
+	elseif vehicleClass == 20 then
+		maxweight = 200000
+		slots = 50
 	elseif vehicleClass == 14 then
-		maxweight = 500000
-		slots = 1000
+		maxweight = 120000
+		slots = 50
 	elseif vehicleClass == 15 then
 		maxweight = 120000
-		slots = 1200
+		slots = 50
 	elseif vehicleClass == 16 then
 		maxweight = 120000
-		slots = 1200
-	elseif vehicleClass == 18 then
-		maxweight = 500000
-		slots = 1200
+		slots = 50
 	else
 		maxweight = 60000
-		slots = 1000
+		slots = 35
 	end
 	local other = {
 		maxweight = maxweight,
@@ -617,6 +612,7 @@ RegisterNetEvent('av_houserobbery:anim', function(anim, deleteObj, i, ground)
 			local pcoords = GetEntityCoords(PlayerPedId())
 
 			local vehicle = lib.getClosestVehicle(pcoords, 5.0, false)
+			print(vehicle)
 			if vehicle then
 				local d1 = GetModelDimensions(GetEntityModel(vehicle))
 				local vehicleCoords = GetOffsetFromEntityInWorldCoords(vehicle, 0.0,d1["y"]+0.60,0.0)
@@ -721,8 +717,9 @@ RegisterNetEvent('av_houserobbery:anim', function(anim, deleteObj, i, ground)
 			local w = 1
 			if not IsEntityPlayingAnim(ped, "anim@heists@box_carry@", "idle", 3) then TaskPlayAnim(ped, "anim@heists@box_carry@", "idle", 8.0, 8.0, -1, 50, 0, false, false, false) end
 			local pcoords = GetEntityCoords(PlayerPedId())
-
+			print(pcoords)
 			local vehicle = lib.getClosestVehicle(pcoords, 5.0, false)
+			print(vehicle)
 			if vehicle then
 				local d1 = GetModelDimensions(GetEntityModel(vehicle))
 				local vehicleCoords = GetOffsetFromEntityInWorldCoords(vehicle, 0.0,d1["y"]+0.60,0.0)
