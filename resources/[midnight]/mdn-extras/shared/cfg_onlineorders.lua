@@ -18,19 +18,24 @@ Config.OnlineOrders.CustomJobs = {
         coords = vector3(128.21, -3011.18, 7.04),
         --cids = {['UPY10832'] = true, ['RQN37448'] = true}
     },
-    ['lostmc'] = {
-        label = "Lost MC's Bar",
-        bankAccount = 'lostmc',
-        isGang = true,
-        coords = vector3(2518.64, 4098.16, 35.59),
+    ['lscustoms'] = {
+        label = "Los Santos Customs",
+        bankAccount = 'lscustoms',
+        coords = vector3(-349.22, -129.06, 39.01),
         --cids = {['UPY10832'] = true}
+    },
+    ['catcafe'] = {
+        label = "UwU Cafe",
+        bankAccount = 'catcafe',
+        coords = vector3(-585.38, -1055.96, 22.34),
+        --cids = {['UPY10832'] 
     },
     -- ['vubar'] = {
     --     label = "Vanilla Unicorn Bar",
     --     bankAccount = 'vanilla',
     --     isGang = false,
     --     isJob = true,
-    --     coords = vector3(2518.64, 4098.16, 35.59),
+    --     coords = vector3(-345.45, -127.06, 39.01),
     --     cids = {},
     --     jobs = {'vanilla'}
     -- },
