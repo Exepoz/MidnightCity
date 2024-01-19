@@ -35,7 +35,7 @@ function startLockpick(strength, difficulty, pins, attempts)
         pins = 9
     end
 
-    lib.showTextUI('[D] Apply Pressure', {position = 'top-center'})
+    lib.showTextUI('Hold [D] Apply Pressure', {position = 'top-center'})
 
     SendNUIMessage({
         action = "startLockpick",
