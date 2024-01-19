@@ -66,6 +66,7 @@ function GetPlayerProperties(cid, cb)
 end
 
 function GetPlayerDataById(id)
+    id = tostring(id)
     local Player = QBCore.Functions.GetPlayerByCitizenId(id)
     if Player ~= nil then
 		local response = {citizenid = Player.PlayerData.citizenid, charinfo = Player.PlayerData.charinfo, metadata = Player.PlayerData.metadata, job = Player.PlayerData.job}
@@ -97,6 +98,7 @@ end
 
 function GetPlayerLicenses(identifier)
     local response = false
+    identifier = tostring(identifier)
     local Player = QBCore.Functions.GetPlayerByCitizenId(identifier)
     if Player ~= nil then
         return Player.PlayerData.metadata.licences
@@ -119,6 +121,7 @@ function GetPlayerLicenses(identifier)
 end
 
 function ManageLicense(identifier, type, status)
+    identifier = tostring(identifier)
     local Player = QBCore.Functions.GetPlayerByCitizenId(identifier)
     local licenseStatus = nil
     if status == "give" then licenseStatus = true elseif status == "revoke" then licenseStatus = false end
@@ -140,6 +143,7 @@ function ManageLicense(identifier, type, status)
 end
 
 function UpdateAllLicenses(identifier, incomingLicenses)
+    identifier = tostring(identifier)
     local Player = QBCore.Functions.GetPlayerByCitizenId(identifier)
     if Player ~= nil then
         Player.Functions.SetMetaData("licences", incomingLicenses)

@@ -15,7 +15,7 @@ QBShared.Jobs = {
 	police = {
 		label = 'LSPD',
 		type = 'leo',
-		defaultDuty = false,
+		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Cadet', payment = 400},
@@ -34,7 +34,7 @@ QBShared.Jobs = {
 	ambulance = {
 		label = 'EMS',
 		type = 'ems',
-		defaultDuty = false,
+		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 400 },
@@ -59,7 +59,7 @@ QBShared.Jobs = {
 	},
 	taxi = {
 		label = 'Taxi',
-		defaultDuty = false,
+		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
 			['0'] = { name = 'Recruit', payment = 50 },

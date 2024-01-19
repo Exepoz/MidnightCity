@@ -300,7 +300,7 @@ local Vehicles = {
     {['model'] = 'tropos',        ['name'] = 'Tropos Rallye',                 ['brand'] = 'Lampadati',       ['price'] = 65000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'verlierer2',    ['name'] = 'Verlierer',                     ['brand'] = 'Bravado',         ['price'] = 90500,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'vstr',          ['name'] = 'V-STR',                         ['brand'] = 'Albany',          ['price'] = 80000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
-    {['model'] = 'italirsx',      ['name'] = 'Itali RSX',                     ['brand'] = 'Progen',          ['price'] = 260000,  ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
+    {['model'] = 'italirsx',      ['name'] = 'Itali RSX',                     ['brand'] = 'Progen',          ['price'] = 660000,  ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'zr350',         ['name'] = 'ZR350',                         ['brand'] = 'Annis',           ['price'] = 38000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'calico',        ['name'] = 'Calico GTF',                    ['brand'] = 'Karin',           ['price'] = 39000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'futo2',         ['name'] = 'Futo GTX',                      ['brand'] = 'Karin',           ['price'] = 39000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},

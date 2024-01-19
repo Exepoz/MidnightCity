@@ -75,21 +75,18 @@ end
 
 -- Buying
 function AddShopItem(item, src, key, shop, itemTable)
-    QBCore.Debug(item)
     local options = {{type = 'number', label = 'Amount', description = 'Amount you want to buy.', required = true, default = 1, min = 1, max = GlobalState.FenceShop.Stock[item.item].stock}}
     if GlobalState.FenceShop.Stock[item.item].subt then options[#options+1] = {type = 'select', label = 'Type', description = 'Chose the item subtype.', required = true, options = GlobalState.FenceShop.Stock[item.item].subt} end
-    local itemTable = {
+    local iTable = {
         title = QBCore.Shared.Items[item.item].label,
         description = "Stock : ".. GlobalState.FenceShop.Stock[item.item].stock .." | Cost: "..item.price.." crumbs",
         onSelect = function()
             local input = lib.inputDialog('Chose Amount', options)
             if not input then  return  lib.showContext('OO_'..src) end
-            print(item, item.item, input[1], key, input[2] or nil, shop)
-            QBCore.Debug(item)
             TriggerServerEvent('mdn-fence:server:buyItem', itemTable, item.item, input[1], key, input[2] or nil, shop)
         end
     }
-    return itemTable
+    return iTable
 end
 
 local function MakeMenu()

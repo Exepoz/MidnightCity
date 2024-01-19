@@ -237,7 +237,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 		TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['lootbag'], "add")
 		itemStr = "\n\n**Item :** "..QBCore.Shared.Items['lootbag'].label.."\n**Amount :** "..1
 	elseif tipo == 'tv' then
-		local trunkItems = exports['lj-inventory']:FetchTrunkItems(trunk.plate)
+		local trunkItems = exports['ps-inventory']:fetchTrunkItems(trunk.plate)
 		local weight = 0
 		if not trunkItems then return 0 end
 		for _, item in pairs(trunkItems) do
@@ -258,10 +258,10 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 					break
 				end
 			end
-			TriggerEvent('inventory:server:addTrunkItems', trunk.plate, trunkItems)
+			exports['ps-inventory']:addTrunkItems(trunk.plate, trunkItems)
 		end
 	elseif tipo == 'telescope' then
-			local trunkItems = exports['lj-inventory']:FetchTrunkItems(trunk.plate)
+			local trunkItems = exports['ps-inventory']:fetchTrunkItems(trunk.plate)
 			local weight = 0
 			if not trunkItems then return 0 end
 			for _, item in pairs(trunkItems) do
@@ -282,7 +282,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 						break
 					end
 				end
-				TriggerEvent('inventory:server:addTrunkItems', trunk.plate, trunkItems)
+				exports['ps-inventory']:addTrunkItems(trunk.plate, trunkItems)
 			end
 	elseif tipo == 'art' then
 		player.Functions.AddItem('art', 1)
@@ -293,7 +293,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 		TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['laptop'], "add")
 		itemStr = "\n\n**Item :** "..QBCore.Shared.Items['laptop'].label.."\n**Amount :** "..1
 	else
-		local trunkItems = exports['lj-inventory']:FetchTrunkItems(trunk.plate)
+		local trunkItems = exports['ps-inventory']:fetchTrunkItems(trunk.plate)
 		local weight = 0
 		if not trunkItems then return 0 end
 		for _, item in pairs(trunkItems) do
@@ -316,7 +316,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 					break
 				end
 			end
-			TriggerEvent('inventory:server:addTrunkItems', trunk.plate, trunkItems)
+			exports['ps-inventory']:addTrunkItems(trunk.plate, trunkItems)
 		end
 	end
 

@@ -1621,6 +1621,7 @@ end)
 
 RegisterNetEvent('mdt:server:setWaypoint:unit', function(cid)
 	local src = source
+	cid = tostring(cid)
 	local Player = QBCore.Functions.GetPlayerByCitizenId(cid)
 	local PlayerCoords = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
 	TriggerClientEvent("mdt:client:setWaypoint:unit", src, PlayerCoords)
@@ -1689,6 +1690,7 @@ end)
 
 RegisterNetEvent('mdt:server:setRadio', function(cid, newRadio)
 	local src = source
+	cid = tostring(cid)
 	local targetPlayer = QBCore.Functions.GetPlayerByCitizenId(cid)
 	local targetSource = targetPlayer.PlayerData.source
 	local targetName = targetPlayer.PlayerData.charinfo.firstname .. ' ' .. targetPlayer.PlayerData.charinfo.lastname
@@ -1841,6 +1843,7 @@ end
 
 -- Returns the source for the given citizenId
 QBCore.Functions.CreateCallback('mdt:server:GetPlayerSourceId', function(source, cb, targetCitizenId)
+	targetCitizenId = tostring(targetCitizenId)
     local targetPlayer = QBCore.Functions.GetPlayerByCitizenId(targetCitizenId)
     if targetPlayer == nil then
         TriggerClientEvent('QBCore:Notify', source, "Citizen seems Asleep / Missing", "error")
@@ -1898,6 +1901,7 @@ RegisterNetEvent('mdt:server:registerweapon', function(serial, imageurl, notes, 
 end)
 
 local function giveCitationItem(src, citizenId, fine, incidentId)
+	citizenId = tostring(citizenId)
 	local Player = QBCore.Functions.GetPlayerByCitizenId(citizenId)
 	local PlayerName = Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname
 	local Officer = QBCore.Functions.GetPlayer(src)
@@ -1934,6 +1938,7 @@ end
 
 -- Removes money from the players bank and gives them a citation item
 RegisterNetEvent('mdt:server:removeMoney', function(citizenId, fine, incidentId)
+	citizenId = tostring(citizenId)
 	local src = source
 	local Player = QBCore.Functions.GetPlayerByCitizenId(citizenId)
 

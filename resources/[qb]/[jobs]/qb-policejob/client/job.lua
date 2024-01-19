@@ -195,7 +195,7 @@ local function TakeOutVehicle(vehicleInfo)
                 SetVehicleLivery(veh,vehicleInfo.livery)
                 TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
                 TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-                TriggerServerEvent("inventory:server:addTrunkItems", QBCore.Functions.GetPlate(veh), Config.CarItems)
+                exports['ps-inventory']:addTrunkItems(QBCore.Functions.GetPlate(veh), Config.CarItems)
                 SetVehicleEngineOn(veh, true, true)
             end, vehicleInfo.vehicle, coords, true)
         end,vehicleInfo.price)
@@ -1694,7 +1694,7 @@ end)
 RegisterCommand('liverymenu', function()
     if not PlayerJob.type == "leo" then QBCore.Functions.Notify("You can't use this menu..", "error") return end
     local vehicle = nil
-	if IsPedInAnyVehicle(PlayerPedId(), false) then	
+	if IsPedInAnyVehicle(PlayerPedId(), false) then
         vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
         syncVehicle(vehicle)
     else

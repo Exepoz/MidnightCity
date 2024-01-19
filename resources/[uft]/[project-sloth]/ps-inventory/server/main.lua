@@ -1268,6 +1268,15 @@ RegisterNetEvent('QBCore:Server:UpdateObject', function()
     QBCore = exports['qb-core']:GetCoreObject()
 end)
 
+function fetchTrunkItems(plate)
+	local trunk = Trunks[plate]
+	if trunk then trunk = Trunks[plate].items end
+	if not trunk then trunk = GetOwnedVehicleItems(plate) end
+	if not trunk then trunk = {} end
+	return trunk
+end exports('fetchTrunkItems', fetchTrunkItems)
+
+
 function addTrunkItems(plate, items)
 	Trunks[plate] = {}
 	Trunks[plate].items = items

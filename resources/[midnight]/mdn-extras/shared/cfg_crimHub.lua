@@ -29,19 +29,19 @@ Config.CrimHub = {
     BHExchangeRate = 500, -- Crumbs received for every Bounty Points Redeemed
     CurrencyExchange = {
         ['cash'] = {
-            rec = 2000, -- Amount of cash received
-            ['crumbs'] = 200, -- Amount of crumbs to receive `rec`
-            ['scoins'] = 10 -- Amount of sCoins to receive `rec`
+            rec = 1000, -- Amount of cash received
+            ['crumbs'] = 500, -- Amount of crumbs to receive `rec`
+            ['scoins'] = 25 -- Amount of sCoins to receive `rec`
         },
         ['crumbs'] = {
-            rec = 1100, -- Amount of crumbs received
-            ['cash'] = 500,  -- Amount of cash to receive `rec`
-            ['scoins'] = 50  -- Amount of sCoins to receive `rec`
+            rec = 50, -- Amount of crumbs received
+            ['cash'] = 1000,  -- Amount of cash to receive `rec`
+            ['scoins'] = 1  -- Amount of sCoins to receive `rec`
         },
         ['scoins'] = {
-            rec = 1100, -- Amount of sCoins received
-            ['crumbs'] = 200,  -- Amount of crumbs to receive `rec`
-            ['cash'] = 200  -- Amount of cash to receive `rec`
+            rec = 5, -- Amount of sCoins received
+            ['crumbs'] = 700,  -- Amount of crumbs to receive `rec`
+            ['cash'] = 6000  -- Amount of cash to receive `rec`
         },
         moneyBagsRatio = 0.4,
     },

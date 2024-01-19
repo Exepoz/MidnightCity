@@ -91,21 +91,21 @@ Config.ScrapyardPed = {
         [1] = {
             name = 'powersaw',
             itemlabel = "Power Saw",
-            price = 1000,
+            price = 1800,
             stock = 10,
             info = {},
         },
         [2] = {
             name = 'sawbladepack',
             itemlabel = "Saw Blade Pack",
-            price = 500,
+            price = 300,
             stock = 100,
             info = {}
         },
         [3] = {
             name = 'sawblade',
             itemlabel = "Saw Blade",
-            price = 100,
+            price = 60,
             stock = 100,
             info = {},
         },
@@ -130,23 +130,23 @@ Config.YardWrecks = {
         [7] = {item = "carbon",          amt = {min = 1, max = 3},    probability = 1/5},
         [8] = {item = "iron",            amt = {min = 1, max = 3},    probability = 1/5},
 
-        [9] = {item = "metalscrap",       amt = {min = 5, max = 10},    probability = 1/12},
-        [10] = {item = "aluminum",        amt = {min = 5, max = 10},    probability = 1/12},
-        [11] = {item = "steel",           amt = {min = 5, max = 10},    probability = 1/12},
-        [12] = {item = "plastic",         amt = {min = 5, max = 10},    probability = 1/12},
-        [13] = {item = "glass",           amt = {min = 5, max = 10},    probability = 1/12},
-        [14] = {item = "rubber",          amt = {min = 5, max = 10},    probability = 1/12},
-        [15] = {item = "carbon",          amt = {min = 5, max = 10},    probability = 1/12},
-        [16] = {item = "iron",            amt = {min = 5, max = 10},    probability = 1/12},
+        [9] = {item = "metalscrap",       amt = {min =2, max = 5},    probability = 1/12},
+        [10] = {item = "aluminum",        amt = {min =2, max = 5},    probability = 1/12},
+        [11] = {item = "steel",           amt = {min =2, max = 5},    probability = 1/12},
+        [12] = {item = "plastic",         amt = {min =2, max = 5},    probability = 1/12},
+        [13] = {item = "glass",           amt = {min =2, max = 5},    probability = 1/12},
+        [14] = {item = "rubber",          amt = {min =2, max = 5},    probability = 1/12},
+        [15] = {item = "carbon",          amt = {min =2, max = 5},    probability = 1/12},
+        [16] = {item = "iron",            amt = {min =2, max = 5},    probability = 1/12},
 
-        [17] = {item = "metalscrap",      amt = {min = 10, max = 20},    probability = 1/30},
-        [18] = {item = "aluminum",        amt = {min = 10, max = 20},    probability = 1/30},
-        [19] = {item = "steel",           amt = {min = 10, max = 20},    probability = 1/30},
-        [20] = {item = "plastic",         amt = {min = 10, max = 20},    probability = 1/30},
-        [21] = {item = "glass",           amt = {min = 10, max = 20},    probability = 1/30},
-        [22] = {item = "rubber",          amt = {min = 10, max = 20},    probability = 1/30},
-        [23] = {item = "carbon",          amt = {min = 10, max = 20},    probability = 1/30},
-        [24] = {item = "iron",            amt = {min = 10, max = 20},    probability = 1/30},
+        [17] = {item = "metalscrap",      amt = {min =3, max = 8},    probability = 1/30},
+        [18] = {item = "aluminum",        amt = {min =3, max = 8},    probability = 1/30},
+        [19] = {item = "steel",           amt = {min =3, max = 8},    probability = 1/30},
+        [20] = {item = "plastic",         amt = {min =3, max = 8},    probability = 1/30},
+        [21] = {item = "glass",           amt = {min =3, max = 8},    probability = 1/30},
+        [22] = {item = "rubber",          amt = {min =3, max = 8},    probability = 1/30},
+        [23] = {item = "carbon",          amt = {min =3, max = 8},    probability = 1/30},
+        [24] = {item = "iron",            amt = {min =3, max = 8},    probability = 1/30},
     },
 }
 
@@ -164,32 +164,32 @@ Config.WorldWrecks = { --Options for wrecks that spawn randomly on the island
         WreckHash = 2710556893,
         HarvestMaterials = { -- Rarity gets rolled first, and then a random item from that rarity is selected.
 
-            [1] = {item = "metalscrap",      amt = {min = 2, max = 6},    probability = 1/5},
-            [2] = {item = "aluminum",        amt = {min = 2, max = 6},    probability = 1/5},
-            [3] = {item = "steel",           amt = {min = 2, max = 6},    probability = 1/5},
-            [4] = {item = "plastic",         amt = {min = 2, max = 6},    probability = 1/5},
-            [5] = {item = "glass",           amt = {min = 2, max = 6},    probability = 1/5},
-            [6] = {item = "rubber",          amt = {min = 2, max = 6},    probability = 1/5},
-            [7] = {item = "carbon",          amt = {min = 2, max = 6},    probability = 1/5},
-            [8] = {item = "iron",            amt = {min = 2, max = 6},    probability = 1/5},
+            [1] = {item = "metalscrap",      amt = {min = 1, max = 3},    probability = 1/5},
+            [2] = {item = "aluminum",        amt = {min = 1, max = 3},    probability = 1/5},
+            [3] = {item = "steel",           amt = {min = 1, max = 3},    probability = 1/5},
+            [4] = {item = "plastic",         amt = {min = 1, max = 3},    probability = 1/5},
+            [5] = {item = "glass",           amt = {min = 1, max = 3},    probability = 1/5},
+            [6] = {item = "rubber",          amt = {min = 1, max = 3},    probability = 1/5},
+            [7] = {item = "carbon",          amt = {min = 1, max = 3},    probability = 1/5},
+            [8] = {item = "iron",            amt = {min = 1, max = 3},    probability = 1/5},
 
-            [9] = {item = "metalscrap",      amt = {min = 8, max = 15},    probability = 1/10},
-            [10] = {item = "aluminum",       amt = {min = 8, max = 15},    probability = 1/10},
-            [11] = {item = "steel",          amt = {min = 8, max = 15},    probability = 1/10},
-            [12] = {item = "plastic",        amt = {min = 8, max = 15},    probability = 1/10},
-            [13] = {item = "glass",          amt = {min = 8, max = 15},    probability = 1/10},
-            [14] = {item = "rubber",         amt = {min = 8, max = 15},    probability = 1/10},
-            [15] = {item = "carbon",         amt = {min = 8, max = 15},    probability = 1/10},
-            [16] = {item = "iron",           amt = {min = 8, max = 15},    probability = 1/10},
+            [9] = {item = "metalscrap",      amt = {min = 2, max = 6},   probability = 1/10},
+            [10] = {item = "aluminum",       amt = {min = 2, max = 6},   probability = 1/10},
+            [11] = {item = "steel",          amt = {min = 2, max = 6},   probability = 1/10},
+            [12] = {item = "plastic",        amt = {min = 2, max = 6},   probability = 1/10},
+            [13] = {item = "glass",          amt = {min = 2, max = 6},   probability = 1/10},
+            [14] = {item = "rubber",         amt = {min = 2, max = 6},   probability = 1/10},
+            [15] = {item = "carbon",         amt = {min = 2, max = 6},   probability = 1/10},
+            [16] = {item = "iron",           amt = {min = 2, max = 6},   probability = 1/10},
 
-            [17] = {item = "metalscrap",      amt = {min = 15, max = 30},    probability = 1/25},
-            [18] = {item = "aluminum",        amt = {min = 15, max = 30},    probability = 1/25},
-            [19] = {item = "steel",           amt = {min = 15, max = 30},    probability = 1/25},
-            [20] = {item = "plastic",         amt = {min = 15, max = 30},    probability = 1/25},
-            [21] = {item = "glass",           amt = {min = 15, max = 30},    probability = 1/25},
-            [22] = {item = "rubber",          amt = {min = 15, max = 30},    probability = 1/25},
-            [23] = {item = "carbon",          amt = {min = 15, max = 30},    probability = 1/25},
-            [24] = {item = "iron",            amt = {min = 15, max = 30},    probability = 1/25},
+            [17] = {item = "metalscrap",      amt = {min =3, max = 8},    probability = 1/25},
+            [18] = {item = "aluminum",        amt = {min =3, max = 8},    probability = 1/25},
+            [19] = {item = "steel",           amt = {min =3, max = 8},    probability = 1/25},
+            [20] = {item = "plastic",         amt = {min =3, max = 8},    probability = 1/25},
+            [21] = {item = "glass",           amt = {min =3, max = 8},    probability = 1/25},
+            [22] = {item = "rubber",          amt = {min =3, max = 8},    probability = 1/25},
+            [23] = {item = "carbon",          amt = {min =3, max = 8},    probability = 1/25},
+            [24] = {item = "iron",            amt = {min =3, max = 8},    probability = 1/25},
 
             -- ['common'] = { -- Comon Rolls have a 40% chance of being selected
             --     {item = 'carbon', minQty = 3, maxQty = 5},
@@ -266,12 +266,12 @@ Config.FlightBox = {
         Cash = {
             Enabled = true,
             Currency = "cash",
-            Amount = {min = 3000, max = 5000}
+            Amount = {min = 800, max = 1400}
         },
         Items = {
             Enabled = true,
             Items = {
-                {item = "diamond", min = 2, max = 4}
+                {item = "diamond", min = 2, max = 3}
             }
         }
     }
