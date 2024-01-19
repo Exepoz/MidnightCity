@@ -135,24 +135,24 @@ RegisterNetEvent('Renewed-Garbage:server:CollectCheck', function()
     if pay > 0 then
         for i=1, #m do
             if m[i] then
-                local Player = QBCore.Functions.GetPlayer(m[i])
-                local CID = Player.PlayerData.citizenid
-                local deliverData = Player.PlayerData.metadata["garbage"] or 0
+                local xPlayer = QBCore.Functions.GetPlayer(m[i])
+                local CID = xPlayer.PlayerData.citizenid
+                local deliverData = xPlayer.PlayerData.metadata["garbage"] or 0
 
-                local payBonus = Config.Buffs and exports[Config.BuffExport]:HasBuff(CID, Config.BuffType) and Config.BuffPay or 0.5
+                local payBonus = Config.Buffs and Player(src).state.foodBuff == 'luck' and Config.BuffPay or 1
                 local final = pay * payBonus
 
-                Player.Functions.SetMetaData('garbage', deliverData + MetaData)
-                Player.Functions.AddMoney("bank", final, "Sanitation")
+                xPlayer.Functions.SetMetaData('garbage', deliverData + MetaData)
+                xPlayer.Functions.AddMoney("bank", final, "Sanitation")
 
                 if Config.MaterialTicket and MaterialCheck > 0 then
                     if Player.Functions.AddItem('matticket', MaterialCheck) then
-                        TriggerClientEvent('inventory:client:ItemBox', Player.PlayerData.source, QBCore.Shared.Items['matticket'], "add", MaterialCheck)
+                        TriggerClientEvent('inventory:client:ItemBox', xPlayer.PlayerData.source, QBCore.Shared.Items['matticket'], "add", MaterialCheck)
                      end
                 end
 
                 if Config.RenewedBanking then
-                    local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
+                    local name = ("%s %s"):format(xPlayer.PlayerData.charinfo.firstname, PlayexPlayerr.PlayerData.charinfo.lastname)
                     local text = "Sanitation PaySlip for turning in "..CurrentRuns[group].Delivered.." Trash Bags"
                     exports['Renewed-Banking']:handleTransaction(CID, "Sanitation", final, text, "Los Santos Sanitation", name, "deposit")
                 end

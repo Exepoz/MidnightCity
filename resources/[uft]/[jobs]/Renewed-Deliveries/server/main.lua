@@ -138,18 +138,18 @@ RegisterNetEvent('Renewed-Deliveries:server:CollectCheck', function()
     if pay > 0 then
         for i=1, #m do
             if m[i] then
-                local Player = QBCore.Functions.GetPlayer(m[i])
-                local CID = Player.PlayerData.citizenid
-                local deliverData = Player.PlayerData.metadata["delivery"] or 0
+                local xPlayer = QBCore.Functions.GetPlayer(m[i])
+                local CID = xPlayer.PlayerData.citizenid
+                local deliverData = xPlayer.PlayerData.metadata["delivery"] or 0
 
-                local payBonus = Config.Buffs and exports[Config.BuffExport]:HasBuff(CID, Config.BuffType) and Config.BuffPay or .5
+                local payBonus = Config.Buffs and Player(src).state.foodBuff == 'luck' and Config.BuffPay or 1.0
                 local final = pay * payBonus
 
-                Player.Functions.SetMetaData('delivery', deliverData + MetaData)
-                Player.Functions.AddMoney("bank", final, "PostOP Delivery")
+                xPlayer.Functions.SetMetaData('delivery', deliverData + MetaData)
+                xPlayer.Functions.AddMoney("bank", final, "PostOP Delivery")
 
                 if Config.RenewedBanking then
-                    local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
+                    local name = ("%s %s"):format(xPlayer.PlayerData.charinfo.firstname, xPlayer.PlayerData.charinfo.lastname)
                     local text = "PostOP PaySlip for delivering "..CurrentRuns[group].Delivered.." Packages"
                     exports['Renewed-Banking']:handleTransaction(CID, "PostOP Delivery", final, text, "PostOP", name, "deposit")
                 end
