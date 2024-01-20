@@ -59,7 +59,7 @@ local checkBounties = function()
 	local options = {}
 	for k, v in ipairs(GlobalState.FenceBounties) do
         local str = Config.Quests[v.item]?.price and Config.Quests[v.item]?.price ..' crumbs each. (Special Feature!)' or Config.FenceItems[v.item] and math.floor(Config.FenceItems[v.item].price * 1.5) ..' crumbs each. (1.5x Extras)'
-		options[#options+1] = {title = QBCore.Shared.Items[v.item].label, disabled = GlobalState.CompletedBounties[pData.citizenid] and GlobalState.CompletedBounties[pData.citizenid][v.item] == true,
+        options[#options+1] = {title = QBCore.Shared.Items[v.item].label, disabled = GlobalState.CompletedBounties[pData.citizenid] and GlobalState.CompletedBounties[pData.citizenid][v.item] == true,
 		onSelect = function()
             local options2 = {{type = 'number', label = 'Amount', description = 'Amount you want to sell.', required = true, default = 1, min = 1, max = 5}}
             local input = lib.inputDialog('Chose Amount', options2)

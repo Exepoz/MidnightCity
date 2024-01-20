@@ -237,11 +237,16 @@ AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName(
         local usedKeys = {}
         CurrentQuests = {}
         for _, v in pairs(Config.FenceItems) do totalStock = totalStock + v.stock end
-        for k, v in pairs(Config.FenceItems) do
-            stockSplit = v.stock / totalStock
-            if stockSplit < 0.05 then
-                usedKeys[k] = true
-                CurrentQuests[#CurrentQuests+1] = {item = k}
+        local hotItems = 0
+        if totalStock >= 30 then
+            for k, v in pairs(Config.FenceItems) do
+                if hotItems >= 5 then break end
+                stockSplit = v.stock / totalStock
+                if stockSplit < 0.02 then
+                    usedKeys[k] = true
+                    CurrentQuests[#CurrentQuests+1] = {item = k}
+                    hotItems += 1
+                end
             end
         end
         for k, v in pairs(Config.Quests) do

@@ -25,7 +25,7 @@ Config.Shop = {
         options = {header = "Clean Weapons", icon = 'gun'},
         items = {
             [1] = {item = "weapon_pistol",  price = 600, stock = 10, loc = 6, max = 100},
-            --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
+            --[2] = {item = "case_recoil",  price = 25000, stock = 5, loc = 6, max = 100},
         }
     },
     ['scratchedweapon'] = {
@@ -58,7 +58,7 @@ Config.Shop = {
 Config.FenceItems = {
     ['vpn'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['tablet'] = {price = 40, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
-    ['10kgoldchain'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
+    ['tenkgoldchain'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['goldbar'] = {price = 150, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['samsungphone'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['monitor'] = {price = 50, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
@@ -73,12 +73,10 @@ Config.FenceItems = {
     ['earrings'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['console'] = {price = 50, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['hairdryer'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
-    ['goldennugget'] = {price = 50, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['soap'] = {price = 5, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['iphone'] = {price = 40, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['diamond_ring'] = {price = 30, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['coffeemaker'] = {price = 20, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
-    ['red_diamond'] = {price = 100, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['romantic_book'] = {price = 12, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['yellow-diamond'] = {price = 50, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['telescope'] = {price = 33, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
@@ -90,10 +88,13 @@ Config.FenceItems = {
     ['kq_expensive_laptop'] = {price = 33, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['kq_expensive_sneakers'] = {price = 22, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['kq_expensive_bag'] = {price = 44, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
+    ['kq_expensive_watch'] = {price = 44, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['pd_laptop'] = {price = 20, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['pd_necklace'] = {price = 12, devStep = 5, devAmount = 0.05, removed = 10, stock = 0,},
     ['pd_ringset'] = {price = 21, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
     ['pd_watch'] = {price = 21, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
+    ['bong'] = {price = 8, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
+    ['tapeplayer'] = {price = 21, devStep = 3, devAmount = 0.03, removed = 10, stock = 0,},
 }
 
 -- Price is needed if the item is not in Config.FenceItems OR if you want to override the default 1.5x hot value.
