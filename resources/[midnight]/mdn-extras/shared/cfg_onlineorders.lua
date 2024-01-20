@@ -28,7 +28,13 @@ Config.OnlineOrders.CustomJobs = {
         label = "UwU Cafe",
         bankAccount = 'catcafe',
         coords = vector3(-585.38, -1055.96, 22.34),
-        --cids = {['UPY10832'] 
+        --cids = {['UPY10832']
+    },
+    ['burgershot'] = {
+        label = "Burgershot",
+        bankAccount = 'burgershot',
+        coords = vector3(-1198.06, -902.24, 13.89),
+        --cids = {['UPY10832'] = true}
     },
     -- ['vubar'] = {
     --     label = "Vanilla Unicorn Bar",
@@ -143,112 +149,112 @@ Config.OnlineOrders.Shops = {
     ['fish'] = {
         options = {header = "Sea Products", icon = 'fish'},
         items = {
-            [1] = {item = "oystershell",    price = 55, stock = 300, loc = 10, max = 100},
-            [2] = {item = "squid",          price = 55, stock = 300, loc = 10, max = 100},
-            [3] = {item = "fish",           price = 55, stock = 300, loc = 10, max = 100},
+            [1] = {item = "oystershell",    price = 18, stock = 300, loc = 10, max = 100},
+            [2] = {item = "squid",          price = 18, stock = 300, loc = 10, max = 100},
+            [3] = {item = "fish",           price = 18, stock = 300, loc = 10, max = 100},
         }
     },
     ['meats'] = {
         options = {header = "Butchery", icon = 'drumstick-bite'},
         items = {
-            [1] = {item = "chickenbreast",  price = 45, stock = 300, loc = 9, max = 100},
-            [2] = {item = "burgerpatty",    price = 45, stock = 300, loc = 9, max = 100},
-            [3] = {item = "meat",           price = 45, stock = 300, loc = 9, max = 100},
-            [4] = {item = "ham",            price = 45, stock = 300, loc = 9, max = 100},
-            [5] = {item = "jimsausages",    price = 45, stock = 300, loc = 9, max = 100},
-            [6] = {item = "egg",            price = 45, stock = 300, loc = 9, max = 100},
-            [7] = {item = "frozennugget",   price = 45, stock = 300, loc = 9, max = 100},
+            [1] = {item = "chickenbreast",  price = 30, stock = 300, loc = 9, max = 100},
+            [2] = {item = "burgerpatty",    price = 30, stock = 300, loc = 9, max = 100},
+            [3] = {item = "meat",           price = 30, stock = 300, loc = 9, max = 100},
+            [4] = {item = "ham",            price = 30, stock = 300, loc = 9, max = 100},
+            [5] = {item = "jimsausages",    price = 30, stock = 300, loc = 9, max = 100},
+            [6] = {item = "egg",            price = 30, stock = 300, loc = 9, max = 100},
+            [7] = {item = "frozennugget",   price = 30, stock = 300, loc = 9, max = 100},
         }
     },
     ['fruits'] = {
         options = {header = "Fruits", icon = 'apple-whole'},
         items = {
-            [1] = {item = "orange",     price = 30, stock = 300, loc = 8, max = 100},
-            [2] = {item = "peach",      price = 30, stock = 300, loc = 8, max = 100},
-            [3] = {item = "strawberry", price = 30, stock = 300, loc = 8, max = 100},
-            [4] = {item = "blueberry",  price = 30, stock = 300, loc = 8, max = 100},
-            [5] = {item = "lime",       price = 30, stock = 300, loc = 8, max = 100},
-            [6] = {item = "lemon",      price = 30, stock = 300, loc = 8, max = 100},
-            [7] = {item = "medfruits",  price = 30, stock = 300, loc = 8, max = 100, jobs = {['pizzathis'] = true}},
-            [8] = {item = "watermelon", price = 30, stock = 300, loc = 8, max = 100, jobs = {['beanmachine'] = true}},
-            [9] = {item = "cherry",     price = 30, stock = 300, loc = 8, max = 100, jobs = {['vanilla'] = true}},
+            [1] = {item = "orange",     price = 13, stock = 300, loc = 8, max = 100},
+            [2] = {item = "peach",      price = 13, stock = 300, loc = 8, max = 100},
+            [3] = {item = "strawberry", price = 13, stock = 300, loc = 8, max = 100},
+            [4] = {item = "blueberry",  price = 13, stock = 300, loc = 8, max = 100},
+            [5] = {item = "lime",       price = 13, stock = 300, loc = 8, max = 100},
+            [6] = {item = "lemon",      price = 13, stock = 300, loc = 8, max = 100},
+            [7] = {item = "medfruits",  price = 13, stock = 300, loc = 8, max = 100, jobs = {['pizzathis'] = true}},
+            [8] = {item = "watermelon", price = 13, stock = 300, loc = 8, max = 100, jobs = {['beanmachine'] = true}},
+            [9] = {item = "cherry",     price = 13, stock = 300, loc = 8, max = 100, jobs = {['vanilla'] = true}},
         }
     },
     ['veggies'] = {
         options = {header = "Vegetables & Fine Herbs", icon = 'carrot'},
         items = {
-            [1] = {item = "potato",         price = 30, stock = 300, loc = 8, max = 100},
-            [2] = {item = "onion",          price = 30, stock = 300, loc = 8, max = 100},
-            [3] = {item = "lettuce",        price = 30, stock = 300, loc = 8, max = 100},
-            [4] = {item = "olives",         price = 30, stock = 300, loc = 8, max = 100},
-            [5] = {item = "pizzmushrooms",  price = 30, stock = 300, loc = 8, max = 100},
+            [1] = {item = "potato",         price = 14, stock = 300, loc = 8, max = 100},
+            [2] = {item = "onion",          price = 14, stock = 300, loc = 8, max = 100},
+            [3] = {item = "lettuce",        price = 14, stock = 300, loc = 8, max = 100},
+            [4] = {item = "olives",         price = 14, stock = 300, loc = 8, max = 100},
+            [5] = {item = "pizzmushrooms",  price = 14, stock = 300, loc = 8, max = 100},
 
-            [6] = {item = "basil",          price = 27, stock = 300, loc = 8, max = 100},
-            [7] = {item = "cubasil",        price = 27, stock = 300, loc = 8, max = 100},
-            [8] = {item = "mintleaf",       price = 27, stock = 300, loc = 8, max = 100},
+            [6] = {item = "basil",          price = 14, stock = 300, loc = 8, max = 100},
+            [7] = {item = "cubasil",        price = 14, stock = 300, loc = 8, max = 100},
+            [8] = {item = "mintleaf",       price = 14, stock = 300, loc = 8, max = 100},
         }
     },
     ['dairy'] = {
         options = {header = "Dairy", icon = 'cow'},
         items = {
-            [1] = {item = "milk",        price = 42, stock = 300, loc = 8, max = 100},
-            [2] = {item = "cheese",      price = 40, stock = 300, loc = 8, max = 100},
-            [3] = {item = "mozz",        price = 40, stock = 300, loc = 8, max = 100},
-            [4] = {item = "gelato",      price = 42, stock = 300, loc = 11, max = 100, },
-            [5] = {item = "popicecream", price = 42, stock = 300, loc = 11, max = 100, },
-            [6] = {item = "icecream",    price = 42, stock = 300, loc = 11, max = 100, },
+            [1] = {item = "milk",        price = 21, stock = 300, loc = 8, max = 100},
+            [2] = {item = "cheese",      price = 21, stock = 300, loc = 8, max = 100},
+            [3] = {item = "mozz",        price = 21, stock = 300, loc = 8, max = 100},
+            [4] = {item = "gelato",      price = 21, stock = 300, loc = 11, max = 100, },
+            [5] = {item = "popicecream", price = 21, stock = 300, loc = 11, max = 100, },
+            [6] = {item = "icecream",    price = 21, stock = 300, loc = 11, max = 100, },
         }
     },
     ['desserts'] = {
         options = {header = "Premade Desserts", icon = 'cake-candles'},
         items = {
-            [1] = {item = "tiramisu",     price = 45, stock = 300, loc = 11, max = 100,}, -- +pizza
-            [2] = {item = "cheesecake",   price = 45, stock = 300, loc = 11, max = 100,}, -- +pops +beanmachine
-            [3] = {item = "carrotcake",   price = 45, stock = 300, loc = 11, max = 100,},
-            [4] = {item = "jelly",        price = 45, stock = 300, loc = 7, max = 100, },
-            [5] = {item = "chocpudding",  price = 45, stock = 300, loc = 7, max = 100, },
-            [6] = {item = "popdonut",     price = 45, stock = 300, loc = 7, max = 100, },
+            [1] = {item = "tiramisu",     price = 25, stock = 300, loc = 11, max = 100,}, -- +pizza
+            [2] = {item = "cheesecake",   price = 25, stock = 300, loc = 11, max = 100,}, -- +pops +beanmachine
+            [3] = {item = "carrotcake",   price = 25, stock = 300, loc = 11, max = 100,},
+            [4] = {item = "jelly",        price = 25, stock = 300, loc = 7, max = 100, },
+            [5] = {item = "chocpudding",  price = 25, stock = 300, loc = 7, max = 100, },
+            [6] = {item = "popdonut",     price = 25, stock = 300, loc = 7, max = 100, },
         }
     },
     ['processed'] = {
         options = {header = "Processed Goods", icon = 'industry'},
         items = {
-            [1] = {item = "cranberry",      price = 27, stock = 300, loc = 7, max = 100, },
-            [2] = {item = "pinejuice",      price = 27, stock = 300, loc = 7, max = 100, },
-            [3] = {item = "sprunk",         price = 27, stock = 300, loc = 7, max = 100, },
-            [4] = {item = "sprunklight",    price = 27, stock = 300, loc = 7, max = 100, },
-            [5] = {item = "ecola",          price = 27, stock = 300, loc = 7, max = 100, },
-            [6] = {item = "ecolalight",     price = 27, stock = 300, loc = 7, max = 100, },
-            [7] = {item = "crisps",         price = 27, stock = 300, loc = 7, max = 100, },
-            [8] = {item = "chocolate",      price = 27, stock = 300, loc = 7, max = 100},
+            [1] = {item = "cranberry",      price = 17, stock = 300, loc = 7, max = 100, },
+            [2] = {item = "pinejuice",      price = 17, stock = 300, loc = 7, max = 100, },
+            [3] = {item = "sprunk",         price = 17, stock = 300, loc = 7, max = 100, },
+            [4] = {item = "sprunklight",    price = 17, stock = 300, loc = 7, max = 100, },
+            [5] = {item = "ecola",          price = 17, stock = 300, loc = 7, max = 100, },
+            [6] = {item = "ecolalight",     price = 17, stock = 300, loc = 7, max = 100, },
+            [7] = {item = "crisps",         price = 17, stock = 300, loc = 7, max = 100, },
+            [8] = {item = "chocolate",      price = 17, stock = 300, loc = 7, max = 100},
         }
     },
     ['baking'] = {
         options = {header = "Baking Ingredients", icon = 'cookie-bite'},
         items = {
-            [1] = {item = "sugar",          price = 32, stock = 250, loc = 7, max = 100},
-            [2] = {item = "flour",          price = 32, stock = 300, loc = 7, max = 100},
-            [3] = {item = "butter",         price = 32, stock = 300, loc = 7, max = 100},
-            [4] = {item = "gelatine",       price = 32, stock = 300, loc = 7, max = 100},
-            [5] = {item = "chocolatechips", price = 32, stock = 300, loc = 7, max = 100},
-            [6] = {item = "peanutbutter",   price = 32, stock = 300, loc = 7, max = 100},
+            [1] = {item = "sugar",          price = 12, stock = 250, loc = 7, max = 100},
+            [2] = {item = "flour",          price = 12, stock = 300, loc = 7, max = 100},
+            [3] = {item = "butter",         price = 12, stock = 300, loc = 7, max = 100},
+            [4] = {item = "gelatine",       price = 12, stock = 300, loc = 7, max = 100},
+            [5] = {item = "chocolatechips", price = 12, stock = 300, loc = 7, max = 100},
+            [6] = {item = "peanutbutter",   price = 12, stock = 300, loc = 7, max = 100},
             [7] = {item = "gummymould",     price = 500, stock = 10, loc = 7, max = 100, },
-            [8] = {item = "egg",            price = 35, stock = 100, loc = 9, max = 100, },
+            [8] = {item = "egg",            price = 15, stock = 100, loc = 9, max = 100, },
             --[9] = {item = "yeast",          price = 100, stock = 100, loc = 7, max = 100,},
         }
     },
     ['gengoods'] = {
         options = {header = "General Goods", icon = 'basket-shopping'},
         items = {
-            [1] =  {item = "water_bottle",  price = 37, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
-            [2] = {item = "tosti",          price = 37, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
-            [3] = {item = "burgerbun",      price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [4] = {item = "tofu",           price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [5] = {item = "rice",           price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [6] = {item = "sauce",          price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [7] = {item = "pasta",          price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [8] = {item = "nachos",         price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [9] = {item = "cereal",         price = 37, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [1] =  {item = "water_bottle",  price = 15, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
+            [2] = {item = "tosti",          price = 15, stock = 300, loc = 7, max = 100, exl = {['whitewidow'] = true, ['vanilla'] = true}},
+            [3] = {item = "burgerbun",      price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [4] = {item = "tofu",           price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [5] = {item = "rice",           price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [6] = {item = "sauce",          price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [7] = {item = "pasta",          price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [8] = {item = "nachos",         price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
+            [9] = {item = "cereal",         price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
         }
     },
     ['alcohol'] = {
@@ -280,17 +286,17 @@ Config.OnlineOrders.Shops = {
     ['beanmachine'] = {
         options = {header = "Bean Machine Exclusives", icon = 'pagelines'},
         items = {
-            [1] = {item = "beancoffee", price = 45, stock = 300, loc = 13, max = 100},
-            [2] = {item = "beandonut",  price = 42, stock = 300, loc = 13, max = 100},
-            [3] = {item = "rhinohorn",  price = 42, stock = 300, loc = 13, max = 100},
+            [1] = {item = "beancoffee", price = 25, stock = 300, loc = 13, max = 100},
+            [2] = {item = "beandonut",  price = 22, stock = 300, loc = 13, max = 100},
+            [3] = {item = "rhinohorn",  price = 22, stock = 300, loc = 13, max = 100},
         }
     },
     ['catcafe'] = {
         options = {header = "Cat Cafe Exclusives", icon = 'cat'},
         items = {
-            [1] = {item = "nori",       price = 42, stock = 300, loc = 13, max = 100},
-            [2] = {item = "boba",       price = 45, stock = 300, loc = 13, max = 100},
-            [3] = {item = "noodles",    price = 40, stock = 300, loc = 13, max = 100},
+            [1] = {item = "nori",       price = 22, stock = 300, loc = 13, max = 100},
+            [2] = {item = "boba",       price = 25, stock = 300, loc = 13, max = 100},
+            [3] = {item = "noodles",    price = 20, stock = 300, loc = 13, max = 100},
         }
     },
     ['whitewidow'] = {
