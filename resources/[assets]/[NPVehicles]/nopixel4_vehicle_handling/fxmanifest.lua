@@ -5,8 +5,6 @@ author 'nopixel'
 description 'nopixel 4.0 - Vehicle Handling'
 version '1.0.0'
 
-lua54 'yes'
-
 files {
 	'BOAT/handling.meta',
     'COMMERCIAL/handling.meta',

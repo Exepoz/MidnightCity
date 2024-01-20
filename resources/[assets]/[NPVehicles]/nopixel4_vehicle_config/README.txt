@@ -1,3 +1,5 @@
+Note: For full compatibility, please put all 'nopixel_vehicle' and 'nopixel_vehicles' resources into their own respective [Folder] without other non-vehicle resources.
+===========================================================================
 Upgraded Vanilla Vehicle Spawn Names
 
 Ambulance, Armytrailer, Asterope, Baller, Baller2, 

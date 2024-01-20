@@ -386,7 +386,7 @@
 					<fBackEndPopUpMaxDeltaSpeed value="0.600000" />
 					<strAdvancedFlags>14008000</strAdvancedFlags>
 				</Item>
-				<Item type="CVehicleWeaponHandlingData">
+				<!-- <Item type="CVehicleWeaponHandlingData">
 					<uWeaponHash>
 						<Item>VEHICLE_WEAPON_GRANGER2_MG</Item>
 						<Item />
@@ -417,7 +417,7 @@
 					<fUvAnimationMult value="0.000000" />
 					<fMiscGadgetVar value="0.000000" />
 					<fWheelImpactOffset value="0.000000" />
-				</Item>
+				</Item> -->
 				<Item type="NULL" />
 				<Item type="NULL" />
 			</SubHandlingData>
