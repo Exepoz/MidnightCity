@@ -15,49 +15,36 @@ function ExploitBan(id, reason)
 	DropPlayer(id, 'You were permanently banned by the server for: Exploiting')
 end
 
+function GetAccountName(account)
+	return QBCore.Shared.Jobs[account].label
+end
+
 function GetAccount(account)
-	return Accounts[account] or 0
+	return exports['Renewed-Banking']:getAccountMoney(GetAccountName(account))
 end
 
 function AddMoney(account, amount)
-	if not Accounts[account] then
-		Accounts[account] = 0
-	end
-
-	Accounts[account] = Accounts[account] + amount
-	MySQL.insert('INSERT INTO management_funds (job_name, amount, type) VALUES (:job_name, :amount, :type) ON DUPLICATE KEY UPDATE amount = :amount',
-		{
-			['job_name'] = account,
-			['amount'] = Accounts[account],
-			['type'] = 'boss'
-		})
+	exports['Renewed-Banking']:addAccountMoney(GetAccountName(account), amount)
+	exports['Renewed-Banking']:handleTransaction(GetAccountName(account), 'Boss Menu Deposit', amount, 'Added money from the boss menu.', 'Boss', GetAccountName(account), 'deposit')
 end
 
 function RemoveMoney(account, amount)
 	local isRemoved = false
 	if amount > 0 then
-		if not Accounts[account] then
-			Accounts[account] = 0
-		end
-
-		if Accounts[account] >= amount then
-			Accounts[account] = Accounts[account] - amount
-			isRemoved = true
-		end
-
-		MySQL.update('UPDATE management_funds SET amount = ? WHERE job_name = ? and type = "boss"', { Accounts[account], account })
+		isRemoved = exports['Renewed-Banking']:removeAccountMoney(GetAccountName(account), amount)
+		exports['Renewed-Banking']:handleTransaction(GetAccountName(account), 'Boss Menu Withdraw', amount, 'Removed money from the boss menu.', 'Boss', GetAccountName(account), 'withdraw')
 	end
 	return isRemoved
 end
 
-MySQL.ready(function ()
-	local bossmenu = MySQL.query.await('SELECT job_name,amount FROM management_funds WHERE type = "boss"', {})
-	if not bossmenu then return end
+-- MySQL.ready(function ()
+-- 	local bossmenu = MySQL.query.await('SELECT job_name,amount FROM management_funds WHERE type = "boss"', {})
+-- 	if not bossmenu then return end
 
-	for _,v in ipairs(bossmenu) do
-		Accounts[v.job_name] = v.amount
-	end
-end)
+-- 	for _,v in ipairs(bossmenu) do
+-- 		Accounts[v.job_name] = v.amount
+-- 	end
+-- end)
 
 RegisterNetEvent("qb-bossmenu:server:withdrawMoney", function(amount)
 	local src = source
