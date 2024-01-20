@@ -180,8 +180,6 @@ end
 RegisterNetEvent('av_houserobbery:client:resetAll', function()
 
 	if Leader and not caught then
-		QBCore.Debug(housePoints)
-		QBCore.Debug(items)
 		local allRobbed = true for _, v in pairs(housePoints) do
 		if not v.robbed then allRobbed = false break end end
 		if allRobbed then TriggerServerEvent('av_houserobbery:server:extraRep') end

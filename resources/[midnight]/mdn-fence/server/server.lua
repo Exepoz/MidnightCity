@@ -60,7 +60,6 @@ RegisterNetEvent('mdn-fence:server:sellToFence', function(data)
 end)
 
 RegisterNetEvent('mdn-fence:server:buyItem', function(itemTable, item, am, k, subt, shop)
-    QBCore.Debug(itemTable)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local crumbs = Player.Functions.GetItemByName('midnight_crumbs')
@@ -71,7 +70,6 @@ RegisterNetEvent('mdn-fence:server:buyItem', function(itemTable, item, am, k, su
     --if crumbs.amount < (itemTable.items[k].price * am) then TriggerClientEvent('QBCore:Notify', src, "You don't have enough gold crumbs...", "error") return end
 
     local info = {ordereditem = item, qty = am, itemName = QBCore.Shared.Items[item].label, itemImage = QBCore.Shared.Items[item].image, subtype = subt, scratched = itemTable.items[k].scratched or false}
-    QBCore.Debug(info)
     if Player.Functions.AddItem("fencepackage", 1, false, info) then
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['midnight_crumbs'], "remove", price)
         Citizen.Wait(500)

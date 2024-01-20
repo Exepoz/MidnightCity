@@ -58,7 +58,6 @@ RegisterNetEvent('jim-consumables:Consume', function(itemName, item)
     if Consumables[itemName].nightOnly and not Midnight.Functions.IsNightTime() then triggerNotify(nil, "For some reason, you can only use this at night...", "error") return end
     if Consumables[itemName].type == 'injector' and GetGameTimer() < injectorUsed + (10*60000) then triggerNotify(nil, "You need to wait before using this again..", "error") return end
     LocalPlayer.state:set("inv_busy", true, true) TriggerEvent('inventory:client:busy:status', true) TriggerEvent('canUseInventoryAndHotbar:toggle', false)
-    QBCore.Debug(Consumables[itemName])
 	local Player = PlayerPedId()
 	local emote = Emotes[Consumables[itemName].emote] or Emotes["crisps"]
     local returnItem = Consumables[itemName].returnItem or nil
