@@ -20,7 +20,7 @@ RegisterNetEvent('qb-taxi:server:NpcPay', function(Payment)
             local r1, r2 = math.random(1, 5), math.random(1, 5)
             if randomAmount == r1 or randomAmount == r2 then Payment = Payment + math.random(10, 20) end
             if Config.Management then
-                exports['Renewed-Banking']:AddAccountMoney('taxi', Payment, 'Customer payment')
+                exports['Renewed-Banking']:addAccountMoney('taxi', Payment, 'Customer payment')
             else
                 Player.Functions.AddMoney('cash', Payment)
             end
