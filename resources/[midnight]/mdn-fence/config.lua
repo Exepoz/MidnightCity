@@ -24,7 +24,7 @@ Config.Shop = {
     ['cleanweapon'] = {
         options = {header = "Clean Weapons", icon = 'gun'},
         items = {
-            [1] = {item = "weapon_pistol",  price = 600, stock = 10, loc = 6, max = 100},
+            [1] = {item = "weapon_pistol",  price = 1300, stock = 10, loc = 6, max = 100},
             --[2] = {item = "case_recoil",  price = 25000, stock = 5, loc = 6, max = 100},
         }
     },
@@ -32,7 +32,7 @@ Config.Shop = {
         options = {header = "Scratched Weapons", icon = 'gun'},
         -- Add `scratched = true` to all these weapons
         items = {
-            [1] = {item = "weapon_pistol",  price = 1700, stock = 15, loc = 6, max = 100, scratched = true},
+            [1] = {item = "weapon_pistol",  price = 5700, stock = 15, loc = 6, max = 100, scratched = true},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
