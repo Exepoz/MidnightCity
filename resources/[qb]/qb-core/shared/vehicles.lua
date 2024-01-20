@@ -197,7 +197,7 @@ local Vehicles = {
     {['model'] = 'brigham',       ['name'] = 'Brigham',                       ['brand'] = 'Albany',          ['price'] = 149900,  ['categoryLabel'] = 'Muscle',          ['shop'] = nil},
     {['model'] = 'greenwood',     ['name'] = 'Greenwood',                     ['brand'] = 'Bravado',         ['price'] = 105000,  ['categoryLabel'] = 'Muscle',          ['shop'] = 'pdm'},
     --- Sports Classic (5)
-    {['model'] = 'ardent',        ['name'] = 'Ardent',                        ['brand'] = 'Ocelot',          ['price'] = 30000,   ['categoryLabel'] = 'Sports Classics', ['shop'] = nil},
+    {['model'] = 'ardent',        ['name'] = 'Ardent',                        ['brand'] = 'Ocelot',          ['price'] = 30000,   ['categoryLabel'] = 'Sports Classics', ['shop'] = 'nil'},
     {['model'] = 'btype',         ['name'] = 'Roosevelt',                     ['brand'] = 'Albany',          ['price'] = 75000,   ['categoryLabel'] = 'Sports Classics', ['shop'] = 'luxury'},
     {['model'] = 'btype2',        ['name'] = 'Franken Stange',                ['brand'] = 'Albany',          ['price'] = 87000,   ['categoryLabel'] = 'Sports Classics', ['shop'] = 'luxury'},
     {['model'] = 'btype3',        ['name'] = 'Roosevelt Valor',               ['brand'] = 'Albany',          ['price'] = 63000,   ['categoryLabel'] = 'Sports Classics', ['shop'] = 'luxury'},
