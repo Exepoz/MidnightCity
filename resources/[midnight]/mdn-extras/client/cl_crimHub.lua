@@ -2,6 +2,20 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local Midnight = exports['mdn-nighttime']:GetMidnightCore()
 local QM, currEx
 
+RegisterCommand('getPeds', function()
+    local peds = {}
+    for k, v in pairs(lib.getNearbyPeds(GetEntityCoords(PlayerPedId()), 30.0)) do
+        local heading = GetEntityHeading(v.ped)
+        local info = {
+            coords = vector4(v.coords.x, v.coords.y,v.coords.z, heading),
+            model = GetEntityModel(v.ped),
+            relGroup = GetPedRelationshipGroupHash(v.ped)
+        }
+        peds[#peds+1] = info
+    end
+    QBCore.Debug(peds)
+end)
+
 -- RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
 --     Wait(2000) SetupHeistBPPed()
 -- end)
@@ -156,6 +170,7 @@ local buyGraceMenu = function(data)
 end
 
 RegisterNetEvent('crimHub:client:SetupQuartermaster', function()
+    if QM then return end
     QM = CreatePedAtCoords('s_m_y_blackops_01', vector4(-603.12, -1601.40, 27.01, 230.82), false)
     exports.ox_target:addLocalEntity(QM, {
         label = 'Talk to the Quartermaster',
@@ -243,7 +258,7 @@ local getCurrency = function(currency)
 end
 
 local convertCurrency = function(buyA, sellA, amountSelected)
-    return math.floor(sellA / buyA * amountSelected)
+    return math.floor(buyA / sellA * amountSelected)
 end
 
 local exchangeAmount = function(data)
@@ -299,6 +314,7 @@ local sellBags = function()
 end
 
 RegisterNetEvent('crimHub:client:SetupCurrExchange', function()
+    if currEx then return end
     currEx = CreatePedAtCoords('s_m_y_blackops_01', vector4(-577.75,-1603.58, 27.01, 100.42), false)
     exports.ox_target:addLocalEntity(currEx, {
         label = 'Exchange your Currencies',
@@ -307,7 +323,7 @@ RegisterNetEvent('crimHub:client:SetupCurrExchange', function()
     })
 end)
 
-RegisterNetEvent('crimHub:client:removeCurrExchange', function() if DoesEntityExist(currEx) then DeleteEntity(currEx) QM = nil end end)
+RegisterNetEvent('crimHub:client:removeCurrExchange', function() if DoesEntityExist(currEx) then DeleteEntity(currEx) currEx = nil end end)
 
 RegisterNetEvent('crimHub:client:talkToCurrExchange', function()
     local isNight = Midnight.Functions.IsNightTime()

@@ -36,7 +36,7 @@ Config.CrimHub = {
         ['crumbs'] = {
             rec = 50, -- Amount of crumbs received
             ['cash'] = 1000,  -- Amount of cash to receive `rec`
-            ['scoins'] = 1  -- Amount of sCoins to receive `rec`
+            ['scoins'] = 20  -- Amount of sCoins to receive `rec`
         },
         ['scoins'] = {
             rec = 5, -- Amount of sCoins received

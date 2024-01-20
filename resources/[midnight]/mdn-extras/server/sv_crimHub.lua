@@ -19,7 +19,7 @@ local getCurrency = function(source, currency)
 end
 
 local convertCurrency = function(buyA, sellA, amountSelected)
-    return math.floor(sellA / buyA * amountSelected)
+    return math.floor(buyA / sellA * amountSelected)
 end
 
 local removeCurrency = function(source, currency, amount, currencyAmount)
