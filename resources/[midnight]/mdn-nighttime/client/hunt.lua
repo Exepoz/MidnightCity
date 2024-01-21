@@ -246,7 +246,7 @@ RegisterNetEvent('openHuntDongle', function()
             else options[#options+1] = {title = 'Search for Bounty', disabled = data.blacklisted or not Midnight.Functions.IsNightTime(), description = data.blacklisted and "~ !! BLACKLISTED !! ~" or Midnight.Functions.IsNightTime() and 'Take part of the hunt and receive the locations of preys.' or 'Wait for the hunt to begin at night.', onSelect = startHunting} end
             -- options[#options+1] = {title = 'Check Profile', description = 'Take a look at your Bounty Hunter Profile.', onSelect = checkProfile}
             options[#options+1] = {title = 'See Bloody Preys', disabled = data.blacklisted, description = data.blacklisted and "~ !! BLACKLISTED !! ~" or 'See everyone who is marked for death by the Golden Trail.', onSelect = seeBloodyPreys, args = data}
-            options[#options+1] = {title = 'Diner Reservation', disabled = data.blacklisted, description = data.blacklisted and "~ !! BLACKLISTED !! ~" or 'You\'ve got some bodies to take care of?', event = 'mdn-extras:client:useHTPhone'}
+            options[#options+1] = {title = 'Diner Reservation', disabled = true --[[data.blacklisted]], description = 'SoonTM'--[[data.blacklisted and "~ !! BLACKLISTED !! ~" or 'You\'ve got some bodies to take care of?']], event = 'mdn-extras:client:useHTPhone'}
             lib.registerContext({id = 'bountyDongle', title = 'Bounty Finder',  options = options })
             lib.showContext('bountyDongle')
         end
