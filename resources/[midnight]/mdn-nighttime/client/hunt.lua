@@ -234,8 +234,7 @@ end)
 RegisterNetEvent('openHuntDongle', function()
     if not QBCore.Functions.HasItem('bh_dongle') then PlaySoundFrontend(-1, "DELETE", "HUD_DEATHMATCH_SOUNDSET", 1) return end
     QBCore.Functions.TriggerCallback('nighttime:fetchUserData', function(data, dongleID)
-        print(dongleID, QBCore.Functions.GetPlayerData().citizenid, type(dongleID), type(QBCore.Functions.GetPlayerData().citizenid))
-        if dongleID ~= QBCore.Functions.GetPlayerData().citizenid then QBCore.Functions.Notify('This dongle does not belong to you...', 'error') return end
+        if dongleID and dongleID ~= QBCore.Functions.GetPlayerData().citizenid then QBCore.Functions.Notify('This dongle does not belong to you...', 'error') return end
         if not data then
             TriggerEvent('nighttime:client:createHuntProfile')
         else

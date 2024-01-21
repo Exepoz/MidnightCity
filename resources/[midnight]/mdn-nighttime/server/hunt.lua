@@ -509,7 +509,7 @@ QBCore.Functions.CreateCallback('nighttime:fetchUserData', function(source, cb, 
     local cid = xPlayer.PlayerData.citizenid
     local item = xPlayer.Functions.GetItemByName('bh_dongle')
     local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', { cid})
-    if not result or not result[1] then cb(false, item.info.cid)
+    if not result or not result[1] then cb(false, item and item.info.cid or nil)
     else
         local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
         if isBlacklisted and os.time() > blTime + 172800 then
