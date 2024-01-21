@@ -649,8 +649,8 @@ RegisterNetEvent('jixel-farming:client:CowGameMenu', function(data)
             header = Loc[Config.CoreOptions.Lan].menu["start_job"],
             title = Loc[Config.CoreOptions.Lan].menu["start_job"],
 			event = "jixel-farming:client:payForAnimal",
-			args = { animalType = "cows", speed = 1.15, price = AnimalSettings.Cow.Price }, -- The chosen stop amount will be passed as an argument
-            params = { event = "jixel-farming:client:payForAnimal", args = { animalType = "cows", speed = 1.15, jobDifficulty = "easy", price = AnimalSettings.Cow.Price } } -- The chosen stop amount will be passed as an argument
+			args = { animalType = "cows", speed = 1.15, price = AnimalSettings.Cows.Price }, -- The chosen stop amount will be passed as an argument
+            params = { event = "jixel-farming:client:payForAnimal", args = { animalType = "cows", speed = 1.15, jobDifficulty = "easy", price = AnimalSettings.Cows.Price } } -- The chosen stop amount will be passed as an argument
 	}
     if Config.CoreOptions.Menu == "ox" then
         exports.ox_lib:registerContext({ id = 'CowsGameMenu', title = "Cows Game Menu", position = 'top-right', options = GameMenu })
