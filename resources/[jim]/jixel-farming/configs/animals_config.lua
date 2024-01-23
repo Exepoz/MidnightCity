@@ -31,7 +31,7 @@ AnimalSettings = {
 		Target = true,
 		MilkKey = 74,
 		KillKey = 38,
-		Price = 10000,
+		Price = 2000,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Cow Farm",
@@ -40,7 +40,7 @@ AnimalSettings = {
 		},
 		Setup = {
 			KillRepAmount = 2, MilkRepAmount = 2,
-			MeatAmount =function() return math.random(5, 10) end,
+			MeatAmount =function() return math.random(7, 10) end,
 			StressPerKill = function() return math.random(5, 10) end,
 			wanderarea = vector3(2257.88, 4928.65, 40.97),
 		},
@@ -100,7 +100,7 @@ AnimalSettings = {
 	Pigs = {
 		Enabled = true,
 		CatchKey = 38,
-		Price = 5000,
+		Price = 1000,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Pig Farm",
@@ -109,7 +109,7 @@ AnimalSettings = {
 		},
 		Setup = {
 			KillRepAmount = 2,
-			MeatAmount = function() return math.random(5, 10) end,
+			MeatAmount = function() return math.random(6, 10) end,
 			StressPerKill = function() return math.random(5, 10) end
 		},
 		PigZone = {
@@ -134,7 +134,7 @@ AnimalSettings = {
 		Enabled = true,
 		Target = true,
 		InteractionKey = 38,
-		Price = 5000,
+		Price = 1000,
 		BlipSettings = {
 			Enabled = true,
 			Label = "Chicken Farm",
