@@ -11,12 +11,14 @@ Midnight.Functions.isHunting = function() return LocalPlayer.state.isHunting end
 
 --- Processes the death of individuals by players at night time.
 local processDeath = function()
+    Midnight.Functions.Debug('Processing Death...')
     if not Midnight.Functions.IsNightTime() then return end
     local ped = PlayerPedId()
     local killer
     local killerPed = GetPedSourceOfDeath(ped)
     if IsEntityAPed(killerPed) and IsPedAPlayer(killerPed) then
         killer = GetPlayerServerId(NetworkGetPlayerIndexFromPed(killerPed))
+        Midnight.Functions.Debug('Sending Killer Info to server. ('..killer..')')
         TriggerServerEvent('nighttime:server:processDeath', killer, checkIsInsideGreenZone())
     end
 end exports('processDeath', processDeath)
@@ -103,7 +105,7 @@ local startHunting = function()
             Midnight.Functions.Debug("Target Found : "..currentTarget)
             while LocalPlayer.state.isHunting do
                 local w = 60000
-                if not gettingNewPrey or currentTarget == 0 then
+                if not gettingNewPrey or currentTarget ~= 0 then
                     Midnight.Functions.Debug("Fetching Location...")
                     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getTargetLocation', function(loc)
                         if loc == "notFound" then
@@ -138,6 +140,7 @@ end
 
 --- Handler to claim the prey's bounty after killing them
 local claimBounty = function(data)
+    QBCore.Debug(data)
     if claimingBounty then return end
     claimingBounty = true
     local ped = PlayerPedId()
@@ -208,11 +211,12 @@ local function safeJob()
 end
 
 RegisterNetEvent('nighttime:addBountyDied', function(ped, bodyID, isHunter)
-    Midnight.Functions.Debug('Adding Claim Bounty Target to ped '..ped)
+    Midnight.Functions.Debug('Adding Claim Bounty Target to ped '..ped, bodyID, isHunter)
     if isHunter then
-        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return NetworkGetEntityFromNetworkId(ped) == e and not claimingBounty end, label = "Steal Unclaimed Points", distance = 2.0, onSelect = claimBounty, hunter = isHunter, bodyID = bodyID})
+        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return GetPlayerPed(GetPlayerFromServerId(ped)) == e and not claimingBounty end, label = "Steal Unclaimed Points", distance = 2.0, onSelect = claimBounty, isHunter = isHunter, bodyID = bodyID, hSrc = ped})
     else
-        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return NetworkGetEntityFromNetworkId(ped) == e and not claimingBounty end, label = "Claim Bounty", distance = 2.0, onSelect = claimBounty, })
+        --currentTarget = 0
+        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return GetPlayerPed(GetPlayerFromServerId(ped)) == e and not claimingBounty end, label = "Claim Bounty", distance = 2.0, onSelect = claimBounty, })
     end
 end)
 

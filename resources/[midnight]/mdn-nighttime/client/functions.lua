@@ -24,7 +24,7 @@ Midnight.Functions = {
         return p
     end,
 
-    Debug = function(...) print('^5[DEBUG]^3 '.. ...) end
+    Debug = function(...) local str = "" for k, v in ipairs({...}) do str = str..tostring(v).." | " end print('^5[DEBUG]^3 '.. str) end
 }
 
 exports('Notify', function(text, ttype, lenght) Midnight.Functions.Notif(text, ttype, lenght) end)

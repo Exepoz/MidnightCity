@@ -88,14 +88,15 @@ end)
 RegisterNetEvent('nighttime:server:enterHunt', function(serversource, bloody)
     local src = serversource or source
     if safeJob(src) and not bloody then return end
+    local alr = false
+    for k, v in pairs(preys) do if v == src then Midnight.Functions.Debug(src..' Person is already a prey') return end end
     table.insert(preys, src)
     GlobalState.BountyTargets = preys
     Player(src).state.isPrey = true
     Midnight.Functions.Debug(src..' has entered the hunt')
 end)
 
---- Removes the player from the prey list.
-RegisterNetEvent('nighttime:server:leaveHunt', function(serversource, quit)
+local function leaveHunt(serversource, quit)
     local src = serversource or source
     for k, v in pairs(preys) do if v == src then
         if Player(src).state.Bloody and not quit then break
@@ -105,6 +106,12 @@ RegisterNetEvent('nighttime:server:leaveHunt', function(serversource, quit)
     end end
     GlobalState.BountyTargets = preys
     Midnight.Functions.Debug(src..' has left the hunt')
+end
+
+--- Removes the player from the prey list.
+RegisterNetEvent('nighttime:server:leaveHunt', function(serversource, quit)
+    local src = serversource or source
+    leaveHunt(src, quit)
 end)
 
 --- Adds the player to the hunters list.
@@ -135,7 +142,7 @@ end)
 --- Removes the player from the hunters list.
 RegisterNetEvent('nighttime:server:stopHunting', function(serversource)
     local src = serversource or source
-    Player = QBCore.Functions.GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     hunters[Player.PlayerData.citizenid] = nil
     Midnight.Functions.Debug(src..' has stopped hunting')
 
@@ -150,6 +157,7 @@ RegisterNetEvent('nighttime:server:preyFound', function(target) Player(target).s
 --- Processes an indvidual's death.
 RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
     local src = source
+    Midnight.Functions.Debug(src..' Processing Death for '..src)
     local Killer = QBCore.Functions.GetPlayer(killer)
     local Prey = QBCore.Functions.GetPlayer(src)
     local headerN = ''
@@ -157,9 +165,10 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
     local hunterName = Midnight.Functions.GetCharName(killer)
     local preyName = Midnight.Functions.GetCharName(src)
 
-    if not Config.Debug then Wait(math.random(60,180)*1000) end
+    if not Config.Debug then Wait(math.random(3,5)*1000) end
     if inGreen then
         -- Player got killed inside a green zone (BAD)
+        -- Wait(math.random(3,5)*1000)
         Midnight.Functions.Debug(killer..' just spilled blood in a green zone.. ('..src..')')
         exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
             sender = 'Anonymous',
@@ -276,25 +285,26 @@ RegisterNetEvent('nighttime:server:giveHuntDongle', function()
 end)
 
 --- Stealing hunters's unclaimed points.
-RegisterNetEvent('nighttime:server:stealPoints', function(hSrc)
+RegisterNetEvent('nighttime:server:stealPoints', function(data)
     local src = source
+    local hSrc = data.hSrc
     local cid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
     local kcid = QBCore.Functions.GetPlayer(hSrc).PlayerData.citizenid
     local result = MySQL.query.await('SELECT unclaimed FROM midnight_hunters WHERE CID = ?', {kcid})
     MySQL.Async.execute(
         'UPDATE midnight_hunters SET unclaimed = CASE WHEN CID = :killed THEN 0 WHEN CID = :killer THEN unclaimed + :newPoints ELSE unclaimed END WHERE CID IN (:killed, :killer)',
-        {killed = kcid, killer = cid, newPoints = result}
+        {killed = kcid, killer = cid, newPoints = result[1].unclaimed}
     )
 
     local pName = Midnight.Functions.GetCharName(src)
     local oName = Midnight.Functions.GetCharName(hSrc)
-    local txt = 'Killed '..oName.."("..QBCore.Functions.GetPlayer(hSrc).PlayerData.metata.hunterName..") and stole their unclaimed points ("..result..")"
-    local logString = {huntA = Player.PlayerData.metadata.huntAlias, ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n\n"..txt}
+    local txt = 'Killed '..oName.."("..QBCore.Functions.GetPlayer(hSrc).PlayerData.metadata.huntAlias..") and stole their unclaimed points ("..result[1].unclaimed..")"
+    local logString = {huntA = QBCore.Functions.GetPlayer(src).PlayerData.metadata.huntAlias, ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..cid.."\n\n"..txt}
     TriggerEvent("qb-log:server:CreateLog", "bountyHunter", "Bounty Claimed", "green", logString)
 
 
-    Midnight.Functions.Debug(src..' has stolen '..result.." unclaimed points from "..hSrc)
-    TriggerClientEvent('QBCore:Notify', src, 'You have stolen '..result.. 'points from an other hunter.', 'info')
+    Midnight.Functions.Debug(src..' has stolen '..result[1].unclaimed.." unclaimed points from "..hSrc)
+    TriggerClientEvent('QBCore:Notify', src, 'You have stolen '..result[1].unclaimed.. ' points from an other hunter.', 'info')
 end)
 
 --- Kicks the player from the server.
@@ -405,6 +415,12 @@ RegisterNetEvent('nighttime:server:buyBHCrumbs', function(amount)
     end
 end)
 
+local function removeAllPreys()
+    for _, v in pairs(preys) do
+        leaveHunt(v, false)
+    end
+end
+
 --- Toggle function for day/night (Triggered by weather/time resource)
 ---@param isNight boolean true -> is night time | false -> is day time.
 ---@param pre boolean true if this is for the warning 1 hour before night time
@@ -416,6 +432,7 @@ local ToggleDayNight = function(isNight, pre)
         TriggerClientEvent('nighttime:client:nightWarning', -1, 'night')
     else
         TriggerClientEvent('nighttime:client:nightWarning', -1, 'day')
+        removeAllPreys()
     end
 end exports("ToggleDayNight", ToggleDayNight)
 
@@ -425,7 +442,7 @@ end exports("ToggleDayNight", ToggleDayNight)
 local generateNewTarget = function(source, current)
     local newTarget = preys[math.random(#preys)]
     Midnight.Functions.Debug("Generated : "..(newTarget or "NIL"))
-    if newTarget == current or newTarget == source  or newTarget == nil then return nil
+    if newTarget == current or newTarget == source or newTarget == nil then return nil
     else return newTarget end
 end
 
@@ -471,6 +488,7 @@ end)
 --- Fetches the target's location
 ---@param target number Hunter's current target
 QBCore.Functions.CreateCallback('mdn-bountyHunt:getTargetLocation', function(_, cb, target)
+    if target == nil then cb('notFound') return end
     if not DoesPlayerExist(target) or not Player(target).state.isPrey or QBCore.Functions.GetPlayer(target).PlayerData.metadata.isDead then cb('notFound') return end
     local ped = GetPlayerPed(target)
     if ped and ped ~= 0 then cb(GetEntityCoords(ped)) else cb("notFound") end
@@ -482,11 +500,16 @@ QBCore.Functions.CreateCallback('mdn-bountyHunt:getNewTarget', function(source, 
     local Player = QBCore.Functions.GetPlayer(source)
     ::generate::
     Midnight.Functions.Debug('List of preys : ')
-    if #preys == 0 then Midnight.Functions.Debug('There are no preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are no preys around currently.', 'error') cb(nil) return end
+    if #preys < 3 then Midnight.Functions.Debug('There are not enough preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are not enough preys around currently.', 'error') cb(nil) return end
     local currentTarget = hunters[Player.PlayerData.citizenid]
-    local newTarget = generateNewTarget(source, currentTarget)
-    local time = GetGameTimer()
-    while newTarget == nil do newTarget = generateNewTarget(source, currentTarget) if GetGameTimer() > time + 10000 then Midnight.Functions.Debug('Finding new target TimeOut for '..source) break end end
+    --local newTarget = generateNewTarget(source, currentTarget)
+    --local time = GetGameTimer()
+
+    local newTarget = lib.waitFor(function()
+        return generateNewTarget(source, currentTarget)
+    end, 'Fetching Prey Timed Out', 3000)
+
+    --while newTarget == nil do newTarget = generateNewTarget(source, currentTarget) if GetGameTimer() > time + 3000 then Midnight.Functions.Debug('Finding new target TimeOut for '..source) break end end
     if not newTarget then cb(nil) return end
     local ped = GetPlayerPed(newTarget)
     if not ped or ped == 0 or not canBeHunted(newTarget) then Midnight.Functions.Debug('Cant find new #'..source.."\'s target #"..newTarget) goto generate end
