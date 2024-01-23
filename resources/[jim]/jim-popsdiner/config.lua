@@ -73,7 +73,7 @@ Config = {
 			{ name = "jelly", price = 0, amount = 50, info = {}, type = "item", slot = 3, },
 			{ name = "chocpudding", price = 0, amount = 50, info = {}, type = "item", slot = 4, },
 			{ name = "popdonut", price = 0, amount = 50, info = {}, type = "item", slot = 5, },
-			{ name = "popicecream", price = 0, amount = 50, info = {}, type = "item", slot = 6, },
+			{ name = "icecream", price = 0, amount = 50, info = {}, type = "item", slot = 6, },
 			{ name = "chocolate", price = 0, amount = 50, info = {}, type = "item", slot = 7, },
 			{ name = "crisps", price = 0, amount = 50, info = {}, type = "item", slot = 8, }
 		},

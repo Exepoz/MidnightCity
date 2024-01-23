@@ -173,9 +173,9 @@ Config = {
 		requireDutyCheck = false,	-- if true, when a mechanic is online, the repair button won't show
 									-- if false, the repair option will always be available
 		Jobs = {
-			["police"] = 0, -- Job and Job Grade
-			["ambulance"] = 0,
-			["mechanic"] = 0,
+			["police"] = 1, -- Job and Job Grade
+			["ambulance"] = 1,
+			["mechanic"] = 1,
 		},
 		LockEmergency = true,  -- Enable this to lock make only "Emergency" (Class 18) vehicles to be used with the bench
 		Locations = {
