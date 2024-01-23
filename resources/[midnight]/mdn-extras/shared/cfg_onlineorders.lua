@@ -71,8 +71,8 @@ Config.OnlineOrders.Shops = {
             [1] = {item = "underglow_controller",   price = 2500,   stock = 25, 	loc = 3, max = 10},
             [2] = {item = "paintcan",               price = 250,    stock = 100, 	loc = 2, max = 25},
             [3] = {item = "cleaningkit",            price = 20,     stock = 100, 	loc = 2, max = 25},
-            [4] = {item = "harness",                price = 1200,    stock = 25, 	loc = 15, max = 25, exl = {"lscustoms"}  },
-            [5] = {item = "noscan",                 price = 500,    stock = 25, 	loc = 15, max = 25,exl = {"lscustoms"} },
+            [4] = {item = "harness",                price = 1200,    stock = 25, 	loc = 15, max = 25, job = {"tunershop"}  },
+            [5] = {item = "noscan",                 price = 500,    stock = 25, 	loc = 15, max = 25, job = {"tunershop"} },
             [6] = {item = "horn",                   price = 300,    stock = 25, 	loc = 4, max = 10,},
             [7] = {item = "ducttape",               price = 75,     stock = 100, 	loc = 2, max = 25},
             [8] = {item = "newoil",                 price = 1500,   stock = 25, 	loc = 3, max = 10},
@@ -102,7 +102,7 @@ Config.OnlineOrders.Shops = {
             [12] = {item = "suspension2",     price = 21500,    	stock = 50,  loc = 3, max = 15, },
             [13] = {item = "suspension3",     price = 33000,    	stock = 50,  loc = 3, max = 15, },
             [14] = {item = "suspension4",     price = 39000,    	stock = 50,  loc = 3, max = 15, },
-            [15] = {item = "turbo",           price = 50000,    	stock = 25,  loc = 1, max = 5, exl = {"lscustoms"} },
+            [15] = {item = "turbo",           price = 50000,    	stock = 25,  loc = 1, max = 5, job = {"tunershop"} },
             [16] = {item = "oilp1",           price = 1000,   	stock = 50,  loc = 1, max = 15, },
             [17] = {item = "oilp2",           price = 3000,    	stock = 50,  loc = 1, max = 15, },
             [18] = {item = "oilp3",           price = 5000,     stock = 50,  loc = 1, max = 15, },
@@ -119,7 +119,7 @@ Config.OnlineOrders.Shops = {
             [29] = {item = "cables2",         price = 6400,    	stock = 50,  loc = 3, max = 15, },
             [30] = {item = "cables3",         price = 9800,    	stock = 50,  loc = 3, max = 15, },
             [31] = {item = "antilag",         price = 25000,    	stock = 50,  loc = 3, max = 15, },
-            [32] = {item = "modified_turbo",  price = 60000,    	stock = 25,  loc = 1, max = 5, exl = {"lscustoms"} },
+            [32] = {item = "modified_turbo",  price = 60000,    	stock = 25,  loc = 1, max = 5, job = {"tunershop"} },
         },
     },
     ['cosmetics'] = {
@@ -164,6 +164,8 @@ Config.OnlineOrders.Shops = {
             [5] = {item = "jimsausages",    price = 30, stock = 300, loc = 9, max = 100},
             [6] = {item = "egg",            price = 30, stock = 300, loc = 9, max = 100},
             [7] = {item = "frozennugget",   price = 30, stock = 300, loc = 9, max = 100},
+            [8] = {item = "rawbacon",       price = 10, stock = 300, loc = 9, max = 100},
+            [8] = {item = "rawgroundbeef",  price = 30, stock = 300, loc = 9, max = 100},
         }
     },
     ['fruits'] = {
@@ -201,8 +203,8 @@ Config.OnlineOrders.Shops = {
             [2] = {item = "cheese",      price = 21, stock = 300, loc = 8, max = 100},
             [3] = {item = "mozz",        price = 21, stock = 300, loc = 8, max = 100},
             [4] = {item = "gelato",      price = 21, stock = 300, loc = 11, max = 100, },
-            [5] = {item = "popicecream", price = 21, stock = 300, loc = 11, max = 100, },
-            [6] = {item = "icecream",    price = 21, stock = 300, loc = 11, max = 100, },
+            --[5] = {item = "popicecream", price = 21, stock = 300, loc = 11, max = 100, },
+            [5] = {item = "icecream",    price = 21, stock = 300, loc = 11, max = 100, },
         }
     },
     ['desserts'] = {
@@ -254,7 +256,6 @@ Config.OnlineOrders.Shops = {
             [6] = {item = "sauce",          price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
             [7] = {item = "pasta",          price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
             [8] = {item = "nachos",         price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
-            [9] = {item = "cereal",         price = 15, stock = 300, loc = 7, max = 100, exl = {['club77'] = true}},
         }
     },
     ['alcohol'] = {

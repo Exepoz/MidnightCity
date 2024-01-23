@@ -3,7 +3,7 @@ Config.Heists = {
 
     StoreRobbery = {
         label = "Store Robbery",
-        ['Money'] = {Amount = {min = 1000, max = 5000}, MoneyInBags = true, BagAmount = {min = 3, max = 5}},
+        ['Money'] = {Amount = {min = 1000, max = 3000}, MoneyInBags = true, BagAmount = {min = 3, max = 5}},
         ['SpecialLoot'] = {chance = 5, item = 'supplier_details', info = {}, amount = 1},
         ['Electronics'] = 'store',
     },
@@ -32,7 +32,7 @@ Config.Heists = {
                 [1] = {item = "diamond_ring", amt = {min = 4, max = 5}, probability = 1/3},
                 [2] = {item = "rolex",        amt = {min = 4, max = 5}, probability = 1/3},
                 [3] = {item = "goldchain",    amt = {min = 4, max = 5}, probability = 1/3},
-                [4] = {item = "10kgoldchain", amt = {min = 4, max = 5}, probability = 1/7},
+                [4] = {item = "tenkgoldchain", amt = {min = 4, max = 5}, probability = 1/7},
                 [5] = {item = "diamond",      amt = {min = 4, max = 5}, probability = 1/7},
             },
         },
@@ -49,7 +49,7 @@ Config.Heists = {
                 [1] = {item = "diamond_ring",  amt = {min = 8, max = 12}, probability = 1/3},
                 [2] = {item = "rolex",         amt = {min = 8, max = 12}, probability = 1/3},
                 [3] = {item = "goldchain",     amt = {min = 8, max = 12}, probability = 1/3},
-                [4] = {item = "10kgoldchain",  amt = {min = 8, max = 12}, probability = 1/5},
+                [4] = {item = "tenkgoldchain",  amt = {min = 8, max = 12}, probability = 1/5},
                 [5] = {item = "diamond",       amt = {min = 8, max = 12}, probability = 1/5},
                 [6] = {item = "goldbar",       amt = {min = 1, max = 2}, probability = 1/10},
                 [7] = {item = "sharp_diamond", amt = {min = 1, max = 2}, probability = 1/15},
