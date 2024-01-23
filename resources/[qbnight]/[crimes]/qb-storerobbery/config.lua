@@ -1,6 +1,6 @@
 Config = {}
 
-Config.MinimumStoreRobberyPolice = 0
+Config.MinimumStoreRobberyPolice = 1
 Config.resetTime = (60 * 1000) * 60
 Config.tickInterval = 1000
 Config.RareSafeItems = {
