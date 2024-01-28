@@ -488,7 +488,7 @@ end)
 --- Fetches the target's location
 ---@param target number Hunter's current target
 QBCore.Functions.CreateCallback('mdn-bountyHunt:getTargetLocation', function(_, cb, target)
-    if target == nil then cb('notFound') return end
+    if target == nil or target == 0 then cb('notFound') return end
     if not DoesPlayerExist(target) or not Player(target).state.isPrey or QBCore.Functions.GetPlayer(target).PlayerData.metadata.isDead then cb('notFound') return end
     local ped = GetPlayerPed(target)
     if ped and ped ~= 0 then cb(GetEntityCoords(ped)) else cb("notFound") end
