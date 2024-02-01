@@ -20,16 +20,16 @@ if Config.reqTow then
     RegisterNetEvent('an-tow:requestResponse')
     AddEventHandler('an-tow:requestResponse', function(towDriverName, accepted)
         if accepted then
-            exports['qb-phone']:PhoneNotification('Tow request accepted by ' .. towDriverName, 'They will be there shortly!', '#9f0e63', "NONE", 5000)
+            exports['qb-phone']:PhoneNotification('Tow request accepted by ' .. towDriverName, 'They will be there shortly!', '#9f0e63', 10000)
         else
-            exports['qb-phone']:PhoneNotification('Tow request declined.', 'Declined.', '#9f0e63', "NONE", 5000)
+            exports['qb-phone']:PhoneNotification('Tow request declined.', 'Declined.', '#9f0e63', 10000)
         end
     end)
 
     RegisterNetEvent('an-tow:receiveTowRequest')
     AddEventHandler('an-tow:receiveTowRequest', function(target, plate, coords)
 
-        local success = exports['qb-phone']:PhoneNotification('Tow Request: ', 'Vehicle Plate: ' .. plate, '#9f0e63', "NONE", 5000, 'fas fa-check-circle', 'fas fa-times-circle')
+        local success = exports['qb-phone']:PhoneNotification('Tow Request: ', 'Vehicle Plate: ' .. plate, '#9f0e63', "NONE", 'fas fa-check-circle', 'fas fa-times-circle')
         if success then
             TriggerServerEvent('an-tow:sendTowResponse', target, true)
             local blip = AddBlipForCoord(coords.x, coords.y, coords.z)

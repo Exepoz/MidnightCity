@@ -13,7 +13,7 @@ Config.Logs = false -- true = qb-logs Enabled | qb-logs Disabled
 -- Run Configurations
 Config.StartLocation = {coords = vector3(-106.61, -2234.44, 7.81), heading = 120.13} --Starter Ped Location & heading
 
-Config.Phone = "qs" -- 'qb' : qb-phone | 'gks' : GKS Phone
+Config.Phone = "qb" -- 'qb' : qb-phone | 'gks' : GKS Phone
 
 Config.Police = { -- Police Configuration
     CopsNeeded = 0,

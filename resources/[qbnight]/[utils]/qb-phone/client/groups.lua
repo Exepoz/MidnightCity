@@ -113,11 +113,8 @@ RegisterNUICallback('jobcenter_JoinTheGroup', function(data, cb) --employment
 end)
 
 RegisterNUICallback('jobcenter_leave_grouped', function(data, cb) --employment
-    QBCore.Debug(data)
     if not data then return end
     local success = exports['qb-phone']:PhoneNotification("Job Center", 'Are you sure you want to leave the group?', 'fas fa-users', '#FFBF00', "NONE", 'fas fa-check-circle', 'fas fa-times-circle')
-    QBCore.Debug('yo')
-    print(success)
     if success then
         TriggerServerEvent('qb-phone:server:jobcenter_leave_grouped', data)
     end

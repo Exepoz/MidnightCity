@@ -1,7 +1,3 @@
-server_script "IIP2C7E9LQV.lua"
-client_script "IIP2C7E9LQV.lua"
-server_script "2592Y9A6DH2W.lua"
-client_script "2592Y9A6DH2W.lua"
 -- Copyright (C) 2022 Constant Development
 
 fx_version 'cerulean'
@@ -13,7 +9,7 @@ version '1.4.1'
 
 shared_scripts {
     --'@ox_lib/init.lua',
-    -- Un-Comment the line above to enable ox_lib 
+    -- Un-Comment the line above to enable ox_lib
     'config.lua',
     'locales/en.lua',
 }

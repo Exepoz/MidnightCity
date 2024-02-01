@@ -316,7 +316,7 @@ CreateThread(function()
                                 break
                             end
                         else
-                            exports["qb-core"]:DrawText(Lang:t('info.bus_stop_work'), 'left')
+                            exports["qb-core"]:DrawText(Lang:t('info.bus_stop_work'))
                             if IsControlJustReleased(0, 38) then
                                 if (not NpcData.Active or NpcData.Active and NpcData.NpcTaken == false) then
                                     if IsPedInAnyVehicle(PlayerPedId(), false) then

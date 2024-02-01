@@ -192,7 +192,8 @@ RegisterNetEvent('cr-armoredtrucks:server:HeistStarted', function(heist)
             message = "Hey. We see you with that Truck. It would be in both our best interests if you secure that truck for me. I will let you have some of it\'s content. Wait until I update your gps with the drop off location.",
         }
     end
-    TriggerEvent('qs-smartphone:server:sendNewMailToOffline', cid, emailData)
+    TriggerEvent('qb-phone:server:sendNewMail', emailData, cid)
+    --TriggerEvent('qs-smartphone:server:sendNewMailToOffline', cid, emailData)
 end)
 
 RegisterNetEvent('cr-armoredtrucks:server:foundTruck', function() TruckFound = true end)

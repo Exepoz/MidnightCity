@@ -53,7 +53,8 @@ end)
 
 local function PhoneNotification(title, text, icon, color, timeout, accept, deny)
     Result = nil
-    if access and deny then test = true end
+    if accept and deny then test = true end
+    if not test and (timeout == 'NONE' or not timeout) then timeout = 10000 end
     SendNUIMessage({
         action = "PhoneNotificationCustom",
         PhoneNotify = {
@@ -66,7 +67,13 @@ local function PhoneNotification(title, text, icon, color, timeout, accept, deny
             deny = deny,
         },
     })
-    while test do
+    local testing
+    if test then
+        Result = false
+        testing = GetGameTimer()
+        if not timeout or timeout == 'NONE' then timeout = 60000 end
+    end
+    while test and GetGameTimer() < testing + timeout do
         Wait(5)
     end
     Wait(100)

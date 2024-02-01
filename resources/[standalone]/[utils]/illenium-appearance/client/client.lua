@@ -136,7 +136,7 @@ function OpenShop(config, isPedMenu, shopType)
             })
             return
         end
-
+        TriggerEvent("backitems:displayItems", false)
         client.startPlayerCustomization(function(appearance)
             if appearance then
                 if not isPedMenu then
@@ -151,6 +151,7 @@ function OpenShop(config, isPedMenu, shopType)
                     position = Config.NotifyOptions.position
                 })
             end
+            TriggerEvent("backitems:displayItems", true)
             exports['is-playerstyles']:SetWalkingStyle()
             exports['is-playerstyles']:SetMood()
             Framework.CachePed()
@@ -719,7 +720,7 @@ RegisterNetEvent("illenium-appearance:client:reloadSkin", function(bypassChecks)
         })
         return
     end
-
+    TriggerEvent("backitems:displayItems", false)
     reloadSkinTimer = GetGameTimer()
     BackupPlayerStats()
 
@@ -732,6 +733,7 @@ RegisterNetEvent("illenium-appearance:client:reloadSkin", function(bypassChecks)
             LoadPlayerUniform(bypassChecks)
         end
         RestorePlayerStats()
+        TriggerEvent("backitems:displayItems", true)
     end)
 end)
 

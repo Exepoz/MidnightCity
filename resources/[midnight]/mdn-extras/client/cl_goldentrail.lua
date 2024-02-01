@@ -1,8 +1,8 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-exports['qb-target']:RemoveZone("goldenTrailDrugLaptop")
-exports['qb-target']:AddBoxZone("goldenTrailDrugLaptop", vector3(569.46, -3127.42, 18.77), 0.5, 0.5, {name="goldenTrailDrugLaptop", heading=0, debugPoly=false, minZ=18.5, maxZ=19.0},
-{options = {{event = "malmo-goldentrail:client:Login", icon = "fas fa-laptop", label = "Turn on Laptop"}}, distance = 2.5})
+-- exports['qb-target']:RemoveZone("goldenTrailDrugLaptop")
+-- exports['qb-target']:AddBoxZone("goldenTrailDrugLaptop", vector3(569.46, -3127.42, 18.77), 0.5, 0.5, {name="goldenTrailDrugLaptop", heading=0, debugPoly=false, minZ=18.5, maxZ=19.0},
+-- {options = {{event = "malmo-goldentrail:client:Login", icon = "fas fa-laptop", label = "Turn on Laptop"}}, distance = 2.5})
 
 local LoadHe = function(a)
     QBCore.Functions.Progressbar("vpnConnect", 'Reaching Server...', 10000, true, true,

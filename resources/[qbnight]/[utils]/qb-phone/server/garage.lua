@@ -54,7 +54,7 @@ QBCore.Functions.CreateCallback('qb-phone:server:GetGarageVehicles', function(so
             local enginePercent = round(v.engine / 10, 0)
             local bodyPercent = round(v.body / 10, 0)
             if v.garage_id then VehicleGarage = v.garage_id end
-            print(v.impound)
+
             local VehicleState = "In"
             if v.impound == 1 then VehicleState = "Impounded"
             elseif v.in_garage == false then VehicleState = "Out" end

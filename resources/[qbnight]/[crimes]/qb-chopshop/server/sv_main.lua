@@ -175,7 +175,7 @@ local GeneratePlate = function()
 end
 
 RegisterNetEvent('qb-chopshop:server:SendEmail', function(cid, email)
-    TriggerEvent('qs-smartphone:server:sendNewMailToOffline', cid, email)
+    TriggerEvent('qb-phone:server:sendNewMail', email, cid)
 end)
 
 RegisterNetEvent('qb-chopshop:server:Reward', function(type)

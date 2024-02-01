@@ -1,7 +1,3 @@
-server_script "XMIT.lua"
-client_script "XMIT.lua"
-server_script "MHCJKL41.lua"
-client_script "MHCJKL41.lua"
 fx_version 'cerulean'
 
 author 'KevinGirardx'
@@ -24,7 +20,7 @@ server_scripts {
 
 lua54 'yes'
 
-escrow_ignore { 
+escrow_ignore {
     'client/*.lua',
     'server/*.lua',
     'config.lua',

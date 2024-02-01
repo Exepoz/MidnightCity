@@ -55,7 +55,7 @@ RegisterNetEvent('malmo-goldentrail:server:CheckHeistReq', function(drug, heist)
                 sender = 'Anonymous',
                 subject = _U('phone_title_current'),
                 message = str
-            } TriggerEvent('qs-smartphone:server:sendNewMailToOffline', Player.PlayerData.citizenid, emailData)
+            }TriggerEvent('qb-phone:server:sendNewMail', emailData, Player.PlayerData.citizenid)
             TriggerClientEvent('qb-drugsystem:client:BringBackBarrel', src , 'kerosene', gang)
         else
             TriggerEvent('qb-drugsystem:client:StartBarrels', src , 'kerosene')
@@ -67,7 +67,7 @@ RegisterNetEvent('malmo-goldentrail:server:CheckHeistReq', function(drug, heist)
                 sender = 'Anonymous',
                 subject = _U('phone_title_current'),
                 message = str
-            } TriggerEvent('qs-smartphone:server:sendNewMailToOffline', Player.PlayerData.citizenid, emailData)
+            } TriggerEvent('qb-phone:server:sendNewMail', emailData, Player.PlayerData.citizenid)
             TriggerClientEvent('qb-drugsystem:client:BringBackBarrel', src , 'methy', gang)
         else
             TriggerEvent('qb-drugsystem:server:CanStartBarrels', src , 'methy')

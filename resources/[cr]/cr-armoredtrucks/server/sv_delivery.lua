@@ -47,7 +47,7 @@ RegisterServerEvent('cr-armoredtrucks:server:DeliveryPayouts', function()
             message = "Hey. You\'ve been doing quite a good job with those trucks. I might have something better for you. If you bring me back the loot you get, I\'ll let you in on some information that will get you better stuff. Drop it off in a box in the storage room at the corner of Alta Street & Clinton Ave. Oh, and make sure you\'ve got a System Breacher with you.. You will need it.",
             button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:getConvoyDropOffLocation'}
         }
-        TriggerEvent('qs-smartphone:server:sendNewMailToOffline', Player.PlayerData.citizenid, emailData)
+        TriggerEvent('qb-phone:server:sendNewMail', emailData, Player.PlayerData.citizenid)
     end
     if Player.PlayerData.metadata['armtruckrep']+1 == 3 then
         Debug('Sending Progression Info Email')
@@ -57,7 +57,7 @@ RegisterServerEvent('cr-armoredtrucks:server:DeliveryPayouts', function()
             message = "Hey. Keep doing what you\'re doing and I\'ll contact you with a great opportunity. We\'re watching you.",
             --button = {enabled = false, buttonEvent = ''}
         }
-        TriggerEvent('qs-smartphone:server:sendNewMailToOffline', Player.PlayerData.citizenid, emailData)
+        TriggerEvent('qb-phone:server:sendNewMail', emailData, Player.PlayerData.citizenid)
     end
 
     local charinfo = Player.PlayerData.charinfo

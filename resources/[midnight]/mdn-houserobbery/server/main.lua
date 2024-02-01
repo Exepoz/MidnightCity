@@ -11,7 +11,7 @@ local jobStages = {
     [1] = {name = "Wait to receive the house's location.", isDone = false, id = 1},
     [2] = {name = "Enter the house.", isDone = false, id = 2},
     [3] = {name = "Loot the house.", isDone = false, id = 3},
-    [4] = {name = "Leave the area.", isDone = false, id = 4}
+    [4] = {name = "Leave the area & get back to Jhonny.", isDone = false, id = 4}
 }
 
 GlobalState.CompHRQuests = Quests

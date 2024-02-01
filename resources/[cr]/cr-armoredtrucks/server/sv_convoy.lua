@@ -21,7 +21,7 @@ RegisterNetEvent('cr-armoredtrucks:server:depoThatBag', function(dataBag)
     --     Player.Functions.RemoveItem('markedbills', 1, dataMoney.money)
     --     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['markedbills'], "remove", 1)
     -- end
-    if nope then Wait(math.random(120,180)*1000) TriggerEvent('qs-smartphone:server:sendNewMailToOffline', Player.PlayerData.citizenid, emailData)
+    if nope then Wait(math.random(120,180)*1000) TriggerEvent('qb-phone:server:sendNewMail', emailData, Player.PlayerData.citizenid)
     else TriggerEvent('cr-armoredtrucks:server:GetInConvoyQueue', src) end
 end)
 
@@ -38,7 +38,7 @@ RegisterNetEvent('cr-armoredtrucks:server:GetInConvoyQueue', function(src)
         if not Config.Debug then Wait(math.random(120,180)*1000) end
         emailData = {sender = 'Anonymous', subject = 'Mutual Interests.', message = 'Thank you for the drop off. I\'ll send you an email if I see a roaming truck...'}
     end
-    TriggerEvent('qs-smartphone:server:sendNewMailToOffline', cid, emailData)
+    TriggerEvent('qb-phone:server:sendNewMail', emailData, cid)
 end)
 
 
@@ -64,7 +64,8 @@ RegisterServerEvent('cr-armoredtrucks:server:Payouts', function()
             subject = 'Mutual Interests',
             message = "Hey. You\'ve become a real pro. Thank you for what you\'ve done. I can get you in contact with some other people, but you\'ll need to connect to a chatroom on the darkweb. There\'s a laptop at 10100, you can connect to it. Maybe you could find some harder jobs on there.",
             button = {enabled = true, buttonEvent = 'cr-armoredtrucks:client:get10100Room'}
-        } TriggerEvent('qs-smartphone:server:sendNewMailToOffline', Player.PlayerData.citizenid, emailData)
+        }
+        TriggerEvent('qb-phone:server:sendNewMail', emailData, Player.PlayerData.citizenid)
     end
 
     local charinfo = Player.PlayerData.charinfo
