@@ -64,7 +64,6 @@ lib.callback.register("delivery:callback:can_start", function(source, data, delA
             end
         end
     end
-
     if cooldown[src] then
         SVNotify(src, locale("cooldown", cooldown[src].time), "error")
         return false
@@ -151,10 +150,10 @@ RegisterNetEvent("delivery:server:start_delivery", function(data, delAmount)
     end
 end)
 
-RegisterNetEvent("delivery:server:end_delivery", function(data, delAmount)
+RegisterNetEvent("delivery:server:end_delivery", function(data, delAmount, ogAMount)
     local src = source
     local reward = math.random(data.delivery.reward.min, data.delivery.reward.max)
-    if delAmount == 3 then reward = reward * 1.1 elseif delAmount == 5 then reward = reward * 1.3 end
+    if ogAMount == 3 then reward = reward * 1.1 elseif ogAMount == 5 then reward = reward * 1.3 end
     if data.job ~= 'fence' and Midnight.Functions.IsNightTime() then reward = reward * NightBonus end
     local item = data.delivery.item
 
@@ -164,6 +163,7 @@ RegisterNetEvent("delivery:server:end_delivery", function(data, delAmount)
     end
 
     cooldown[src] = { time = data.cooldown }
+    reward = math.floor(reward)
     if data.job == 'fence' then
         AddItem(src, 'midnight_crumbs', reward)
     else
@@ -175,7 +175,7 @@ Cooldown = function()
     for player, _ in pairs(cooldown) do
         cooldown[player].time = cooldown[player].time - 1
         if cooldown[player].time <= 0 then
-            table.remove(cooldown, player)
+            cooldown[player] = nil
         end
     end
 

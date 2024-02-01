@@ -1,3 +1,46 @@
+local targets = {}
+local peds = {}
+--- TESTING ONLY ---
+-- local testing = true
+-- Citizen.CreateThread(function()
+--     local options = {
+--         {
+--             label = 'test',
+--             name = 'test',
+--             icon = "fas fa-hand-holding",
+--             distance = 2.5,
+--         }
+--     }
+--     if testing then
+--         print("doing stuff")
+--         for k,v in pairs(KloudDev.Delivery.locations) do
+--             targets[k] = AddTarget(vec3(v.coords.x, v.coords.y, v.coords.z), 0.7, options)
+--             peds[k] = SpawnPed(KloudDev.Delivery.peds[math.random(1, #KloudDev.Delivery.peds)], vec4(v.coords.x, v.coords.y, v.coords.z - 1, v.coords[4]))
+--         end
+
+--         testingLocs = false
+--         continue = 1
+--         RegisterCommand('tryLocs', function(source, args)
+--             testingLocs = true
+--             for i = (tonumber(args[1]) or continue), #KloudDev.Delivery.locations do
+--                 v = KloudDev.Delivery.locations[i]
+--                 print(i, v.coords)
+
+--                 SetEntityCoords(PlayerPedId(), v.coords.xyz)
+--                 Wait(5000)
+--                 if not testingLocs then continue = i break end
+--             end
+--         end)
+
+--         RegisterCommand('tryStop', function()
+--             lib.setClipboard(KloudDev.Delivery.locations[continue].coords)
+--             testingLocs = false
+--         end)
+--     end
+-- end)
+
+-- TESTING ONLY ---
+
 StartDelivery = function(data)
     local dropoff = PickDropOff()
     CreateWaypoint(dropoff)
@@ -107,7 +150,7 @@ DropOff = function(dropoff, data)
 
     Progress(2000, locale("giving_delivery"))
 
-    TriggerServerEvent("delivery:server:end_delivery", data, _G.DeliveryAmount)
+    TriggerServerEvent("delivery:server:end_delivery", data, _G.DeliveryAmount, _G.OGDeliveryAmount)
     EndJob()
     _G.Busy = false
 
@@ -126,7 +169,12 @@ DropOff = function(dropoff, data)
     table.wipe(_G.CurrentDropOff)
 
     _G.DeliveryAmount -= 1
-    if _G.DeliveryAmount <= 0 then _G.DeliveryData = {} return end
+    if _G.DeliveryAmount <= 0 then
+        ClearPedTasks(cache.ped)
+        _G.OnGoing = false
+        _G.DeliveryData = {}
+        _G.OGDeliveryAmount = 0
+    return end
     StartDelivery(_G.DeliveryData)
 end
 
@@ -134,8 +182,6 @@ EndJob = function()
     ClearGpsMultiRoute()
     RemoveTarget(_G.DropOffTarget, "delivery:drop-off")
     if _G.WaypointBlip then RemoveBlip(_G.WaypointBlip) end
-
-    _G.OnGoing = false
 
     if _G.WaypointZone then
         _G.WaypointZone:remove()

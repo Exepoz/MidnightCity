@@ -22,6 +22,7 @@ AddEventHandler("delivery:start_delivery", function(data)
     if not input then _G.DeliveryData = {} return end
 
     _G.DeliveryAmount = tonumber(input[1])
+    _G.OGDeliveryAmount = tonumber(input[1])
 
     if data.job ~= 'fence' then
         local current_stock = lib.callback.await("delivery:callback:get_current_stock", false, data)

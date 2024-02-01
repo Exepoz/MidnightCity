@@ -7,6 +7,7 @@ _G = {
     CurrentData = {},
     CurrentDropOff = {},
     DeliveryAmount = 0,
+    OGDeliveryAmount = 0,
     DeliveryData = {}
 }
 

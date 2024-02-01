@@ -376,13 +376,13 @@ KloudDev.Locations = {
             item = "delivery_box",
             money_type = "crumbs",
             deposit = {
-                enabled = true,
+                enabled = false,
                 amount = 0
             },
             reward = {
                 enabled = true,
-                min = 65,
-                max = 85
+                min = 35,
+                max = 55
                 -- Real reward = `this - deposit.amount`
             }
         },
