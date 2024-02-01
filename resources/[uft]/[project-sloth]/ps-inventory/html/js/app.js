@@ -746,6 +746,9 @@ function FormatItemInfo(itemData, dom) {
 
     if (itemData.info.gasamount) {c = c + "<p style=\"font-size:11px;color:MediumSeaGreen\"><b>" + itemData.info.gasamount + " Liters Inside.</b>"}
 
+    if (itemData.name == 'orderbox')
+    {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>Ordered Item: </b>" + [itemData.info.itemName || "None"] + " </br><b>Quantity: </b>" + [itemData.info.qty || "0"] + "</p>"}
+
     if (itemData.name == 'wateringcan')
     {c = c + "<p style=\"font-size:11px;color:Aqua\"><b>Waterings Left : </b>" + itemData.info?.uses ?? 0}
 
