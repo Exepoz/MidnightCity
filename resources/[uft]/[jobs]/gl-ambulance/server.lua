@@ -34,7 +34,7 @@ RegisterServerEvent("gl-ambulance:revivePlayer", function(target, type)
             TriggerClientEvent("hospital:client:Revive", targetPlayer.PlayerData.source)
 
         --[[ UNCOMMENT BELOW IF YOU WANT TO ALLOW BANK AS WELL ]] --
-        -- elseif targetPlayer.Functions.RemoveMoney("bank", Config.GrandmasCost, "Grandma") then 
+        -- elseif targetPlayer.Functions.RemoveMoney("bank", Config.GrandmasCost, "Grandma") then
         --    TriggerClientEvent("hospital:client:Revive", targetPlayer.PlayerData.source)
 
         else
@@ -43,7 +43,7 @@ RegisterServerEvent("gl-ambulance:revivePlayer", function(target, type)
     elseif type == 'nancy' and Config.NancyCost > 0 then
         if targetPlayer.Functions.RemoveMoney("cash", Config.NancyCost) then
             TriggerClientEvent("gl-ambulance:checkInNancy", targetPlayer.PlayerData.source)
-        elseif targetPlayer.Functions.RemoveMoney("bank", Config.NancyCost) then 
+        elseif targetPlayer.Functions.RemoveMoney("bank", Config.NancyCost) then
             TriggerClientEvent("gl-ambulance:checkInNancy", targetPlayer.PlayerData.source)
         else
             TriggerClientEvent("QBCore:Notify", targetPlayer.PlayerData.source, "You don't have enough money", "error")
@@ -126,20 +126,20 @@ end)
 -- Hospital Weapon Damage Syncing
 RegisterNetEvent('hospital:server:SetWeaponDamage', function(data)
     local src = source
-    for k, v in pairs(Config.Guns) do
-        for _, weapon in pairs(data) do
-            if weapon == v then
-                TriggerClientEvent('gl-ambulance:setWound', src, 'bullet')
-            end
-        end
-    end
-    for k, v in pairs (Config.Melee) do 
-        for _, weapon in pairs(data) do
-            if weapon == v then
-                TriggerClientEvent('gl-ambulance:setWound', src, 'stitch')
-            end
-        end
-    end
+    -- for k, v in pairs(Config.Guns) do
+    --     for _, weapon in pairs(data) do
+    --         if weapon == v then
+    --             TriggerClientEvent('gl-ambulance:setWound', src, 'bullet')
+    --         end
+    --     end
+    -- end
+    -- for k, v in pairs (Config.Melee) do
+    --     for _, weapon in pairs(data) do
+    --         if weapon == v then
+    --             TriggerClientEvent('gl-ambulance:setWound', src, 'stitch')
+    --         end
+    --     end
+    -- end
     for k, v in pairs(Config.Explosions) do
         for _, weapon in pairs(data) do
             if weapon == v then
@@ -151,7 +151,7 @@ end)
 
 RegisterNetEvent('hospital:server:RestoreWeaponDamage', function()
     local src = source
-    TriggerClientEvent('gl-ambulance:removeWounds', src)
+    TriggerClientEvent('debuffs:healAllEffects', src)
 end)
 
 QBCore.Functions.CreateCallback("gl-ambulance:isPlayerDead", function(source, cb, playerid)
@@ -180,13 +180,13 @@ QBCore.Functions.CreateUseableItem("suturekit", function(source, item)
     end
 end)
 
-QBCore.Functions.CreateUseableItem("burncream", function(source, item)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if Player.Functions.GetItemByName(item.name) ~= nil then
-        TriggerClientEvent("gl-ambulance:tryTreatingPlayer", src, "burn")
-    end
-end)
+-- QBCore.Functions.CreateUseableItem("burncream", function(source, item)
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     if Player.Functions.GetItemByName(item.name) ~= nil then
+--         TriggerClientEvent("gl-ambulance:tryTreatingPlayer", src, "burn")
+--     end
+-- end)
 
 QBCore.Functions.CreateUseableItem("defib", function(source, item)
     local src = source

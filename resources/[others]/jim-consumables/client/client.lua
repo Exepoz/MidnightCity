@@ -120,7 +120,7 @@ RegisterNetEvent('jim-consumables:Consume', function(itemName, item)
 	--Load and Start animation
     if Config.Debug then print("^5Debug^7: ^3Consume^7: ^2Playing Animation^7...") end
 	loadAnimDict(animDict)
-	TaskPlayAnim(Player, animDict, anim, 1.0, 1.0, -1, MovementType, 0, 0, 0, 0)
+	TaskPlayAnim(Player, animDict, anim, 1.0, 1.0, emote.AnimationOptions.EmoteDuration or -1, MovementType, 0, 0, 0, 0)
 	if Config.Debug then print("^5Debug^7: ^3Consume^7: ^2Player Movement Type^7 - ^6"..json.encode(MovementType).." ^7") end
     if Config.UseProgbar then
         if Config.ProgressBar == "ox" then
@@ -262,6 +262,13 @@ RegisterNetEvent('jim-consumables:Consume', function(itemName, item)
                     exports["ps-buffs"]:StaminaBuffEffect((tonumber(stats.time) or 10000), (stats.amount or 6))
                 else CreateThread(function() StaminaEffect({(tonumber(stats.time) or 10000), (stats.amount or 6)}) end) end
 			end
+
+            if stats.effect == "painkiller" then TriggerEvent('debuffs:startEffect', "buff_painkiller", stats.time or 60000) end
+            if stats.effect == "bone" then TriggerEvent('debuffs:stopEffect', "debuff_bone") end
+            if stats.effect == "bleeding" then TriggerEvent('debuffs:stopEffect', "debuff_bleeding") end
+            if stats.effect == "heavybleeding" then TriggerEvent('debuffs:stopEffect', "debuff_heavybleeding") end
+            if stats.effect == "burnt" then TriggerEvent('debuffs:stopEffect', "debuff_burnt") end
+
             if GetResourceState("ps-buffs") == "started" then   --PS-BUFFS ONLY
                 --if Config.Debug then if stats.effect then print("^5Debug^7: ^3Consume^7: ^4PS^7-^4Buffs ^2found^7, ^2hooking in to get buffs and applying ^6"..stats.effect.." Buff ^2for ^6"..(stats.time or "nil").."^7ms") end end
                 if stats.effect == "armor" then exports["ps-buffs"]:AddArmorBuff((tonumber(stats.time) or 10000), (stats.amount or 6)) end

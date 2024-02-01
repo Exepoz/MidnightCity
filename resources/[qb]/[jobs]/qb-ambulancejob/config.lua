@@ -45,7 +45,7 @@ Config.Locations = {                -- Edit the various interaction points for p
         [2] = vector3(1670.9, 3653.13, 33.28), -- sandy
     },
     ['vehicle'] = {
-        [1] = vector4(356.88, -599.67, 28.63, 165.04),
+        [1] = vector4(286.83, -606.02, 43.17, 22.01),
         [2] = vector4(-234.28, 6329.16, 32.15, 222.5), -- sandy
     },
     ['helicopter'] = {
@@ -74,12 +74,17 @@ Config.Locations = {                -- Edit the various interaction points for p
         [6] = { coords = vector4(318.34, -580.77, 44.9, 160.0), taken = false, model = -421052012 },
         [7] = { coords = vector4(321.15, -581.77, 44.9, 160.0), taken = false, model = -421052012 },
         [8] = { coords = vector4(327.41, -583.92, 44.9, 160.0), taken = false, model = -421052012 },
-        [9] = { coords = vector4(330.62, -585.23, 44.9, 160.0), taken = false, model = -421052012 },
+        -- [8] = { coords = vector4(330.62, -585.23, 44.9, 160.0), taken = false, model = -421052012 },
         --- sandy
-        [10] = { coords = vector4(1676.07, 3647.12, 34.9, 30.0), taken = false, model = 1004440924 },
+        [9] = { coords = vector4(1676.07, 3647.12, 34.9, 30.0), taken = false, model = 1004440924 },
         -- [11] = { coords = vector4(-247.04, 6317.95, 32.34, 134.64), taken = false, model = 1004440924 },
         -- [12] = { coords = vector4(-255.98, 6315.67, 32.34, 313.91), taken = false, model = 2117668672 },
     },
+    ['morgue'] = {
+        [1] = { coords = vector4(306.78, -562.95, 28.83, 251.50), taken = false, model = nil },
+        [2] = { coords = vector4(307.76, -560.76, 28.83, 251.50), taken = false, model = nil },
+    },
+
     ['jailbeds'] = {
         [1] = { coords = vector4(1675.83, 3647.46, 35.34, 229.77), taken = false, model = 2117668672 },
         [2] = { coords = vector4(1671.88, 3644.69, 35.34, 209.32), taken = false, model = 2117668672 },
@@ -99,12 +104,12 @@ Config.AuthorizedVehicles = { -- Grade is key, don't add same vehicle in multipl
 
 Config.Items = { -- Grade is key, don't add same item in multiple grades. Higher rank can see lower
     [0] = {
-        { name = 'radio',                   price = 0, amount = 50, info = {}, type = 'item' },
-        { name = 'bandage',                 price = 0, amount = 50, info = {}, type = 'item' },
-        { name = 'painkillers',             price = 0, amount = 50, info = {}, type = 'item' },
-        { name = 'firstaid',                price = 0, amount = 50, info = {}, type = 'item' },
-        { name = 'weapon_flashlight',       price = 0, amount = 50, info = {}, type = 'item' },
-        { name = 'weapon_fireextinguisher', price = 0, amount = 50, info = {}, type = 'item' },
+        { name = 'radio',                   price = 60, amount = 50, info = {}, type = 'item' },
+        { name = 'bandage',                 price = 40, amount = 50, info = {}, type = 'item' },
+        { name = 'painkillers',             price = 100, amount = 50, info = {}, type = 'item' },
+        { name = 'firstaid',                price = 100, amount = 50, info = {}, type = 'item' },
+        { name = 'weapon_flashlight',       price = 200, amount = 50, info = {}, type = 'item' },
+        { name = 'weapon_fireextinguisher', price = 100, amount = 50, info = {}, type = 'item' },
     }
 }
 
@@ -381,6 +386,28 @@ Config.Weapons = { -- Correspond weapon names to their class number
     [`WEAPON_KNIFE`] = Config.WeaponClasses['CUTTING'],
     [`WEAPON_MACHETE`] = Config.WeaponClasses['CUTTING'],
     [`WEAPON_SWITCHBLADE`] = Config.WeaponClasses['CUTTING'],
+   --[[ CUTTING ]]
+   [`WEAPON_SHIV`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_KATANA`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_BAYONETKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_BLUEBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_BFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_CHBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_CRIMSONBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_FADEBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_FLIPKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_FORESTBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_GUTKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_HUNTSMANKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_KARAMBITKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_SAFARIBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_SCORCHEDBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_SLAUGHTERBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_STAINEDRBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   [`WEAPON_URBANRBFKNIFE`] = Config.WeaponClasses['CUTTING'],
+   --[[ HEAVY IMPACT ]]
+   [`WEAPON_SLEDGEHAMMER`] = Config.WeaponClasses['HEAVY_IMPACT'],
+   [`WEAPON_PERFORATOR`] = Config.WeaponClasses['HEAVY_IMPACT'],
 
     --[[ Light Impact ]] --
     [`WEAPON_KNUCKLE`] = Config.WeaponClasses['LIGHT_IMPACT'],

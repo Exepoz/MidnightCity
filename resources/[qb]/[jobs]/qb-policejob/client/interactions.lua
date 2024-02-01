@@ -79,6 +79,7 @@ RegisterNetEvent('police:client:PutInVehicle', function()
             for i = GetVehicleMaxNumberOfPassengers(vehicle), 0, -1 do
                 if IsVehicleSeatFree(vehicle, i) then
                     isEscorted = false
+                    LocalPlayer.state:set('isEscorted', false, true)
                     TriggerEvent('hospital:client:isEscorted', isEscorted)
                     ClearPedTasks(ped)
                     DetachEntity(ped, true, false)
@@ -404,6 +405,7 @@ RegisterNetEvent('police:client:GetEscorted', function(playerId)
         if PlayerData.metadata["isdead"] or isHandcuffed or PlayerData.metadata["inlaststand"] then
             if not isEscorted then
                 isEscorted = true
+                LocalPlayer.state:set('isEscorted', true, true)
                 local dragger = GetPlayerPed(GetPlayerFromServerId(playerId))
                 TriggerServerEvent('police:server:isEscortingPlayer', true, playerId)
                 QBCore.Functions.RequestAnimDict('move_m@generic_variations@walk')
@@ -416,6 +418,7 @@ RegisterNetEvent('police:client:GetEscorted', function(playerId)
                 SyncEscortWalking(dragger)
             else
                 isEscorted = false
+                LocalPlayer.state:set('isEscorted', false, true)
                 cuffType = TempcuffType
                 TaskPlayAnim(PlayerPedId(), animDict, animName, 8.0, -8, -1, cuffType, 0, 0, 0, 0)
                 TriggerServerEvent('police:server:isEscortingPlayer', false, playerId)
@@ -443,6 +446,7 @@ RegisterNetEvent('police:client:setEscortStatus', function(bool) isEscortingPlay
 
 RegisterNetEvent('police:client:DeEscort', function()
     isEscorted = false
+    LocalPlayer.state:set('isEscorted', false, true)
     TriggerEvent('hospital:client:isEscorted', isEscorted)
     DetachEntity(PlayerPedId(), true, false)
 end)
@@ -453,6 +457,7 @@ RegisterNetEvent('police:client:GetKidnappedTarget', function(playerId)
         if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or isHandcuffed then
             if not isEscorted then
                 isEscorted = true
+                LocalPlayer.state:set('isEscorted', true, true)
                 local dragger = GetPlayerPed(GetPlayerFromServerId(playerId))
                 RequestAnimDict("nm")
 
@@ -463,6 +468,7 @@ RegisterNetEvent('police:client:GetKidnappedTarget', function(playerId)
                 TaskPlayAnim(ped, "nm", "firemans_carry", 8.0, -8.0, 100000, 33, 0, false, false, false)
             else
                 isEscorted = false
+                LocalPlayer.state:set('isEscorted', false, true)
                 DetachEntity(ped, true, false)
                 ClearPedTasksImmediately(ped)
             end
@@ -568,6 +574,7 @@ RegisterNetEvent('police:client:GetCuffed', function(source, position, item)
             if cuffitem then DeleteEntity(cuffitem) cuffitem = nil end
             isHandcuffed = false
             isEscorted = false
+            LocalPlayer.state:set('isEscorted', false, true)
             TriggerEvent('hospital:client:isEscorted', isEscorted)
             DetachEntity(ped, true, false)
             DeleteEntity(cuffitem)
@@ -587,6 +594,7 @@ RegisterNetEvent('police:client:GetUnCuffed', function(item)
     local ped = PlayerPedId()
     isHandcuffed = false
     isEscorted = false
+    LocalPlayer.state:set('isEscorted', false, true)
     TriggerEvent('hospital:client:isEscorted', isEscorted)
     DetachEntity(ped, true, false)
     DeleteEntity(cuffitem)

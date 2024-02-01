@@ -23,7 +23,7 @@ Config = {
 	Inv = "qb", -- set to "ox" if using ox_inventory
 	Notify = "qb",  -- set to "ox" if using ox_lib
 
-	UseProgbar = false,
+	UseProgbar = true,
 	ProgressBar = "qb", -- set to "ox" if using ox_lib
 
 	FoodBuffs = {
@@ -31,58 +31,68 @@ Config = {
 		['burgershot'] = function()
 			if LocalPlayer.state.foodBuff ~= nil then return end
 			LocalPlayer.state:set('foodBuff', 'greasy', true)
-			for i = 1, 6 do
-				QBCore.Functions.Notify('Your hands are greasy...\n('..((6-i)*5)..' minutes left)')
-				Wait(5*60000)
-			end
-			QBCore.Functions.Notify('Your hands aren\'t greasy anymore...', 'error')
-			LocalPlayer.state:set('foodBuff', nil, true)
-			LocalPlayer.state:set('greasyUncuff', nil, true)
+			QBCore.Functions.Notify('Your hands get greasy...', 'success')
+			TriggerEvent('debuffs:startEffect', "buff_greasy", 30*60000)
+			-- for i = 1, 6 do
+			-- 	QBCore.Functions.Notify('Your hands are greasy...\n('..((6-i)*5)..' minutes left)')
+			-- 	Wait(5*60000)
+			-- end
+			-- QBCore.Functions.Notify('Your hands aren\'t greasy anymore...', 'error')
+			-- LocalPlayer.state:set('foodBuff', nil, true)
+			-- LocalPlayer.state:set('greasyUncuff', nil, true)
 		end,
 		-- loot luck
 		['cluckinbell'] = function()
 			if LocalPlayer.state.foodBuff ~= nil then return end
 			LocalPlayer.state:set('foodBuff', 'luck', true)
-			for i = 1, 6 do
-				QBCore.Functions.Notify('You feel lucky...\n('..((6-i)*5)..' minutes left)')
-				Wait(5*60000)
-			end
-			QBCore.Functions.Notify('You don\'t feel lucky anymore...', 'error')
-			LocalPlayer.state:set('foodBuff', nil, true)
+			LocalPlayer.state:set('foodBuff', 'greasy', true)
+			QBCore.Functions.Notify('You feel lucky...', 'success')
+			TriggerEvent('debuffs:startEffect', "buff_luck", 30*60000)
+			-- for i = 1, 6 do
+			-- 	Wait(5*60000)
+			-- end
+			-- QBCore.Functions.Notify('You don\'t feel lucky anymore...', 'error')
+			-- LocalPlayer.state:set('foodBuff', nil, true)
 		end,
 		-- easier hacking
 		['catcafe'] = function()
 			if LocalPlayer.state.foodBuff ~= nil then return end
 			LocalPlayer.state:set('foodBuff', 'hacking', true)
-			for i = 1, 6 do
-				QBCore.Functions.Notify('You feel more focused...\n('..((7-i)*5)..' minutes left)')
-				Wait(5*60000)
-			end
-			QBCore.Functions.Notify('Your focus is back to normal...', 'error')
-			LocalPlayer.state:set('foodBuff', nil, true)
+			QBCore.Functions.Notify('You feel more focused...', 'success')
+			TriggerEvent('debuffs:startEffect', "buff_easyhack", 30*60000)
+			-- for i = 1, 6 do
+			-- 	QBCore.Functions.Notify('You feel more focused...\n('..((7-i)*5)..' minutes left)')
+			-- 	Wait(5*60000)
+			-- end
+			-- QBCore.Functions.Notify('Your focus is back to normal...', 'error')
+			-- LocalPlayer.state:set('foodBuff', nil, true)
 		end,
 		-- faster progress bar
 		['beanmachine'] = function()
 			if LocalPlayer.state.foodBuff ~= nil then return end
 			LocalPlayer.state:set('foodBuff', 'progress', true)
+			QBCore.Functions.Notify('You feel you have better dexterity...', 'success')
 			TriggerEvent("progressbar:client:toggleFaster", true)
-			for i = 1, 6 do
-				QBCore.Functions.Notify('You feel you have better dexterity...\n('..((6-i)*5)..' minutes left)')
-				Wait(5*60000)
-			end
-			LocalPlayer.state:set('foodBuff', nil, true)
-			TriggerEvent("progressbar:client:toggleFaster", false)
+			TriggerEvent('debuffs:startEffect', "buff_easyhack", 30*60000)
+			-- for i = 1, 6 do
+			-- 	QBCore.Functions.Notify('You feel you have better dexterity...\n('..((6-i)*5)..' minutes left)')
+			-- 	Wait(5*60000)
+			-- end
+			-- LocalPlayer.state:set('foodBuff', nil, true)
+			-- TriggerEvent("progressbar:client:toggleFaster", false)
 		end,
 		-- sneaky (sound minigame, sounds, etc)
 		['popsdiner'] = function()
 			if LocalPlayer.state.foodBuff ~= nil then return end
 			LocalPlayer.state:set('foodBuff', 'sneaky', true)
-			for i = 1, 6 do
-				QBCore.Functions.Notify('You feel sneaky...\n('..((6-i)*5)..' minutes left)')
-				Wait(5*60000)
-			end
-			QBCore.Functions.Notify('You\'re are not sneaky anymore...', 'error')
-			LocalPlayer.state:set('foodBuff', nil, true)
+			QBCore.Functions.Notify('You feel sneaky...', 'success')
+			TriggerEvent('debuffs:startEffect', "buff_sneaky", 30*60000)
+			-- for i = 1, 6 do
+			-- 	QBCore.Functions.Notify('You feel sneaky...\n('..((6-i)*5)..' minutes left)')
+			-- 	Wait(5*60000)
+			-- end
+			-- QBCore.Functions.Notify('You\'re are not sneaky anymore...', 'error')
+			-- LocalPlayer.state:set('foodBuff', nil, true)
 		end,
 	},
 
@@ -117,7 +127,7 @@ Config = {
 		--["crackbaggy"] = { 		emote = "coke",		time = math.random(5000, 6000), stress = math.random(12, 24), heal = 0, armor = 0, type = "drug", stats = { effect = "heal", widepupils = false, canOD = true } },
 		["xtcbaggy"] = { 		emote = "oxy",		time = math.random(5000, 6000), stress = math.random(12, 24), heal = 0, armor = 10, type = "drug", stats = { effect = "strength", widepupils = true, canOD = true } },
 		["oxy"] = { 			emote = "oxy",		time = math.random(5000, 6000), stress = math.random(12, 24), heal = 0, armor = 0, type = "drug", stats = { effect = "heal", widepupils = false, canOD = false } },
-		["meth"] = { 			emote = "coke",		time = math.random(5000, 6000), stress = math.random(12, 24), heal = 0, armor = 10, type = "drug", stats = { effect = "stamina", widepupils = false, canOD = true } },
+		["methbags"] = { 		emote = "coke",		time = math.random(5000, 6000), stress = math.random(12, 24), heal = 0, armor = 10, type = "drug", stats = { effect = "stamina", widepupils = false, canOD = true } },
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		--CluckinBell - Drinks
@@ -179,6 +189,19 @@ Config = {
 		["armor_injector"] = { emote = "inject", nightOnly = true, canRun = false, time = math.random(5000, 6000), stress = 0, heal = 0, armor = 100, type = "injector", stats = { hunger = -10, thirst = -10, screen = "focus", time = 35000 }, action = nil },
 
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		["bandage"] 	= { emote = "cuff", 	time = math.random(10000, 12000), stress = 0, heal = 20, armor = 0, type = "drug", stats = { effect = "bleeding", amount = 3, widepupils = false, canOD = false } },
+		["ifaks"] 		= { emote = "cuff", 	time = math.random(15000, 20000), stress = 0, heal = 35, armor = 0, type = "drug", stats = { effect = "heavybleeding", amount = 6, widepupils = false, canOD = false } },
+		["splint"] 		= { emote = "cuff", 	time = math.random(15000, 20000), stress = 0, heal = 0, armor = 0, type = "drug", stats = { effect = "bone", amount = 6, widepupils = false, canOD = false } },
+		["medkit"] 		= { emote = "cuff", 	time = math.random(30000, 45000), stress = 0, heal = 30, armor = 0, type = "drug", action = function() TriggerEvent("debuffs:healAllEffects") end },
+		["burncream"] 	= { emote = "cuff", 	time = math.random(7500, 10000), stress = 0, heal = 0, armor = 0, type = "drug", stats = { effect = "burnt", amount = 6, widepupils = false, canOD = false } },
+
+		["painkillers"] 	= { emote = "oxy", 	time = 5000, stress = 0, heal = 0, armor = 0, type = "drug", stats = { effect = "pain", time = 180000, amount = 6, widepupils = true, canOD = true } },
+		["vicodin"] 		= { emote = "oxy", 	time = 5000, stress = 0, heal = 0, armor = 0, type = "drug", stats = { effect = "pain", time = 300000, amount = 6, widepupils = true, canOD = true } },
+		["morphine"] 		= { emote = "oxy", 	time = 5000, stress = 0, heal = 0, armor = 30, type = "drug", stats = { effect = "pain", time = 300000, amount = 6, widepupils = true, canOD = true } },
+
+		["adderal"] 		= { emote = "oxy", 	time = 5000, stress = 0, heal = 0, armor = 0, type = "drug", stats = { effect = "hacking", time = 360000, amount = 6, widepupils = false, canOD = false } },
+
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		--[[Example item
 		["heartstopper"] = {
@@ -194,8 +217,8 @@ Config = {
 			stats = {
 				screen = "thermal",						-- The screen effect to be played when after consuming the item "rampage" "turbo" "focus" "weed" "trevor" "nightvision" "thermal"
 				effect = "heal", 						-- The status effect given by the item, "heal" / "stamina"
-														-- This supports ps-buffs effects "armor" "stress" "swimming" "hacking" "intelligence" "luck" "strength"
-				time = 10000,							-- How long the effect should last (if not added it will default to 10000)
+														-- "pain" "bone" "bleeding" "heavybleeding" "burnt" "armor" "stress" "swimming" "hacking" "intelligence" "luck" "strength"
+				time = 60000,							-- How long the effect should last (if not added it will default to 1 minute)
 				amount = 6,								-- How much the value is changed by per second
 				hunger = math.random(10, 20),			-- The hunger/thirst stats of the item, if not found in the items.lua
 				thirst = math.random(10, 20),			-- The hunger/thirst stats of the item, if not found in the items.lua
@@ -255,8 +278,8 @@ Config = {
 		["coke"] = { "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", "Coke", AnimationOptions =
 			{ EmoteLoop = true, EmoteMoving = true, }},
 		["oxy"] = { "mp_suicide", "pill", "Oxy", AnimationOptions =
-			{ EmoteLoop = true, EmoteMoving = true, }},
-				["cigar"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cigar", AnimationOptions =
+			{ EmoteLoop = false, EmoteMoving = true, EmoteDuration = 2600 }},
+		["cigar"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cigar", AnimationOptions =
 			{ Prop = 'prop_cigar_02', PropBone = 47419, PropPlacement = {0.010, 0.0, 0.0, 50.0, 0.0, -80.0},
 				EmoteMoving = true, EmoteDuration = 2600 }},
 		["cigar2"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cigar 2", AnimationOptions =
@@ -266,7 +289,12 @@ Config = {
 			{ Prop = 'p_cs_joint_02', PropBone = 47419, PropPlacement = {0.015, -0.009, 0.003, 55.0, 0.0, 110.0},
 				EmoteMoving = true, EmoteDuration = 2600 }},
 		["cig"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cig", AnimationOptions =
-			{ Prop = 'prop_amb_ciggy_01', PropBone = 47419, PropPlacement = {0.015, -0.009, 0.003, 55.0, 0.0, 110.0},
+			{ Prop = 'prop_amb_ciggy_01', PropBone = 47419, PropPlacement = {0.015, -0.009, 0.003, 55.0, 0.0, 110.0}, -- animDict, anim, flag = 'mp_arresting', 'a_uncuff', 17 end
 			EmoteMoving = true, EmoteDuration = 2600 }},
+		["cuff"] = {"mp_arresting", "a_uncuff", "Hands", AnimationOptions =
+			{ Prop = 'v_ret_hd_prod1_', PropBone = 47419, PropPlacement = {0.015, -0.009, 0.003, 55.0, 0.0, 110.0},
+				EmoteMoving = true }},
+
 	},
+
 }

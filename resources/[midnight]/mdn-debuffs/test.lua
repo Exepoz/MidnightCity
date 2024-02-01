@@ -1,0 +1,82 @@
+-- RegisterKeyMapping('debuffs:test', 'test', 'keyboard', 'F3')
+-- RegisterCommand('debuffs:test', function()
+-- 	local ped = PlayerPedId()
+
+-- 	GiveWeaponToPed(ped, GetHashKey('weapon_mg'), 1000, false)
+-- 	SetEntityHealth(ped, GetEntityMaxHealth(ped))
+-- 	-- SetPedArmour(ped, 100)
+-- 	-- stopAllEffects()
+-- end)
+
+-- RegisterCommand("b", function(source, args, rawCommand)
+-- 	-- PlayAnim(GetPlayerPed(-1), 'anim@gangops@morgue@office@laptop@', 'exit',  48)
+-- 	if args[1] == 'bandage' then
+-- 		bleedingStop()
+-- 	elseif args[1] == 'gm' then
+-- 		godmode()
+-- 	elseif args[1] == 'medkit' then
+-- 		heavybleedingStop()
+-- 	elseif args[1] == 'splint' then
+-- 		boneStop()
+-- 	elseif args[1] == 'painkiller' then
+-- 		painkiller() -- 60*1000 == 60 sec
+-- 	elseif args[1] == 'pain' then
+-- 		painStop()
+-- 	elseif args[1] == 'burnt' then
+-- 		burntStop()
+-- 	elseif args[1] == 'gunshot' then
+-- 		gunshotStop()
+-- 	elseif args[1] == 'hot' then
+-- 		hotStop()
+-- 	elseif args[1] == 'cold' then
+-- 		coldStop()
+-- 	elseif args[1] == 'luck' then
+-- 		luck(300000)
+-- 	elseif args[1] == 'greasy' then
+-- 		greasy(300000)
+-- 	elseif args[1] == 'sneaky' then
+-- 		sneaky(300000)
+-- 	elseif args[1] == 'easyhack' then
+-- 		easyhack(300000)
+-- 	elseif args[1] == 'fasthands' then
+-- 		fasthands(300000)
+-- 	end
+-- end, false)
+
+-- RegisterCommand("d", function(source, args, rawCommand)
+-- 	if args[1] == 'pain' then
+-- 		pain(120000)
+-- 	elseif args[1] == 'gm' then
+-- 		godmodeStop()
+-- 	elseif args[1] == 'bl' then
+-- 		bleeding()
+-- 	elseif args[1] == 'hbl' then
+-- 		heavybleeding()
+-- 	elseif args[1] == 'bone' then
+-- 		bone()
+-- 	elseif args[1] == 'burnt' then
+-- 		burnt()
+-- 	elseif args[1] == 'gunshot' then
+-- 		gunshot()
+-- 	elseif args[1] == 'alc' then
+-- 		alcohol(30000)
+-- 	elseif args[1] == 'hot' then
+-- 		hot()
+-- 	elseif args[1] == 'cold' then
+-- 		cold()
+-- 	elseif args[1] == 'th' then
+-- 		thirst()
+-- 	elseif args[1] == 'hr' then
+-- 		hangry()
+-- 	elseif args[1] == 'luck' then
+-- 		luckStop()
+-- 	elseif args[1] == 'greasy' then
+-- 		greasyStop()
+-- 	elseif args[1] == 'sneaky' then
+-- 		sneakyStop()
+-- 	elseif args[1] == 'easyhack' then
+-- 		easyhackStop()
+-- 	elseif args[1] == 'fasthands' then
+-- 		fasthandsStop()
+-- 	end
+-- end, false)

@@ -117,6 +117,7 @@ end)
 
 RegisterNetEvent('hospital:client:isEscorted', function(bool)
     isEscorted = bool
+    LocalPlayer.state:set('isEscorted', bool, true)
 end)
 
 RegisterNetEvent('hospital:client:UseFirstAid', function()

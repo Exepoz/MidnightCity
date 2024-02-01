@@ -74,96 +74,96 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
 end)
 
--- Create Stretcher (qb-radialmenu)
-RegisterNetEvent('qb-radialmenu:client:TakeStretcher', function()
-    TriggerEvent('gl-ambulance:useStretcher')
-end)
+-- -- Create Stretcher (qb-radialmenu)
+-- RegisterNetEvent('qb-radialmenu:client:TakeStretcher', function()
+--     TriggerEvent('gl-ambulance:useStretcher')
+-- end)
 
--- Remove Stretcher (qb-radialmenu)
-RegisterNetEvent('qb-radialmenu:client:RemoveStretcher', function()
-    TriggerEvent('gl-ambulance:delStretcher')
-end)
+-- -- Remove Stretcher (qb-radialmenu)
+-- RegisterNetEvent('qb-radialmenu:client:RemoveStretcher', function()
+--     TriggerEvent('gl-ambulance:delStretcher')
+-- end)
 
--- Create Stretcher
-RegisterNetEvent('gl-ambulance:useStretcher', function()
-    local PlayerPed = PlayerPedId()
-    local PlayerPos = GetOffsetFromEntityInWorldCoords(PlayerPed, 0.0, 3.0, 0.5)
-    local hash = GetHashKey('prop_ld_binbag_01')
+-- -- Create Stretcher
+-- RegisterNetEvent('gl-ambulance:useStretcher', function()
+--     local PlayerPed = PlayerPedId()
+--     local PlayerPos = GetOffsetFromEntityInWorldCoords(PlayerPed, 0.0, 3.0, 0.5)
+--     local hash = GetHashKey('prop_ld_binbag_01')
 
-    QBCore.Functions.LoadModel(hash)
-    local stretcher = CreateObjectNoOffset(hash, PlayerPos.x, PlayerPos.y, PlayerPos.z, true, false)
-    if stretcher ~= nil or stretcher ~= 0 then
-        SetModelAsNoLongerNeeded(hash)
-        QBCore.Functions.RequestAnimDict("anim@heists@box_carry@")
-        SetEntityAsMissionEntity(stretcher, true, false)
-        PlaceObjectOnGroundProperly(stretcher)
-    end
-end)
+--     QBCore.Functions.LoadModel(hash)
+--     local stretcher = CreateObjectNoOffset(hash, PlayerPos.x, PlayerPos.y, PlayerPos.z, true, false)
+--     if stretcher ~= nil or stretcher ~= 0 then
+--         SetModelAsNoLongerNeeded(hash)
+--         QBCore.Functions.RequestAnimDict("anim@heists@box_carry@")
+--         SetEntityAsMissionEntity(stretcher, true, false)
+--         PlaceObjectOnGroundProperly(stretcher)
+--     end
+-- end)
 
--- Remove Stretcher (Networked)
-RegisterNetEvent('gl-ambulance:delStretcher', function(netId)
-    local entity = NetworkGetEntityFromNetworkId(netId)
-    if DoesEntityExist(entity) then
-        DeleteEntity(entity)
-    end
-end)
+-- -- Remove Stretcher (Networked)
+-- RegisterNetEvent('gl-ambulance:delStretcher', function(netId)
+--     local entity = NetworkGetEntityFromNetworkId(netId)
+--     if DoesEntityExist(entity) then
+--         DeleteEntity(entity)
+--     end
+-- end)
 
--- Push Stretcher
-RegisterNetEvent('gl-ambulance:pushstretcher', function()
-    local PlayerPed = PlayerPedId()
-    local pedCoords = GetEntityCoords(PlayerPed)
-    local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
-    local objCoords = GetEntityCoords(closestObject)
-    QBCore.Functions.RequestAnimDict("anim@heists@box_carry@")
+-- -- Push Stretcher
+-- RegisterNetEvent('gl-ambulance:pushstretcher', function()
+--     local PlayerPed = PlayerPedId()
+--     local pedCoords = GetEntityCoords(PlayerPed)
+--     local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
+--     local objCoords = GetEntityCoords(closestObject)
+--     QBCore.Functions.RequestAnimDict("anim@heists@box_carry@")
 
-    AttachEntityToEntity(closestObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -0.9, -0.52, 195.0, 180.0,
-        180.0, 0.0, false, false, false, false, 2, false)
+--     AttachEntityToEntity(closestObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -0.9, -0.52, 195.0, 180.0,
+--         180.0, 0.0, false, false, false, false, 2, false)
 
-    while IsEntityAttachedToEntity(closestObject, PlayerPed) do
-        Wait(5)
+--     while IsEntityAttachedToEntity(closestObject, PlayerPed) do
+--         Wait(5)
 
-        if not IsEntityPlayingAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 3) then
-            TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
-        end
+--         if not IsEntityPlayingAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 3) then
+--             TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
+--         end
 
-        if IsPedDeadOrDying(PlayerPed) then
-            DetachEntity(closestObject, false, false)
-        end
+--         if IsPedDeadOrDying(PlayerPed) then
+--             DetachEntity(closestObject, false, false)
+--         end
 
-        if IsControlJustPressed(0, 38) then
-            DetachEntity(closestObject, false, false)
-            FreezeEntityPosition(closestObject, true)
-            PlaceObjectOnGroundProperly(closestObject)
-            ClearPedTasks(PlayerPed)
-        end
-    end
-end)
+--         if IsControlJustPressed(0, 38) then
+--             DetachEntity(closestObject, false, false)
+--             FreezeEntityPosition(closestObject, true)
+--             PlaceObjectOnGroundProperly(closestObject)
+--             ClearPedTasks(PlayerPed)
+--         end
+--     end
+-- end)
 
--- Get On Stretcher
-RegisterNetEvent('gl-ambulance:putOnStretcher', function()
-    local ped = PlayerPedId()
-    local pedCoords = GetEntityCoords(ped)
-    local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
-    if DoesEntityExist(closestObject) then
-        local objCoords = GetEntityCoords(closestObject)
-        QBCore.Functions.RequestAnimDict("anim@gangops@morgue@table@")
-        TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 8.0, 8.0, -1, 33, 0, 0, 0, 0)
-        AttachEntityToEntity(ped, closestObject, 0, 0, 0.0, 1.0, 195.0, 0.0, 180.0, 0.0, false, false, false, false, 2, true)
-        LayOnStretcher()
-    end
-end)
+-- -- Get On Stretcher
+-- RegisterNetEvent('gl-ambulance:putOnStretcher', function()
+--     local ped = PlayerPedId()
+--     local pedCoords = GetEntityCoords(ped)
+--     local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
+--     if DoesEntityExist(closestObject) then
+--         local objCoords = GetEntityCoords(closestObject)
+--         QBCore.Functions.RequestAnimDict("anim@gangops@morgue@table@")
+--         TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 8.0, 8.0, -1, 33, 0, 0, 0, 0)
+--         AttachEntityToEntity(ped, closestObject, 0, 0, 0.0, 1.0, 195.0, 0.0, 180.0, 0.0, false, false, false, false, 2, true)
+--         LayOnStretcher()
+--     end
+-- end)
 
--- Laydown On Stretcher
-RegisterNetEvent('gl-ambulance:LayDown', function()
-    local ped = PlayerPedId()
-    local pedCoords = GetEntityCoords(ped)
-    local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
-    local objCoords = GetEntityCoords(closestObject)
-    QBCore.Functions.RequestAnimDict("anim@gangops@morgue@table@")
-    TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 8.0, 8.0, -1, 33, 0, 0, 0, 0)
-    AttachEntityToEntity(ped, closestObject, 0, 0, 0.0, 1.0, 195.0, 0.0, 180.0, 0.0, false, false, false, false, 2, true)
-    LayOnStretcher()
-end)
+-- -- Laydown On Stretcher
+-- RegisterNetEvent('gl-ambulance:LayDown', function()
+--     local ped = PlayerPedId()
+--     local pedCoords = GetEntityCoords(ped)
+--     local closestObject = GetClosestObjectOfType(pedCoords, 1.0, GetHashKey("prop_ld_binbag_01"), false)
+--     local objCoords = GetEntityCoords(closestObject)
+--     QBCore.Functions.RequestAnimDict("anim@gangops@morgue@table@")
+--     TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 8.0, 8.0, -1, 33, 0, 0, 0, 0)
+--     AttachEntityToEntity(ped, closestObject, 0, 0, 0.0, 1.0, 195.0, 0.0, 180.0, 0.0, false, false, false, false, 2, true)
+--     LayOnStretcher()
+-- end)
 
 -- Pickup Med Bag
 RegisterNetEvent('gl-ambulance:pickUpBag', function()
@@ -244,16 +244,7 @@ RegisterNetEvent('gl-ambulance:interactBag', function()
                     item = 'sedative'
                 }
             }
-        }, {
-            header = 'Foldable Stretcher',
-            txt = 'Stretcher',
-            params = {
-                event = "gl-ambulance:getItem",
-                args = {
-                    item = 'stretcher'
-                }
-            }
-        }})
+        },})
     end
 end)
 
@@ -295,40 +286,35 @@ end)
 -- Player Pulse Callback
 RegisterNetEvent('gl-ambulance:sendPulseBack', function(target)
     local sendToWhom = target
-    local minPulse = 60
-    local maxPulse = 80
-    local status = 'They seem fine'
+    local status = ''
+    local debuffs = exports['mdn-debuffs']:fetchAll()
+    local health = GetEntityHealth(PlayerPedId()) - 100
     QBCore.Functions.TriggerCallback('gl-ambulance:isPlayerDead', function(isdead)
         if isdead then
-            minPulse = 0
-            maxPulse = 0
             status = 'No heartbeat'
         else
-            if isShot then
-                minPulse = 120
-                maxPulse = 200
-                status = 'Bleeding from apparent gunshot wounds'
-            end
-            if isMeleed then
-                minPulse = 90
-                maxPulse = 115
-                status = 'Has deep lacerations/bruising'
-            end
-            if isBurned then
-                minPulse = 20
-                maxPulse = 50
-                status = 'Burns all over their body'
-            end
+            if debuffs.gunshot then status = 'Apparent gunshot wound' end
+            if debuffs.heavybleeding then status = (status ~= '' and "\n" or "") .. 'Is bleeding heavily'
+            elseif debuffs.bleeding then status = (status ~= '' and "\n" or "") .. 'Is bleeding' end
+            if debuffs.burnt then status = (status ~= '' and "\n" or "") .. 'Burns all over their body' end
+            if debuffs.bone then status = (status ~= '' and "\n" or "") .. 'Has some broken bones' end
         end
-        local pulse = math.random(minPulse, maxPulse)
+        if status == '' then status = 'They seem fine.' end
+        if health < 15 then health = 15 end
+        local pulse = isdead and 0 or math.random(health-10, health+10)
         TriggerServerEvent('gl-ambulance:reportPulseBack', sendToWhom, pulse, status)
     end, GetPlayerServerId(PlayerId()))
 end)
 
 -- Check Player Wounds
 RegisterNetEvent('gl-ambulance:checkPlayerWounds', function(player, wound)
-    if curWound == wound then
-        TriggerServerEvent('gl-ambulance:treatPlayerWounds', player, curWound)
+    local debuffs = exports['mdn-debuffs']:fetchAll()
+    if wound == 'bullet' and debuffs.gunshot then
+        TriggerServerEvent('gl-ambulance:treatPlayerWounds', player, 'bullet')
+    elseif wound == 'stitch' and (debuffs.bleeding or debuffs.heavybleeding) then
+        TriggerServerEvent('gl-ambulance:treatPlayerWounds', player, 'stitch')
+    elseif wound == 'burn' and debuffs.burnt then
+        TriggerServerEvent('gl-ambulance:treatPlayerWounds', player, 'burn')
     end
 end)
 
@@ -344,35 +330,12 @@ end)
 -- Treating Target Wounds
 RegisterNetEvent('gl-ambulance:treatTargetWound', function(wound)
     if wound == 'bullet' then
-        TriggerEvent('gl-ambulance:treatBulletWound')
+        TriggerEvent('debuffs:stopEffect', 'debuff_gunshot')
     elseif wound == 'stitch' then
-        TriggerEvent('gl-ambulance:treatDeepWound')
+        TriggerEvent('debuffs:stopEffect', 'debuff_heavybleeding')
+        TriggerEvent('debuffs:stopEffect', 'debuff_bleeding')
     elseif wound == 'burn' then
-        TriggerEvent('gl-ambulance:treatBurnWound')
-    end
-end)
-
-RegisterNetEvent('gl-ambulance:treatBulletWound', function()
-    if isShot then
-        -- Add Animation Stuff
-        isShot = false
-        curWound = nil
-    end
-end)
-
-RegisterNetEvent('gl-ambulance:treatDeepWound', function()
-    if isMeleed then
-        -- Add Animation Stuff
-        isMeleed = false
-        curWound = nil
-    end
-end)
-
-RegisterNetEvent('gl-ambulance:treatBurnWound', function()
-    if isBurned then
-        -- Add Animation Stuff
-        isBurned = false
-        curWound = nil
+        TriggerEvent('debuffs:stopEffect', 'debuff_burnt')
     end
 end)
 
@@ -398,22 +361,48 @@ RegisterNetEvent('gl-ambulance:treatAnimations', function(wound)
     end
 end)
 
+local isSedated = false
+local sedated = function()
+    lib.disableControls:Add({1,2,245,38,0,322,288,213,249,46,47})
+    while isSedated do
+        lib.disableControls()
+        Wait(0)
+    end
+    lib.disableControls:Remove({1,2,245,38,0,322,288,213,249,46,47})
+end
+
 -- Use Sedative
 RegisterNetEvent('gl-ambulance:useSedative', function()
     local player, distance = QBCore.Functions.GetClosestPlayer()
     if player ~= -1 and distance <= 3.0 then
-        TriggerServerEvent('gl-ambulance:goNightNight', GetPlayerServerId(player))
+        local pData = QBCore.Functions.GetPlayerData()
+        if pData.job.name ~= "ambulance" then
+            local success = lib.skillCheck({'easy', 'medium'}, {'1', '2', '3', '4'})
+            if success then
+                player, distance = QBCore.Functions.GetClosestPlayer()
+                if player ~= -1 and distance <= 2.0 then
+                    TriggerServerEvent('gl-ambulance:goNightNight', GetPlayerServerId(player))
+                end
+            end
+        else
+            TriggerServerEvent('gl-ambulance:goNightNight', GetPlayerServerId(player))
+        end
     end
 end)
 
 -- Night Night Bitch
 RegisterNetEvent('gl-ambulance:goNightNight', function()
     local ped = PlayerPedId()
+    QBCore.Functions.Notify('You were put to sleep...')
     QBCore.Functions.RequestAnimDict('mini@cpr@char_b@cpr_def')
     TaskPlayAnim(ped, 'mini@cpr@char_b@cpr_def', 'cpr_pumpchest_idle', 8.0, 8.0, -1, 33, 0, 0, 0, 0)
     FreezeEntityPosition(ped, true)
-    Wait(20000)
+    isSedated = true
+    sedated()
+    Wait(60000)
+    isSedated = false
     FreezeEntityPosition(ped, false)
+    ClearPedTasks(ped)
 end)
 
 -- Put Player Into Vehicle
@@ -468,7 +457,7 @@ RegisterNetEvent('gl-ambulance:spawnPed', function(coords, heading)
     -- })
 end)
 
--- Interact With Nancy
+-- Interact With Nancy NOT USED RN!
 RegisterNetEvent('gl-ambulance:checkInNancy', function()
     local ped = PlayerPedId()
     local bed = Config.BedLocs[math.random(#Config.BedLocs)]
@@ -596,28 +585,7 @@ end)
 
 -- Set Wound
 RegisterNetEvent('gl-ambulance:setWound', function(wound)
-    if wound == "bullet" then
-        curWound = 'bullet'
-        isShot = true
-    end
-
-    if wound == "stitch" then
-        curWound = 'stitch'
-        isMeleed = true
-    end
-
-    if wound == "burn" then
-        curWound = 'burn'
-        isBurned = true
-    end
-end)
-
--- Remove Wounds
-RegisterNetEvent('gl-ambulance:removeWounds', function()
-    curWound = nil
-    isShot = false
-    isMeleed = false
-    isBurned = false
+    if wound == "burn" then TriggerEvent('debuffs:startEffect', 'debuff_burnt') end
 end)
 
 RegisterNetEvent('gl-ambulance:SetPlayerOutWheelchair', function(vehicle)

@@ -4,6 +4,8 @@ local getOutDict = 'switch@franklin@bed'
 local getOutAnim = 'sleep_getup_rubeyes'
 local canLeaveBed = true
 local bedOccupying = nil
+local morgueOccupying = nil
+local morgueOccupyingData = nil
 local bedObject = nil
 local bedOccupyingData = nil
 local closestBed = nil
@@ -55,7 +57,6 @@ local function GetAvailableBed(bedId)
     if bedId == nil then
         for k, _ in pairs(Config.Locations['beds']) do
             if not Config.Locations['beds'][k].taken then
-                print(#(pos - vector3(Config.Locations['beds'][k].coords.x, Config.Locations['beds'][k].coords.y, Config.Locations['beds'][k].coords.z)))
                 if #(pos - vector3(Config.Locations['beds'][k].coords.x, Config.Locations['beds'][k].coords.y, Config.Locations['beds'][k].coords.z)) < 500 then
                     retval = k
                 end
@@ -290,9 +291,49 @@ local function SetBedCam()
     FreezeEntityPosition(player, true)
 end
 
-local function LeaveBed()
+local function SetMorgueCam()
+    isInHospitalBed = true
+    canLeaveBed = false
     local player = PlayerPedId()
 
+    DoScreenFadeOut(1000)
+
+    while not IsScreenFadedOut() do
+        Wait(100)
+    end
+
+    if IsPedDeadOrDying(player) then
+        local pos = GetEntityCoords(player, true)
+        NetworkResurrectLocalPlayer(pos.x, pos.y, pos.z, GetEntityHeading(player), true, false)
+    end
+
+    SetEntityCoords(player, morgueOccupyingData.coords.x, morgueOccupyingData.coords.y, morgueOccupyingData.coords.z + 0.02)
+    --SetEntityInvincible(PlayerPedId(), true)
+    Wait(500)
+    FreezeEntityPosition(player, true)
+
+    loadAnimDict(inBedDict)
+
+    TaskPlayAnim(player, inBedDict, inBedAnim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
+    SetEntityHeading(player, morgueOccupyingData.coords.w)
+
+    cam = CreateCam('DEFAULT_SCRIPTED_CAMERA', 1)
+    SetCamActive(cam, true)
+    RenderScriptCams(true, false, 1, true, true)
+    AttachCamToPedBone(cam, player, 31085, 0, 1.0, 1.0, true)
+    SetCamFov(cam, 90.0)
+    local heading = GetEntityHeading(player)
+    heading = (heading > 180) and heading - 180 or heading + 180
+    SetCamRot(cam, -45.0, 0.0, heading, 2)
+
+    DoScreenFadeIn(1000)
+
+    Wait(1000)
+    FreezeEntityPosition(player, true)
+end
+
+local function LeaveBed()
+    local player = PlayerPedId()
     RequestAnimDict(getOutDict)
     while not HasAnimDictLoaded(getOutDict) do
         Wait(0)
@@ -300,11 +341,12 @@ local function LeaveBed()
 
     FreezeEntityPosition(player, false)
     SetEntityInvincible(player, false)
-    SetEntityHeading(player, bedOccupyingData.coords.w + 90)
+    if bedOccupyingData then SetEntityHeading(player, bedOccupyingData.coords.w + 90)
+    else SetEntityHeading(player, morgueOccupyingData.coords.w + 90) end
     TaskPlayAnim(player, getOutDict, getOutAnim, 100.0, 1.0, -1, 8, -1, 0, 0, 0)
     Wait(4000)
     ClearPedTasks(player)
-    TriggerServerEvent('hospital:server:LeaveBed', bedOccupying)
+    if not morgueOccupyingData then TriggerServerEvent('hospital:server:LeaveBed', bedOccupying) end
     FreezeEntityPosition(bedObject, true)
     RenderScriptCams(0, true, 200, true, true)
     DestroyCam(cam, false)
@@ -312,6 +354,9 @@ local function LeaveBed()
     bedOccupying = nil
     bedObject = nil
     bedOccupyingData = nil
+    morgueOccupying = nil
+    morgueOccupyingData = nil
+
     isInHospitalBed = false
 
     QBCore.Functions.GetPlayerData(function(PlayerData)
@@ -654,12 +699,32 @@ RegisterNetEvent('hospital:client:SendToBed', function(id, data, isRevive)
     end)
 end)
 
+RegisterNetEvent('hospital:client:SendToMorgue', function(id, data, isRevive)
+    morgueOccupying = id
+    morgueOccupyingData = data
+    SetMorgueCam()
+    CreateThread(function()
+        Wait(5)
+        if isRevive then
+            QBCore.Functions.Notify(Lang:t('success.being_helped'), 'success')
+            Wait(Config.AIHealTimer * 1000)
+            TriggerEvent('hospital:client:Revive')
+        else
+            canLeaveBed = true
+        end
+    end)
+end)
+
 RegisterNetEvent('hospital:client:SetBed', function(id, isTaken)
     Config.Locations['beds'][id].taken = isTaken
 end)
 
 RegisterNetEvent('hospital:client:SetBed2', function(id, isTaken)
     Config.Locations['jailbeds'][id].taken = isTaken
+end)
+
+RegisterNetEvent('hospital:client:SetMorgue', function(id, isTaken)
+    Config.Locations['morgue'][id].taken = isTaken
 end)
 
 RegisterNetEvent('hospital:client:RespawnAtHospital', function()
@@ -848,7 +913,7 @@ local function CheckInControls(variable)
 end
 
 RegisterNetEvent('qb-ambulancejob:checkin', function()
-    if doctorCount >= Config.MinimalDoctors then
+    if doctorCount >= Config.MinimalDoctors and QBCore.Functions.GetPlayerData().job.name ~= 'ambulance' then
         TriggerServerEvent('hospital:server:SendDoctorAlert')
     else
         QBCore.Functions.Progressbar('hospital_checkin', Lang:t('progress.checking_in'), 2000, false, true, {

@@ -59,10 +59,10 @@ RegisterNetEvent('hospital:server:RespawnAtHospital', function()
 		exports['Renewed-Banking']:addAccountMoney('ambulance', Config.BillCost, 'Player treatment')
 		TriggerClientEvent('hospital:client:SendBillEmail', src, Config.BillCost)
 	else
-		for k, v in pairs(Config.Locations['beds']) do
+		for k, v in pairs(Config.Locations['morgue']) do
 			if not v.taken then
-				TriggerClientEvent('hospital:client:SendToBed', src, k, v, true)
-				TriggerClientEvent('hospital:client:SetBed', -1, k, true)
+				TriggerClientEvent('hospital:client:SendToMorgue', src, k, v, true)
+				--TriggerClientEvent('hospital:client:SetMorgue', -1, k, true)
 				if Config.WipeInventoryOnRespawn then
 					Player.Functions.ClearInventory()
 					MySQL.update('UPDATE players SET inventory = ? WHERE citizenid = ?', { json.encode({}), Player.PlayerData.citizenid })
@@ -76,7 +76,7 @@ RegisterNetEvent('hospital:server:RespawnAtHospital', function()
 		end
 		--print("All beds were full, placing in first bed as fallback")
 
-		TriggerClientEvent('hospital:client:SendToBed', src, 1, Config.Locations['beds'][1], true)
+		TriggerClientEvent('hospital:client:SendToBed', src, 1, Config.Locations['morgue'][1], true)
 		TriggerClientEvent('hospital:client:SetBed', -1, 1, true)
 		if Config.WipeInventoryOnRespawn then
 			Player.Functions.ClearInventory()
@@ -88,6 +88,7 @@ RegisterNetEvent('hospital:server:RespawnAtHospital', function()
 		TriggerClientEvent('hospital:client:SendBillEmail', src, Config.BillCost)
 	end
 end)
+
 
 RegisterNetEvent('hospital:server:ambulanceAlert', function(text)
 	local src = source
@@ -444,29 +445,29 @@ end, 'admin')
 
 -- Items
 
-QBCore.Functions.CreateUseableItem('ifaks', function(source, item)
-	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.Functions.GetItemByName(item.name) ~= nil then
-		TriggerClientEvent('hospital:client:UseIfaks', src)
-	end
-end)
+-- QBCore.Functions.CreateUseableItem('ifaks', function(source, item)
+-- 	local src = source
+-- 	local Player = QBCore.Functions.GetPlayer(src)
+-- 	if Player.Functions.GetItemByName(item.name) ~= nil then
+-- 		TriggerClientEvent('hospital:client:UseIfaks', src)
+-- 	end
+-- end)
 
-QBCore.Functions.CreateUseableItem('bandage', function(source, item)
-	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.Functions.GetItemByName(item.name) ~= nil then
-		TriggerClientEvent('hospital:client:UseBandage', src)
-	end
-end)
+-- QBCore.Functions.CreateUseableItem('bandage', function(source, item)
+-- 	local src = source
+-- 	local Player = QBCore.Functions.GetPlayer(src)
+-- 	if Player.Functions.GetItemByName(item.name) ~= nil then
+-- 		TriggerClientEvent('hospital:client:UseBandage', src)
+-- 	end
+-- end)
 
-QBCore.Functions.CreateUseableItem('painkillers', function(source, item)
-	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.Functions.GetItemByName(item.name) ~= nil then
-		TriggerClientEvent('hospital:client:UsePainkillers', src)
-	end
-end)
+-- QBCore.Functions.CreateUseableItem('painkillers', function(source, item)
+-- 	local src = source
+-- 	local Player = QBCore.Functions.GetPlayer(src)
+-- 	if Player.Functions.GetItemByName(item.name) ~= nil then
+-- 		TriggerClientEvent('hospital:client:UsePainkillers', src)
+-- 	end
+-- end)
 
 QBCore.Functions.CreateUseableItem('firstaid', function(source, item)
 	local src = source
