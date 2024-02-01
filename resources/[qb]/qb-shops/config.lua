@@ -41,7 +41,8 @@ Config.Products = {
         {name = 'fishingrod',        price = 400,  amount = 50,  info = {}, type = 'item'},
         {name = 'fishingbait',       price = 4, amount = 150, info = {}, type = 'item'},
         {name = 'bee-house',        price = 9000,  amount = 10,  info = {}, type = 'item'},
-        {name = 'bee-hive',       price = 7000, amount = 10, info = {}, type = 'item'},
+        {name = 'bee-hive',         price = 7000, amount = 10, info = {}, type = 'item'},
+        {name = 'boxcutter',       price = 1000, amount = 50, info = {}, type = 'item'},
     },
     ['weedshop'] = {
         {name = 'weed_nutrition', price = 15,  amount = 50,   info = {}, type = 'item'},
