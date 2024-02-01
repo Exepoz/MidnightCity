@@ -148,4 +148,21 @@ QBShared.Weapons = {
 	-- Animals
 	[`weapon_animal`]                = { name = 'weapon_animal', label = 'Animal', weapontype = 'Animals', ammotype = nil, damagereason = 'Mauled' },
 	[`weapon_cougar`]                = { name = 'weapon_cougar', label = 'Cougar', weapontype = 'Animals', ammotype = nil, damagereason = 'Mauled' },
+
+	[`WEAPON_URBANRBFKNIFE`] 		         = {['name'] = 'WEAPON_URBANRBFKNIFE', 	 	  	['label'] = 'Urban Masked Butterfly Knife', 					['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_STAINEDRBFKNIFE`] 				 = {['name'] = 'WEAPON_STAINEDRBFKNIFE', 	 		  	['label'] = 'Stained Butterfly Knife', 					['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_SLAUGHTERBFKNIFE`] 			 = {['name'] = 'WEAPON_SLAUGHTERBFKNIFE', 	 		  	['label'] = 'Slaughter Butterfly Knife', 				['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_SCORCHEDBFKNIFE`] 				 = {['name'] = 'WEAPON_SCORCHEDBFKNIFE', 	 		  	['label'] = 'Scorched Butterfly Knife', 				['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_SAFARIBFKNIFE`] 				 = {['name'] = 'WEAPON_SAFARIBFKNIFE', 	 		  	['label'] = 'Safari Mesh Butterfly Knife', 					['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_KARAMBITKNIFE`] 				 = {['name'] = 'WEAPON_KARAMBITKNIFE', 	 		  	['label'] = 'Karamabit Knife', 								['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_HUNTSMANKNIFE`] 				 = {['name'] = 'WEAPON_HUNTSMANKNIFE', 	 		  	['label'] = 'Huntsman Knife', 								['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_GUTKNIFE`] 				     = {['name'] = 'WEAPON_GUTKNIFE', 	 		  	['label'] = 'Gut Knife', 										['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_FORESTBFKNIFE`] 				 = {['name'] = 'WEAPON_FORESTBFKNIFE', 	 		  	['label'] = 'Forest Butterfly Knife', 						['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_PERFORATOR`] 				     = {['name'] = 'WEAPON_PERFORATOR', 	 		  	['label'] = 'The Perforator',								['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_BLUEBFKNIFE`] 			        = {['name'] = 'WEAPON_BLUEBFKNIFE', 	 		  	['label'] = 'Blue Steel Butterfly Knife', 					['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_BFKNIFE`] 				        = {['name'] = 'WEAPON_BFKNIFE', 	 		  	    ['label'] = 'Vanilla Butterfly Knife', 						['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_CHBFKNIFE`] 			 = {['name'] = 'WEAPON_CHBFKNIFE', 	 		  	    ['label'] = 'Case Hardened Butterfly Knife', 						['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_CRIMSONBFKNIFE`] 		 = {['name'] = 'WEAPON_CRIMSONBFKNIFE', 	 		['label'] = 'Crimson Butterfly Knife', 								['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_FADEBFKNIFE`] 			 = {['name'] = 'WEAPON_FADEBFKNIFE', 	 		  	['label'] = 'Fade Butterfly Knife', 								['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
+	[`WEAPON_FLIPKNIFE`] 			 = {['name'] = 'WEAPON_FLIPKNIFE', 	 		        ['label'] = 'Flip Knife', 					        				['ammotype'] = nil,				['damagereason'] = 'Knifed / Stabbed / Eviscerated'},
 }

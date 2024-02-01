@@ -153,6 +153,27 @@ Config.DurabilityMultiplier = {
     weapon_hazardcan             = 0.15,
     weapon_fertilizercan         = 0.15,
     weapon_huntingrifle          = 0.15,
+
+    ['weapon_shiv'] 	             = 0.15,
+    ['weapon_katana'] 	             = 0.15,
+    ['weapon_sledgehammer'] 	     = 0.15,
+    ['weapon_perforator'] 		     = 0.05,
+    ----custom csknife
+    ['weapon_bluebfknife'] 			 = 0.05,
+    ['weapon_bfknife'] 				 = 0.05,
+    ['weapon_chbfknife'] 			 = 0.05,
+    ['weapon_crimsonbfknife'] 		 = 0.05,
+    ['weapon_fadebfknife'] 			 = 0.05,
+    ['weapon_flipknife'] 			 = 0.05,
+    ['weapon_forestbfknife'] 		 = 0.05,
+    ['weapon_gutknife'] 			 = 0.05,
+    ['weapon_huntsmanknife'] 		 = 0.05,
+    ['weapon_karambitknife'] 		 = 0.05,
+    ['weapon_safaribfknife'] 		 = 0.05,
+    ['weapon_scorchedbfknife'] 		 = 0.05,
+    ['weapon_slaughterbfknife'] 	 = 0.05,
+    ['weapon_stainebfknife'] 		 = 0.05,
+    ['weapon_urbanrbfknife'] 		 = 0.05,
 }
 
 Config.WeaponRepairPoints = {
