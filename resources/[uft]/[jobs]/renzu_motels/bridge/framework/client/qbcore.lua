@@ -21,6 +21,8 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
 	if PlayerData.identifier == nil then
 		PlayerData.identifier = PlayerData.citizenid
 	end
+	local motels = GlobalState.Motels
+
 	local login = GetResourceKvpString(kvpname)
 	if not login then return end
     local data = json.decode(login)
@@ -32,7 +34,7 @@ end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
 	PlayerData.job = job
-	
+
 	PlayerData.job.grade = PlayerData.job.grade.level
 end)
 

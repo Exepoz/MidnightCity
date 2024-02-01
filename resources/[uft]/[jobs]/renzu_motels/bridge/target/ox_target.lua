@@ -17,21 +17,13 @@ MotelFunction = function(data)
 		AddTextComponentString('Door '..data.index)
 		EndTextCommandSetBlipName(blip)
 		table.insert(blips,blip)
-		-- table.insert(options,{
-		-- 	items = {'lockpick'},
-		-- 	name = data.index .. '_' .. data.type..'_lockpick',
-		-- 	onSelect = function() 
-		-- 		return LockPick(data)
-		-- 	end,
-		-- 	icon = 'fas fa-unlink',
-		-- 	label = 'Lock Pick'
-		-- })
 		if not data.Mlo then
 			table.insert(options,{
 				name = data.index .. '_' .. data.type..'_lockpick',
-				onSelect = function() 
+				onSelect = function()
 					return EnterShell(data)
 				end,
+				distance = 2,
 				icon = 'fas fa-person-booth',
 				label = 'Enter'
 			})
@@ -39,9 +31,10 @@ MotelFunction = function(data)
 	end
 	table.insert(options,{
 		name = data.index .. '_' .. data.type,
-		onSelect = function() 
+		onSelect = function()
 			return RoomFunction(data)
 		end,
+		distance = 2,
 		icon = config.icons[data.type],
 		label = data.label
 	})
@@ -65,20 +58,22 @@ ShellTargets = function(data,offsets,loc,house)
 		local options = {}
 		table.insert(options,{
 			name = data.motel .. '_' .. k..'_'..data.index,
-			onSelect = function() 
+			onSelect = function()
 				data.type = k
 				return RoomFunction(data)
 			end,
+			distance = 2,
 			icon = config.icons[k],
 			label = config.Text[k]
 		})
 		if k == 'exit' then
 			table.insert(options,{
 				name = data.motel .. '_' .. k..'_'..data.index..'_door',
-				onSelect = function() 
+				onSelect = function()
 					data.type = 'door'
 					return Door(data)
 				end,
+				distance = 2,
 				icon = config.icons[k],
 				label = 'Toggle Door'
 			})
@@ -91,10 +86,11 @@ ShellTargets = function(data,offsets,loc,house)
 			for identifier,name in pairs(keys) do
 				table.insert(options,{
 					name = data.motel .. '_' .. k..'_'..data.index..'_'..identifier,
-					onSelect = function() 
+					onSelect = function()
 						data.type = k
 						return RoomFunction(data,identifier)
 					end,
+					distance = 2,
 					icon = config.icons[k],
 					label = config.Text[k]..' - ['..name..']'
 				})

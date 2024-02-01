@@ -137,7 +137,7 @@ RoomFunction = function(data,identifier)
 		return config.wardrobes[config.wardrobe]()
 	elseif config.extrafunction[data.type] then
 		local stashid = identifier or data.uniquestash and PlayerData.identifier or 'room'
-		return config.extrafunction[data.type](data,stashid)
+		return config.extrafunction[data.type](data,stashid,kvpname)
 	end
 end
 
@@ -813,6 +813,7 @@ function Teleport(x, y, z, h ,exit)
 		LocalPlayer.state:set('inshell',false,true)
 	end
 end
+local QBCore = exports['qb-core']:GetCoreObject()
 
 EnterShell = function(data,login)
 	local motels = GlobalState.Motels
@@ -852,6 +853,7 @@ EnterShell = function(data,login)
 		-- })
 	end
 	Teleport(spawn.x + offsets.exit.x, spawn.y + offsets.exit.y, spawn.z+0.1, offsets.exit.h)
+	QBCore.Debug(data)
 	SetResourceKvp(kvpname,json.encode(data))
 
 	Citizen.CreateThreadNow(function()
