@@ -22,12 +22,12 @@ end
 
 ---@param src? number -- Player source
 ---@return string -- Player's Character Name
-Midnight.Functions.GetCharName = function(src)
+Midnight.Functions.GetCharName = function(src, firstOnly)
     local Player = QBCore.Functions.GetPlayer(src)
     local charinfo = Player.PlayerData.charinfo
     local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
     local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
-    local pName = firstName.." "..lastName
+    local pName = firstName..(firstOnly and "" or " "..lastName)
     return pName
 end
 
@@ -308,10 +308,10 @@ RegisterNetEvent('nighttime:server:stealPoints', function(data)
 end)
 
 --- Kicks the player from the server.
-RegisterNetEvent('nighttime:GoToBed', function()
+RegisterNetEvent('nighttime:GoToBed', function(loc)
     local src = source
     DropPlayer(src, "Went to bed.")
-    Midnight.Functions.Debug(src..' quit at The District.')
+    Midnight.Functions.Debug(src..' quit at '..(loc or " UNKNOWN"))
 end)
 
 --- Checks if player is bloody when they go online
@@ -551,7 +551,7 @@ QBCore.Functions.CreateCallback('nighttime:fetchUserData', function(source, cb, 
             grace = result[1].grace,
         }
         Player(src).state:set('bhprofile', data, true)
-        cb(data, item.info.cid)
+        cb(data, item and item.info.cid or nil)
     end
 end)
 

@@ -36,6 +36,12 @@ Config.OnlineOrders.CustomJobs = {
         coords = vector3(-1198.06, -902.24, 13.89),
         --cids = {['UPY10832'] = true}
     },
+    ['ambulance'] = {
+        label = "Pillbox Pharmacy",
+        bankAccount = 'ambulance',
+        coords = vector3(313.55, -584.10, 43.27),
+        --cids = {['UPY10832'] = true}
+    },
     -- ['vubar'] = {
     --     label = "Vanilla Unicorn Bar",
     --     bankAccount = 'vanilla',
@@ -320,6 +326,16 @@ Config.OnlineOrders.Shops = {
             }
         },
     },
+    -- Pillbox
+    ['pharmacy'] = {
+        options = {header = "Pharmacy", icon = 'wine-bottle'},
+        items = {
+            [1] = {item = "painkillers",  price = 200, stock = 50, loc = 16, max = 25},
+            [2] = {item = "vicodinbottle",  price = 200, stock = 50, loc = 16, max = 25},
+            [3] = {item = "morphinebottle",  price = 200, stock = 50, loc = 16, max = 25},
+            [4] = {item = "adderalbottle",  price = 200, stock = 50, loc = 16, max = 25},
+        }
+    },
 
     -- Ammunation
     --['ammo'] = {
@@ -392,12 +408,12 @@ Config.OnlineOrders.Shops = {
     --},
 
     -- Winery
-    ['wine_equipment'] = {
-        options = {header = "Winery Equipment", icon = 'wine-bottle'},
-        items = {
-            [1] = {item = "empty_barrel",  price = 200, stock = 50, loc = 14, max = 25},
-        }
-    },
+    -- ['wine_equipment'] = {
+    --     options = {header = "Winery Equipment", icon = 'wine-bottle'},
+    --     items = {
+    --         [1] = {item = "empty_barrel",  price = 200, stock = 50, loc = 14, max = 25},
+    --     }
+    -- },
 }
 
 -- Jobs & Which category do they have access to
@@ -432,6 +448,7 @@ Config.OnlineOrders.jobs = {
     ["ammunation"]      = {AvailableShops = {'ammo', 'pistols', 'smgs', 'shotguns', 'hunting', 'melee', 'protection'}},
     ["digitalden"]      = {AvailableShops = {'electronics'}},
     ["winery"]          = {AvailableShops = {'baking', 'wine_equipment'}},
+    ["ambulance"]          = {AvailableShops = {'pharmacy'}},
 }
 
 Config.Foodpacks = {
@@ -514,9 +531,14 @@ Config.OnlineOrders.ShopLocations = {
         name = 'Electronic Goods'
     },
     [15] = { -- Illegal Mech Parts
-    ped = 'MP_M_WareMech_01',
-    coords = vector4(1080.49, -2412.81, 30.17, 266.3),
-    name = 'Tuner Parts'
-},
+        ped = 'MP_M_WareMech_01',
+        coords = vector4(1080.49, -2412.81, 30.17, 266.3),
+        name = 'Tuner Parts'
+    },
+    [16] = { -- Mount Zonah Pharmacy
+        ped = 's_f_y_scrubs_01',
+        coords = vector4(-430.83, -329.15, 34.47, 256.37),
+        name = 'Zonah Pharmacy'
+    },
 
 }

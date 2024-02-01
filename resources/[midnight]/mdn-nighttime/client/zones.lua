@@ -16,11 +16,9 @@ local function MakeBlip(blipCoords, blipSprite, blipDisplay, blipScale, blipColo
     -- end
 end
 
-RegisterCommand('fetchLightInfo', function(source, args)
-    -- [[
-
-    --]]
-    print(vector3(-1185.06, -872.23, 13.88) - vector3(-1186.82, -877.12, 21.11))
+RegisterCommand('lightinfo', function(source, args)
+    print(GetEntityCoords(PlayerPedId())- vector3(tonumber(args[1]), tonumber(args[2]), tonumber(args[3])))
+    lib.setClipboard(GetEntityCoords(PlayerPedId())- vector3(tonumber(args[1]), tonumber(args[2]), tonumber(args[3])))
 end)
 
 --- Checks if player is inside a green zone & updtaes their Player State Bag
@@ -90,7 +88,7 @@ local enterGreenZone = function(self)
     if stop then return end
     if LocalPlayer.state.inGreenZone == false then
         if Midnight.Functions.IsNightTime() then
-            exports['qb-phone']:PhoneNotification('The Hunt', "You are no longer a bounty target.", 'fas fa-dove', '#558ac2', '5000')
+            exports['qb-phone']:PhoneNotification('The Hunt', "You are no longer a bounty target.", 'fas fa-dove', '#558ac2', 5000)
             TriggerServerEvent('nighttime:server:leaveHunt')
         end
         LocalPlayer.state:set('inGreenZone', true, true)
@@ -109,7 +107,7 @@ local leavingGreenZone = function(self)
     if not Midnight.Functions.IsNightTime() then return end
     if not Config.Debug then Wait(math.random(30, 75) * 1000) end
     if LocalPlayer.state.inGreenZone == false then
-        exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', '5000')
+        exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', 5000)
         TriggerServerEvent('nighttime:server:enterHunt')
     end
 end
@@ -171,14 +169,14 @@ end)
 RegisterNetEvent('nighttime:client:nightWarning', function(warn)
     if Midnight.Functions.safeJob() then return end
     if warn == 'pre' then
-        exports['qb-phone']:PhoneNotification('Night Approaching', "Careful, it\'s getting dark...", 'fas fa-moon', '#558ac2', '15000')
+        exports['qb-phone']:PhoneNotification('Night Approaching', "Careful, it\'s getting dark...", 'fas fa-moon', '#558ac2', 15000)
         for _ = 1, 5 do
             PlaySoundFrontend(-1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1) Wait(120)
             PlaySoundFrontend(-1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1) Wait(120)
             PlaySoundFrontend(-1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1) Wait(1000)
         end
     elseif warn == 'night' then
-        exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', '15000')
+        exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', 15000)
         exports['qb-phone']:ToggleDayTime(false)
         for _ = 1, 5 do
             PlaySoundFrontend(-1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1) Wait(120)
@@ -188,11 +186,11 @@ RegisterNetEvent('nighttime:client:nightWarning', function(warn)
         if not checkIsInsideGreenZone() then TriggerServerEvent('nighttime:server:enterHunt') end
     elseif warn == 'day' then
         exports['qb-phone']:ToggleDayTime(true)
-        exports['qb-phone']:PhoneNotification('The Hunt', "You survived the hunt.", 'fas fa-sun', '#558ac2', '15000')
+        exports['qb-phone']:PhoneNotification('The Hunt', "You survived the hunt.", 'fas fa-sun', '#558ac2', 15000)
         if LocalPlayer.state.isHunting then
             Midnight.Functions.stopHunting()
             Wait(10000)
-            exports['qb-phone']:PhoneNotification('The Hunt', "Hunting is over, thanks for playing.", 'fas fa-skull', '#5c0707', '15000')
+            exports['qb-phone']:PhoneNotification('The Hunt', "Hunting is over, thanks for playing.", 'fas fa-skull', '#5c0707', 15000)
         end
     end
 end)
@@ -202,7 +200,7 @@ AddEventHandler('onClientResourceStart', function(resName)
     Wait(5000) if not checkIsInsideGreenZone() and Midnight.Functions.IsNightTime() then
         if not Config.Debug then Wait(math.random(30, 75) * 1000) end
         if LocalPlayer.state.inGreenZone == false then
-            exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', '5000')
+            exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', 5000)
             TriggerServerEvent('nighttime:server:enterHunt')
         end
     end
