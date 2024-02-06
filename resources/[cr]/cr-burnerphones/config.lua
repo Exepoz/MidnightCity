@@ -6,7 +6,7 @@ Config.Framework = {
     Framework = "QBCore", --"QBCore" | "ESX"
     Interaction = {
         UseTarget = GetConvar('UseTarget', 'false') == 'true', -- Leave true if you are using qb-target. Set to false to disable targetting and enable DrawText for all interactions
-        Target = "qb-target", -- "qb-target" | "oxtarget" | "meta-target"
+        Target = "oxtarget", -- "qb-target" | "oxtarget" | "meta-target"
         OxLibDistanceCheck = false -- If true, most distance checks are done via oxlib, if false distance checks are done via built-in functions.
     },
     --Framework Overrides (You can change specific framework related functions to ones from other scripts.)
@@ -90,7 +90,7 @@ Config.Burnerphones = {
             vector3(-859.9, -354.12, 38.68)
         },
         Rewards = {
-  
+
         }
     },
     ['burnerphone_mat'] = {
