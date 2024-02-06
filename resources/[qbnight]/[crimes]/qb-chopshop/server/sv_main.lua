@@ -186,7 +186,7 @@ RegisterNetEvent('qb-chopshop:server:Reward', function(type)
         local rndm = math.random(1,2) -- 3 item drops
         for i=1, rndm do
             local randItem = GenerateLoot(Rewards[type])
-            if randItem ~= #Reward[type] and ranItem ~= 0 then
+            if randItem ~= #Rewards[type] and ranItem ~= 0 then
                 giv = true
                 local amount = math.random(Rewards[type][randItem].amt.min, Rewards[type][randItem].amt.max)
                 Player.Functions.AddItem(Rewards[type][randItem].item, amount, false)
@@ -200,7 +200,7 @@ RegisterNetEvent('qb-chopshop:server:Reward', function(type)
         local rndm = math.random(1,2) -- 3 item drops
         for i=1, rndm do
             local randItem = GenerateLoot(Rewards[type])
-            if randItem ~= #Reward[type] and ranItem ~= 0 then
+            if randItem ~= #Rewards[type] and ranItem ~= 0 then
                 giv = true
                 local amount = math.random(Rewards[type][randItem].amt.min, Rewards[type][randItem].amt.max)
                 Player.Functions.AddItem(Rewards[type][randItem].item, amount, false)
@@ -214,7 +214,7 @@ RegisterNetEvent('qb-chopshop:server:Reward', function(type)
         local rndm = math.random(1,2) -- 3 item drops
         for i=1, rndm do
             local randItem = GenerateLoot(Rewards[type])
-            if randItem ~= #Reward[type] and ranItem ~= 0 then
+            if randItem ~= #Rewards[type] and ranItem ~= 0 then
                 giv = true
                 local amount = math.random(Rewards[type][randItem].amt.min, Rewards[type][randItem].amt.max)
                 Player.Functions.AddItem(Rewards[type][randItem].item, amount, false)
@@ -228,7 +228,7 @@ RegisterNetEvent('qb-chopshop:server:Reward', function(type)
         local rndm = math.random(1,2) -- 3 item drops
         for i=1, rndm do
             local randItem = GenerateLoot(Rewards[type])
-            if randItem ~= #Reward[type] and ranItem ~= 0 then
+            if randItem ~= #Rewards[type] and ranItem ~= 0 then
                 giv = true
                 local amount = math.random(Rewards[type][randItem].amt.min, Rewards[type][randItem].amt.max)
                 Player.Functions.AddItem(Rewards[type][randItem].item, amount, false)
@@ -238,8 +238,8 @@ RegisterNetEvent('qb-chopshop:server:Reward', function(type)
         end
         if not giv then TriggerClientEvent('QBCore:Notify', src, "You did not find anything useful here...", "info") end
     elseif type == 'cash' then
-        local payout = math.random(810, 1500) -- cash payout between 810 and 2.190
-        Player.Functions.AddItem('dirtymoney', payout, 'chopshop-reward')
+        local payout = math.random(100, 150) -- cash payout between 810 and 2.190
+        Player.Functions.AddItem('midnight_crumbs', payout, 'chopshop-reward')
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['dirtymoney'], "add", amount)
         Wait(250)
     end
