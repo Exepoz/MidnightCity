@@ -198,18 +198,17 @@ end)
 AddEventHandler('onClientResourceStart', function(resName)
     if (GetCurrentResourceName() ~= resName) then return end
     Wait(5000) if not checkIsInsideGreenZone() and Midnight.Functions.IsNightTime() then
-        if not Config.Debug then Wait(math.random(30, 75) * 1000) end
         if LocalPlayer.state.inGreenZone == false then
             exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', 5000)
             TriggerServerEvent('nighttime:server:enterHunt')
         end
     end
+    if LocalPlayer.state.Loaded then TriggerServerEvent('nighttime:server:checkIsBloodyPrey') end
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     LocalPlayer.state.Loaded = true
     Wait(5000) if not checkIsInsideGreenZone() and Midnight.Functions.IsNightTime() then
-        if not Config.Debug then Wait(math.random(30, 75) * 1000) end
         if LocalPlayer.state.inGreenZone == false then
             exports['qb-phone']:PhoneNotification('The Hunt', "You can be targeted by hunters.", 'fas fa-crosshairs', '#5c0707', '5000')
             TriggerServerEvent('nighttime:server:enterHunt')

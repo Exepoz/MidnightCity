@@ -5,6 +5,9 @@ local hunters = {}
 local BloodyPreys = {}
 GlobalState.BloodyPreys = BloodyPreys
 
+----------------------------
+-- Start/Stop/Leave Logic --
+----------------------------
 
 AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName() ~= resource then return end
     local bPreys = MySQL.Sync.fetchAll('SELECT * FROM midnight_bloodypreys')
@@ -13,41 +16,77 @@ AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName(
     --QBCore.Debug(BloodyPreys)
 end)
 
+-- remove them if they're dropped
+AddEventHandler('playerDropped', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player or not Player.PlayerData then return end
+    Midnight.Functions.Debug('Player Dropped : '..src.. ' | '..Player.PlayerData.citizenid..' | '..Midnight.Functions.GetCharName(src))
+    if hunters[Player.PlayerData.citizenid] then TriggerEvent('nighttime:server:stopHunting', src) end
+    TriggerEvent('nighttime:server:leaveHunt', src, true)
+end)
+
+---------------
+-- Functions --
+---------------
+
+--- Checks if the player's job is safe from the hunt
 ---@param src? number Checks Player's jobs to see if they can be hunted.
----@return boolean Can be hunted?
+---@return boolean retval Can be hunted?
 local function safeJob(src)
+    local retval = false
     local job = QBCore.Functions.GetPlayer(src).PlayerData.job.name
-    return Config.SafeJobs[job]
+    retval = Config.SafeJobs[job] or Player(src).state.huntAdmin or false
+    return retval
 end
 
----@param src? number -- Player source
----@return string -- Player's Character Name
-Midnight.Functions.GetCharName = function(src, firstOnly)
-    local Player = QBCore.Functions.GetPlayer(src)
-    local charinfo = Player.PlayerData.charinfo
-    local firstName = charinfo.firstname:sub(1,1):upper()..charinfo.firstname:sub(2)
-    local lastName = charinfo.lastname:sub(1,1):upper()..charinfo.lastname:sub(2)
-    local pName = firstName..(firstOnly and "" or " "..lastName)
-    return pName
+--- Checks if the source is a bloody prey
+---@param source any Player's server src or CID to check
+---@return boolean retval Is the player a bloody prey?
+---@return number index BloodyPrey's Index ID for reference
+local checkIsBloodyPrey = function(source)
+    local argType = 'src'
+    local cid, index
+    if type(source) == 'string' then source = tonumber(source) end
+    if source > 1000 then argType = 'cid' cid = source end
+    if argType == 'src' then cid = QBCore.Functions.GetPlayer(source).PlayerData.citizenid end
+    local retval = false
+    for k,v in pairs(BloodyPreys) do
+        if tostring(v.cid) == tostring(cid) then
+            retval = true
+            index = k
+            break
+        end
+    end
+    return retval, index
 end
 
---- Sets an individual as bloody prey (NOT CODDED YET)
-local setBloodyPrey = function(src, bool, prize)
+--- Sets an individual as bloody prey
+---@param src number Player's server src to check
+---@param bool boolean Set BP as TRUE or FALSE
+---@param arg3 number EITHER prize set on the player (if bool is true) OR BloodyPrey's Index ID (fetched from checkIsBloodyPrey)
+local setBloodyPrey = function(src, bool, arg3)
     local cid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
-    local Player = QBCore.Functions.GetPlayer(src)
-    local logStr = {}
+    local xPlayer = QBCore.Functions.GetPlayer(src)
     if bool then
+        local prize = arg3
         local data = {
             cid = cid,
-            name = Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname,
+            name = xPlayer.PlayerData.charinfo.firstname.." "..xPlayer.PlayerData.charinfo.lastname,
             time = os.time(),
-            prize = prize or 500
+            prize = prize or 500,
+            online = xPlayer.source ~= 0 or xPlayer.source ~= nil and true or false,
+            source = src
         }
-        BloodyPreys[cid] = data
+        BloodyPreys[#BloodyPreys+1] = data
+        Player(src).state.Bloody = true
+        xPlayer.Functions.SetMetaData('bloodyPrey', true)
+        -- Sets Bloody Prey status
         MySQL.update.await('INSERT INTO midnight_bloodypreys (cid, name, time, prize) VALUES (:cid, :name, :time, :prize)', data)
+        -- Sets Blacklist status + Deducts points
         local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
         if not result or not result[1] then
-            MySQL.insert('INSERT INTO midnight_hunters (CID, blacklisted, blacklisted_time) VALUES (?, ?, ?)', {CID, true, data.time})
+            MySQL.insert('INSERT INTO midnight_hunters (CID, blacklisted, blacklisted_time) VALUES (?, ?, ?)', {cid, true, data.time})
         else
             local points = math.floor(result[1].points / 2)
             local bank = math.floor(result[1].bank / 2)
@@ -55,22 +94,132 @@ local setBloodyPrey = function(src, bool, prize)
         end
 
         local pName = Midnight.Functions.GetCharName(src)
-        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n\n ** Has become a bloody prey."}
+        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..xPlayer.PlayerData.citizenid.."\n\n ** Has become a bloody prey."}
+        Midnight.Functions.Debug(logString.txt)
         TriggerEvent("qb-log:server:CreateLog", "bountyHunter", "New Bloody Prey.", "green", logString)
     else
-        if not BloodyPreys[cid] then return end
-        BloodyPreys[cid] = nil
+        local index = arg3
+        if not BloodyPreys[index] then return end
+        BloodyPreys[index] = nil
+        Player(src).state.Bloody = nil
+        xPlayer.Functions.SetMetaData('bloodyPrey', false)
         MySQL.query.await('DELETE FROM midnight_bloodypreys WHERE cid = ?', {cid})
 
         local pName = Midnight.Functions.GetCharName(src)
-        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..Player.PlayerData.citizenid.."\n\n ** is not a bloody prey anymore."}
+        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..xPlayer.PlayerData.citizenid.."\n\n ** is not a bloody prey anymore."}
+        Midnight.Functions.Debug(logString.txt)
         TriggerEvent("qb-log:server:CreateLog", "bountyHunter", "Bloody Prey Removed.", "green", logString)
     end
     GlobalState.BloodyPreys = BloodyPreys
     TriggerClientEvent('nighttime:client:BloodyPreysUpdated', -1, BloodyPreys)
 end
 
----
+---Check is dead player is a bloody prey & proccesses it
+---@param killer any Killer's CID
+---@param killed any Preys's CID
+local checkBloodyDeath = function(killer, killed)
+    local wasBloody, i = checkIsBloodyPrey(killed)
+    if wasBloody then
+        print(killer, QBCore.Functions.GetPlayerByCitizenId(tostring(killer)).PlayerData.source)
+        QBCore.Debug((QBCore.Functions.GetPlayerByCitizenId(tostring(killer))))
+        MySQL.Async.execute('UPDATE midnight_hunters SET bloodBounty = bloodBounty + ' .. BloodyPreys[i].prize .. ' WHERE CID = ?', {killer})
+        TriggerClientEvent('QBCore:Notify', QBCore.Functions.GetPlayerByCitizenId(tostring(killer)).PlayerData.source, 'You have claimed a Bloody Bounty worth '.. BloodyPreys[i].prize .. "crumbs. You can claim it in the Morning at the Quartermaster." , 'success')
+        setBloodyPrey(BloodyPreys[i].source, false, i)
+        print('bounty set')
+    end
+end
+
+--- Removes a player from the prey list
+---@param serversource number Server SRC for the player who left the hunt
+---@param quit? boolean Set true if the player is quitting the game
+local leaveHunt = function(serversource, quit)
+    local src = serversource or source
+    for k, v in pairs(preys) do if v == src then
+        local isBloody, index = checkIsBloodyPrey(src)
+        if isBloody and not quit then break
+        else
+            Player(src).state.isPrey = false
+            preys[k] = nil
+            if isBloody then
+                BloodyPreys[index].online = false
+                BloodyPreys[index].source = nil
+                TriggerClientEvent('nighttime:client:BloodyPreysUpdated', -1, BloodyPreys)
+            end
+        end
+    end end
+    GlobalState.BountyTargets = preys
+    GlobalState.BloodyPreys = BloodyPreys
+    Midnight.Functions.Debug(src..' has left the hunt')
+end
+
+--- Clears the prey list
+local removeAllPreys = function()
+    for _, v in pairs(preys) do
+        leaveHunt(v, false)
+    end
+end
+
+--- Generates a new target from the list of preys
+--- | Returns New Target or NIL
+---@param source number Hunter's source ID
+---@param current number Hunter's current target
+local generateNewTarget = function(source, current)
+    local newTarget = preys[math.random(#preys)]
+    Midnight.Functions.Debug("Generated : "..(newTarget or "NIL"))
+    if newTarget == current or newTarget == source or newTarget == nil then return nil
+    else return newTarget end
+end
+
+---Checks if the player can be hunted at the moment
+---@param source number Player's server src to check for
+---@return boolean retval Can the player be hunted currently?
+local canBeHunted = function(source)
+    local retval = true
+    if Player(source).state.huntAdmin then retval = false end
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player.PlayerData.metadata.isdead then retval = false end
+    return retval
+end
+
+--- Toggle function for day/night (Triggered by weather/time resource)
+---@param isNight boolean true -> is night time | false -> is day time.
+---@param pre boolean true if this is for the warning 1 hour before night time
+local ToggleDayNight = function(isNight, pre)
+    Midnight.Functions.Debug('Toggle Daytime State - '..((pre and '1 hour before night') or (isNight and "Night") or "Day"))
+    if pre then
+        TriggerClientEvent('nighttime:client:nightWarning', -1, 'pre')
+    elseif isNight then
+        TriggerClientEvent('nighttime:client:nightWarning', -1, 'night')
+    else
+        TriggerClientEvent('nighttime:client:nightWarning', -1, 'day')
+        removeAllPreys()
+    end
+end exports("ToggleDayNight", ToggleDayNight)
+
+---Checks if the player is blacklisted from the hub services.
+---@param src any Player's server src to check for
+---@return boolean isBlacklisted Can be hunted?
+Midnight.Functions.IsBlacklisted = function(src)
+    local Player = QBCore.Functions.GetPlayer(src)
+    local cid = Player.PlayerData.citizenid
+    local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
+    if not result or not result[1] then return false end
+    local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
+    if isBlacklisted and os.time() > blTime + 172800 then
+        isBlacklisted = false
+        blTime = nil
+        if result[1].hunter == 0 then MySQL.query.await('DELETE FROM midnight_hunters WHERE cid = ?', {cid})
+        else MySQL.Async.execute('UPDATE midnight_hunters SET blacklisted = ?, blacklisted_time = ? WHERE CID = ?', {0, nil, tonumber(cid)}) end
+        return false
+    elseif isBlacklisted then return true
+    else return false end
+end
+
+-------------
+-- Events --
+-------------
+
+--- Creates a hunter profile and sets player's Alias
 RegisterNetEvent('nighttime:server:createHunterProfile', function(alias)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
@@ -95,18 +244,6 @@ RegisterNetEvent('nighttime:server:enterHunt', function(serversource, bloody)
     Player(src).state.isPrey = true
     Midnight.Functions.Debug(src..' has entered the hunt')
 end)
-
-local function leaveHunt(serversource, quit)
-    local src = serversource or source
-    for k, v in pairs(preys) do if v == src then
-        if Player(src).state.Bloody and not quit then break
-        else
-            Player(src).state.isPrey = false
-            preys[k] = nil end
-    end end
-    GlobalState.BountyTargets = preys
-    Midnight.Functions.Debug(src..' has left the hunt')
-end
 
 --- Removes the player from the prey list.
 RegisterNetEvent('nighttime:server:leaveHunt', function(serversource, quit)
@@ -168,7 +305,7 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
     if not Config.Debug then Wait(math.random(3,5)*1000) end
     if inGreen then
         -- Player got killed inside a green zone (BAD)
-        -- Wait(math.random(3,5)*1000)
+        Wait(math.random(3,5)*1000)
         Midnight.Functions.Debug(killer..' just spilled blood in a green zone.. ('..src..')')
         exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
             sender = 'Anonymous',
@@ -183,11 +320,8 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
         })
         descS = 'Has spilled blood in a green zone.'
         headerN = "Process Death - GreenZone"
-        Killer.Functions.SetMetaData('bloodyPrey', true)
-
         local logString = {huntA = Killer.PlayerData.metadata.huntAlias, ply = GetPlayerName(killer), txt = "Player : ".. GetPlayerName(killer) .. "\nCharacter : "..hunterName.."\nCID : "..Killer.PlayerData.citizenid.."\n\n"..descS}
         TriggerEvent("qb-log:server:CreateLog", "bountyHunter", headerN, "green", logString)
-
         setBloodyPrey(killer, true)
         return
     end
@@ -216,9 +350,23 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
 
         descS = 'Has killed an other hunter.'
         headerN = "Process Death - Hunter"
+    elseif checkIsBloodyPrey(killed) then
+        Midnight.Functions.Debug(killer..' just killed a bloody prey randomly.. ('..src..')')
+        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), true)
+        exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
+            sender = 'Anonymous',
+            subject = 'Bloody Prey Killed.',
+            message = 'Dear Hunter,<br><br>'..
+            'You are lucky to have killed a bloody prey...' ..
+            '<br>You may reap their bounty, thank you for the service.' ..
+            '<br><br>Be careful of who you kill. Harming an innocenent person holds grave consequences.'
+        })
+        descS = 'Has killed a  Bloody Prey.'
+        headerN = "Process Death - Bloody Prey"
+        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)))
     else
         local grace = MySQL.query.await('SELECT grace FROM midnight_hunters WHERE CID = ?', {Killer.PlayerData.citizenid})
-        if grace > 0 then
+        if grace and grace[1] and grace[1].grace > 0 then
             -- Player killed was a random person, but killer has Marks of Grace. (OKAY)
             Midnight.Functions.Debug(killer..' just spilled the wrong blood but had Marks of Grace.. ('..src..')')
             exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
@@ -259,9 +407,11 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
 end)
 
 --- Claiming Bounty when killing proper target
-RegisterNetEvent('nighttime:server:claimBounty', function()
+RegisterNetEvent('nighttime:server:claimBounty', function(prey)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    local Prey = QBCore.Functions.GetPlayer(prey)
+    checkBloodyDeath(Player.PlayerData.citizenid, Prey.PlayerData.citizenid)
     MySQL.Async.execute('UPDATE midnight_hunters SET unclaimed = unclaimed + 1 WHERE CID = ?', {Player.PlayerData.citizenid})
     hunters[Player.PlayerData.citizenid] = 0
     TriggerClientEvent('nighttime:client:bountyCooldown', src)
@@ -319,17 +469,15 @@ RegisterNetEvent('nighttime:server:checkIsBloodyPrey', function()
     local src = source
     local Ply = QBCore.Functions.GetPlayer(src)
     local cid = Ply.PlayerData.citizenid
-    for k,v in pairs(BloodyPreys) do
-        if v.cid == cid then
-            Player(src).state.isPrey = true
-            Player(src).state.Bloody = true
-            BloodyPreys[k].online = true
-            BloodyPreys[k].source = src
-            Ply.Functions.SetMetaData('bloodyPrey', true)
-            TriggerEvent('nighttime:server:enterHunt', src, true)
-            TriggerClientEvent('nighttime:server:alertIsBloody', src)
-            break
-        end
+    local isBloody, i = checkIsBloodyPrey(src)
+    if isBloody then
+        Player(src).state.isPrey = true
+        Player(src).state.Bloody = true
+        BloodyPreys[i].online = true
+        BloodyPreys[i].source = src
+        Ply.Functions.SetMetaData('bloodyPrey', true)
+        TriggerEvent('nighttime:server:enterHunt', src, true)
+        TriggerClientEvent('nighttime:server:alertIsBloody', src)
     end
 end)
 
@@ -341,11 +489,13 @@ RegisterNetEvent('nighttime:server:selectBloodyPrey', function(data)
     if src == data.source then TriggerClientEvent('QBCore:Notify', src, 'You cannot hunt yourself...', 'error') return end
     local preyData = data.source ~= nil and QBCore.Functions.GetPlayer(data.source) or false
     local ped = GetPlayerPed(data.source)
+
     if not preyData or not ped or ped == 0 or not canBeHunted(data.source) then
         Midnight.Functions.Debug('Cant find new #'..src.."\'s target #"..data.source)
         TriggerClientEvent('QBCore:Notify', src, 'Cannot find prey currently...', 'error')
     return end
-    Midnight.Functions.Debug('New Target Found for #'..src.." : "..newTarget.." (Bloody Prey)")
+
+    Midnight.Functions.Debug('New Target Found for #'..src.." : "..data.source.." (Bloody Prey)")
     hunters[cid] = data.source
     TriggerClientEvent('nighttime:client:selectBloodyPrey', src, data)
 end)
@@ -415,59 +565,9 @@ RegisterNetEvent('nighttime:server:buyBHCrumbs', function(amount)
     end
 end)
 
-local function removeAllPreys()
-    for _, v in pairs(preys) do
-        leaveHunt(v, false)
-    end
-end
-
---- Toggle function for day/night (Triggered by weather/time resource)
----@param isNight boolean true -> is night time | false -> is day time.
----@param pre boolean true if this is for the warning 1 hour before night time
-local ToggleDayNight = function(isNight, pre)
-    Midnight.Functions.Debug('Toggle Daytime State - '..((pre and '1 hour before night') or (isNight and "Night") or "Day"))
-    if pre then
-        TriggerClientEvent('nighttime:client:nightWarning', -1, 'pre')
-    elseif isNight then
-        TriggerClientEvent('nighttime:client:nightWarning', -1, 'night')
-    else
-        TriggerClientEvent('nighttime:client:nightWarning', -1, 'day')
-        removeAllPreys()
-    end
-end exports("ToggleDayNight", ToggleDayNight)
-
---- Generates a new target from the list of preys
----@param source number Hunter's source ID
----@param current number Hunter's current target
-local generateNewTarget = function(source, current)
-    local newTarget = preys[math.random(#preys)]
-    Midnight.Functions.Debug("Generated : "..(newTarget or "NIL"))
-    if newTarget == current or newTarget == source or newTarget == nil then return nil
-    else return newTarget end
-end
-
-local canBeHunted = function(source)
-    local retval = true
-    local Player = QBCore.Functions.GetPlayer(source)
-    if Player.PlayerData.metadata.isdead then retval = false end
-    return retval
-end
-
-Midnight.Functions.IsBlacklisted = function(src)
-    local Player = QBCore.Functions.GetPlayer(src)
-    local cid = Player.PlayerData.citizenid
-    local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
-    if not result or not result[1] then return false end
-    local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
-    if isBlacklisted and os.time() > blTime + 172800 then
-        isBlacklisted = false
-        blTime = nil
-        if result[1].hunter == 0 then MySQL.query.await('DELETE FROM midnight_hunters WHERE cid = ?', {cid})
-        else MySQL.Async.execute('UPDATE midnight_hunters SET blacklisted = ?, blacklisted_time = ? WHERE CID = ?', {0, nil, tonumber(cid)}) end
-        return false
-    elseif isBlacklisted then return true
-    else return false end
-end
+--------------
+-- Callbacks --
+--------------
 
 --- Fetches if a player is blacklisted
 QBCore.Functions.CreateCallback('mdn-nighttime:IsBlacklisted', function(source, cb)
@@ -546,6 +646,7 @@ QBCore.Functions.CreateCallback('nighttime:fetchUserData', function(source, cb, 
             points = result[1].points,
             unclaimed = result[1].unclaimed,
             bank = result[1].bank,
+            bloodBounty = result[1].bloodBounty,
             blacklisted = isBlacklisted,
             blacklisted_time = blTime,
             grace = result[1].grace,
@@ -555,21 +656,70 @@ QBCore.Functions.CreateCallback('nighttime:fetchUserData', function(source, cb, 
     end
 end)
 
--- remove them if they're dropped
-AddEventHandler('playerDropped', function()
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if not Player or not Player.PlayerData then return end
-    if hunters[Player.PlayerData.citizenid] then TriggerEvent('nighttime:server:stopHunting', src) end
-    TriggerEvent('nighttime:server:leaveHunt', src, true)
-end)
+--------------
+-- Commands --
+--------------
 
+--- Prints a list of all the current preys in the console
 RegisterCommand('checkPreys', function()
     Midnight.Functions.Debug('List of Current Preys :')
     QBCore.Debug(preys)
 end)
 
+--- Prints a list of all the current hunters in the console
 RegisterCommand('checkHunters', function()
     Midnight.Functions.Debug('List of Current Hunters :')
     QBCore.Debug(hunters)
 end)
+
+--- Prints a list of all the bloody preys in the console
+RegisterCommand('checkBloodyPreys', function()
+    Midnight.Functions.Debug('List of Current Bloody Preys :')
+    QBCore.Debug(BloodyPreys)
+end)
+
+--- Prints all info related to a certain hunter in the console
+RegisterCommand('checkHunterInfo', function(source, args)
+    local argType = 'src'
+    local cid
+    if #args[1] >= 4 then argType = 'cid' cid = args[1] end
+    if argType == 'src' then cid = QBCore.Functions.GetPlayer(tonumber(args[1])).PlayerData.citizenid end
+
+    local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
+    if not result or not result[1] then Midnight.Functions.Debug('No hunter profile found')
+    else
+        local blOver
+        local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
+        if isBlacklisted and os.time() > blTime + 172800 then
+            isBlacklisted = false
+            blTime = nil
+            blOver = 'Blacklist is done, waiting for update.'
+        end
+        local data = {
+            charName = Midnight.Functions.GetCharName(tonumber(args[1])),
+            CID = result[1].CID,
+            nickname = result[1].nickname,
+            points = result[1].points,
+            unclaimed = result[1].unclaimed,
+            bank = result[1].bank,
+            bloodBounty = result[1].bloodBounty,
+            blacklisted = isBlacklisted,
+            blacklisted_time = blTime,
+            blacklisted_done = blOver,
+            grace = result[1].grace,
+            prey = hunters[cid],
+            preysName = hunters[cid] and hunters[cid] ~= 0 and Midnight.Functions.GetCharName(source) or "No Current Prey"
+        }
+        Midnight.Functions.Debug('Hunters Current Info :')
+        QBCore.Debug(data)
+    end
+end)
+
+--- Enter Admin mode and prevents the user from entering the hunt / being hunted.
+QBCore.Commands.Add('huntAdmin', 'Keeps you off the prey list (Admin Only)', { { name = 'true/false', help = "Sets admin status to set value" } }, true, function(source, args)
+    local bool = args[1] == 'true' and true or args[1] == 'false' and false or nil
+    if not bool then TriggerClientEvent('QBCore:Notify', source, 'Invalid Argument.', 'error') return end
+    Player(source).state.huntAdmin = bool
+    if bool then leaveHunt(source, true) else if Midnight.Functions.IsNightTime() then TriggerEvent('nighttime:server:enterHunt', source, BloodyPreys[source] or false) end end
+    TriggerClientEvent('QBCore:Notify', source, 'Hunt Admin Status set to '..args[1], 'success')
+end, 'admin')

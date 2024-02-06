@@ -48,7 +48,6 @@ end
 local makeTargetBlip = function(loc)
     if targetBlip then RemoveBlip(targetBlip) end
     local p = 500.0 - (precision * 50)
-    print(p, precision)
     if p <= 0 then
         targetBlip = AddBlipForCoord(loc.x, loc.y, loc.z)
         SetBlipSprite(targetBlip, 303)
@@ -73,17 +72,25 @@ end
 --- Handler to fetch a new target if the current one is lost or cycled.
 ---@param v? table Menu Handler if the player requested the new target (Reopens menu if v.man = true)
 Midnight.Functions.getNewTarget = function(v)
-    if gettingNewPrey or not LocalPlayer.state.isHunting then return end
+    if gettingNewPrey or not Midnight.Functions.isHunting() then return end
     gettingNewPrey = true
     QBCore.Functions.Notify('Find New Prey...')
     if DoesBlipExist(targetBlip) then RemoveBlip(targetBlip) end
     precision = 0 Wait(1000)
     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getNewTarget', function(target, loc)
-        if not target then QBCore.Functions.Notify('No Preys Available, Try Again Later...') Midnight.Functions.Debug("No Target Found") Midnight.Functions.stopHunting() return end
-        currentTarget = target
+        Midnight.Functions.Debug("Received Target : "..(target or "NIL"))
+        if not target then
+            QBCore.Functions.Notify('No Preys Available, Please try again later.' , 'error') Midnight.Functions.Debug("No Target Found") currentTarget = 0
+        else
+            currentTarget = target
+        end
         if v and v.man == true then TriggerEvent('openHuntDongle') end
-        Wait(1500) QBCore.Functions.Notify('New Prey Acquired.', 'success')
-        makeTargetBlip(loc)
+        if not currentTarget or currentTarget == 0 then
+            QBCore.Functions.Notify('No Preys Available, Please try again later.' , 'error')
+        else
+            Wait(1500) QBCore.Functions.Notify('New Prey Acquired.', 'success')
+            makeTargetBlip(loc)
+        end
         Wait(30000) gettingNewPrey = false Wait(100)
         if lib.getOpenContextMenu() == 'bountyDongle' then TriggerEvent('openHuntDongle') end
     end)
@@ -97,15 +104,18 @@ local startHunting = function()
     TriggerServerEvent('nighttime:server:startHunting')
     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getNewTarget', function(target)
         Midnight.Functions.Debug("Received Target : "..(target or "NIL"))
-        if not target then QBCore.Functions.Notify('No Preys Available, Please try again later.' , 'error') Midnight.Functions.Debug("No Target Found") Midnight.Functions.stopHunting() return end
-        currentTarget = target
+        if not target then
+            QBCore.Functions.Notify('No Preys Available, Please try again later.' , 'error') Midnight.Functions.Debug("No Target Found") currentTarget = 0
+        else
+            currentTarget = target
+        end
         Wait(1000)
         Citizen.CreateThread(function()
-            QBCore.Functions.Notify('Initial Prey Acquired, you can cycle through preys using your [DEVICE]', 'success')
-            Midnight.Functions.Debug("Target Found : "..currentTarget)
-            while LocalPlayer.state.isHunting do
+            QBCore.Functions.Notify('You are now hunting. Good Luck.', 'success')
+            while Midnight.Functions.isHunting() do
                 local w = 60000
-                if not gettingNewPrey or currentTarget ~= 0 then
+                Midnight.Functions.Debug("Current Target : "..currentTarget)
+                if not gettingNewPrey and currentTarget ~= 0 then
                     Midnight.Functions.Debug("Fetching Location...")
                     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getTargetLocation', function(loc)
                         if loc == "notFound" then
@@ -154,7 +164,7 @@ local claimBounty = function(data)
             TriggerServerEvent('nighttime:server:stealPoints', data)
         else
             --GetNearestPlayerToEntity(v.entity) works too
-            if GetPlayerFromServerId(currentTarget) == NetworkGetPlayerIndexFromPed(data.entity) then TriggerServerEvent('nighttime:server:claimBounty')
+            if GetPlayerFromServerId(currentTarget) == NetworkGetPlayerIndexFromPed(data.entity) then TriggerServerEvent('nighttime:server:claimBounty', currentTarget)
             else QBCore.Functions.Notify("This is not your prey anymore....", 'error') end
         end
     end, function()
@@ -166,10 +176,21 @@ end
 RegisterNetEvent('nighttime:client:selectBloodyPrey', function(data)
     Midnight.Functions.Debug('Bloody Prey Selected : '..data.source)
     currentTarget = data.source
+    precision = 10
+    QBCore.Functions.TriggerCallback('mdn-bountyHunt:getTargetLocation', function(loc)
+        if loc == "notFound" then
+            QBCore.Functions.Notify('The Prey has been lost...', 'error')
+            Wait(2000)
+            Midnight.Functions.getNewTarget()
+        else
+            Midnight.Functions.Debug('Making Blip Area')
+            makeTargetBlip(loc)
+        end
+    end, currentTarget)
 end)
 
 local selectPrey = function(data)
-    if not LocalPlayer.state.IsHunting then QBCore.Functions.Notify('You are not hunting currently...', 'error') return end
+    if not Midnight.Functions.isHunting() then QBCore.Functions.Notify('You are not hunting currently...', 'error') return end
     local alert = lib.alertDialog({
         header = 'Attention!',
         content = 'Despite knowing your target\'s location at all times, you must remember to follow the rules of the hunt.\n'..
@@ -180,16 +201,16 @@ local selectPrey = function(data)
     })
     if alert ~= 'confirm' then return end
     Midnight.Functions.Debug('Sending Bloody Prey Data to Server')
-    TriggerServerEvent('mdn-bountyhunt:server:selectBloodyPrey', data)
+    TriggerServerEvent('nighttime:server:selectBloodyPrey', data)
 end
 
 --- Handler to check the bloody prey menu
 local seeBloodyPreys = function(data)
-    local disabled = data.blacklisted or not LocalPlayer.state.isHunting or not Midnight.Functions.IsNightTime()
+    local disabled = data.blacklisted or not Midnight.Functions.isHunting() or not Midnight.Functions.IsNightTime()
     local desc = 'Cannot find target.'
     if data.blacklisted then desc = "~ !! BLACKLISTED !! ~"
     elseif not Midnight.Functions.IsNightTime() then desc = "Not Night Time."
-    elseif not LocalPlayer.state.isHunting then desc = "Not hunting currently." end
+    elseif not Midnight.Functions.isHunting() then desc = "Not hunting currently." end
     QBCore.Functions.TriggerCallback('mdn-bountyHunt:fetchBloodyPreys', function(preys)
         local options = {}
         for _, v in ipairs(preys) do
