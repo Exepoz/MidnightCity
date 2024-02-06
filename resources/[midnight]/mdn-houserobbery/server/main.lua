@@ -170,25 +170,47 @@ end)
 
 local function GenerateLoot(items)
     local total_prob = 0
-    for _, item in ipairs(items) do
+    for _, item in pairs(items) do
         total_prob = total_prob + item.probability
     end
 
     local total_weight = 0
-    for _, item in ipairs(items) do
+    for _, item in pairs(items) do
         item.weight = math.ceil(item.probability / total_prob * 100)
         total_weight = total_weight + item.weight
     end
 
     local chosenLoot = math.random(total_weight)
     local chosenItem
-    for k, item in ipairs(items) do
+    for k, item in pairs(items) do
         chosenLoot = chosenLoot - item.weight
         if chosenLoot <= 0 then chosenItem = k break end
     end
 
     return chosenItem
 end
+
+-- local totI = 0
+-- RegisterCommand('genHouseLoot', function(_, args)
+--     print("generating loot for "..tonumber(args[1]))
+-- 	local v = Config.ItemsReward
+--     for i = 1, tonumber(args[1]) do
+-- 		v = Config.ItemsReward
+--         i = i +1
+-- 		if not totI then totI = 0 end
+-- 		local loot = GenerateLoot(Config.ItemsReward)
+-- 		if not v[loot].chosen then v[loot].chosen = 0 end
+-- 		v[loot].chosen = v[loot].chosen + 1
+-- 		totI = totI + 1
+-- 	end
+
+-- 	print("\n----- House Robbery Loot -----")
+-- 	table.sort(v, function(a, b) if not a.chosen then a.chosen = 0 end if not b.chosen then b.chosen = 0 end return a.chosen > b.chosen end)
+-- 	for k_, v_ in ipairs(v) do
+-- 		print("Item : "..v_.item.." | "..(v_.chosen and "Chosen "..v_.chosen.." times." or "Not Chosen").." | Chance : ".. string.format("%.2f", math.floor(v_.probability*100)) .. "% | ".. string.format("%.2f", (v_.chosen or 0)/totI*100) .. "%")
+-- 	end
+
+-- end)
 
 -- RegisterCommand('setHRRep', function(source, args)
 -- 	local player = QBCore.Functions.GetPlayer(source)

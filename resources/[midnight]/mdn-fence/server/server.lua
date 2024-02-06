@@ -242,13 +242,13 @@ AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName(
                 stockSplit = v.stock / totalStock
                 if stockSplit < 0.02 then
                     usedKeys[k] = true
-                    CurrentQuests[#CurrentQuests+1] = {item = k}
+                    CurrentQuests[#CurrentQuests+1] = {item = k, type = 'In Demand'}
                     hotItems += 1
                 end
             end
         end
         for k, v in pairs(Config.Quests) do
-            if not usedKeys[k] then CurrentQuests[#CurrentQuests+1] = {item = k} end
+            if not usedKeys[k] then CurrentQuests[#CurrentQuests+1] = {item = k, type = 'Config Set'} end
         end
         GlobalState.FenceBounties = CurrentQuests
     end
@@ -258,8 +258,13 @@ AddEventHandler('onResourceStart', function(resource) if GetCurrentResourceName(
     lib.cron.new('*/15 * * * *', UpdateBounties)
 end)
 
+RegisterCommand('checkFenceBounties', function()
+    Midnight.Functions.Debug('List of current Fence Bounties :')
+    QBCore.Debug(CurrentQuests)
+end)
+
 -- lib.cron.new('* */3 * * *', function() -- Happens every 3 hours
-lib.cron.new('15 23 */3 * *', function() -- Happens every 3 hours
+lib.cron.new('15 23 * * *', function() -- Happens every day
     print('Updating Current Fence Stock...')
     fenceData = MySQL.query.await('SELECT * FROM `midnight_fence`')
     if fenceData and fenceData[1] ~= nil then
@@ -273,6 +278,6 @@ lib.cron.new('15 23 */3 * *', function() -- Happens every 3 hours
             end
         end
     end
-    --QBCore.Debug(Config.FenceItems)
+    QBCore.Debug(Config.FenceItems)
     --print('Current Fence Stock Updated!')
-end)
+end, {debug = true})

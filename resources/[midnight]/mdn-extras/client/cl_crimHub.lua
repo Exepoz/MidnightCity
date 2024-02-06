@@ -274,7 +274,7 @@ local exchangeAmount = function(data)
         local input = lib.inputDialog('Select Amount to Exchange', {
             {type = 'number', label = Config.CrimHub.CurrencyExchange[buy][sell]..labels[sell].." ⟶ "..Config.CrimHub.CurrencyExchange[buy].rec..labels[buy], description = 'Current '..labels[sell].." : "..math.floor(currencyAmount), required = true, min = 0, max = currencyAmount},
         })
-        if not input or not input[1] then TriggerEvent('crimHub:client:talkToQuartermaster') return end
+        if not input or not input[1] then TriggerEvent('crimHub:client:talkToCurrExchange') return end
         local finalAmount = convertCurrency(Config.CrimHub.CurrencyExchange[buy].rec, Config.CrimHub.CurrencyExchange[buy][sell], input[1])
         local alert = lib.alertDialog({
             header = 'Confirm Purchase',

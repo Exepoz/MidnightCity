@@ -171,7 +171,7 @@ Config.OnlineOrders.Shops = {
             [6] = {item = "egg",            price = 30, stock = 300, loc = 9, max = 100},
             [7] = {item = "frozennugget",   price = 30, stock = 300, loc = 9, max = 100},
             [8] = {item = "rawbacon",       price = 10, stock = 300, loc = 9, max = 100},
-            [8] = {item = "rawgroundbeef",  price = 30, stock = 300, loc = 9, max = 100},
+            [9] = {item = "rawgroundbeef",  price = 30, stock = 300, loc = 9, max = 100},
         }
     },
     ['fruits'] = {
@@ -199,7 +199,7 @@ Config.OnlineOrders.Shops = {
 
             [6] = {item = "basil",          price = 14, stock = 300, loc = 8, max = 100},
             [7] = {item = "cubasil",        price = 14, stock = 300, loc = 8, max = 100},
-            [8] = {item = "mintleaf",       price = 14, stock = 300, loc = 8, max = 100},
+            [8] = {item = "mint",       price = 14, stock = 300, loc = 8, max = 100},
         }
     },
     ['dairy'] = {
