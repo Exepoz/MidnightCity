@@ -715,9 +715,7 @@ RegisterNetEvent('av_houserobbery:anim', function(anim, deleteObj, i, ground)
 			local w = 1
 			if not IsEntityPlayingAnim(ped, "anim@heists@box_carry@", "idle", 3) then TaskPlayAnim(ped, "anim@heists@box_carry@", "idle", 8.0, 8.0, -1, 50, 0, false, false, false) end
 			local pcoords = GetEntityCoords(PlayerPedId())
-			print(pcoords)
 			local vehicle = lib.getClosestVehicle(pcoords, 5.0, false)
-			print(vehicle)
 			if vehicle then
 				local d1 = GetModelDimensions(GetEntityModel(vehicle))
 				local vehicleCoords = GetOffsetFromEntityInWorldCoords(vehicle, 0.0,d1["y"]+0.60,0.0)
@@ -800,7 +798,7 @@ end)
 
 local syncEvents = {
 	['doorOpen'] = function() isLocked = false end,
-	['takenLoot'] = function(item, bool) items[item].robbed = bool if not housePoints[item] then return end housePoints[item].robbed = bool end,
+	['takenLoot'] = function(item, bool) if not housePoints[item] then return end housePoints[item].robbed = bool end,
 	['caught'] = function(bool)
 		caught = bool
 		MissionInProgress = false

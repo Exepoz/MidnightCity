@@ -9,6 +9,7 @@ end
 
 local function drawText(text, position)
     if type(position) ~= 'string' then position = 'left-center' end
+    if position == "left" then position = "lef-center" end
     if position ~= 'right-center' and position ~= 'left-center' and position ~= 'top-center' then
         QBCore.Debug('Draw text tried to set a custom position but the value is not valid. (Text : '..text.." | Position : "..position..")")
         position = 'left-center'
@@ -39,6 +40,7 @@ local function changeText(text, position)
 
     -- if type(position) ~= 'string' then position = 'left' end
     if type(position) ~= 'string' then position = 'left-center' end
+    if position == "left" then position = "lef-center" end
     if position ~= 'right-center' and position ~= 'left-center' and position ~= 'top-center' then
         QBCore.Debug('Draw text tried to set a custom position but the value is not valid. (Text : '..text.." | Position : "..position..")")
         position = 'left-center'
