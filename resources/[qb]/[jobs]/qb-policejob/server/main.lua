@@ -236,12 +236,23 @@ QBCore.Commands.Add("jail", Lang:t("commands.jail_player"), {}, false, function(
     end
 end)
 
+-- QBCore.Commands.Add("unjail", Lang:t("commands.unjail_player"), {{name = "id", help = Lang:t('info.player_id')}}, true, function(source, args)
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     if Player.PlayerData.job.type == "leo" and Player.PlayerData.job.onduty then
+--         local playerId = tonumber(args[1])
+--         TriggerClientEvent("prison:client:UnjailPerson", playerId)
+--     else
+--         TriggerClientEvent('QBCore:Notify', src, Lang:t("error.on_duty_police_only"), 'error')
+--     end
+-- end)
+
 QBCore.Commands.Add("unjail", Lang:t("commands.unjail_player"), {{name = "id", help = Lang:t('info.player_id')}}, true, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if Player.PlayerData.job.type == "leo" and Player.PlayerData.job.onduty then
+    if Player.PlayerData.job.type == "police" and Player.PlayerData.job.onduty then
         local playerId = tonumber(args[1])
-        TriggerClientEvent("prison:client:UnjailPerson", playerId)
+        exports['qb-jail']:unJailPlayer(playerId)
     else
         TriggerClientEvent('QBCore:Notify', src, Lang:t("error.on_duty_police_only"), 'error')
     end
@@ -697,7 +708,7 @@ QBCore.Functions.CreateCallback('police:server:GetEvidenceByType', function(sour
     local EvidenceBags = exports[Config.Inventory]:GetItemsByName(source, 'filled_evidence_bag')
     if not EvidenceBags then TriggerClientEvent('QBCore:Notify', source, Lang:t('error.dont_have_evidence_bag'), 'error') end
     local ItemList = {}
-    
+
     for k,v in pairs(EvidenceBags) do
         if v.info.type == type then
             if type == 'casing' then
@@ -996,9 +1007,9 @@ RegisterNetEvent('police:server:JailPlayer', function(playerId, time)
     local src = source
     local playerPed = GetPlayerPed(src)
     local targetPed = GetPlayerPed(playerId)
-    local playerCoords = GetEntityCoords(playerPed)
-    local targetCoords = GetEntityCoords(targetPed)
-    if #(playerCoords - targetCoords) > 4.5 then return DropPlayer(src, "Attempted exploit abuse") end
+    -- local playerCoords = GetEntityCoords(playerPed)
+    -- local targetCoords = GetEntityCoords(targetPed)
+    --if #(playerCoords - targetCoords) > 4.5 then return DropPlayer(src, "Attempted exploit abuse") end
 
     local Player = QBCore.Functions.GetPlayer(src)
     local OtherPlayer = QBCore.Functions.GetPlayer(playerId)
@@ -1009,6 +1020,7 @@ RegisterNetEvent('police:server:JailPlayer', function(playerId, time)
         currentDate.day = 30
     end
 
+    exports['qb-jail']:jailPlayer(playerId, true, time)
     OtherPlayer.Functions.SetMetaData("injail", time)
     OtherPlayer.Functions.SetMetaData("criminalrecord", {
         ["hasRecord"] = true,
@@ -1017,7 +1029,7 @@ RegisterNetEvent('police:server:JailPlayer', function(playerId, time)
     TriggerClientEvent("police:client:SendToJail", OtherPlayer.PlayerData.source, time)
     TriggerClientEvent('QBCore:Notify', src, Lang:t("info.sent_jail_for", {time = time}))
     local name = OtherPlayer.PlayerData.charinfo.firstname.." "..OtherPlayer.PlayerData.charinfo.lastname
-    exports['futte-newspaper']:CreateJailStory(name, time)
+    --exports['futte-newspaper']:CreateJailStory(name, time)
 end)
 
 RegisterNetEvent('police:server:SetHandcuffStatus', function(isHandcuffed, cuffitem, position)

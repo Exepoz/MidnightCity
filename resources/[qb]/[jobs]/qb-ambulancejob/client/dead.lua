@@ -64,7 +64,13 @@ function DeathTimer()
         deathTime = deathTime - 1
         if deathTime <= 0 then
             if IsControlPressed(0, 38) and hold <= 0 and not isInHospitalBed then
-                TriggerEvent('hospital:client:RespawnAtHospital')
+                QBCore.Functions.GetPlayerData(function(PlayerData)
+                    if PlayerData.metadata.injail ~= 0 then
+                        TriggerEvent("qb-jail:client:PrisonRevive")
+                    else
+                        TriggerEvent("hospital:client:RespawnAtHospital")
+                    end
+                end)
                 hold = 5
             end
             if IsControlPressed(0, 38) then

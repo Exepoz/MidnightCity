@@ -4,7 +4,7 @@ Config = {}
 Config.Resource             = GetCurrentResourceName()
 Config.Notify               = 'ox' -- 'ox' for ox_lib or 'qb' for QBCore.Functions.Notify
 Config.Phone                = 'QBCore' -- 'QBCore' or 'GKS' or 'Qs' or 'lb-phone' or edit utils files for others
-Config.Inventory            = 'ps_inventory' -- 'ox_inventory' or 'qb'
+Config.Inventory            = 'qb' -- 'ox_inventory' or 'qb'
 Config.Doorlock             = 'ox' -- 'ox' or 'qb'
 Config.Logs                 = 'qb' -- 'ox' or 'qb'
 
@@ -203,7 +203,7 @@ Config.Armory = {
             info = { serie = '' },
             type = 'weapon',
             slot = 1,
-        },      
+        },
         [2] = {
             name = 'weapon_nightstick',
             price = 0,
@@ -253,19 +253,19 @@ Config.PrisonOutfit = {
         ['male'] = {
             outfitData = {
                 ['t-shirt'] = { item = 15, texture = 0 },
-                ['torso2']  = { item = 345, texture = 0 },
-                ['arms']    = { item = 19, texture = 0 },
-                ['pants']   = { item = 3, texture = 7 },
-                ['shoes']   = { item = 1, texture = 0 },
+                ['torso2']  = { item = 569, texture = 0 }, --583
+                ['arms']    = { item = 1, texture = 0 }, --5
+                ['pants']   = { item = 196, texture = 0 }, --197
+                ['shoes']   = { item = 52, texture = 0 },
             }
         },
         ['female'] = {
              outfitData = {
                 ['t-shirt'] = { item = 14, texture = 0 },
-                ['torso2']  = { item = 370, texture = 0 },
-                ['arms']    = { item = 0, texture = 0 },
-                ['pants']   = { item = 0, texture = 12 },
-                ['shoes']   = { item = 1, texture = 0 },
+                ['torso2']  = { item = 338, texture = 0 },
+                ['arms']    = { item = 14, texture = 0 },
+                ['pants']   = { item = 247, texture = 2 },
+                ['shoes']   = { item = 59, texture = 0 },
              }
         }
     }

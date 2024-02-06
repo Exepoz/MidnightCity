@@ -1016,3 +1016,5 @@ RegisterNetEvent('qb-phone:RefreshPhone', function()
         })
     end)
 end)
+
+exports('CallContact', CallContact)

@@ -29,7 +29,9 @@ local function TakeMugShot()
     end)
 end
 
+local takingPhoto = false
 local function PhotoProcess(ped)
+    takingPhoto = true
     local rotation = suspectheading
     for photo = 1, Config.Photos, 1 do
         Wait(Config.WaitTime)
@@ -39,6 +41,7 @@ local function PhotoProcess(ped)
         rotation = rotation - 90.0
         SetEntityHeading(ped, rotation)
     end
+    takingPhoto = false
 end
 
 local function MugShotCamera()
@@ -139,8 +142,8 @@ end
 local function PlayerBoard()
 	RequestModel(`prop_police_id_board`)
 	RequestModel(`prop_police_id_text`)
-	while not HasModelLoaded(`prop_police_id_board`) or not HasModelLoaded(`prop_police_id_text`) do 
-        Wait(1) 
+	while not HasModelLoaded(`prop_police_id_board`) or not HasModelLoaded(`prop_police_id_text`) do
+        Wait(1)
     end
 	board = CreateObject(`prop_police_id_board`, pedcoords, true, true, false)
 	overlay = CreateObject(`prop_police_id_text`, pedcoords, true, true, false)
@@ -182,15 +185,15 @@ RegisterNetEvent('cqc-mugshot:client:trigger', function()
         SetEntityHeading(ped,suspectheading)
         PlayerBoard()
         TaskPlayAnim(ped, animDict, "loop_raised", 8.0, 8.0, -1, 49, 0, false, false, false)
+        takingPhoto = true
         PhotoProcess(ped)
+        while takingPhoto do Wait(0) end
         if createdCamera ~= 0 then
             DestoryCamera()
             SetEntityHeading(suspectheading, ped)
             ClearPedSecondaryTask(GetPlayerPed(ped))
         end
-        if Config.CQCMDT then
-            TriggerServerEvent('cqc-mugshot:server:MDTupload', playerData.citizenid, MugshotArray)
-        end
+        TriggerServerEvent('psmdt-mugshot:server:MDTupload', playerData.citizenid, MugshotArray)
         if Config.CustomMLO == false then
             SetEntityCoords(ped, pedcoords.x, pedcoords.y, pedcoords.z)
         end

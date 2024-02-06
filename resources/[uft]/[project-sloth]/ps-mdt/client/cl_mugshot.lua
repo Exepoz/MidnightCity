@@ -5,15 +5,15 @@ local handle, board, board_scaleform, overlay, ped, pedcoords, x, y, z, r, suspe
 local MugShots = {}
 
 -- Mugshot location  ( Position is the default QBCore Prison Interior )
-	x = 1828.69
-    y = 2581.72
-    z = 46.3
-    r = {x = 0.0, y = 0.0, z = 92.23}
-    suspectheading = 265.00
-    suspectx = 1827.63
-    suspecty = 2581.7
-    suspectz = 44.89
-	
+    x = 473.05
+    y = -1012.56
+    z = 26.90
+    r = {x = 0.0, y = 0.0, z = 358.04}
+    suspectheading = 189.48
+    suspectx = 472.77
+    suspecty = -1011.27
+    suspectz = 25.27
+
 -- Mugshot functions
 
 local function TakeMugShot()
@@ -161,7 +161,7 @@ local function DestoryCamera()
     createdCamera = 0
 end
 
-RegisterNetEvent('cqc-mugshot:client:trigger', function()
+RegisterNetEvent('mdt-mugshot:client:trigger', function()
     ped = PlayerPedId()
     pedcoords = GetEntityCoords(ped)
     CreateThread(function()
@@ -184,7 +184,7 @@ RegisterNetEvent('cqc-mugshot:client:trigger', function()
             SetEntityHeading(ped, suspectheading)
             ClearPedSecondaryTask(GetPlayerPed(ped))
         end
-           TriggerServerEvent('psmdt-mugshot:server:MDTupload', playerData.citizenid, MugshotArray)
+        TriggerServerEvent('psmdt-mugshot:server:MDTupload', playerData.citizenid, MugshotArray)
         mugshotInProgress = false
     end)
 end)
@@ -199,14 +199,14 @@ RegisterNUICallback("sendToJail", function(data, cb)
             QBCore.Functions.TriggerCallback('mdt:server:GetPlayerSourceId', function(result)
                 p:resolve(result)
             end, citizenId)
-        
+
             local targetSourceId = Citizen.Await(p)
-        
+
             if sentence > 0 then
-                if Config.UseCQCMugshot    then
-                    TriggerServerEvent('cqc-mugshot:server:triggerSuspect', targetSourceId)
+                if Config.UseCQCMugshot then
+                    TriggerServerEvent('mdt-mugshot:server:triggerSuspect', targetSourceId)
                 end
-                Citizen.Wait(5000)
+                Wait(3000)
                 -- Uses qb-policejob JailPlayer event
                 TriggerServerEvent("police:server:JailPlayer", targetSourceId, sentence)
             end

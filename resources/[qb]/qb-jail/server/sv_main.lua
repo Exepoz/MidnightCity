@@ -26,7 +26,7 @@ local jailPlayer = function(src, takeItems, time)
 
     jailedPlayers[src] = time
     Player.Functions.SetMetaData('injail', time)
-    TriggerClientEvent('qb-prison:client:SendPlayerToPrison', src, takeItems, time)
+    TriggerClientEvent('qb-prison:client:SendPlayerToPrison', src, false, time)
 
     if takeItems then
         -- Take cash and put it in bank
@@ -50,7 +50,7 @@ local jailPlayer = function(src, takeItems, time)
     end
 
     debugPrint('Added ' .. Player.PlayerData.name .. ' (' .. src .. ')' .. ' to jailedPlayers, time: ' .. time)
-    
+
     return true
 end
 
@@ -70,11 +70,11 @@ local unJailPlayer = function(src)
         Player.Functions.ClearInventory()
 
         Wait(1000)
-    
+
         for _, v in pairs(Player.PlayerData.metadata['jailitems']) do
             Player.Functions.AddItem(v.name, v.amount, false, v.info)
         end
-    
+
         Player.Functions.SetMetaData('jailitems', {})
     elseif Config.Inventory == 'ox_inventory' then
         exports['ox_inventory']:ReturnInventory(src)
@@ -114,7 +114,7 @@ end
 ---@param src number - playerId
 ---@return boolean - isPlayerInJail
 isPlayerInJail = function(src)
-    return jailedPlayers[src] and jailedPlayers[src] ~= 0 
+    return jailedPlayers[src] and jailedPlayers[src] ~= 0
 end
 
 --- Method to increase a players jail sentence, if player was already released, the amount is now his sentence
@@ -126,7 +126,7 @@ increasePlayerJailSentence = function(src, amount)
     if not Player then return false end
 
     if not isPlayerInJail(src) or type(amount) ~= 'number' then return false end
-    
+
     local currentJailTime = getPlayerTimeRemaining(src)
     local newJailTime = currentJailTime + amount
     if currentJailTime < 0 then newJailTime = amount end
@@ -162,7 +162,7 @@ reducePlayerJailSentence = function(src, amount)
     if currentJailTime > 0 and newJailTime < 0 then
         Utils.Notify(src, Locales['notify_sent_prison2'], 'primary', 4000)
     end
-    
+
     debugPrint('Reduced jail sentence of ' .. Player.PlayerData.name .. ' (' .. src .. ')' .. ' by ' .. amount .. ' to ' .. newJailTime)
 
     return true
@@ -198,7 +198,7 @@ reduceJailSentenceAttempt = function(src)
         Player.Functions.SetMetaData('injail', newJailTime)
 
         debugPrint(Player.PlayerData.name .. ' (' .. src .. ')' .. ' reduced jail sentence by ' .. amount .. ' (' .. group .. ')')
-        
+
         return true
     else
         return false
@@ -243,7 +243,7 @@ AddEventHandler('onResourceStop', function(resource)
         end
     end
 
-    for i = 1, #scrapYardObjects do 
+    for i = 1, #scrapYardObjects do
         if DoesEntityExist(scrapYardObjects[i]) then
             DeleteEntity(scrapYardObjects[i])
         end
@@ -254,7 +254,7 @@ AddEventHandler('onResourceStop', function(resource)
             DeleteEntity(farmingSetup[i].handle)
         end
     end
-    
+
     for i = 1, #spawnedGuards, 1 do
         if DoesEntityExist(spawnedGuards[i]) then
             DeleteEntity(spawnedGuards[i])
@@ -277,7 +277,7 @@ end)
 AddEventHandler('playerDropped', function(reason)
     local src = source
 
-    if isPlayerInJail(src) then 
+    if isPlayerInJail(src) then
         jailedPlayers[src] = nil
         removeFromJobGroup(src, getPlayerJobGroup(src))
     end
@@ -286,7 +286,7 @@ end)
 --- Player Load/Unload event
 
 AddEventHandler('QBCore:Server:OnPlayerUnload', function(src)
-    if isPlayerInJail(src) then 
+    if isPlayerInJail(src) then
         jailedPlayers[src] = nil
         removeFromJobGroup(src, getPlayerJobGroup(src))
     end
@@ -335,7 +335,7 @@ RegisterNetEvent('qb-jail:server:RequestPrisoner', function(playerId)
     local Player = QBCore.Functions.GetPlayer(src)
     local Target = QBCore.Functions.GetPlayer(playerId)
     if not Player or not Target then return end
-    
+
     local request = Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname
     Utils.Notify(playerId, (Locales['notify_visitation_request']):format(request), 'primary', 8000)
 end)
@@ -445,7 +445,7 @@ lib.addCommand('relinquish', {
                     for _, v in pairs(OtherPlayer.PlayerData.metadata['jailitems']) do
                         OtherPlayer.Functions.AddItem(v.name, v.amount, false, v.info)
                     end
-                    
+
                     OtherPlayer.Functions.SetMetaData('jailitems', {})
                 else
                     Utils.Notify(src, Locales['notify_cannot_return'], 'error', 2500)
