@@ -137,6 +137,7 @@ function OpenShop(config, isPedMenu, shopType)
             return
         end
         TriggerEvent("backitems:displayItems", false)
+
         client.startPlayerCustomization(function(appearance)
             if appearance then
                 if not isPedMenu then
@@ -696,7 +697,7 @@ RegisterNetEvent("illenium-appearance:client:deleteOutfit", function(id)
     TriggerServerEvent("illenium-appearance:server:deleteOutfit", id)
     lib.notify({
         title = _L("outfits.delete.success.title"),
-        description = _L("outfits.delete.success.failure"),
+        description = _L("outfits.delete.success.description"),
         type = "success",
         position = Config.NotifyOptions.position
     })
@@ -721,6 +722,7 @@ RegisterNetEvent("illenium-appearance:client:reloadSkin", function(bypassChecks)
         return
     end
     TriggerEvent("backitems:displayItems", false)
+
     reloadSkinTimer = GetGameTimer()
     BackupPlayerStats()
 
