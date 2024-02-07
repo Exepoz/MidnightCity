@@ -32,7 +32,7 @@ p {
 }
 
 .eye-hover {
-  fill: var(--color-default);
+  fill: #331f51;
 }
 
 #options-wrapper {
