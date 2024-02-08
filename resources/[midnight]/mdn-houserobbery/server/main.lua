@@ -274,7 +274,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 		else
 			for i = 1, trunk.slots, 1 do
 				if trunkItems[i] == nil then
-					trunkItems[i] = { name = 'tv', amount = 1, info = '', label = QBCore.Shared.Items['tv'].label, description = QBCore.Shared.Items['tv'].description, weight = QBCore.Shared.Items['tv'].weight, type = QBCore.Shared.Items['tv'].type, unique = QBCore.Shared.Items['tv'].unique, useable = QBCore.Shared.Items['tv'].useable, image = QBCore.Shared.Items['tv'].image, shouldClose = QBCore.Shared.Items['tv'].shouldClose, slot = i, combinable = QBCore.Shared.Items['tv'].combinable}
+					trunkItems[i] = { name = 'tv', amount = 1, info = {}, label = QBCore.Shared.Items['tv'].label, description = QBCore.Shared.Items['tv'].description, weight = QBCore.Shared.Items['tv'].weight, type = QBCore.Shared.Items['tv'].type, unique = QBCore.Shared.Items['tv'].unique, useable = QBCore.Shared.Items['tv'].useable, image = QBCore.Shared.Items['tv'].image, shouldClose = QBCore.Shared.Items['tv'].shouldClose, slot = i, combinable = QBCore.Shared.Items['tv'].combinable}
 					TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['tv'], "add")
 					TriggerClientEvent('QBCore:Notify', src, 'You place the TV in the trunk', 'info')
 					itemStr = "\n\n**Item :** "..QBCore.Shared.Items['tv'].label.."\n**Amount :** "..1
@@ -298,7 +298,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 			else
 				for i = 1, trunk.slots, 1 do
 					if trunkItems[i] == nil then
-						trunkItems[i] = { name = 'telescope', amount = 1, info = '', label = QBCore.Shared.Items['telescope'].label, description = QBCore.Shared.Items['telescope'].description, weight = QBCore.Shared.Items['telescope'].weight, type = QBCore.Shared.Items['telescope'].type, unique = QBCore.Shared.Items['telescope'].unique, useable = QBCore.Shared.Items['telescope'].useable, image = QBCore.Shared.Items['telescope'].image, shouldClose = QBCore.Shared.Items['telescope'].shouldClose, slot = i, combinable = QBCore.Shared.Items['telescope'].combinable}
+						trunkItems[i] = { name = 'telescope', amount = 1, info = {}, label = QBCore.Shared.Items['telescope'].label, description = QBCore.Shared.Items['telescope'].description, weight = QBCore.Shared.Items['telescope'].weight, type = QBCore.Shared.Items['telescope'].type, unique = QBCore.Shared.Items['telescope'].unique, useable = QBCore.Shared.Items['telescope'].useable, image = QBCore.Shared.Items['telescope'].image, shouldClose = QBCore.Shared.Items['telescope'].shouldClose, slot = i, combinable = QBCore.Shared.Items['telescope'].combinable}
 						TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['telescope'], "add")
 						TriggerClientEvent('QBCore:Notify', src, 'You place the telescope in the trunk', 'info')
 						itemStr = "\n\n**Item :** "..QBCore.Shared.Items['telescope'].label.."\n**Amount :** "..1
@@ -332,7 +332,7 @@ RegisterServerEvent('av_houserobbery:item', function(tipo, trunk)
 		else
 			for i = 1, trunk.slots, 1 do
 				if trunkItems[i] == nil then
-					trunkItems[i] = { name = item, amount = 1, info = '', label = QBCore.Shared.Items[item].label, description = QBCore.Shared.Items[item].description, weight = QBCore.Shared.Items[item].weight, type = QBCore.Shared.Items[item].type, unique = QBCore.Shared.Items[item].unique, useable = QBCore.Shared.Items[item].useable, image = QBCore.Shared.Items[item].image, shouldClose = QBCore.Shared.Items[item].shouldClose, slot = i, combinable = QBCore.Shared.Items[item].combinable}
+					trunkItems[i] = { name = item, amount = 1, info = {}, label = QBCore.Shared.Items[item].label, description = QBCore.Shared.Items[item].description, weight = QBCore.Shared.Items[item].weight, type = QBCore.Shared.Items[item].type, unique = QBCore.Shared.Items[item].unique, useable = QBCore.Shared.Items[item].useable, image = QBCore.Shared.Items[item].image, shouldClose = QBCore.Shared.Items[item].shouldClose, slot = i, combinable = QBCore.Shared.Items[item].combinable}
 					TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
 					TriggerClientEvent('QBCore:Notify', src, 'You place the item in the trunk', 'info')
 					itemStr = "\n\n**Item :** "..QBCore.Shared.Items[item].label.."\n**Amount :** "..1
