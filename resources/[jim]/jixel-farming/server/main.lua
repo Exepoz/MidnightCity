@@ -197,8 +197,8 @@ function cookItem(give, item, amount, newsrc, oNeeded, oAmount)
 		else triggerNotify(nil, "You don't seem to have everything to do this...", "error", src) end--dupeWarn(src, item) end -- if not boot the player
 	else
 		local info = {}
-		print(oNeeded, oAmount)
-		if oNeeded > 0 and oAmount >= oNeeded then
+		--print(organicNeeded, organicAmount)
+		if organicNeeded > 0 and organicAmount >= organicNeeded then
 			info = {organic = true, packedItems = Foodpacks[item] and Foodpacks[item].item or nil, qty = Foodpacks[item] and Foodpacks[item].qty or nil}
 		end
 		if player.Functions.AddItem(item, amount or 1, false, info) then
@@ -324,12 +324,12 @@ RegisterNetEvent("jixel-farming:server:SellingDiscordLog", function(info, item, 
         {["name"] = "Sold Item", ["value"] = item, ["inline"] = true},
         {["name"] = "Amount Paid", ["value"] = "$"..pay, ["inline"] = true},
     }
-    sendToDiscord(
-        info.colour,
-		Loc[Config.CoreOptions.Lan].discord["sellingLog"],
-        Loc[Config.CoreOptions.Lan].discord["sold"].." ["..player.PlayerData.citizenid.."] - "..player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname,
-        Loc[Config.CoreOptions.Lan].discord["amount_paid"] ..pay,
-        htmllist,
-        info
-    )
+    -- sendToDiscord(
+    --     info.colour,
+	-- 	Loc[Config.CoreOptions.Lan].discord["sellingLog"],
+    --     Loc[Config.CoreOptions.Lan].discord["sold"].." ["..player.PlayerData.citizenid.."] - "..player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname,
+    --     Loc[Config.CoreOptions.Lan].discord["amount_paid"] ..pay,
+    --     htmllist,
+    --     info
+    -- )
 end)

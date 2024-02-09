@@ -337,7 +337,7 @@ function greasyStop()
 		buffs.greasy = false;
 		UpdateHUD("buff_greasy", buffs.greasy)
 		LocalPlayer.state:set('foodBuff', nil, true)
-		LocalPlayer.state:set('greasyUncuff', nil, true)
+		LocalPlayer.state:set('greasyUncuffed', nil, true)
 	end
 end
 
