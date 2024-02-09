@@ -500,35 +500,44 @@ RegisterNetEvent('police:client:GetKidnappedDragger', function()
 end)
 
 local cuffedTime = 0
+LocalPlayer.state.cuffedData = 0
+print(LocalPlayer.state.greasyUncuffed)
 RegisterNetEvent('police:client:GetCuffed', function(source, position, item)
     local ped = PlayerPedId()
     if not isHandcuffed then
         local success = nil
         if Config.BreakOutCuffing.active then
-
             local cuffedData = LocalPlayer.state.cuffedData or 0
-            if cuffedTime + (30*6000) > GetGameTimer() then
-                LocalPlayer.state.cuffedData = 0 cuffedData = 0
+            if cuffedTime + (30*60000) < GetGameTimer() then
+                LocalPlayer.state.cuffedData = 0
+                cuffedData = 0
+                cuffedTime = 0
             end
             local greasyUncuffed = LocalPlayer.state.greasyUncuffed or 0
             local greasy = LocalPlayer.state.foodBuff == 'greasy'
-
-            if greasy and greasyUncuffed < 3 then
+            if cuffedData == 0 or cuffedTime == 0 then cuffedTime = GetGameTimer() end
+            if greasy and greasyUncuffed < 2 then
                 greasyUncuffed = greasyUncuffed + 1
+                cuffedData += 1
                 LocalPlayer.state.greasyUncuffed = greasyUncuffed
+                LocalPlayer.state.cuffedData = cuffedData
                 QBCore.Functions.Notify('Your greasy hands helped you escape!', 'success')
                 TriggerServerEvent('qb-policejob:server:NotifyOtherPlayer', source, 'The person\'s hands were too greasy!', 'error', 3500)
                 success = true
-            elseif cuffedData < 3 then
-                if cuffedData == 0 then cuffedTime = GetGameTimer() end
-                success = lib.skillCheck({{areasize = greasy and 30 or 25, speedMultiplier = 1.3}}, {'e'})
-                if success == true then TriggerServerEvent('qb-policejob:server:NotifyOtherPlayer', source, Lang:t('error.break_out'), 'error', 3500)
-                else TriggerServerEvent('qb-policejob:server:NotifyOtherPlayer', source, Lang:t('success.cuffed_player'), 'success', 3500) end
+            elseif cuffedData < 4 then
+                local size = greasy and 70 or 30
+                -- success = lib.skillCheck({{areasize = greasy and 0.30 or 0.25, speedMultiplier = 1.3}}, {'e'})
+                success = lib.skillCheck({{areaSize = size, speedMultiplier = 1.3}}, {'w', 'a', 's', 'd'})
+                if success == true then
+                    cuffedData += 1
+                    LocalPlayer.state.cuffedData = cuffedData
+                    TriggerServerEvent('qb-policejob:server:NotifyOtherPlayer', source, Lang:t('error.break_out'), 'error', 3500)
+                else TriggerServerEvent('qb-policejob:server:NotifyOtherPlayer', source, Lang:t('success.cuffed_player'), 'success', 3500)  end
             else
+                TriggerServerEvent('qb-policejob:server:NotifyOtherPlayer', source, Lang:t('success.cuffed_player'), 'success', 3500)
                 QBCore.Functions.Notify('You\'re too tired to try escaping anymore...', 'error')
                 success = false
             end
-
             while success == nil do Wait(10) end
         end
         if Config.BreakOutCuffing.active and success then return end
