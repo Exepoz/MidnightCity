@@ -1,6 +1,10 @@
 Config.Peds = {
     pedConfig = {
         {
+            peds = {'pw_vicente'},
+            gangs = {'admingang'}
+        },
+        {
             peds = {
                 "mp_m_freemode_01",
                 "mp_f_freemode_01",
