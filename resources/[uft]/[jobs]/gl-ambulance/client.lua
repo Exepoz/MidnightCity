@@ -244,7 +244,17 @@ RegisterNetEvent('gl-ambulance:interactBag', function()
                     item = 'sedative'
                 }
             }
-        },})
+        }, {
+            header = 'Splint',
+            txt = 'Repair those broken bones',
+            params = {
+                event = "gl-ambulance:getItem",
+                args = {
+                    item = 'splint'
+                }
+            }
+        },
+    })
     end
 end)
 
