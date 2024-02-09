@@ -420,10 +420,10 @@ Citizen.CreateThread(function()
 				DisableControlAction(0,21,true) -- disable sprint
 				DisableControlAction(0,22,true) -- disable SPACEBAR
 
-				if IsPedInAnyVehicle(playerPed, false) then
-					DisableControlAction(0,71,true) -- disable SPACEBAR
-					DisableControlAction(0,72,true)
-				end
+				-- if IsPedInAnyVehicle(playerPed, false) then
+				-- 	DisableControlAction(0,71,true) -- disable SPACEBAR
+				-- 	DisableControlAction(0,72,true)
+				-- end
 			end
 			if debuffs.gunshot and not debuffs.bleeding and not debuffs.heavybleeding then
 				if not debuffs.pain and not buffs.painkiller then pain() end
