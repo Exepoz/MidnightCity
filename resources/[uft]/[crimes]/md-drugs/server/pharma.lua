@@ -74,7 +74,7 @@ end)
 QBCore.Functions.CreateUseableItem('vicodinbottle', function(source, item)
 local src = source
 local Player = QBCore.Functions.GetPlayer(src)
-local luck = math.random(10,30)
+local luck = 15
 	if Player.Functions.RemoveItem('vicodinbottle', 1) then
 		Player.Functions.AddItem('vicodin', luck)
 		TriggerClientEvent('QBCore:Notify', src,"You got ".. luck .. " Vicodin!", "success")
@@ -85,7 +85,7 @@ end)
 QBCore.Functions.CreateUseableItem('adderalbottle', function(source, item)
 local src = source
 local Player = QBCore.Functions.GetPlayer(src)
-local luck = math.random(10,30)
+local luck = 15
 
 	if Player.Functions.RemoveItem('adderalbottle', 1) then
 		Player.Functions.AddItem('adderal', luck)
@@ -97,7 +97,7 @@ end)
 QBCore.Functions.CreateUseableItem('morphinebottle', function(source, item)
 local src = source
 local Player = QBCore.Functions.GetPlayer(src)
-local luck = math.random(10,30)
+local luck = 15
 
 	if Player.Functions.RemoveItem('morphinebottle', 1) then
 		Player.Functions.AddItem('morphine', luck)
@@ -109,7 +109,7 @@ end)
 QBCore.Functions.CreateUseableItem('xanaxbottle', function(source, item)
 local src = source
 local Player = QBCore.Functions.GetPlayer(src)
-local luck = math.random(10,30)
+local luck = 15
 
 	if Player.Functions.RemoveItem('xanaxbottle', 1) then
 		Player.Functions.AddItem('xanax', luck)
