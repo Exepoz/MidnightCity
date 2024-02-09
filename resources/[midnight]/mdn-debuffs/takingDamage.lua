@@ -278,16 +278,27 @@ local function crashFade()
 			end
 
 			Citizen.Wait(2000)
-			local rand = math.random(10);
+			local rand = math.random(100);
 
-			if rand == 1 then
+			if rand > 98 then -- 2%
 				bone()
-				ApplyPedDamagePack(GetPlayerPed(-1), "Fall", 100, 100);
-			elseif rand == 2 then
 				heavybleeding()
-			elseif rand == 3 then
+				if not buffs.painkiller then pain(20000) end
+				ApplyPedDamagePack(GetPlayerPed(-1), "Fall", 100, 100);
+			elseif rand > 94 then -- 4 %
+				bone()
 				bleeding()
-			elseif not buffs.painkiller then
+				if not buffs.painkiller then pain(17000) end
+			elseif rand > 89 then -- 5%
+				bone()
+				if not buffs.painkiller then pain(15000) end
+			elseif rand > 85 then -- 4%
+				heavybleeding()
+				if not buffs.painkiller then pain(5000) end
+			elseif rand > 78 then -- 7%
+				bleeding()
+				if not buffs.painkiller then pain(3000) end
+			elseif rand > 30 and not buffs.painkiller then -- 50%
 				pain(3000)
 			end
 

@@ -1,3 +1,5 @@
+local blStack = 0
+
 buffs = {
 	godmode = false,
 	painkiller = false,
@@ -461,13 +463,16 @@ Citizen.CreateThread(function()
 		if not IsEntityDead(playerPed) then
 			-- bleeding, bone
 			if debuffs.bleeding then
+				blStack = blStack + 1
 				SetDecal(1010, GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 0.0, -1.0), 0.5)
-				SetEntityHealth(playerPed,  GetEntityHealth(playerPed) - 1)
+				if blStack >= 6 then SetEntityHealth(playerPed,  GetEntityHealth(playerPed) - 1) blStack = 0 end
 			elseif debuffs.heavybleeding then
+				blStack = blStack + 1
 				SetDecal(1010, GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 0.0, -1.0), 1.0)
-				SetEntityHealth(playerPed,  GetEntityHealth(playerPed) - 3)
+				if blStack >= 3 then SetEntityHealth(playerPed,  GetEntityHealth(playerPed) - 1) blStack = 0 end
+			else
+				blStack = 0
 			end
-
 			-- Cold, Hot
 			if debuffs.hot then
 				-- example

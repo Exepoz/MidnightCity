@@ -162,11 +162,17 @@ RegisterNetEvent('qb-bossmenu:client:ManageEmployee', function(data)
     local EmployeeMenu = {
         {
             header = Lang:t("body.mngpl").. data.player.name .. " - " .. string.upper(PlayerJob.label),
+            txt = "Current Grade : "..PlayerJob.grade.name,
             isMenuHeader = true,
             icon = "fa-solid fa-circle-info"
         },
     }
+
+    local grades = {}
     for k, v in pairs(QBCore.Shared.Jobs[data.work.name].grades) do
+        grades[tonumber(k)] = v
+    end
+    for k, v in ipairs(grades) do
         EmployeeMenu[#EmployeeMenu + 1] = {
             header = v.name,
             txt =  Lang:t("body.grade") .. k,

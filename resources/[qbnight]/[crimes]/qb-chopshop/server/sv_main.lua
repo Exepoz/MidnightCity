@@ -6,21 +6,21 @@ local Rewards = {
         [2] = {item = "goldchain",                  amt = {min = 1, max = 3}, probability = 1/5},
         [3] = {item = "samsungphone",               amt = {min = 1, max = 3}, probability = 1/5},
         [4] = {item = "iphone",                     amt = {min = 1, max = 3}, probability = 1/5},
-        [5] = {item = "skunk_joint",                 amt = {min = 1, max = 3}, probability = 1/5},
+        -- [5] = {item = "skunk_joint",                 amt = {min = 1, max = 3}, probability = 1/5},
 
-        [6] = {item = "weapon_knife",               amt = {min = 1, max = 1}, probability = 1/10},
-        [7] = {item = "weapon_knuckle",             amt = {min = 1, max = 1}, probability = 1/15},
-        [8] = {item = "weapon_pistol",               amt = {min = 1, max = 1}, probability = 1/50},
-        [9] = {item = "weapon_heavypistol",                  amt = {min = 1, max = 1}, probability = 1/60},
+        [5] = {item = "weapon_knife",               amt = {min = 1, max = 1}, probability = 1/10},
+        [6] = {item = "weapon_knuckle",             amt = {min = 1, max = 1}, probability = 1/15},
+        [7] = {item = "weapon_pistol",               amt = {min = 1, max = 1}, probability = 1/50},
+        [8] = {item = "weapon_heavypistol",                  amt = {min = 1, max = 1}, probability = 1/60},
 
-        [10] = {item = "phone",              amt = {min = 1, max = 1}, probability = 1/7},
-        [11] = {item = "malmo_skunk_seed",          amt = {min = 3, max = 5}, probability = 1/10},
-        [12] = {item = "tint_supplies",             amt = {min = 1, max = 1}, probability = 1/20},
-        [13] = {item = "joint",         amt = {min = 1, max = 1}, probability = 1/15},
-        [14] = {item = "burnerphone_loot",          amt = {min = 1, max = 1}, probability = 1/15},
-        [15] = {item = "burnerphone_wep",           amt = {min = 1, max = 1}, probability = 1/15},
-        [16] = {item = "burnerphone_mat",           amt = {min = 1, max = 1}, probability = 1/15},
-        [17] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
+        [9] = {item = "phone",                     amt = {min = 1, max = 1}, probability = 1/7},
+        -- [11] = {item = "malmo_skunk_seed",          amt = {min = 3, max = 5}, probability = 1/10},
+        [10] = {item = "tint_supplies",             amt = {min = 1, max = 1}, probability = 1/20},
+        [11] = {item = "joint",                     amt = {min = 1, max = 1}, probability = 1/15},
+        -- [14] = {item = "burnerphone_loot",          amt = {min = 1, max = 1}, probability = 1/15},
+        -- [15] = {item = "burnerphone_wep",           amt = {min = 1, max = 1}, probability = 1/15},
+        -- [16] = {item = "burnerphone_mat",           amt = {min = 1, max = 1}, probability = 1/15},
+        [12] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
     },
     ['hood'] = {
         [1] = {item = "iron",                    amt = {min = 10, max = 16}, probability = 1/20},
@@ -28,14 +28,14 @@ local Rewards = {
         --[2] = {item = "turbo",                      amt = {min = 1, max = 1}, probability = 1/20},
         --[3] = {item = "modified_turbo",             amt = {min = 1, max = 1}, probability = 1/500},
 
-        [4] = {item = "steel",              amt = {min = 10, max = 18}, probability = 1/20},
+        [2] = {item = "steel",              amt = {min = 10, max = 18}, probability = 1/20},
 
-        [5] = {item = "headlights",                amt = {min = 1, max = 1}, probability = 1/20},
-        [6] = {item = "hood",                      amt = {min = 1, max = 1}, probability = 1/20},
-        [7] = {item = "externals",                 amt = {min = 1, max = 1}, probability = 1/20},
-        [8] = {item = "bumper",                    amt = {min = 1, max = 1}, probability = 1/20},
-        [9] = {item = "crack_baggy",                    amt = {min = 1, max = 1}, probability = 1/25},
-        [10] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
+        [3] = {item = "headlights",                amt = {min = 1, max = 1}, probability = 1/20},
+        [4] = {item = "hood",                      amt = {min = 1, max = 1}, probability = 1/20},
+        [5] = {item = "externals",                 amt = {min = 1, max = 1}, probability = 1/20},
+        [6] = {item = "bumper",                    amt = {min = 1, max = 1}, probability = 1/20},
+        [7] = {item = "crack_baggy",                    amt = {min = 1, max = 1}, probability = 1/25},
+        [8] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
 
     },
     ['wheel'] = {
@@ -45,7 +45,7 @@ local Rewards = {
         [4] = {item = "car_armor",                  amt = {min = 1, max = 1}, probability = 1/5},
 
         --[5] = {item = "pd_adpt_tracker",           amt = {min = 1, max = 1}, probability = 1/20},
-        [6] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
+        [5] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
     },
     ['trunk'] = {
         [1] = {item = "bumper",                     amt = {min = 1, max = 1}, probability = 1/20},
@@ -62,9 +62,9 @@ local Rewards = {
         [11] = {item = "gold_watch",                amt = {min = 2, max = 3}, probability = 1/5},
 
         [12] = {item = "cokebaggy",               amt = {min = 2, max = 3}, probability = 1/5},
-        [13] = {item = "dongle",                    amt = {min = 2, max = 3}, probability = 1/15},
-        [14] = {item = "crack_baggy",                       amt = {min = 1, max = 1}, probability = 1/25},
-        [15] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
+        -- [13] = {item = "dongle",                    amt = {min = 2, max = 3}, probability = 1/15},
+        [13] = {item = "crack_baggy",                       amt = {min = 1, max = 1}, probability = 1/25},
+        [14] = {item = "nothing",                   amt = {min = 1, max = 1}, probability = 1/10},
     },
 }
 

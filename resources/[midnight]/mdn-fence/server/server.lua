@@ -176,7 +176,6 @@ end)
 QBCore.Functions.CreateUseableItem("fencepackage", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
     local itemInfo = Player.PlayerData.items[item.slot].info
-    QBCore.Debug(itemInfo)
     if itemInfo.qty > 0 then
         local oItem = itemInfo.ordereditem
         itemInfo.qty = itemInfo.qty - 1

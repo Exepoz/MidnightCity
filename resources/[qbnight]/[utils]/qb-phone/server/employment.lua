@@ -217,7 +217,7 @@ end)
 
 ---- ** Handles the changing of someone grade within the job ** ----
 
-RegisterNetEvent('qb-phone:server:gradesHandler', function(Job, CID, grade, serversource)
+RegisterNetEvent('qb-phone:server:gradesHandler', function(Job, CID, grade, serversource, qbcommand)
     print('changeing grade', Job, CID, grade, serversource)
     local src = serversource or source
     local srcPlayer = QBCore.Functions.GetPlayer(src)
@@ -228,15 +228,16 @@ RegisterNetEvent('qb-phone:server:gradesHandler', function(Job, CID, grade, serv
 
     if not Job or not CID or not CachedJobs[Job] then return end
     local Player = QBCore.Functions.GetPlayerByCitizenId(CID)
-    if not CachedJobs[Job].employees[CID] then return notifyPlayer(src, "Citizen is not employed at the job...") end
+    if not CachedJobs[Job].employees[CID] then return src ~= 0 and notifyPlayer(src, "Citizen is not employed at the job...") or print("Citizen is not employed at the job...") end
 
-    if not CachedJobs[Job].employees[srcCID] then return  end
+    if src ~= 0 and not qbcommand then
+        if not CachedJobs[Job].employees[srcCID] then return end
 
-    if tonumber(grade) > tonumber(CachedJobs[Job].employees[srcCID].grade) then return notifyPlayer(src, "You cannot promote someone higher than you...") end
+        if tonumber(grade) > tonumber(CachedJobs[Job].employees[srcCID].grade) then return notifyPlayer(src, "You cannot promote someone higher than you...") end
 
-    local bossGrade = tostring(CachedJobs[Job].employees[srcCID].grade)
-    if not QBCore.Shared.Jobs[Job].grades[bossGrade].isboss then return notifyPlayer(src, "You arent a manager // boss...") end
-
+        local bossGrade = tostring(CachedJobs[Job].employees[srcCID].grade)
+        if not QBCore.Shared.Jobs[Job].grades[bossGrade].isboss then return notifyPlayer(src, "You arent a manager // boss...") end
+    end
     CachedJobs[Job].employees[CID].grade = tonumber(grade)
 
     MySQL.update('UPDATE player_jobs SET employees = ? WHERE jobname = ?',{json.encode(CachedJobs[Job].employees), Job})
@@ -252,6 +253,8 @@ RegisterNetEvent('qb-phone:server:gradesHandler', function(Job, CID, grade, serv
         TriggerClientEvent('qb-phone:client:MyJobsHandler', Player.PlayerData.source, Job, CachedPlayers[CID][Job], CachedJobs[Job].employees)
     end
 end)
+
+
 
 
 RegisterNetEvent('qb-phone:server:clockOnDuty', function(Job)

@@ -74,7 +74,7 @@ function Queue:IsSteamRunning(src)
             return true
         end
     end
-    
+
     return false
 end
 
@@ -315,7 +315,7 @@ function Queue:AddToConnecting(ids, ignorePos, autoRemove, done)
     local connList = Queue:GetConnectingList()
 
     if Queue:ConnectingSize() + Queue:GetPlayerCount() + 1 > Queue.MaxPlayers then remove() return false end
-    
+
     if ids[1] == "debug" then
         table_insert(connList, {source = ids[1], ids = ids, name = ids[1], firstconnect = ids[1], priority = ids[1], timeout = 0})
         return true
@@ -370,11 +370,11 @@ function Queue:AddPriority(id, power, temp)
         local tempPower, tempEnd, tempId = Queue:HasTempPriority({id})
         id = tempId or id
 
-        Queue:GetTempPriorityList()[string_lower(id)] = {power = power, endTime = os_time() + temp} 
+        Queue:GetTempPriorityList()[string_lower(id)] = {power = power, endTime = os_time() + temp}
     else
         Queue:GetPriorityList()[string_lower(id)] = power
     end
-    
+
     return true
 end
 
@@ -449,7 +449,24 @@ local function playerConnect(name, setKickReason, deferrals)
     local connecting = true
 
     deferrals.defer()
-	
+    deferrals.update('Waiting for password...')
+    local passwordCorrect = false
+    repeat
+        Wait(1000)
+        local passwordEntered = GlobalState.passwordEntered
+        if passwordEntered[src] then passwordCorrect = true end
+        --print("Waiting for password")
+    until not DoesPlayerExist(src) or passwordCorrect
+    if not DoesPlayerExist(src) then return end
+    -- while true do
+    --     print("Waiting for password")
+    --     if Player(src).state.passwordCorrect then break end
+    --     if not NetworkIsPlayerConnected(src) then print("Player Left") return end
+    --     Wait(10)
+    -- end
+
+
+
 	if Config.AntiSpam then
 		for i=Config.AntiSpamTimer,0,-1 do
 			deferrals.update(string.format(Config.PleaseWait, i))
@@ -525,7 +542,7 @@ local function playerConnect(name, setKickReason, deferrals)
         end
 
         allow = true
-    end) 
+    end)
 
     while allow == nil do Citizen.Wait(0) end
     if not allow then return end
@@ -539,7 +556,6 @@ local function playerConnect(name, setKickReason, deferrals)
 
         if Queue:NotFull() then
             -- let them in the server
-
             if not Queue:IsInQueue(ids) then
                 Queue:AddToQueue(ids, connectTime, name, src, deferrals)
             end
@@ -568,7 +584,7 @@ local function playerConnect(name, setKickReason, deferrals)
     end
 
     local pos, data = Queue:IsInQueue(ids, true)
-    
+
     if not pos or not data then
         done(Config.Language.err .. " [1]")
 
@@ -589,7 +605,7 @@ local function playerConnect(name, setKickReason, deferrals)
 
         return
     end
-    
+
     update(string_format(Config.Language.pos .. ((Queue:TempSize() and Config.ShowTemp) and " (" .. Queue:TempSize() .. " temp)" or "00:00:00"), pos, Queue:GetSize(), ""))
 
     if rejoined then return end
@@ -671,16 +687,16 @@ Citizen.CreateThread(function()
 
     while true do
         Citizen.Wait(1000)
-    
+
         local i = 1
-    
+
         while i <= Queue:ConnectingSize() do
             local data = Queue:GetConnectingList()[i]
-    
+
             local endPoint = GetPlayerEndpoint(data.source)
-    
+
             data.timeout = data.timeout + 1
-    
+
             if ((data.timeout >= 300 and not endPoint) or data.timeout >= Config.ConnectTimeOut) and data.source ~= "debug" and os_time() - data.firstconnect > 5 then
                 remove(data)
                 Queue:DebugPrint(data.name .. "[" .. data.ids[1] .. "] was removed from the connecting queue because they timed out")
@@ -694,7 +710,7 @@ Citizen.CreateThread(function()
                 Queue:GetTempPriorityList()[id] = nil
             end
         end
-    
+
         Queue.MaxPlayers = GetConvarInt("sv_maxclients", 30)
         Queue.Debug = GetConvar("sv_debugqueue", "true") == "true" and true or false
         Queue.DisplayQueue = GetConvar("sv_displayqueue", "true") == "true" and true or false
@@ -740,7 +756,7 @@ end)
 
 AddEventHandler("onResourceStop", function(resource)
     if Queue.DisplayQueue and Queue.InitHostName and resource == GetCurrentResourceName() then SetConvar("sv_hostname", Queue.InitHostName) end
-    
+
     for k, data in ipairs(_Queue.JoinCbs) do
         if data.resource == resource then
             table_remove(_Queue.JoinCbs, k)
@@ -754,7 +770,7 @@ if Config.DisableHardCap then
     AddEventHandler("onResourceStarting", function(resource)
         if resource == "hardcap" then CancelEvent() return end
     end)
-    
+
     StopResource("hardcap")
 end
 

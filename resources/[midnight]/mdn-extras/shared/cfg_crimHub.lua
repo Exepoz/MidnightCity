@@ -23,15 +23,16 @@ Config.HeistEquip = {
     {item = 'cutter', i_cost = 5000, bp_cost = 20700},
     {item = 'thermite', i_cost = 5000, bp_cost = 18600},
     {item = 'camera_looper', i_cost = 5000, bp_cost = 18500},
+    {item = 'weapon_bzgas', i_cost = 5000, bp_cost = 18500},
 }
 
 Config.CrimHub = {
     BHExchangeRate = 1000, -- Crumbs received for every Bounty Points Redeemed
     CurrencyExchange = {
         ['cash'] = {
-            rec = 1000, -- Amount of cash received
+            rec = 100, -- Amount of cash received
             ['crumbs'] = 500, -- Amount of crumbs to receive `rec`
-            ['scoins'] = 25 -- Amount of sCoins to receive `rec`
+            ['scoins'] = 2.5 -- Amount of sCoins to receive `rec`
         },
         ['crumbs'] = {
             rec = 50, -- Amount of crumbs received
@@ -70,6 +71,7 @@ Config.CrimHub = {
                 {item = 'cutter', cost = 6000},
                 {item = 'thermite', cost = 1000},
                 {item = 'camera_looper', cost = 2000},
+                {item = 'weapon_bzgas', cost = 2000},
             }
         },
         ['heist_equip_bp'] = {

@@ -228,6 +228,9 @@ QBCore.Commands.Add('setjob', 'Set A Players Job (Admin Only)', { { name = 'id',
         if jobInfo then
             if jobInfo["grades"][sgrade] then
                 Player.Functions.SetJob(job, grade)
+                if Player.PlayerData.job.name == job then
+                    TriggerEvent('qb-phone:server:gradesHandler', job, Player.PlayerData.citizenid, sgrade, source, true)
+                end
                 exports['qb-phone']:hireUser(job, Player.PlayerData.citizenid, grade)
             else
                 TriggerClientEvent('QBCore:Notify', source, "Not a valid grade", 'error')

@@ -32,8 +32,8 @@ KloudDev.Locations = {
             reward = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
-                min = 100,
-                max = 150
+                min = 150,
+                max = 250
                 -- Players receive pay tickets
             }
         },
@@ -104,8 +104,8 @@ KloudDev.Locations = {
             reward = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
-                min = 100,
-                max = 150
+                min = 150,
+                max = 250
                 -- Players receive pay tickets
             }
         },
@@ -176,8 +176,8 @@ KloudDev.Locations = {
             reward = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
-                min = 100,
-                max = 150
+                min = 150,
+                max = 250
                 -- Players receive pay tickets
             }
         },
@@ -248,8 +248,8 @@ KloudDev.Locations = {
             reward = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
-                min = 100,
-                max = 150
+                min = 150,
+                max = 250
                 -- Players receive pay tickets
             }
         },
@@ -320,8 +320,8 @@ KloudDev.Locations = {
             reward = {
                 enabled = true,
                 type = "cash", -- not used, sent to job's account (still the money amount below)
-                min = 100,
-                max = 150
+                min = 150,
+                max = 250
                 -- Players receive pay tickets
             }
         },
@@ -381,8 +381,8 @@ KloudDev.Locations = {
             },
             reward = {
                 enabled = true,
-                min = 35,
-                max = 55
+                min = 50,
+                max = 80
                 -- Real reward = `this - deposit.amount`
             }
         },

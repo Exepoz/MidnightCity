@@ -3,7 +3,7 @@ Config = {}
 -- General Settings
 Config.OxyRunDebug = false -- Change to true to enable PolyZone DebugPoly's for testing.
 
-Config.MinimumPolice = 3 -- Minimum Police Required to start a Run..
+Config.MinimumPolice = 0 -- Minimum Police Required to start a Run..
 Config.RunCost = 500 -- How much it will cost to start the run..
 Config.SendEmail = false -- The E-Mail received upon taking on a job (reference Config.Phone in sd_lib/sh_config.lua and the util function SendEmail in sd_lib/client/cl_utils.lua) if false, a notification will play instead
 
@@ -80,7 +80,7 @@ Config.MoneyWashing = {
 -- Example Scenario: With 1000 'ItemName' units, the script checks for a minimum of 500 ('MinAmount').
 -- If met, a random quantity between 'MinAmount' and the lower of your quantity or 'MaxAmount' is selected for laundering.
 
--- Level Settings 
+-- Level Settings
 -- 'Robbery': Enables a minigame with a failure penalty (no oxy from package). The amount of entries in 'Difficulty' determines the number of skill checks.
 -- 'Delay' sets the time before the minigame starts (milliseconds). Requires ox_lib for the skillcheck minigame.
 -- 'Washing': 'markedbills' max and min payouts will only be applied if the 'markedbills' don't have a 'worth' as metadata. (In a players inventory for example 1 'markedbills' could equal $5000)
@@ -149,7 +149,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 12.72 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -161,7 +161,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 216.91 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -173,7 +173,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 319.39 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -185,7 +185,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 230.89 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -207,7 +207,7 @@ Config.Routes = {
                 { pos = vector3(-1603.57, 163.06, 59.49), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-1661.02, 89.28, 63.91), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- University 3
                 occupied = false,
@@ -219,10 +219,10 @@ Config.Routes = {
                 { pos = vector3(-1740.53, 250.09, 65.23), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-1616.84, 297.69, 58.74), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
     },
     [2] = { -- Level 2
-        { 
+        {
             info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
@@ -235,7 +235,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 115.98 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -247,7 +247,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 21.37 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -259,7 +259,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 353.19 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -267,11 +267,11 @@ Config.Routes = {
             locations = {
                 { pos = vector3(1058.02, 2676.97, 38.68), stop = false }, -- SPAWN POINT
                 { pos = vector3(1137.97, 2679.15, 37.7), stop = true }, -- WAIT FOR DELIVER
-                { pos = vector3(1188.94, 2679.3, 37.22), stop = false }, -- DESPAWN POINT 
+                { pos = vector3(1188.94, 2679.3, 37.22), stop = false }, -- DESPAWN POINT
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 31.3 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -281,7 +281,7 @@ Config.Routes = {
                 { pos = vector3(1961.1, 3853.16, 31.39), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(2000.25, 3823.83, 32.27), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- Paleto ParkingLot
                 occupied = false,
@@ -293,7 +293,7 @@ Config.Routes = {
                 { pos = vector3(-284.75, 6055.43, 31.51), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-399.18, 6031.27, 31.42), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- Kortz center
                 occupied = false,
@@ -305,7 +305,7 @@ Config.Routes = {
                 { pos = vector3(-2306.26, 378.11, 174.47), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-2269.93, 549.64, 171.97), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- City LOST
                 occupied = false,
@@ -317,10 +317,10 @@ Config.Routes = {
                 { pos = vector3(957.21, -145.89, 74.34), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(888.02, -80.81, 78.76), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
     },
     [3] = { -- Level 3
-        { 
+        {
             info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
@@ -333,7 +333,7 @@ Config.Routes = {
             }
         },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 214.17 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -343,9 +343,9 @@ Config.Routes = {
                 { pos = vector3(2564.95, 2633.94, 37.3), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(2597.8, 2536.67, 30.64), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 200.91 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -355,9 +355,9 @@ Config.Routes = {
                 { pos = vector3(1251.51, -1598.78, 52.31), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(1154.46, -1700.67, 34.91), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
-            info = { 
+            info = {
                 occupied = false,
                 hash = "", -- DON'T TOUCH
                 startHeading = 34.45 -- HEADING OF CAR WHEN IT SPAWNS IN
@@ -367,7 +367,7 @@ Config.Routes = {
                 { pos = vector3(-1190.09, -1369.01, 4.01), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-1131.28, -1337.85, 4.53), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- Vinewood Bowl
                 occupied = false,
@@ -379,7 +379,7 @@ Config.Routes = {
                 { pos = vector3(709.75, 661.28, 128.91), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(655.52, 667.96, 128.91), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- Balla Gang 2
                 occupied = false,
@@ -391,7 +391,7 @@ Config.Routes = {
                 { pos = vector3(45.15, -1819.64, 24.46), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-14.15, -1789.68, 27.86), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- GlobeOil
                 occupied = false,
@@ -403,7 +403,7 @@ Config.Routes = {
                 { pos = vector3(1867.26, 6408.16, 46.54), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(1775.73, 6402.06, 36.38), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
         {
             info = {  -- University
                 occupied = false,
@@ -415,7 +415,7 @@ Config.Routes = {
                 { pos = vector3(-1680.06, 62.25, 63.98), stop = true }, -- WAIT FOR DELIVER
                 { pos = vector3(-1743.3, 59.6, 67.91), stop = false }, -- DESPAWN POINT
             }
-        }, 
+        },
     },
 }
 
