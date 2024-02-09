@@ -33,7 +33,7 @@ local function EnsurePedModel(pedModel)
     end
 end
 
-local function CreatePedAtCoords(pedModel, coords, isNetworked)
+local function CreatePedAtCoords(pedModel, coords, isNetworked, scenario)
     if type(pedModel) == "string" then
         pedModel = GetHashKey(pedModel)
     end
@@ -44,6 +44,7 @@ local function CreatePedAtCoords(pedModel, coords, isNetworked)
     SetEntityInvincible(ped, true)
     PlaceObjectOnGroundProperly(ped)
     SetBlockingOfNonTemporaryEvents(ped, true)
+    if scenario then TaskStartScenarioInPlace(ped, scenario, -1, true) end
     return ped
 end
 
@@ -135,7 +136,7 @@ function SetupVendor(data)
         label = data.menuLabel,
         icon = data.icon,
         onSelect = function()
-            Midnight.Functions.IsBlackListed():next(function(isBL)
+            Midnight.Functions.IsBlacklisted():next(function(isBL)
                 if isBL then QBCore.Functions.Notify('I don\'t know you, get out! Now!', 'error') return end
                 local pData = QBCore.Functions.GetPlayerData()
                 setupShops(data.categories, data.shopId)
@@ -171,7 +172,7 @@ end
 
 RegisterNetEvent('crimHub:client:SetupQuartermaster', function()
     if QM then return end
-    QM = CreatePedAtCoords('s_m_y_blackops_01', vector4(-603.12, -1601.40, 27.01, 230.82), false)
+    QM = CreatePedAtCoords('s_m_y_blackops_01', vector4(-625.83, -1622.71, 29.04, 262.05), false, 'WORLD_HUMAN_LEANING')
     exports.ox_target:addLocalEntity(QM, {
         label = 'Talk to the Quartermaster',
         icon = 'fas fa-comments',
@@ -181,62 +182,68 @@ end)
 
 RegisterNetEvent('crimHub:client:removeQuartermaster', function() if DoesEntityExist(QM) then DeleteEntity(QM) QM = nil end end)
 
+local explanationScript = function(skip)
+    local alert = lib.alertDialog({
+        header = 'A new hunter eh?',
+        cancel = true,
+        content = 'Hey you, are you interested in becoming a bounty hunter?\n\n\n'..
+        "There's a couple of rules I need to inform you about before letting you lose in these streets...\n\n"
+        .."We follow a strict code when it comes to hunting, first and foremost, we **ONLY** hunt at night.\n\n"
+        .."When you are hunting, you can only kill your prey or other hunters, nobody else. Unless you've bought some _Marks of Grace_, **innocent people are off the grid** for you. "
+        .."For sure, you can press anyone and rob whoever you'd like, but **DO NOT** spill their blood unless you've got some _Marks of Grace_\n\n"
+        .."Anyone is protected inside **Safe Havens**, these are marked with _green lights_ at their entrance. Again, do **NOT** spill any blood inside Safe Havens.\n\n"
+        .."Not following these simple rules will blacklist you from any Golden Trail services. You will be marked as a _Bloody Prey_ and be in constant danger according to the rules of the hunt.\n\n\n"
+        .."More info on the next page... **Are you aware of these rules?**"
+    }) if alert ~= 'confirm' then return end
+
+    alert = lib.alertDialog({
+        header = 'How to hunt.',
+        cancel = true,
+        content = 'If you become a hunter, you will be given a **Blood Dongle**.\n\n'
+        .."While carrying it, you will able to open the hunting services by pressing the Sun/Moon icon at the top right of your phone.\n\n"
+        .."At night, you may start hunting. You will be given a random prey between anyone who is outside of a Safe Haven\n\n"
+        .."You may switch prey every 30 seconds if you are not happy with the current prey's location.\n\n"
+        .."Every minute, the location of your prey will get more precise until it becomes an exact coordinate marker.\n\n"
+        .."When close to someone, you may Identify them to find out if they are your prey or not.\n\n"
+        .."Once you are certain of who your prey is, you may kill them and reap their bounty.\n\n"
+        .."The bounty remains unclaimed until the morning, where I will be able to confirm your kills and bank your points.\n\n"
+        .."You may only stop hunting while being inside of a Safe Haven.\n\n\n"
+        .."Do you understand these instructions?"
+    }) if alert ~= 'confirm' then return end
+
+    alert = lib.alertDialog({
+        header = 'The Risks.',
+        cancel = true,
+        content = '**Do NOT kill the wrong prey.**\n\n'
+        .."Unles you've got some _Marks Of Grace_, of which I can sell you here, killing innocent people will result in you becoming a Bloody Prey.\n\n"
+        .."You may have a maximum of 6 _Marks Of Grace_ at a time, those grant you immunity from killing an innocent. "
+        .."Marks **DO NOT** protect you from killing someone inside of a Safe Haven.\n\n"
+        .."You may kill other hunters during the night to steal their unclaimed points. Others can do the same to you.\n\n"
+        .."Becoming a bloody prey will lower your total score and your point bank by half & wipe your unclaimed points.\n\n"
+        .."Becoming a bloody prey also blacklists you from any Golden Trail Services for a period of 48h, regardless of if your bounty is claimed or not.\n\n"
+        .."Any hunters can select bloody preys as their targets. The Prey's location is instantly & precisely given.\n\n"
+        .."Bloody Preys have a crumbs bounty bonus attached to them.\n\n\n"
+        .."Do you understand these risks?"
+    }) if alert ~= 'confirm' then return end
+    if not skip then TriggerServerEvent('nighttime:server:giveHuntDongle')
+    else TriggerEvent('crimHub:client:talkToQuartermaster') end
+end
+
 RegisterNetEvent('crimHub:client:talkToQuartermaster', function()
     local isNight = Midnight.Functions.IsNightTime()
     QBCore.Functions.TriggerCallback('nighttime:fetchUserData', function(data)
         if not data then
-            local alert = lib.alertDialog({
-                header = 'A new hunter eh?',
-                cancel = true,
-                content = 'Hey you, are you interested in becoming a bounty hunter?\n\n\n'..
-                "There's a couple of rules I need to inform you about before letting you lose in these streets...\n\n"
-                .."We follow a strict code when it comes to hunting, first and foremost, we **ONLY** hunt at night.\n\n"
-                .."When you are hunting, you can only kill your prey or other hunters, nobody else. Unless you've bought some _Marks of Grace_, **innocent people are off the grid** for you. "
-                .."For sure, you can press anyone and rob whoever you'd like, but **DO NOT** spill their blood unless you've got some _Marks of Grace_\n\n"
-                .."Anyone is protected inside **Safe Havens**, these are marked with _green lights_ at their entrance. Again, do **NOT** spill any blood inside Safe Havens.\n\n"
-                .."Not following these simple rules will blacklist you from any Golden Trail services. You will be marked as a _Bloody Prey_ and be in constant danger according to the rules of the hunt.\n\n\n"
-                .."More info on the next page... **Are you aware of these rules?**"
-            }) if alert ~= 'confirm' then return end
-
-            alert = lib.alertDialog({
-                header = 'How to hunt.',
-                cancel = true,
-                content = 'If you become a hunter, you will be given a **Blood Dongle**.\n\n'
-                .."While carrying it, you will able to open the hunting services by pressing the Sun/Moon icon at the top right of your phone.\n\n"
-                .."At night, you may start hunting. You will be given a random prey between anyone who is outside of a Safe Haven\n\n"
-                .."You may switch prey every 30 seconds if you are not happy with the current prey's location.\n\n"
-                .."Every minute, the location of your prey will get more precise until it becomes an exact coordinate marker.\n\n"
-                .."When close to someone, you may Identify them to find out if they are your prey or not.\n\n"
-                .."Once you are certain of who your prey is, you may kill them and reap their bounty.\n\n"
-                .."The bounty remains unclaimed until the morning, where I will be able to confirm your kills and bank your points.\n\n"
-                .."You may only stop hunting while being inside of a Safe Haven.\n\n\n"
-                .."Do you understand these instructions?"
-            }) if alert ~= 'confirm' then return end
-
-            alert = lib.alertDialog({
-                header = 'The Risks.',
-                cancel = true,
-                content = '**Do NOT kill the wrong prey.**\n\n'
-                .."Unles you've got some _Marks Of Grace_, of which I can sell you here, killing innocent people will result in you becoming a Bloody Prey.\n\n"
-                .."You may have a maximum of 6 _Marks Of Grace_ at a time, those grant you immunity from killing an innocent. "
-                .."Marks **DO NOT** protect you from killing someone inside of a Safe Haven.\n\n"
-                .."You may kill other hunters during the night to steal their unclaim points. Others can do the same to you.\n\n"
-                .."Becoming a bloody prey will lower your total score and your poiny bank by half & wipe your unclaim points.\n\n"
-                .."Becoming a bloody prey also blacklist you from any Golden Trail Services for a period of 48h, regardless of if your bounty is claimed or not.\n\n"
-                .."Any hunters can select bloody preys as their targets. The Prey's location is instantly & precisely given.\n\n"
-                .."Bloody Preys have a crumbs bounty bonus attached to them.\n\n\n"
-                .."Do you understand these risks?"
-            }) if alert ~= 'confirm' then return end
-            TriggerServerEvent('nighttime:server:giveHuntDongle')
+            explanationScript()
         else
             local pData = QBCore.Functions.GetPlayerData()
             local options = {}
 
-            options[#options+1] = {title = 'Claimed any new bounties, **'..data.nickname.."**?", readOnly = true, description = data.blacklisted and "~ !! BLACKLISTED !! ~" or "Bounty Points : "..data.points.." | Unclaimed : "..data.unclaimed.." | Banked : "..data.bank}
-            options[#options+1] = {title = 'Claim Bounties', disabled = isNight, description = isNight and 'You can only claim during the day' or 'Confirm any unclaimed points and bank them.', serverEvent = 'nighttime:server:bankPoints', args = data}
-            options[#options+1] = {title = 'Buy Marks of Grace', disabled = data.bank < 3, description = 'Current : '..data.grace..'\nMake sure you\'ve got a couple if you\'re a messy hunter.', onSelect = buyGraceMenu, args = data}
+            options[#options+1] = {title = 'Claimed any new bounties, **'..data.nickname.."**?", readOnly = true, description = data.blacklisted and "~ !! BLACKLISTED !! ~" or "Bounty Points : "..data.points.." | Unclaimed : "..data.unclaimed.." | Banked : "..data.bank.."\n_Blood Bounty : "..data.bloodBounty.." crumbs_".."\n_Marks of Grace : "..data.grace.."_"}
+            options[#options+1] = {title = 'Claim Bounties', disabled = isNight, description = isNight and 'You can only claim during the day' or 'Confirm any unclaimed points and bank them. Also claims blood bounties.', serverEvent = 'nighttime:server:bankPoints', args = data}
+            options[#options+1] = {title = 'Buy Marks of Grace', disabled = data.bank < 3, description = 'Make sure you\'ve got a couple if you\'re a messy hunter.', onSelect = buyGraceMenu, args = data}
             options[#options+1] = {title = 'Get Crumbs', disabled = data.bank <= 0, description = 'Current Exchange Rate :\n1 Banked point = '..Config.CrimHub.BHExchangeRate..' Gold Crumbs', onSelect = buyCrumbsMenu, args = data}
             options[#options+1] = {title = 'Get new Blood Dongle', description = 'Lost your dongle? I\'ve got some to spare...', serverEvent = 'nighttime:server:giveHuntDongle'}
+            options[#options+1] = {title = 'Get Explanations Again', description = 'In case you need a run down of how everything works again...', onSelect = function() explanationScript(true) end}
 
             lib.registerContext({id = 'QuarterMaster', title = 'The Quartermaster',  options = options })
             lib.showContext('QuarterMaster')
@@ -340,19 +347,19 @@ RegisterNetEvent('crimHub:client:talkToCurrExchange', function()
     lib.showContext('currencyExchange')
 end)
 
--- Condo System
-local RentRoom = function()
-end
+-- -- Condo System
+-- local RentRoom = function()
+-- end
 
-Citizen.CreateThread(function()
-    QBCore.Functions.TriggerCallback('hubCondo:cb:fetchApartments', function()
-        exports.ox_target:addSphereZone({coords = vector3(-608.19, -1617.26, 37.22), radius = 0.5, debug = false, options = {
-            {label = 'Rent Room', icon = 'fas fa-money-bill-wave', onSelect = RentRoom},
-            {label = 'Rent Room', icon = 'fas fa-money-bill-wave', onSelect = RentRoom},
-            {label = 'Rent Room', icon = 'fas fa-money-bill-wave', onSelect = RentRoom},
-        }})
-    end)
-end)
+-- Citizen.CreateThread(function()
+--     QBCore.Functions.TriggerCallback('hubCondo:cb:fetchApartments', function()
+--         exports.ox_target:addSphereZone({coords = vector3(-608.19, -1617.26, 37.22), radius = 0.5, debug = false, options = {
+--             {label = 'Rent Room', icon = 'fas fa-money-bill-wave', onSelect = RentRoom},
+--             {label = 'Rent Room', icon = 'fas fa-money-bill-wave', onSelect = RentRoom},
+--             {label = 'Rent Room', icon = 'fas fa-money-bill-wave', onSelect = RentRoom},
+--         }})
+--     end)
+-- end)
 
 Citizen.CreateThread(function()
     for k, v in pairs(Config.CrimHub.Vendors) do

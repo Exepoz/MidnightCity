@@ -2,6 +2,11 @@ QBCore = exports['qb-core']:GetCoreObject()
 
 jailedPlayers = {}
 
+RegisterNetEvent('jail:updateBucket',function()
+    local src = source
+    SetPlayerRoutingBucket(src, 0)
+end)
+
 --- Method to print debug messages to console when Config.Debug is enabled
 ---@param message string - message to print
 ---@return nil

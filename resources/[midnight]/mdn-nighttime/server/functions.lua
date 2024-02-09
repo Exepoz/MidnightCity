@@ -51,4 +51,10 @@ Midnight.Functions = {
 
         return chosenItem
     end,
+
+    pickRandom = function(tb)
+        local keys = {}
+        for k in pairs(tb) do table.insert(keys, k) end
+        return tb[keys[math.random(#keys)]]
+    end
 }

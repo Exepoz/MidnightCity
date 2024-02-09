@@ -127,7 +127,7 @@ end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
-    
+
     lib.callback('qb-jail:server:GetJailBreakConfig', false, function(result)
         Config.JailBreak = result
 
@@ -147,7 +147,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
             local alarmIpl = GetInteriorAtCoordsWithType(1787.004, 2593.1984, 45.7978, 'int_prison_main')
             RefreshInterior(alarmIpl)
             DisableInteriorProp(alarmIpl, 'prison_alarm')
-            
+
             CreateThread(function()
                 while not PrepareAlarm('PRISON_ALARMS') do
                     Wait(100)
@@ -217,7 +217,7 @@ RegisterNetEvent('qb-prison:client:SendPlayerToPrison', function(takeMugshot, ti
         SetEntityHeading(ped, Config.Locations['mugshot'].w)
 
         Wait(2000)
-        
+
         StopAnimTask(ped, animDict, anim, 1.0)
         FreezeEntityPosition(ped, false)
         DeleteEntity(created_object)
@@ -235,7 +235,7 @@ RegisterNetEvent('qb-prison:client:SendPlayerToPrison', function(takeMugshot, ti
 
     TriggerServerEvent('InteractSound_SV:PlayOnSource', 'jail', 0.5)
     Wait(100)
-    
+
     -- Apply Clothing
     if Config.PrisonOutfit.Enable then
         local gender = PlayerData.charinfo.gender
@@ -250,6 +250,7 @@ RegisterNetEvent('qb-prison:client:SendPlayerToPrison', function(takeMugshot, ti
     TriggerEvent('qb-jail:client:ChangeJob', 'lockup')
     Wait(1000)
     createPrisonPed()
+    TriggerServerEvent('jail:updateBucket')
 end)
 
 RegisterNetEvent('qb-jail:client:PrisonServices', function()
@@ -296,7 +297,7 @@ RegisterNetEvent('qb-jail:client:PrisonRevive', function()
         if exports['qb-policejob']:IsHandcuffed() then
             TriggerEvent('police:client:GetCuffed', -1)
         end
-        
+
         TriggerEvent('police:client:DeEscort')
 
         DoScreenFadeOut(1000)
@@ -316,7 +317,7 @@ RegisterNetEvent('qb-jail:client:PrisonRevive', function()
         RenderScriptCams(true, false, 1, true, true)
         AttachCamToPedBone(cam, ped, 31085, 0, 1.0, 1.0 , true)
         SetCamFov(cam, 90.0)
-        
+
         local heading = GetEntityHeading(ped)
         heading = (heading > 180) and heading - 180 or heading + 180
         SetCamRot(cam, -45.0, 0.0, heading, 2)
@@ -395,7 +396,7 @@ RegisterNetEvent('qb-jail:client:PostPrisonExit', function()
     if DoesEntityExist(prisonerPed) then
         DeleteEntity(prisonerPed)
     end
-    
+
     if Config.PrisonOutfit.Enable then
         TriggerServerEvent('qb-clothes:loadPlayerSkin')
     end
@@ -421,7 +422,7 @@ CreateThread(function()
         minZ = 46.00,
         maxZ = 47.00
     }, {
-        options = { 
+        options = {
             {
                 type = 'client',
                 event = 'qb-jail:client:PrisonServices',
@@ -487,5 +488,5 @@ CreateThread(function()
         },
         distance = 2.5
     })
-    
+
 end)

@@ -73,7 +73,7 @@ local enterGreenZone = function(self)
     local wait, stop = false, false
     if self.zoneName == 'crimHub' then
         wait = true
-        Midnight.Functions.IsBlackListed():next(function(isBl)
+        Midnight.Functions.IsBlacklisted():next(function(isBl)
             if isBl then
                 while IsPedInAnyVehicle(PlayerPedId()) do Wait(100) end
                 stop, wait = true, false
@@ -99,6 +99,7 @@ end
 --- Zone Handler for leaving a green zone
 ---@param self table table containing all of the current zone's info
 local leavingGreenZone = function(self)
+    Midnight.Functions.Debug("Leaving Safe Haven")
     if self.zoneName == 'crimHub' then
         TriggerEvent('crimHub:client:removeQuartermaster')
     end

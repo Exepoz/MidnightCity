@@ -133,7 +133,7 @@ end
 
 local TalkToFence = function(data)
 
-    Midnight.Functions.IsBlackListed():next(function(isBlacklisted)
+    Midnight.Functions.IsBlacklisted():next(function(isBlacklisted)
         if isBlacklisted then QBCore.Functions.Notify('I won\'t talk to you, bloody scum!', 'error') return end
         local count = 0
         local pData = QBCore.Functions.GetPlayerData()

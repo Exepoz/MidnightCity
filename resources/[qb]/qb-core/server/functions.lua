@@ -183,6 +183,7 @@ end
 ---@param bucket any
 ---@return boolean
 function QBCore.Functions.SetPlayerBucket(source, bucket)
+    print("Updating Player Routing Bucket", source, bucket)
     if source and bucket then
         local plicense = QBCore.Functions.GetIdentifier(source, 'license')
         SetPlayerRoutingBucket(source, bucket)
@@ -198,6 +199,7 @@ end
 ---@param bucket number
 ---@return boolean
 function QBCore.Functions.SetEntityBucket(entity, bucket)
+    print("Updating Entity Routing Bucket", entity, bucket)
     if entity and bucket then
         SetEntityRoutingBucket(entity, bucket)
         QBCore.Entity_Buckets[entity] = { id = entity, bucket = bucket }

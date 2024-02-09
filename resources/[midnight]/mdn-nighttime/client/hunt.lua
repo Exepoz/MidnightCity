@@ -32,7 +32,7 @@ local identifyIndividual = function(v)
         if #(GetEntityCoords(v.entity) - GetEntityCoords(PlayerPedId())) > 3.0 then QBCore.Functions.Notify('The individual is too far...') return end
         exports['rpemotes']:EmoteCancel()
         --GetNearestPlayerToEntity(v.entity) works too
-        if GetPlayerFromServerId(currentTarget) == NetworkGetPlayerIndexFromPed(v.entity) then
+        if GetPlayerFromServerId(GlobalState.BountyPreys[currentTarget]) == NetworkGetPlayerIndexFromPed(v.entity) then
             TriggerServerEvent('nighttime:server:preyFound', currentTarget)
             QBCore.Functions.Notify("Positive ID. Individual Registers as Current Prey.", 'success')
         else
@@ -66,7 +66,7 @@ end
 Midnight.Functions.stopHunting = function()
     if targetBlip then RemoveBlip(targetBlip) end
     LocalPlayer.state:set('isHunting', false, true)
-    TriggerServerEvent('nighttime:stopHunting')
+    TriggerServerEvent('nighttime:server:stopHunting')
 end
 
 --- Handler to fetch a new target if the current one is lost or cycled.
@@ -164,7 +164,7 @@ local claimBounty = function(data)
             TriggerServerEvent('nighttime:server:stealPoints', data)
         else
             --GetNearestPlayerToEntity(v.entity) works too
-            if GetPlayerFromServerId(currentTarget) == NetworkGetPlayerIndexFromPed(data.entity) then TriggerServerEvent('nighttime:server:claimBounty', currentTarget)
+            if GetPlayerFromServerId(GlobalState.BountyPreys[currentTarget]) == NetworkGetPlayerIndexFromPed(data.entity) then TriggerServerEvent('nighttime:server:claimBounty', currentTarget)
             else QBCore.Functions.Notify("This is not your prey anymore....", 'error') end
         end
     end, function()
@@ -174,8 +174,8 @@ end
 
 --- Handler Received from server when selecting a BP as target.
 RegisterNetEvent('nighttime:client:selectBloodyPrey', function(data)
-    Midnight.Functions.Debug('Bloody Prey Selected : '..data.source)
-    currentTarget = data.source
+    Midnight.Functions.Debug('Bloody Prey Selected : '..data.cid)
+    currentTarget = data.cid
     precision = 10
     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getTargetLocation', function(loc)
         if loc == "notFound" then
@@ -289,6 +289,7 @@ RegisterNetEvent('nighttime:client:createHuntProfile', function()
     if alert ~= 'confirm' then return end
     local input = lib.inputDialog('Create Hunter Profile', {{type = 'input', label = 'Create Alias', description = 'Chose a name to go by in the bounty hunter world.', required = true, min = 3, max = 21},})
     if not input or not input[1] then return end
+    if input[1] == "Anonymous Hunter" then QBCore.Functions.Notify('Invalid Nickname', 'error') return end
     alert = lib.alertDialog({
         header = 'Confirm Alias',
         content = 'Are you sure you want to go by : **'..input[1].."**?",
@@ -299,9 +300,29 @@ RegisterNetEvent('nighttime:client:createHuntProfile', function()
     TriggerServerEvent('nighttime:server:createHunterProfile', input[1])
 end)
 
+local openScoreboard = function()
+    Midnight.Functions.IsBlacklisted():next(function(bl)
+        if bl then return end
+        QBCore.Functions.TriggerCallback('nighttime:fetchLeaderboard', function(list)
+            if not list then return end
+            local options = {}
+            for k, v in ipairs(list) do
+                options[#options+1] = {title = k ..' ~ '..v.nickname, readOnly = true, description = "Bounty Points : "..v.points}
+            end
+            lib.registerContext({id = 'bhleaderboard', title = 'Hunters Leaderboard',  options = options})
+            lib.showContext('bhleaderboard')
+        end)
+    end)
+end
+
 Citizen.CreateThread(function()
     local options = {
         [1] = { name = 'idTarget', label = "Identify Potential Prey", icon = 'fas fa-person-circle-question', distance = 2.0, canInteract = (Midnight.Functions.isHunting() and Midnight.Functions.IsNightTime()), onSelect = identifyIndividual},
     }
+
+    local boardOptions = {
+        [1] = { name = 'bhleaderboard', label = "Hunters Leaderboard", icon = 'fas fa-list-ol', distance = 2.0, onSelect = openScoreboard},
+    }
     exports.ox_target:addGlobalPlayer(options)
+    exports.ox_target:addSphereZone({coords = vector3(-623.42, -1616.41, 29.47), radius = 1.0, options = boardOptions})
 end)

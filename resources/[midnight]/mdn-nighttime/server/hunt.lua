@@ -4,6 +4,7 @@ local preys = {}
 local hunters = {}
 local BloodyPreys = {}
 GlobalState.BloodyPreys = BloodyPreys
+GlobalState.BountyPreys = preys
 
 ----------------------------
 -- Start/Stop/Leave Logic --
@@ -93,6 +94,8 @@ local setBloodyPrey = function(src, bool, arg3)
             MySQL.update.await('UPDATE midnight_hunters SET points = ?, unclaimed = ?, bank = ?, blacklisted = ?, blacklisted_time = ? WHERE cid = ?', {points, 0, bank, true, data.time, cid})
         end
 
+        TriggerEvent('nighttime:server:enterHunt', src, true)
+
         local pName = Midnight.Functions.GetCharName(src)
         local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..xPlayer.PlayerData.citizenid.."\n\n ** Has become a bloody prey."}
         Midnight.Functions.Debug(logString.txt)
@@ -138,8 +141,9 @@ local leaveHunt = function(serversource, quit)
         local isBloody, index = checkIsBloodyPrey(src)
         if isBloody and not quit then break
         else
+            local cid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
             Player(src).state.isPrey = false
-            preys[k] = nil
+            preys[cid] = nil
             if isBloody then
                 BloodyPreys[index].online = false
                 BloodyPreys[index].source = nil
@@ -147,7 +151,7 @@ local leaveHunt = function(serversource, quit)
             end
         end
     end end
-    GlobalState.BountyTargets = preys
+    GlobalState.BountyPreys = preys
     GlobalState.BloodyPreys = BloodyPreys
     Midnight.Functions.Debug(src..' has left the hunt')
 end
@@ -164,9 +168,10 @@ end
 ---@param source number Hunter's source ID
 ---@param current number Hunter's current target
 local generateNewTarget = function(source, current)
-    local newTarget = preys[math.random(#preys)]
+    --local newTarget = preys[math.random(#preys)]
+    local newTarget = Midnight.Functions.pickRandom(preys)
     Midnight.Functions.Debug("Generated : "..(newTarget or "NIL"))
-    if newTarget == current or newTarget == source or newTarget == nil then return nil
+    if newTarget == current or preys[newTarget] == source or newTarget == nil then return nil
     else return newTarget end
 end
 
@@ -238,9 +243,10 @@ RegisterNetEvent('nighttime:server:enterHunt', function(serversource, bloody)
     local src = serversource or source
     if safeJob(src) and not bloody then return end
     local alr = false
-    for k, v in pairs(preys) do if v == src then Midnight.Functions.Debug(src..' Person is already a prey') return end end
-    table.insert(preys, src)
-    GlobalState.BountyTargets = preys
+    local cid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
+    if preys[cid] then Midnight.Functions.Debug(src..' Person is already a prey') return end
+    preys[cid] = src
+    GlobalState.BountyPreys = preys
     Player(src).state.isPrey = true
     Midnight.Functions.Debug(src..' has entered the hunt')
 end)
@@ -289,7 +295,7 @@ RegisterNetEvent('nighttime:server:stopHunting', function(serversource)
 end)
 
 --- Toggle state for when a player has id'ed their target.
-RegisterNetEvent('nighttime:server:preyFound', function(target) Player(target).state.preyId = true end)
+RegisterNetEvent('nighttime:server:preyFound', function(target) Player(preys[target]).state.preyId = true end)
 
 --- Processes an indvidual's death.
 RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
@@ -310,19 +316,19 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
         exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
             sender = 'Anonymous',
             subject = 'Blood Spilled...',
-            message = 'Dear Hunter,<br><br>'..
+            message = 'Dear Citizen,<br><br>'..
             'You have wronged the Golden Trail. You have killed an individual inside a protected area.' ..
             'For this, you will now be marked as a <b>Bloody Prey</b>.' ..
             '<br><br>-Night Hunters are able to select you as their prey. Your location is updated live for anyone hunting you.' ..
             '<br>- You are barred from any Hub Services for the next 48 hours.' ..
-            '<br>- You have lost h+alf of your hunter score. (if applicable)',
+            '<br>- You have lost half of your hunter score. (if applicable)',
             '<br>Thank you for your cooperation. We will enjoy seeing you run.'
         })
         descS = 'Has spilled blood in a green zone.'
         headerN = "Process Death - GreenZone"
         local logString = {huntA = Killer.PlayerData.metadata.huntAlias, ply = GetPlayerName(killer), txt = "Player : ".. GetPlayerName(killer) .. "\nCharacter : "..hunterName.."\nCID : "..Killer.PlayerData.citizenid.."\n\n"..descS}
         TriggerEvent("qb-log:server:CreateLog", "bountyHunter", headerN, "green", logString)
-        setBloodyPrey(killer, true)
+        setBloodyPrey(killer, true, 2500)
         return
     end
     if not hunters[Killer.PlayerData.citizenid] then return end
@@ -410,7 +416,7 @@ end)
 RegisterNetEvent('nighttime:server:claimBounty', function(prey)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local Prey = QBCore.Functions.GetPlayer(prey)
+    local Prey = QBCore.Functions.GetPlayer(preys[prey])
     checkBloodyDeath(Player.PlayerData.citizenid, Prey.PlayerData.citizenid)
     MySQL.Async.execute('UPDATE midnight_hunters SET unclaimed = unclaimed + 1 WHERE CID = ?', {Player.PlayerData.citizenid})
     hunters[Player.PlayerData.citizenid] = 0
@@ -505,7 +511,17 @@ RegisterNetEvent('nighttime:server:bankPoints', function(data)
     local src = source
     local Ply = QBCore.Functions.GetPlayer(src)
     local cid = Ply.PlayerData.citizenid
-    MySQL.update.await('UPDATE midnight_hunters SET bank = bank + unclaimed, points = points + unclaimed, unclaimed = 0 WHERE cid = ?', {cid})
+    local result = MySQL.query.await('SELECT bloodBounty FROM midnight_hunters WHERE CID = ?', {cid})
+    if result and result[1] then
+        QBCore.Debug(result)
+        local bA = tonumber(result[1].bloodBounty)
+        if bA > 0 then
+            Ply.Functions.AddItem('midnight_crumbs', bA)
+            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['midnight_crumbs'], "add", bA)
+            TriggerClientEvent('QBCore:Notify', src, 'Here\'s the crumbs we owe you for taking care of bloody preys.', 'success')
+        end
+    end
+    MySQL.update.await('UPDATE midnight_hunters SET bank = bank + unclaimed, points = points + unclaimed, unclaimed = 0, bloodBounty = 0 WHERE cid = ?', {cid})
     Wait(100)
     TriggerClientEvent('crimHub:client:talkToQuartermaster', src)
 end)
@@ -588,6 +604,7 @@ end)
 --- Fetches the target's location
 ---@param target number Hunter's current target
 QBCore.Functions.CreateCallback('mdn-bountyHunt:getTargetLocation', function(_, cb, target)
+    target = preys[target]
     if target == nil or target == 0 then cb('notFound') return end
     if not DoesPlayerExist(target) or not Player(target).state.isPrey or QBCore.Functions.GetPlayer(target).PlayerData.metadata.isDead then cb('notFound') return end
     local ped = GetPlayerPed(target)
@@ -600,6 +617,7 @@ QBCore.Functions.CreateCallback('mdn-bountyHunt:getNewTarget', function(source, 
     local Player = QBCore.Functions.GetPlayer(source)
     ::generate::
     Midnight.Functions.Debug('List of preys : ')
+    QBCore.Debug(preys)
     if #preys < 3 then Midnight.Functions.Debug('There are not enough preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are not enough preys around currently.', 'error') cb(nil) return end
     local currentTarget = hunters[Player.PlayerData.citizenid]
     --local newTarget = generateNewTarget(source, currentTarget)
@@ -656,6 +674,14 @@ QBCore.Functions.CreateCallback('nighttime:fetchUserData', function(source, cb, 
     end
 end)
 
+--- Fetches the target's location
+local EntryAmounts = 5
+QBCore.Functions.CreateCallback('nighttime:fetchLeaderboard', function(_, cb)
+    MySQL.Async.fetchAll(string.format("SELECT * FROM midnight_hunters WHERE nickname <> 'Anonymous Hunter' order by points desc limit %s", EntryAmounts), {},
+    function(result)
+        cb(result)
+    end)
+end)
 --------------
 -- Commands --
 --------------
@@ -716,10 +742,16 @@ RegisterCommand('checkHunterInfo', function(source, args)
 end)
 
 --- Enter Admin mode and prevents the user from entering the hunt / being hunted.
-QBCore.Commands.Add('huntAdmin', 'Keeps you off the prey list (Admin Only)', { { name = 'true/false', help = "Sets admin status to set value" } }, true, function(source, args)
-    local bool = args[1] == 'true' and true or args[1] == 'false' and false or nil
-    if not bool then TriggerClientEvent('QBCore:Notify', source, 'Invalid Argument.', 'error') return end
+QBCore.Commands.Add('huntadmin', 'Keeps you off the prey list (Admin Only)', { { name = 'true/false', help = "Sets admin status to set value" } }, true, function(source, args)
+    local bool = (args[1] == 'true' and true) or (args[1] == 'false' and false) or nil
+    if bool == nil then TriggerClientEvent('QBCore:Notify', source, 'Invalid Argument.', 'error') return end
     Player(source).state.huntAdmin = bool
     if bool then leaveHunt(source, true) else if Midnight.Functions.IsNightTime() then TriggerEvent('nighttime:server:enterHunt', source, BloodyPreys[source] or false) end end
     TriggerClientEvent('QBCore:Notify', source, 'Hunt Admin Status set to '..args[1], 'success')
 end, 'admin')
+
+
+RegisterCommand('gbleeder', function(source, args)
+    local Player = QBCore.Functions.GetPlayer(source)
+    Player.Functions.AddItem('bleeder', 1, false, {highQuality = true, buffJob = 'burgershot'})
+end)

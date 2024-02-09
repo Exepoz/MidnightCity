@@ -25,7 +25,7 @@ Config.Shop = {
         options = {header = "Clean Weapons", icon = 'gun'},
         items = {
             [1] = {item = "weapon_pistol",  price = 1300, stock = 10, loc = 6, max = 100},
-            --[2] = {item = "case_recoil",  price = 25000, stock = 5, loc = 6, max = 100},
+            [2] = {item = "case_recoil",  price = 25000, stock = 5, loc = 6, max = 100},
         }
     },
     ['scratchedweapon'] = {

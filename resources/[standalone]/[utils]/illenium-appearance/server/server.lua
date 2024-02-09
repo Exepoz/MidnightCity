@@ -294,11 +294,14 @@ end)
 RegisterNetEvent("illenium-appearance:server:ChangeRoutingBucket", function()
     local src = source
     SetPlayerRoutingBucket(src, src)
+    print("Initializing Character, sending to own bucket", src)
 end)
 
 RegisterNetEvent("illenium-appearance:server:ResetRoutingBucket", function()
     local src = source
     SetPlayerRoutingBucket(src, 0)
+    print("Initializing Character  Over, sending to own bucket", src)
+
 end)
 
 if Config.EnablePedMenu then

@@ -21,7 +21,7 @@ AddEventHandler('playerConnecting', function(name, skr, d)
                         text = 'Password Required to access the server'
                     }),
                     DeferralCards.CardElement:TextBlock({
-                        text = "You can find the password in the server rules. Visit our discord at discord.gg/m-g-m to find our rules page.",
+                        text = "You can find the password in the server rules. Visit our discord at discord.gg/m-g-n to find our rules page.",
                         wrap = true
                     }),
                     DeferralCards.Input:Password({
