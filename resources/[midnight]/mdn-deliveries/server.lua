@@ -1,5 +1,6 @@
 local cooldown = {}
 local Midnight = exports['mdn-nighttime']:GetMidnightCore()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 MySQL.ready(function()
     local done = MySQL.query.await([[
@@ -96,6 +97,9 @@ lib.callback.register("delivery:callback:add_stock", function(source, data)
     if RemoveItem(src, data.restock.item, 1) then
         --if data.restock.reward.enabled then AddMoney(src, data.restock.reward.type, reward, "Delivery Restock Pay") end
         exports['Renewed-Banking']:addAccountMoney(data.job, reward)
+        local text2 = Midnight.Functions.GetCharName(src).." has stocked up product. The business receives $"..reward
+        exports['Renewed-Banking']:handleTransaction(data.job, "Business // Stocked Delivery Food", reward, text2, "Midnight Deliveries", QBCore.Shared.Jobs[data.job].label, "deposit")
+
         if data.restock.reward.enabled then AddItem(src, 'payticket', 1) end
 
         MySQL.update("UPDATE kloud_delivery SET stock = ? WHERE job = ?", {

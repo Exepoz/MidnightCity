@@ -132,6 +132,7 @@ end
 local Type = type
 local function handleTransaction(account, title, amount, message, issuer, receiver, transType, transID)
     if not account or Type(account) ~= 'string' then return print(locale("err_trans_account", account)) end
+    if QBCore.Shared.Jobs[account] then account = GetSocietyLabel(account) end
     if not title or Type(title) ~= 'string' then return print(locale("err_trans_title", title)) end
     if not amount or Type(amount) ~= 'number' then return print(locale("err_trans_amount", amount)) end
     if not message or Type(message) ~= 'string' then return print(locale("err_trans_message", message)) end
@@ -169,6 +170,7 @@ local function handleTransaction(account, title, amount, message, issuer, receiv
 end exports("handleTransaction", handleTransaction)
 
 function GetAccountMoney(account)
+    if QBCore.Shared.Jobs[account] then account = GetSocietyLabel(account) end
     if not cachedAccounts[account] then
         locale("invalid_account", account)
         return false
@@ -182,6 +184,7 @@ local function updateBalance(account)
 end
 
 function AddAccountMoney(account, amount)
+    if QBCore.Shared.Jobs[account] then account = GetSocietyLabel(account) end
     if not cachedAccounts[account] then
         locale("invalid_account", account)
         return false
@@ -214,6 +217,7 @@ lib.callback.register('Renewed-Banking:server:deposit', function(source, data)
     end
     local name = GetCharacterName(Player)
     if not data.comment or data.comment == "" then data.comment = locale("comp_transaction", name, "deposited", amount) else sanitizeMessage(data.comment) end
+    if QBCore.Shared.Jobs[data.fromAccount] then data.fromAccount = GetSocietyLabel(data.fromAccount) end
     if RemoveMoney(Player, amount, 'cash', data.comment) then
         if cachedAccounts[data.fromAccount] then
             AddAccountMoney(data.fromAccount, amount)
@@ -232,6 +236,7 @@ lib.callback.register('Renewed-Banking:server:deposit', function(source, data)
 end)
 
 function RemoveAccountMoney(account, amount)
+    if QBCore.Shared.Jobs[account] then account = GetSocietyLabel(account) end
     if not cachedAccounts[account] then
         print(locale("invalid_account", account))
         return false
@@ -257,7 +262,7 @@ lib.callback.register('Renewed-Banking:server:withdraw', function(source, data)
     local name = GetCharacterName(Player)
     local funds = GetFunds(Player)
     if not data.comment or data.comment == "" then data.comment = locale("comp_transaction", name, "withdrawed", amount) else sanitizeMessage(data.comment) end
-
+    if QBCore.Shared.Jobs[data.fromAccount] then data.fromAccount = GetSocietyLabel(data.fromAccount) end
     local canWithdraw
     if cachedAccounts[data.fromAccount] then
         canWithdraw = RemoveAccountMoney(data.fromAccount, amount)
@@ -286,6 +291,7 @@ lib.callback.register('Renewed-Banking:server:transfer', function(source, data)
     end
     local name = GetCharacterName(Player)
     if not data.comment or data.comment == "" then data.comment = locale("comp_transaction", name, "transfered", amount) else sanitizeMessage(data.comment) end
+    if QBCore.Shared.Jobs[data.fromAccount] then data.fromAccount = GetSocietyLabel(data.fromAccount) end
     if cachedAccounts[data.fromAccount] then
         if cachedAccounts[data.stateid] then
             local canTransfer = RemoveAccountMoney(data.fromAccount, amount)
@@ -388,6 +394,7 @@ RegisterNetEvent("Renewed-Banking:server:viewMemberManagement", function(data)
     local Player = GetPlayerObject(source)
 
     local account = data.account
+    if QBCore.Shared.Jobs[account] then account = GetSocietyLabel(account) end
     local retData = {
         account = account,
         members = {}

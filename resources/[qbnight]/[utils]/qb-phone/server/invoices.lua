@@ -6,18 +6,18 @@ RegisterNetEvent('qb-phone:server:InvoiceHandler')
 
 -- EVENT HANDLER(S) --
 
--- Has player paid something this --
-AddEventHandler('qb-phone:server:InvoiceHandler', function(paid, amount, source, resource, society)
+-- -- Has player paid something this --
+-- AddEventHandler('qb-phone:server:InvoiceHandler', function(paid, amount, source, resource, society)
 
-    if paid and resource == GetCurrentResourceName() then
-            if Config.RenewedBanking then
-                local cid = Player.PlayerData.citizenid
-                local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
-                exports['Renewed-Banking']:handleTransaction(cid, "Phone Invoice", amount, "Paid off phone invoice of $"..amount, name, name, "withdraw")
-                exports['Renewed-Banking']:addAccountMoney(society, amount)
-            end
-    end
-end)
+--     if paid then
+--         if Config.RenewedBanking then
+--             local cid = Player.PlayerData.citizenid
+--             local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
+--             exports['Renewed-Banking']:handleTransaction(cid, "Phone Invoice", amount, "Paid off phone invoice of $"..amount, name, name, "withdraw")
+--             exports['Renewed-Banking']:addAccountMoney(society, amount)
+--         end
+--     end
+-- end)
 
 
 
@@ -45,7 +45,6 @@ RegisterNetEvent('qb-phone:server:PayMyInvoice', function(society, amount, invoi
 
         TriggerClientEvent('qb-phone:client:RemoveInvoiceFromTable', src, invoiceId)
         TriggerEvent("qb-phone:server:InvoiceHandler", true, amount, src, resource, society)
-
         exports.oxmysql:execute('DELETE FROM phone_invoices WHERE id = ?', {invoiceId})
     end
 end)

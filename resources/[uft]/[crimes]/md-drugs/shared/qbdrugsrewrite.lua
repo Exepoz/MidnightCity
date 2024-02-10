@@ -5,7 +5,7 @@ QBConfig = {}
 QBConfig.SuccessChance = 50
 QBConfig.ScamChance = 25
 QBConfig.RobberyChance = 25
-QBConfig.MinimumDrugSalePolice = 0
+QBConfig.MinimumDrugSalePolice = 1
 
 QBConfig.DrugsPrice = {
     ["weed_white-widow"] = { min = 15, max = 24 },

@@ -461,11 +461,11 @@ Config.JobGarageLocations = {
     },
     hideBlip = false,
   },
-  ['Rising Sun (Personal Vehicles)'] = {
+  ['LS Customs (Job Vehicles)'] = {
     coords = vector3(-369.92, -112.98, 38.68),
     spawn = vector4(-361.43, -115.12, 38.72, 156.97),
     distance = 7,
-    job = 'rising',
+    job = 'lscustoms',
     type = 'car',
     vehiclesType = 'personal',
     blip = {

@@ -31,6 +31,14 @@ end)
 -- Functions --
 ---------------
 
+local getTableCount = function(tbl)
+    local count = 0
+    for _, _ in pairs(tbl) do
+        count += 1
+    end
+    return count
+end
+
 --- Checks if the player's job is safe from the hunt
 ---@param src? number Checks Player's jobs to see if they can be hunted.
 ---@return boolean retval Can be hunted?
@@ -618,7 +626,7 @@ QBCore.Functions.CreateCallback('mdn-bountyHunt:getNewTarget', function(source, 
     ::generate::
     Midnight.Functions.Debug('List of preys : ')
     QBCore.Debug(preys)
-    if #preys < 3 then Midnight.Functions.Debug('There are not enough preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are not enough preys around currently.', 'error') cb(nil) return end
+    if getTableCount(preys) < 3 then Midnight.Functions.Debug('There are not enough preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are not enough preys around currently.', 'error') cb(nil) return end
     local currentTarget = hunters[Player.PlayerData.citizenid]
     --local newTarget = generateNewTarget(source, currentTarget)
     --local time = GetGameTimer()

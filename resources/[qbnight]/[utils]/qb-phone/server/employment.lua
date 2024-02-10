@@ -380,14 +380,36 @@ RegisterNetEvent('qb-phone:server:ChargeCustomer', function(id, amount, notes, j
     TriggerEvent('qb-phone:server:CreateInvoice', tonumber(id), src, amt)
 end)
 
+---- ** Invoices // Charging People ** ----
+RegisterNetEvent('qb-phone:server:makeBill', function(id, amount, notes, job, employeeName)
+    print('making bill')
+    if not id or not amount or not job then return end
+    local src = id
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+    if not CachedJobs[job].employees[Player.PlayerData.citizenid] then return notifyPlayer(src, "You're not an employee at this business...") end
+
+    local note = notes or ""
+    local amt = tonumber(amount)
+
+    bills[tonumber(id)] = {
+        amount = amt,
+        job = job,
+        notes = note,
+        coords = GetEntityCoords(GetPlayerPed(src)),
+        name = employeeName
+    }
+end)
+
+
 AddEventHandler('qb-phone:server:InvoiceHandler', function(paid, amount, source, resource)
     if not bills[source] then return end
-    if resource ~= GetCurrentResourceName() then return end
-
+    --if resource ~= GetCurrentResourceName() then return end
     if paid then
         if amount == bills[source].amount then
             local Player = QBCore.Functions.GetPlayer(source)
             if Config.RenewedBanking then
+                print("potator", bills[source].job , amount, text2, bills[source].name, name, "deposit")
                 local cid = Player.PlayerData.citizenid
                 local name = ("%s %s"):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
                 local text = "You paid off an invoice for $"..amount.." from "..bills[source].name.." for "..bills[source].notes

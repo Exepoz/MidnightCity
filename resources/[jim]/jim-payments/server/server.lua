@@ -138,10 +138,12 @@ RegisterServerEvent("jim-payments:server:Charge", function(citizen, price, billt
 			TriggerClientEvent("jim-payments:client:PayPopup", billed.PlayerData.source, amount, src, billtype, img, label, gang, outside)
 		else
 			if Config.PhoneType == "qb" then
+				local res = GetInvokingResource()
 				MySQL.Async.insert(
 					'INSERT INTO phone_invoices (citizenid, amount, society, sender, sendercitizenid) VALUES (?, ?, ?, ?, ?)',
 					{billed.PlayerData.citizenid, amount, biller.PlayerData.job.name, biller.PlayerData.charinfo.firstname, biller.PlayerData.citizenid}, function(id)
 						if id then
+							TriggerEvent('qb-phone:server:makeBill', tonumber(citizen), amount, "", biller.PlayerData.job.name, biller.PlayerData.charinfo.firstname.." "..biller.PlayerData.charinfo.lastname)
 							TriggerClientEvent('qb-phone:client:AcceptorDenyInvoice', billed.PlayerData.source, id, biller.PlayerData.charinfo.firstname, biller.PlayerData.job.name, biller.PlayerData.citizenid, amount, GetInvokingResource())
 						end
 					end)
@@ -172,7 +174,7 @@ RegisterServerEvent("jim-payments:server:PayPopup", function(data)
 	if data.gang == true then newdata.society = biller.PlayerData.gang.name end
 	if data.accept == true then
 		billed.Functions.RemoveMoney(tostring(data.billtype), data.amount)
-		if Config.ApGov then exports['ap-government']:chargeCityTax(billed.PlayerData.source, "Item", data.amount) end
+		exports['Renewed-Banking']:addAccountMoney(newdata.society, newdata.amount)
 		TriggerEvent('jim-payments:Tickets:Give', newdata, biller, data.gang)
 		triggerNotify(nil, billed.PlayerData.charinfo.firstname..Loc[Config.Lan].success["accepted_pay"]..data.amount..Loc[Config.Lan].success["payment"], "success", data.biller)
 	elseif data.accept == false then
@@ -195,6 +197,8 @@ RegisterServerEvent("jim-payments:server:PolCharge", function(citizen, price)
 
 			if Config.Banking == "renewed" then
 				exports['Renewed-Banking']:addAccountMoney(tostring(biller.PlayerData.job.name), (price - commission))
+				local text2 = Midnight.Functions.GetCharName(source).." has charged "..Midnight.Functions.GetCharName(billed.PlayerData.source).." for $"..amount
+				exports['Renewed-Banking']:handleTransaction(tostring(biller.PlayerData.job.name), "Individual Charged.", (price - commission), text2, "PolCharge", QBCore.Shared.Jobs[tostring(biller.PlayerData.job.name)].label, "deposit")
 				if Config.Debug then print("^5Debug^7: ^3Renewed-Banking^7(^3Job^7): ^2Adding ^7$^6"..(price - commission).." ^2to account ^7'^6"..tostring(biller.PlayerData.job.name).."^7' ($^6"..exports['Renewed-Banking']:getAccountMoney((biller.PlayerData.job.name).."^7)")) end
 			elseif Config.Banking == "qb" then
 				exports["qb-management"]:AddMoney(tostring(biller.PlayerData.job.name), (price - commission))
@@ -203,8 +207,8 @@ RegisterServerEvent("jim-payments:server:PolCharge", function(citizen, price)
 				exports.fd_banking:AddMoney(tostring(biller.PlayerData.job.name), (price - commission))
 				if Config.Debug then print("^5Debug^7: ^3QB-Management^7(^3Job^7): ^2Adding ^7$^6"..(price - takecomm).." ^2to account ^7'^6"..tostring(biller.PlayerData.job.name).."^7' ($^6"..exports.fd_banking:GetAccount(biller.PlayerData.job.name).."^7)") end
 			end
-			triggerNotify(nil, billed.PlayerData.charinfo.firstname..Loc[Config.Lan].success["charged"]..(price - commission), "success", src)
-			triggerNotify(nil, Loc[Config.Lan].success["you_charged"]..(price - commission), nil, billed.PlayerData.source)
+			triggerNotify(nil, billed.PlayerData.charinfo.firstname..Loc[Config.Lan].success["charged"]..price, "success", src)
+			triggerNotify(nil, Loc[Config.Lan].success["you_charged"]..price, nil, billed.PlayerData.source)
 		else
 			TriggerClientEvent("jim-payments:client:PolPopup", billed.PlayerData.source, price, src, biller.PlayerData.job.label)
 		end
