@@ -477,8 +477,8 @@ Config.OnlineOrders.ShopLocations = {
     },
     [4] = {
 		ped = 'u_m_y_smugmech_01',
-        coords = vector4(925.14, -2350.21, 31.82, 48.5),
-		name = 'The Automobile Wareohouse'
+        coords = vector4(907.90, -2201.60, 32.29, 319.79),
+		name = 'The Automobile Warehouse'
     },
 	[5] = {
 		ped = 's_m_m_ccrew_01',

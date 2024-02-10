@@ -1,7 +1,7 @@
 Config = Config or {}
 
 Config.UsingPsHousing = true
-Config.UsingDefaultQBApartments = true
+Config.UsingDefaultQBApartments = false
 Config.OnlyShowOnDuty = true
 Config.UseCQCMugshot = true
 
@@ -17,7 +17,7 @@ Config.BillVariation = false
 Config.QBManagementUse = true
 
 -- Set up your inventory to automatically retrieve images when a weapon is registered at a weapon shop or self-registered.
--- If you're utilizing lj-inventory's latest version from GitHub, no further modifications are necessary. 
+-- If you're utilizing lj-inventory's latest version from GitHub, no further modifications are necessary.
 -- However, if you're using a different inventory system, please refer to the "Inventory Edit | Automatic Add Weapons with images" section in ps-mdt's README.
 Config.InventoryForWeaponsImages = "ps-inventory"
 
@@ -47,7 +47,7 @@ Config.RosterLink = {
     ['sasp'] = '',
     ['doc'] = '',
     ['lssd'] = '',
-    ['sapr'] = '',	
+    ['sapr'] = '',
 }
 
 Config.PoliceJobs = {
@@ -72,7 +72,7 @@ Config.DojJobs = {
     ['judge'] = true
 }
 
--- This is a workaround solution because the qb-menu present in qb-policejob fills in an impound location and sends it to the event. 
+-- This is a workaround solution because the qb-menu present in qb-policejob fills in an impound location and sends it to the event.
 -- If the impound locations are modified in qb-policejob, the changes must also be implemented here to ensure consistency.
 
 Config.ImpoundLocations = {
@@ -80,13 +80,13 @@ Config.ImpoundLocations = {
     [2] = vector4(-436.14, 5982.63, 31.34, 136.0),
 }
 
--- Support for Wraith ARS 2X. 
+-- Support for Wraith ARS 2X.
 
 Config.UseWolfknightRadar = false
 Config.WolfknightNotifyTime = 5000 -- How long the notification displays for in milliseconds (30000 = 30 seconds)
 Config.PlateScanForDriversLicense = false -- If true, plate scanner will check if the owner of the scanned vehicle has a drivers license
 
--- IMPORTANT: To avoid making excessive database queries, modify this config to true 'CONFIG.use_sonorancad = true' setting in the configuration file located at 'wk_wars2x/config.lua'. 
+-- IMPORTANT: To avoid making excessive database queries, modify this config to true 'CONFIG.use_sonorancad = true' setting in the configuration file located at 'wk_wars2x/config.lua'.
 -- Enabling this setting will limit plate checks to only those vehicles that have been used by a player.
 
 Config.LogPerms = {

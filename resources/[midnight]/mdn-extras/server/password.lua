@@ -55,7 +55,7 @@ AddEventHandler('playerConnecting', function(name, skr, d)
                 end
             end)
             if breakloop then break end
-            Wait(60000) break
+            Wait(300000) break
         end
     end)
 end)
