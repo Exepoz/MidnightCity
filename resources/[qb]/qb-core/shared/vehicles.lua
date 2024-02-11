@@ -253,7 +253,7 @@ local Vehicles = {
     {['model'] = 'coquette4',     ['name'] = 'Coquette D10',                  ['brand'] = 'Invetero',        ['price'] = 220000,  ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'drafter',       ['name'] = '8F Drafter',                    ['brand'] = 'Obey',            ['price'] = 80000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'elegy',         ['name'] = 'Elegy Retro Custom',            ['brand'] = 'Annis',           ['price'] = 145000,  ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
-    {['model'] = 'elegy2',        ['name'] = 'Elegy RH8',                     ['brand'] = 'Annis',           ['price'] = 150000,  ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
+    {['model'] = 'elegy2',        ['name'] = 'Elegy RH8',                     ['brand'] = 'Annis',           ['price'] = 150000,  ['categoryLabel'] = 'Sports',          ['shop'] = nil},
     {['model'] = 'feltzer2',      ['name'] = 'Feltzer',                       ['brand'] = 'Benefactor',      ['price'] = 97000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'flashgt',       ['name'] = 'Flash GT',                      ['brand'] = 'Vapid',           ['price'] = 48000,   ['categoryLabel'] = 'Sports',          ['shop'] = 'luxury'},
     {['model'] = 'furoregt',      ['name'] = 'Furore GT',                     ['brand'] = 'Lampadati',       ['price'] = 78000,   ['categoryLabel'] = 'Sports',          ['shop'] = nil},

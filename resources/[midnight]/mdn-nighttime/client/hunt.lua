@@ -3,7 +3,7 @@ LocalPlayer.state:set('isHunting', false, true)
 local currentTarget = 0
 local precision = 0
 local targetBlip
-local gettingNewPrey, claimingBounty = false, false
+local gettingNewPrey, claimingBounty, waitingToClaim = false, false, false
 
 --- Checks if the player is currently a bounty hunter
 ---@return boolean -- Bool ~ is the player bounty hunting?
@@ -22,6 +22,30 @@ local processDeath = function()
         TriggerServerEvent('nighttime:server:processDeath', killer, checkIsInsideGreenZone())
     end
 end exports('processDeath', processDeath)
+
+
+local processLastStand = function()
+    Midnight.Functions.Debug('Processing Death...')
+    if not Midnight.Functions.IsNightTime() then return end
+    local ped = PlayerPedId()
+
+    local killer_2, killerWeapon = NetworkGetEntityKillerOfPlayer(player)
+    local killer = GetPedSourceOfDeath(ped)
+    if killer_2 ~= 0 and killer_2 ~= -1 then killer = killer_2 end
+    local killerId = NetworkGetPlayerIndexFromPed(killer)
+    if killerId == -1 then print("self death") return end
+    Midnight.Functions.Debug('Sending Killer Info to server. ('..GetPlayerServerId(killerId)..')')
+    TriggerServerEvent('nighttime:server:processLastStand', GetPlayerServerId(killerId), checkIsInsideGreenZone())
+
+    -- if IsEntityAPed(killerPed) and IsPedAPlayer(killerPed) then
+    --     killer = GetPlayerServerId(NetworkGetPlayerIndexFromPed(killerPed))
+    --     Midnight.Functions.Debug('Sending Killer Info to server. ('..killer..')')
+    --     TriggerServerEvent('nighttime:server:processDeath', killer, checkIsInsideGreenZone())
+    -- end
+end exports('processLastStand', processLastStand)
+
+
+
 
 --- Scan an other player to find out if they are the current player's target
 ---@param v table -- Arguments from ox_target regarding the targetted individual
@@ -67,6 +91,10 @@ Midnight.Functions.stopHunting = function()
     if targetBlip then RemoveBlip(targetBlip) end
     LocalPlayer.state:set('isHunting', false, true)
     TriggerServerEvent('nighttime:server:stopHunting')
+    gettingNewPrey = false
+    claimingBounty = false
+    waitingToClaim = false
+    currentTarget = 0
 end
 
 --- Handler to fetch a new target if the current one is lost or cycled.
@@ -75,6 +103,8 @@ Midnight.Functions.getNewTarget = function(v)
     if gettingNewPrey or not Midnight.Functions.isHunting() then return end
     gettingNewPrey = true
     QBCore.Functions.Notify('Find New Prey...')
+    claimingBounty = false
+    waitingToClaim = false
     if DoesBlipExist(targetBlip) then RemoveBlip(targetBlip) end
     precision = 0 Wait(1000)
     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getNewTarget', function(target, loc)
@@ -101,6 +131,8 @@ local startHunting = function()
     QBCore.Functions.Notify('Searching for prey...')
     --Wait(math.random(15, 30)*1000)
     precision = 0
+    claimingBounty = false
+    waitingToClaim = false
     TriggerServerEvent('nighttime:server:startHunting')
     QBCore.Functions.TriggerCallback('mdn-bountyHunt:getNewTarget', function(target)
         Midnight.Functions.Debug("Received Target : "..(target or "NIL"))
@@ -117,17 +149,19 @@ local startHunting = function()
                 Midnight.Functions.Debug("Current Target : "..currentTarget)
                 if not gettingNewPrey and currentTarget ~= 0 then
                     Midnight.Functions.Debug("Fetching Location...")
-                    QBCore.Functions.TriggerCallback('mdn-bountyHunt:getTargetLocation', function(loc)
-                        if loc == "notFound" then
-                            QBCore.Functions.Notify('The Prey has been lost...', 'error')
-                            Wait(2000)
-                            Midnight.Functions.getNewTarget()
-                        else
-                            Midnight.Functions.Debug('Making Blip Area')
-                            makeTargetBlip(loc)
-                            precision = precision + 1
-                        end
-                    end, currentTarget)
+                    if not claimingBounty or waitingToClaim then
+                        QBCore.Functions.TriggerCallback('mdn-bountyHunt:getTargetLocation', function(loc)
+                            if loc == "notFound" then
+                                QBCore.Functions.Notify('The Prey has been lost...', 'error')
+                                Wait(2000)
+                                Midnight.Functions.getNewTarget()
+                            else
+                                Midnight.Functions.Debug('Making Blip Area')
+                                makeTargetBlip(loc)
+                                precision = precision + 1
+                            end
+                        end, currentTarget)
+                    end
                     if precision > 10 then w = 60000 - (10000 * -1*(10-precision)) if w < 10000 then w = 10000 end end
                 end
                 if currentTarget == 0 then w = 15000 end
@@ -152,6 +186,7 @@ end
 local claimBounty = function(data)
     QBCore.Debug(data)
     if claimingBounty then return end
+    local target = data.cid
     claimingBounty = true
     local ped = PlayerPedId()
     TaskTurnPedToFaceEntity(ped, data.entity, 1500) Wait(1500)
@@ -164,9 +199,10 @@ local claimBounty = function(data)
             TriggerServerEvent('nighttime:server:stealPoints', data)
         else
             --GetNearestPlayerToEntity(v.entity) works too
-            if GetPlayerFromServerId(GlobalState.BountyPreys[currentTarget]) == NetworkGetPlayerIndexFromPed(data.entity) then TriggerServerEvent('nighttime:server:claimBounty', currentTarget)
+            if GetPlayerFromServerId(GlobalState.BountyPreys[target]) == NetworkGetPlayerIndexFromPed(data.entity) then TriggerServerEvent('nighttime:server:claimBounty', target)
             else QBCore.Functions.Notify("This is not your prey anymore....", 'error') end
         end
+        exports.ox_target:removeGlobalPlayer('claimBounty_'..data.bodyID)
     end, function()
         exports['rpemotes']:EmoteCancel()
     end)
@@ -231,18 +267,20 @@ local function safeJob()
 
 end
 
-RegisterNetEvent('nighttime:addBountyDied', function(ped, bodyID, isHunter)
-    Midnight.Functions.Debug('Adding Claim Bounty Target to ped '..ped, bodyID, isHunter)
+RegisterNetEvent('nighttime:addBountyDied', function(ped, bodyID, isHunter, preyCID)
+    Midnight.Functions.Debug('Adding Claim Bounty Target to : '..ped, bodyID, isHunter, preyCID)
+    waitingToClaim = true
     if isHunter then
-        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return GetPlayerPed(GetPlayerFromServerId(ped)) == e and not claimingBounty end, label = "Steal Unclaimed Points", distance = 2.0, onSelect = claimBounty, isHunter = isHunter, bodyID = bodyID, hSrc = ped})
+        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return GetPlayerPed(GetPlayerFromServerId(ped)) == e and not claimingBounty end, label = "Steal Unclaimed Points", distance = 2.0, onSelect = claimBounty, isHunter = isHunter, bodyID = bodyID, hSrc = ped, cid = preyCID})
     else
         --currentTarget = 0
-        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return GetPlayerPed(GetPlayerFromServerId(ped)) == e and not claimingBounty end, label = "Claim Bounty", distance = 2.0, onSelect = claimBounty, })
+        exports.ox_target:addGlobalPlayer({ name = 'claimBounty_'..bodyID, icon = 'fas fa-sack-dollar', canInteract = function(e) return GetPlayerPed(GetPlayerFromServerId(ped)) == e and not claimingBounty end, label = "Claim Bounty", distance = 2.0, onSelect = claimBounty , isHunter = isHunter, bodyID = bodyID, hSrc = ped, cid = preyCID})
     end
 end)
 
-RegisterNetEvent('nighttime:client:alertIsBloody', function()
-    exports['qb-phone']:PhoneNotification('The Hunt', "You've been marked as a Bloody Prey.", 'fas fa-crosshairs', '#5c0707', 10000)
+RegisterNetEvent('nighttime:client:becameBloody', function()
+    exports['qb-phone']:PhoneNotification('The Hunt', "You have been marked as a Bloody Prey.", 'fas fa-crosshairs', '#5c0707', 5000)
+    Midnight.Functions.stopHunting()
 end)
 
 RegisterNetEvent('nighttime:client:bountyCooldown', function(ped)
@@ -253,6 +291,7 @@ RegisterNetEvent('nighttime:client:bountyCooldown', function(ped)
     Wait(10000) QBCore.Functions.Notify('You will soon get a new prey.', 'info')
     Wait(2*60000)
     claimingBounty = false
+    waitingToClaim = false
     Midnight.Functions.getNewTarget()
 end)
 

@@ -19,7 +19,6 @@ Midnight.Functions = {
         local argType = 'src'
         local cid
         if src > 1000 then argType = 'cid' cid = src end
-        print(src)
         if argType == 'src' then cid = QBCore.Functions.GetPlayer(tonumber(src)).PlayerData.citizenid end
         local Player = QBCore.Functions.GetPlayerByCitizenId(tostring(cid))
         if not Player then return "Unknown Individual" end
@@ -55,6 +54,6 @@ Midnight.Functions = {
     pickRandom = function(tb)
         local keys = {}
         for k in pairs(tb) do table.insert(keys, k) end
-        return tb[keys[math.random(#keys)]]
+        return keys[math.random(#keys)]
     end
 }

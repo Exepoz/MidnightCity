@@ -18,7 +18,7 @@ Config.Route = {
 Config.StopsAmt = {
     ["small"] = {min = 1, max = 2},
     ["medium"] = {min = 2, max = 3},
-    ["large"] = {min = 3, max = 6},
+    ["large"] = {min = 3, max = 5},
 }
 
 Config.MaterialTicket = true -- Enable or disable MaterialTickets and trades

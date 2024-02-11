@@ -16,23 +16,23 @@ Config.Shop = {
     ['protection'] = {
         options = {header = "Protection", icon = 'shield'},
         items = {
-            [1] = {item = "armor",  price = 100, stock = 10, loc = 6, max = 100},
-            [2] = {item = "heavyarmor",  price = 1000, stock = 5, loc = 6, max = 100},
+            [1] = {item = "armor",  price = 500, stock = 10, loc = 6, max = 100},
+            [2] = {item = "heavyarmor",  price = 3000, stock = 5, loc = 6, max = 100},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
     ['cleanweapon'] = {
         options = {header = "Clean Weapons", icon = 'gun'},
         items = {
-            [1] = {item = "weapon_pistol",  price = 1300, stock = 10, loc = 6, max = 100},
-            [2] = {item = "case_recoil",  price = 25000, stock = 5, loc = 6, max = 100},
+            [1] = {item = "weapon_pistol",  price = 13000, stock = 5, loc = 6, max = 100},
+            [2] = {item = "case_recoil",  price = 3000, stock = 10, loc = 6, max = 100},
         }
     },
     ['scratchedweapon'] = {
         options = {header = "Scratched Weapons", icon = 'gun'},
         -- Add `scratched = true` to all these weapons
         items = {
-            [1] = {item = "weapon_pistol",  price = 5700, stock = 15, loc = 6, max = 100, scratched = true},
+            [1] = {item = "weapon_pistol",  price = 33000, stock = 5, loc = 6, max = 100, scratched = true},
             --[4] = {item = "hunting_ammo",  price = 250, stock = 500, loc = 6, max = 100},
         }
     },
@@ -42,9 +42,9 @@ Config.Shop = {
         items = {
             [1] = {item = "bandage",  price = 300, stock = 50, loc = 6, max = 3},
             [2] = {item = "ifaks",  price = 800, stock = 50, loc = 6, max = 3},
-            [3] = {item = "speed_injector",  price = 5000, stock = 5, loc = 6, max = 3},
-            [4] = {item = "health_injector",  price = 5000, stock = 5, loc = 6, max = 3},
-            [5] = {item = "armor_injector",  price = 5000, stock = 5, loc = 6, max = 3},
+            [3] = {item = "speed_injector",  price = 4000, stock = 5, loc = 6, max = 3},
+            [4] = {item = "health_injector",  price = 3000, stock = 5, loc = 6, max = 3},
+            [5] = {item = "armor_injector",  price = 4000, stock = 5, loc = 6, max = 3},
         }
     },
 

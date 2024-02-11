@@ -233,7 +233,6 @@ end
 local function BeenDamagedWeapon(ped)
 	for k, v in pairs(weapons) do
 		if HasEntityBeenDamagedByWeapon(ped, v.hash, 0) then
-
 			local rand = math.random(100);
 			-- print('class: ' .. v.class .. ' ^ ' .. rand)
 

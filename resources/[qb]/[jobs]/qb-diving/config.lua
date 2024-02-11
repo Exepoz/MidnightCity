@@ -352,7 +352,7 @@ Config.SellLocations = {
 
 
 Config.GroupPedLocations = {
-    [1] = vector4(-1301.90, -1369.58, 4.51, 111.81),
+    [1] = vector4(0,0,0,0),
 }
 
 

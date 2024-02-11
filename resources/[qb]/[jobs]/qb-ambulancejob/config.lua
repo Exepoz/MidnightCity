@@ -313,8 +313,8 @@ Config.BoneIndexes = { -- Correspond bone labels to their hash number
 }
 
 Config.Weapons = { -- Correspond weapon names to their class number
-    [`WEAPON_STUNGUN`] = Config.WeaponClasses['NONE'],
-    [`WEAPON_STUNGUN_MP`] = Config.WeaponClasses['NONE'],
+    [`WEAPON_STUNGUN`] = Config.WeaponClasses['NOTHING'],
+    [`WEAPON_STUNGUN_MP`] = Config.WeaponClasses['NOTHING'],
     --[[ Small Caliber ]] --
     [`WEAPON_PISTOL`] = Config.WeaponClasses['SMALL_CALIBER'],
     [`WEAPON_COMBATPISTOL`] = Config.WeaponClasses['SMALL_CALIBER'],

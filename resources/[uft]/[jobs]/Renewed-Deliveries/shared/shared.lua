@@ -12,8 +12,8 @@ Config.Route = {
 
 Config.StopsAmt = {
     ["small"] = {min = 1, max = 2},
-    ["medium"] = {min = 2, max = 4},
-    ["large"] = {min = 4, max = 8},
+    ["medium"] = {min = 2, max = 3},
+    ["large"] = {min = 4, max = 6},
 }
 
 Config.PedLocation = vector4(-429.29, -2783.94, 6.0, 10.85)

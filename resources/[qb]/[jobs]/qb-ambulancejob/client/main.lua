@@ -85,7 +85,10 @@ end
 local function IsDamagingEvent(damageDone, weapon)
     local luck = math.random(100)
     local multi = damageDone / Config.HealthDamage
-
+    -- Either -> The more damage you have, the more chance to apply an Injury
+             --> The damage done is higher than 35
+             --> The damage done is higher than 3 times (Config.MaxInjuryChanceMulti) the min damage to injure (Config.HealthDamage)
+             --> The weapon is hardcoded to cause an injury
     return luck < (Config.HealthDamage * multi) or (damageDone >= Config.ForceInjury or multi > Config.MaxInjuryChanceMulti or Config.ForceInjuryWeapons[weapon])
 end
 
@@ -778,6 +781,7 @@ end)
 
 -- Threads
 
+-- Bips
 CreateThread(function()
     for _, station in pairs(Config.Locations['stations']) do
         local blip = AddBlipForCoord(station.coords.x, station.coords.y, station.coords.z)
@@ -791,6 +795,7 @@ CreateThread(function()
     end
 end)
 
+-- Bed Timer
 CreateThread(function()
     while true do
         local sleep = 1000
@@ -807,6 +812,7 @@ CreateThread(function()
     end
 end)
 
+-- Limb Alert Loop
 CreateThread(function()
     while true do
         Wait((1000 * Config.MessageTimer))
@@ -814,6 +820,7 @@ CreateThread(function()
     end
 end)
 
+-- Status check timer?
 CreateThread(function()
     while true do
         Wait(1000)
@@ -828,6 +835,7 @@ CreateThread(function()
     end
 end)
 
+-- Main Damage Thread
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
@@ -856,6 +864,7 @@ CreateThread(function()
                 local checkDamage = true
                 if damageDone >= Config.HealthDamage then
                     if weapon then
+                        -- Checking if body armor got hit
                         if armorDamaged and (bodypart == 'SPINE' or bodypart == 'UPPER_BODY') or weapon == Config.WeaponClasses['NOTHING'] then
                             checkDamage = false -- Don't check damage if the it was a body shot and the weapon class isn't that strong
                             if armorDamaged then
@@ -864,16 +873,21 @@ CreateThread(function()
                         end
 
                         if checkDamage then
+                                -- Either -> The more damage you have, the more chance to apply an Injury
+                                    --> The damage done is higher than 35
+                                    --> The damage done is higher than 3 times (Config.MaxInjuryChanceMulti) the min damage to injure (Config.HealthDamage)
+                                    --> The weapon is hardcoded to cause an injury
                             if IsDamagingEvent(damageDone, weapon) then
                                 CheckDamage(ped, bone, weapon, damageDone)
                             end
                         end
                     end
-                elseif Config.AlwaysBleedChanceWeapons[weapon] then
+                elseif Config.AlwaysBleedChanceWeapons[weapon] then -- If the weapon is hardcoded to cause injuries
                     if armorDamaged and (bodypart == 'SPINE' or bodypart == 'UPPER_BODY') or weapon == Config.WeaponClasses['NOTHING'] then
                         checkDamage = false -- Don't check damage if the it was a body shot and the weapon class isn't that strong
                     end
                     if math.random(100) < Config.AlwaysBleedChance and checkDamage then
+                        -- Apply Bleeding Damage
                         ApplyBleed(1)
                     end
                 end

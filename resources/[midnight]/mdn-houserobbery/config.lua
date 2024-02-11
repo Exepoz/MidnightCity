@@ -77,13 +77,16 @@ Config.ItemsReward = {
     {item = "romantic_book",                     	amt = {min = 1, max = 3}, probability = 1/15},
     {item = "goldennugget",             	amt = {min = 1, max = 2},     probability = 1/35},
     {item = "burnerphone_wep",         	amt = {min = 1, max = 1}, probability = 1/50},
-	{item = "notepad",                     	amt = {min = 350, max = 900}, probability = 1/15},
+	{item = "notepad",                     	amt = {min = 3, max = 7}, probability = 1/15},
     {item = "telescope",                     	amt = {min = 1, max = 3}, probability = 1/15},
     {item = "pencil",             	amt = {min = 1, max = 2},     probability = 1/35},
     {item = "tapeplayer",         	amt = {min = 1, max = 1}, probability = 1/50},
 	{item = "book",         	amt = {min = 1, max = 1}, probability = 1/50},
 	{item = "skull",         	amt = {min = 1, max = 1}, probability = 1/50},
+	{item = "midnight_crumbs",         	amt = {min = 150, max = 300}, probability = 1/50},
+
 }
+
 
 Config.Quests = {
 	[1] = {item = 'microwave', amount = {1,2,3}},

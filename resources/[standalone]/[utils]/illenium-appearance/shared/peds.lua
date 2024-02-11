@@ -1,7 +1,7 @@
 Config.Peds = {
     pedConfig = {
         {
-            peds = {'pw_vicente'},
+            peds = {'pw_vicente','pw_jiwon'},
             gangs = {'admingang'}
         },
         {

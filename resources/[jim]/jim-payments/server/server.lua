@@ -1,3 +1,4 @@
+local Midnight = exports['mdn-nighttime']:GetMidnightCore()
 
 local function cv(amount)
     local formatted = amount

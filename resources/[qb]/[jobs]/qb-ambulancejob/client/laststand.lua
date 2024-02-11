@@ -45,6 +45,7 @@ function SetLaststand(bool)
         local heading = GetEntityHeading(ped)
         TriggerServerEvent('InteractSound_SV:PlayOnSource', 'demo', 0.1)
         LaststandTime = Config.ReviveInterval
+        exports['mdn-nighttime']:processLastStand()
         if IsPedInAnyVehicle(ped) then
             local veh = GetVehiclePedIsIn(ped)
             local vehseats = GetVehicleModelNumberOfSeats(GetHashKey(GetEntityModel(veh)))

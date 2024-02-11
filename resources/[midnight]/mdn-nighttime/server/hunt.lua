@@ -56,6 +56,7 @@ end
 local checkIsBloodyPrey = function(source)
     local argType = 'src'
     local cid, index
+    print("checking bloody prey", source)
     if type(source) == 'string' then source = tonumber(source) end
     if source > 1000 then argType = 'cid' cid = source end
     if argType == 'src' then cid = QBCore.Functions.GetPlayer(source).PlayerData.citizenid end
@@ -91,21 +92,31 @@ local setBloodyPrey = function(src, bool, arg3)
         Player(src).state.Bloody = true
         xPlayer.Functions.SetMetaData('bloodyPrey', true)
         -- Sets Bloody Prey status
-        MySQL.update.await('INSERT INTO midnight_bloodypreys (cid, name, time, prize) VALUES (:cid, :name, :time, :prize)', data)
-        -- Sets Blacklist status + Deducts points
-        local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
+        local result = MySQL.query.await('SELECT * FROM midnight_bloodypreys WHERE cid = ?', {cid})
         if not result or not result[1] then
-            MySQL.insert('INSERT INTO midnight_hunters (CID, blacklisted, blacklisted_time) VALUES (?, ?, ?)', {cid, true, data.time})
+            MySQL.update.await('INSERT INTO midnight_bloodypreys (cid, name, time, prize) VALUES (:cid, :name, :time, :prize)', data)
         else
-            local points = math.floor(result[1].points / 2)
-            local bank = math.floor(result[1].bank / 2)
-            MySQL.update.await('UPDATE midnight_hunters SET points = ?, unclaimed = ?, bank = ?, blacklisted = ?, blacklisted_time = ? WHERE cid = ?', {points, 0, bank, true, data.time, cid})
+            local newprize = result[1].prize + 2500
+            MySQL.update.await('UPDATE midnight_bloodypreys SET prize = ?, time = ? WHERE cid = ?', {newprize, data.time, cid})
+        end
+        -- Sets Blacklist status + Deducts points
+        local result2 = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
+        if not result2 or not result2[1] then
+            MySQL.insert('INSERT INTO midnight_hunters (CID, blacklisted, blacklisted_time, blacklisted_stack) VALUES (?, ?, ?, ?)', {cid, true, data.time, 1})
+        else
+            print(result2[1].points,result2[1].bank,result2[1].blacklisted_time,result2[1].blacklisted_stack)
+            local points = math.floor(result2[1].points / 2)
+            local bank = math.floor(result2[1].bank / 2)
+            local time = result2[1].blacklisted_time ~= 0 and result2[1].blacklisted_time or data.time
+            local stack = result2[1].blacklisted_stack + 1
+            print(points, bank, time, stack)
+            MySQL.update.await('UPDATE midnight_hunters SET points = ?, unclaimed = ?, bank = ?, blacklisted = ?, blacklisted_time = ?, blacklisted_stack = ? WHERE cid = ?', {points, 0, bank, true, time, stack, cid})
         end
 
         TriggerEvent('nighttime:server:enterHunt', src, true)
-
+        TriggerClientEvent('nighttime:client:becameBloody', src)
         local pName = Midnight.Functions.GetCharName(src)
-        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..xPlayer.PlayerData.citizenid.."\n\n ** Has become a bloody prey."}
+        local logString = {ply = GetPlayerName(src), txt = "Player : ".. GetPlayerName(src) .. "\nCharacter : "..pName.."\nCID : "..xPlayer.PlayerData.citizenid.." Has become a bloody prey."}
         Midnight.Functions.Debug(logString.txt)
         TriggerEvent("qb-log:server:CreateLog", "bountyHunter", "New Bloody Prey.", "green", logString)
     else
@@ -134,9 +145,8 @@ local checkBloodyDeath = function(killer, killed)
         print(killer, QBCore.Functions.GetPlayerByCitizenId(tostring(killer)).PlayerData.source)
         QBCore.Debug((QBCore.Functions.GetPlayerByCitizenId(tostring(killer))))
         MySQL.Async.execute('UPDATE midnight_hunters SET bloodBounty = bloodBounty + ' .. BloodyPreys[i].prize .. ' WHERE CID = ?', {killer})
-        TriggerClientEvent('QBCore:Notify', QBCore.Functions.GetPlayerByCitizenId(tostring(killer)).PlayerData.source, 'You have claimed a Bloody Bounty worth '.. BloodyPreys[i].prize .. "crumbs. You can claim it in the Morning at the Quartermaster." , 'success')
+        TriggerClientEvent('QBCore:Notify', QBCore.Functions.GetPlayerByCitizenId(tostring(killer)).PlayerData.source, 'You have claimed a Blood Bounty worth '.. BloodyPreys[i].prize .. " crumbs. You can claim it in the Morning at the Quartermaster." , 'success')
         setBloodyPrey(BloodyPreys[i].source, false, i)
-        print('bounty set')
     end
 end
 
@@ -157,11 +167,11 @@ local leaveHunt = function(serversource, quit)
                 BloodyPreys[index].source = nil
                 TriggerClientEvent('nighttime:client:BloodyPreysUpdated', -1, BloodyPreys)
             end
+            Midnight.Functions.Debug(src..' has left the hunt')
         end
     end end
     GlobalState.BountyPreys = preys
     GlobalState.BloodyPreys = BloodyPreys
-    Midnight.Functions.Debug(src..' has left the hunt')
 end
 
 --- Clears the prey list
@@ -217,12 +227,12 @@ Midnight.Functions.IsBlacklisted = function(src)
     local cid = Player.PlayerData.citizenid
     local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', {cid})
     if not result or not result[1] then return false end
-    local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
-    if isBlacklisted and os.time() > blTime + 172800 then
+    local isBlacklisted, blTime, blStack = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time, result[1].blacklisted_stack
+    if isBlacklisted and os.time() > blTime + (172800 * blStack) then
         isBlacklisted = false
         blTime = nil
         if result[1].hunter == 0 then MySQL.query.await('DELETE FROM midnight_hunters WHERE cid = ?', {cid})
-        else MySQL.Async.execute('UPDATE midnight_hunters SET blacklisted = ?, blacklisted_time = ? WHERE CID = ?', {0, nil, tonumber(cid)}) end
+        else MySQL.Async.execute('UPDATE midnight_hunters SET blacklisted = ?, blacklisted_time = ?, blacklisted_stack = ? WHERE CID = ?', {0, nil, 0, tonumber(cid)}) end
         return false
     elseif isBlacklisted then return true
     else return false end
@@ -305,10 +315,9 @@ end)
 --- Toggle state for when a player has id'ed their target.
 RegisterNetEvent('nighttime:server:preyFound', function(target) Player(preys[target]).state.preyId = true end)
 
---- Processes an indvidual's death.
-RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
+RegisterNetEvent('nighttime:server:processLastStand', function(killer, inGreen)
     local src = source
-    Midnight.Functions.Debug(src..' Processing Death for '..src)
+    Midnight.Functions.Debug(src..' Processing Last Stand for '..src)
     local Killer = QBCore.Functions.GetPlayer(killer)
     local Prey = QBCore.Functions.GetPlayer(src)
     local headerN = ''
@@ -316,11 +325,54 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
     local hunterName = Midnight.Functions.GetCharName(killer)
     local preyName = Midnight.Functions.GetCharName(src)
 
-    if not Config.Debug then Wait(math.random(3,5)*1000) end
     if inGreen then
         -- Player got killed inside a green zone (BAD)
-        Wait(math.random(3,5)*1000)
         Midnight.Functions.Debug(killer..' just spilled blood in a green zone.. ('..src..')')
+        descS = 'Has spilled blood in a green zone.'
+        headerN = "Process Last Stand - GreenZone"
+        local logString = {huntA = Killer.PlayerData.metadata.huntAlias, ply = GetPlayerName(killer), txt = "Player : ".. GetPlayerName(killer) .. "\nCharacter : "..hunterName.."\nCID : "..Killer.PlayerData.citizenid.."\n\n"..descS}
+        TriggerEvent("qb-log:server:CreateLog", "bountyHunter", headerN, "green", logString)
+        setBloodyPrey(killer, true, 2500)
+
+        Wait(math.random(3,5)*1000)
+        exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
+            sender = 'Anonymous',
+            subject = 'Blood Spilled...',
+            message = 'Dear Citizen,<br><br>'..
+            'You have wronged the Golden Trail. You have spilled blood inside a protected area.' ..
+            'For this, you will now be marked as a <b>Bloody Prey</b>.' ..
+            '<br><br>-Night Hunters are able to select you as their prey. Your location is updated live for anyone hunting you.' ..
+            '<br>- You are barred from any Hub Services for the next 48 hours.' ..
+            '<br>- You have lost half of your hunter score. (if applicable)',
+            '<br>Thank you for your cooperation. We will enjoy seeing you run.'
+        })
+
+    end
+end)
+
+--- Processes an indvidual's death.
+RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
+    local src = source
+    Midnight.Functions.Debug('Processing Death for '..src)
+    local Killer = QBCore.Functions.GetPlayer(killer)
+    local Prey = QBCore.Functions.GetPlayer(src)
+    local headerN = ''
+    local descS = ''
+    local hunterName = Midnight.Functions.GetCharName(killer)
+    local preyName = Midnight.Functions.GetCharName(src)
+
+    --if not Config.Debug then Wait(math.random(3,5)*1000) end
+    if inGreen then
+        -- Player got killed inside a green zone (BAD)
+        Midnight.Functions.Debug(killer..' just spilled blood in a green zone.. ('..src..')')
+
+        descS = 'Has spilled blood in a green zone.'
+        headerN = "Process Death - GreenZone"
+        local logString = {huntA = Killer.PlayerData.metadata.huntAlias, ply = GetPlayerName(killer), txt = "Player : ".. GetPlayerName(killer) .. "\nCharacter : "..hunterName.."\nCID : "..Killer.PlayerData.citizenid.."\n\n"..descS}
+        TriggerEvent("qb-log:server:CreateLog", "bountyHunter", headerN, "green", logString)
+        setBloodyPrey(killer, true, 2500)
+
+        Wait(math.random(3,5)*1000)
         exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
             sender = 'Anonymous',
             subject = 'Blood Spilled...',
@@ -332,19 +384,14 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
             '<br>- You have lost half of your hunter score. (if applicable)',
             '<br>Thank you for your cooperation. We will enjoy seeing you run.'
         })
-        descS = 'Has spilled blood in a green zone.'
-        headerN = "Process Death - GreenZone"
-        local logString = {huntA = Killer.PlayerData.metadata.huntAlias, ply = GetPlayerName(killer), txt = "Player : ".. GetPlayerName(killer) .. "\nCharacter : "..hunterName.."\nCID : "..Killer.PlayerData.citizenid.."\n\n"..descS}
-        TriggerEvent("qb-log:server:CreateLog", "bountyHunter", headerN, "green", logString)
-        setBloodyPrey(killer, true, 2500)
         return
     end
     if not hunters[Killer.PlayerData.citizenid] then return end
     -- Killer is a hunter
-    if hunters[Killer.PlayerData.citizenid] == src then
+    if hunters[Killer.PlayerData.citizenid] == Prey.PlayerData.citizenid then
         -- Player killed was hunter's prey (GOOD)
         Midnight.Functions.Debug(killer..' just killed their bounty ('..src..')')
-        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)))
+        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), false, Prey.PlayerData.citizenid)
 
         descS = 'Has killed their prey.'
         headerN = "Process Death - Prey"
@@ -352,7 +399,7 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
     elseif hunters[Prey.PlayerData.citizenid] then
         -- Player killed was also a hunter (OKAY)
         Midnight.Functions.Debug(killer..' just killed an other hunter.. ('..src..')')
-        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), true)
+        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), true, Prey.PlayerData.citizenid)
         exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
             sender = 'Anonymous',
             subject = 'Hunter Killed.',
@@ -364,9 +411,9 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
 
         descS = 'Has killed an other hunter.'
         headerN = "Process Death - Hunter"
-    elseif checkIsBloodyPrey(killed) then
+    elseif checkIsBloodyPrey(src) then
         Midnight.Functions.Debug(killer..' just killed a bloody prey randomly.. ('..src..')')
-        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), true)
+        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), false, Prey.PlayerData.citizenid)
         exports['qb-phone']:sendNewMailToOffline(Killer.PlayerData.citizenid, {
             sender = 'Anonymous',
             subject = 'Bloody Prey Killed.',
@@ -377,7 +424,7 @@ RegisterNetEvent('nighttime:server:processDeath', function(killer, inGreen)
         })
         descS = 'Has killed a  Bloody Prey.'
         headerN = "Process Death - Bloody Prey"
-        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)))
+        TriggerClientEvent('nighttime:addBountyDied', killer, src, NetworkGetNetworkIdFromEntity(GetPlayerPed(src)), false, Prey.PlayerData.citizenid)
     else
         local grace = MySQL.query.await('SELECT grace FROM midnight_hunters WHERE CID = ?', {Killer.PlayerData.citizenid})
         if grace and grace[1] and grace[1].grace > 0 then
@@ -423,9 +470,10 @@ end)
 --- Claiming Bounty when killing proper target
 RegisterNetEvent('nighttime:server:claimBounty', function(prey)
     local src = source
+    print(prey)
     local Player = QBCore.Functions.GetPlayer(src)
     local Prey = QBCore.Functions.GetPlayer(preys[prey])
-    checkBloodyDeath(Player.PlayerData.citizenid, Prey.PlayerData.citizenid)
+    checkBloodyDeath(Player.PlayerData.citizenid, prey)
     MySQL.Async.execute('UPDATE midnight_hunters SET unclaimed = unclaimed + 1 WHERE CID = ?', {Player.PlayerData.citizenid})
     hunters[Player.PlayerData.citizenid] = 0
     TriggerClientEvent('nighttime:client:bountyCooldown', src)
@@ -614,7 +662,7 @@ end)
 QBCore.Functions.CreateCallback('mdn-bountyHunt:getTargetLocation', function(_, cb, target)
     target = preys[target]
     if target == nil or target == 0 then cb('notFound') return end
-    if not DoesPlayerExist(target) or not Player(target).state.isPrey or QBCore.Functions.GetPlayer(target).PlayerData.metadata.isDead then cb('notFound') return end
+    if not DoesPlayerExist(target) or not Player(target).state.isPrey or QBCore.Functions.GetPlayer(target).PlayerData.metadata.isdead or Player(target).state.inGreenZone then cb('notFound') return end
     local ped = GetPlayerPed(target)
     if ped and ped ~= 0 then cb(GetEntityCoords(ped)) else cb("notFound") end
 end)
@@ -626,19 +674,17 @@ QBCore.Functions.CreateCallback('mdn-bountyHunt:getNewTarget', function(source, 
     ::generate::
     Midnight.Functions.Debug('List of preys : ')
     QBCore.Debug(preys)
-    if getTableCount(preys) < 3 then Midnight.Functions.Debug('There are not enough preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are not enough preys around currently.', 'error') cb(nil) return end
+    --if getTableCount(preys) < 3 then Midnight.Functions.Debug('There are not enough preys around currently.') TriggerClientEvent('QBCore:Notify', source, 'There are not enough preys around currently.', 'error') cb(nil) return end
     local currentTarget = hunters[Player.PlayerData.citizenid]
     --local newTarget = generateNewTarget(source, currentTarget)
     --local time = GetGameTimer()
-
     local newTarget = lib.waitFor(function()
         return generateNewTarget(source, currentTarget)
     end, 'Fetching Prey Timed Out', 3000)
-
     --while newTarget == nil do newTarget = generateNewTarget(source, currentTarget) if GetGameTimer() > time + 3000 then Midnight.Functions.Debug('Finding new target TimeOut for '..source) break end end
     if not newTarget then cb(nil) return end
-    local ped = GetPlayerPed(newTarget)
-    if not ped or ped == 0 or not canBeHunted(newTarget) then Midnight.Functions.Debug('Cant find new #'..source.."\'s target #"..newTarget) goto generate end
+    local ped = GetPlayerPed(preys[newTarget])
+    if not ped or ped == 0 or not canBeHunted(preys[newTarget]) then Midnight.Functions.Debug('Cant find new #'..source.."\'s target #"..newTarget) goto generate end
     hunters[Player.PlayerData.citizenid] = newTarget
     Midnight.Functions.Debug('New Target Found for #'..source.." : "..newTarget)
     cb(newTarget, GetEntityCoords(ped))
@@ -660,11 +706,11 @@ QBCore.Functions.CreateCallback('nighttime:fetchUserData', function(source, cb, 
     local result = MySQL.query.await('SELECT * FROM midnight_hunters WHERE CID = ?', { cid})
     if not result or not result[1] then cb(false, item and item.info.cid or nil)
     else
-        local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
-        if isBlacklisted and os.time() > blTime + 172800 then
+        local isBlacklisted, blTime, blStack = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time, result[1].blacklisted_stack
+        if isBlacklisted and os.time() > blTime + (172800 * blStack) then
             isBlacklisted = false
             blTime = nil
-            MySQL.Async.execute('UPDATE midnight_hunters SET blacklisted = ?, blacklisted_time = ?, WHERE CID = ?', {isBlacklisted, nil, xPlayer.PlayerData.citizenid})
+            MySQL.Async.execute('UPDATE midnight_hunters SET blacklisted = ?, blacklisted_time = ?, blacklisted_stack = ? WHERE CID = ?', {isBlacklisted, nil, 0, xPlayer.PlayerData.citizenid})
         end
         local data = {
             CID = result[1].CID,
@@ -723,8 +769,8 @@ RegisterCommand('checkHunterInfo', function(source, args)
     if not result or not result[1] then Midnight.Functions.Debug('No hunter profile found')
     else
         local blOver
-        local isBlacklisted, blTime = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time
-        if isBlacklisted and os.time() > blTime + 172800 then
+        local isBlacklisted, blTime, blStack = result[1].blacklisted == 1 and true or false, result[1].blacklisted_time,  result[1].blacklisted_stack
+        if isBlacklisted and os.time() > blTime + (172800 * blStack) then
             isBlacklisted = false
             blTime = nil
             blOver = 'Blacklist is done, waiting for update.'

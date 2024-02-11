@@ -45,13 +45,13 @@ Config.trucker_locations = {
 Config.jobs = {
 	['cancel_job'] = 167,						-- Key to cancel the active job (167 = F6) [Hold key 2 seconds]
 	['cooldown'] = 1, 							-- Cooldown time (in minutes) to generate a new contract
-	['price_per_km_min'] = 100,				-- Minimum price per kilometer of the contract
+	['price_per_km_min'] = 150,				-- Minimum price per kilometer of the contract
 	['price_per_km_max'] = 200,				-- Maximum price per kilometer of the contract
-	['freight_job_mutiplier'] = 1.2,			-- Multiplier applied when generating FREIGHT loads
+	['freight_job_mutiplier'] = 1.5,			-- Multiplier applied when generating FREIGHT loads
 	['probability_urgent_cargo'] = 10,			-- The urgent load is generated randomly, here you can configure the probability (%)
 	['max_contratos_ativos'] = 60,				-- Maximum of contracts that can be active, this means that when generating a contact that exceeds this number, the oldest contract will be deleted
 	['available_trucks'] = {					-- List of trucks that are generated in contracts
-		"hauler","packer"
+		"hauler","packer","phantom"
 	},
 	['must_bring_truck_back'] = true,			-- true: Payment will only be made when bringing the truck back to the garage (except with own truck) | false: Payment will be made upon delivery of the cargo
 	['available_loads'] = {
@@ -257,17 +257,17 @@ Config.repair_price = { -- Cost to repair 1% damage for each part (For example: 
 	Level 30 represents the maximum achievable level.
 ]]
 Config.required_xp_to_levelup = {
-	[1] = 1000,
-	[2] = 2000,
-	[3] = 3000,
-	[4] = 4000,
-	[5] = 5000,
-	[6] = 6000,
-	[7] = 7000,
-	[8] = 8000,
-	[9] = 9000,
-	[10] = 10000,
-	[11] = 11000,
+	[1] = 50,
+	[2] = 100,
+	[3] = 150,
+	[4] = 200,
+	[5] = 250,
+	[6] = 300,
+	[7] = 350,
+	[8] = 400,
+	[9] = 450,
+	[10] = 500,
+	[11] = 550,
 	[12] = 12000,
 	[13] = 13000,
 	[14] = 14000,

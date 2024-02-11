@@ -1,18 +1,18 @@
 Config = Config or {}
 
-Config.RenewedBanking = false
+Config.RenewedBanking = true
 Config.PriceBrackets = {
     ["small"] = 80,
     ["medium"] = 125,
-    ["large"] = 200,
+    ["large"] = 150,
 }
 
 Config.MaxMembers = 4 -- How many people can be in a group during the runs?
 Config.MaxDeliver = 8 -- How many MAXIMUM Packages per location
 Config.Deliver = {min = 2, max = 4} -- How many garbage bags per location?
 
-Config.GroupPay = 1.5 -- How much more you get paid for doing a group run (5% more)
-Config.GroupPayLimit = 3 -- How many people to get the Config.GroupPay bonus?
+Config.GroupPay = 1.3 -- How much more you get paid for doing a group run (5% more)
+Config.GroupPayLimit = 2 -- How many people to get the Config.GroupPay bonus?
 
 Config.Buffs = false -- Do u use ps or tnj buffs then enable this
 Config.BuffExport = "tnj-buffs" -- Some people still use tnj-buffs some uses ps-buffs they are the just edit the BuffExport to whatever you use
