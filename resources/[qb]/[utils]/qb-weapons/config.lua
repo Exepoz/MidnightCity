@@ -181,13 +181,13 @@ Config.WeaponRepairPoints = {
 }
 
 Config.WeaponRepairCosts = {
-    pistol = 1000,
-    smg = 3000,
-    mg = 4000,
-    rifle = 5000,
-    hunting = 1000,
-    sniper = 7000,
-    shotgun = 6000
+    pistol = 100000,
+    smg = 300000,
+    mg = 400000,
+    rifle = 500000,
+    hunting = 100000,
+    sniper = 700000,
+    shotgun = 600000
 }
 
 WeaponAttachments = {
