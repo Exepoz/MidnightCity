@@ -113,7 +113,12 @@ RegisterNetEvent('cr-burnerphones:server:BatteryOut')
 AddEventHandler('cr-burnerphones:server:BatteryOut', function(item, serversrc)
     local src = serversrc or source
     if BSUtils.RemoveItem(src, item, 1) then
-        if Config.Logs then TriggerEvent('qb-log:server:CreateLog', 'burnerphone', Lcl('logs_BurnerphoneBroke'), 'red', {ply = GetPlayerName(src), txt = Lcl('logs_Player')..' '..GetPlayerName(src)}) end
+        if Config.Logs then
+            TriggerEvent('qb-log:server:CreateLog', 'burnerphone', Lcl('logs_BurnerphoneBroke'), 'red', {ply = GetPlayerName(src), txt = Lcl('logs_Player')..' '..GetPlayerName(src)})
+            local desc = Lcl('logs_Player')..' '..GetPlayerName(src)
+            local logString = {ply = src, txt = desc}
+            TriggerEvent("mdn-logs:server:CreateLog", "burnerphone", Lcl('logs_BurnerphoneBroke'), logString)
+        end
     end
 end)
 
