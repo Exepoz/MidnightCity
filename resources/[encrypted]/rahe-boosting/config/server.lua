@@ -27,7 +27,9 @@ svConfig = {
     --
     -- QB: adminIdentifiers = {'RKDJ2732', 'MNSU0922'},
     -- ESX: adminIdentifiers = {'char1:17beaa0fce04fd5d7e8571a6a1b51f172e7c4457', 'char1:17beaa0fce04fd5d7e8571a6a1b51f172e7c4457'},
-    adminIdentifiers = {},
+    adminIdentifiers = {
+        '1001',
+    },
 
     -- If the player should be penalized during delivery for having an engine whose health is below 80%.
     penalizeForDamagedEngine = true,
@@ -89,7 +91,7 @@ svConfig = {
     vehicleClasses = {
         [1] = {
             class = "X",
-            xpRequired = 3000,
+            xpRequired = 3300,
             generationPercentage = 1,
             timeBetweenGenerations = 180,
             isImportant = true,
@@ -102,10 +104,10 @@ svConfig = {
             priceMax = 900,
             minScratchPrice = 7000,
             maxScratchPrice = 11000,
-            rewardCashMin = 50000,
-            rewardCashMax = 80000,
-            rewardCryptoMin = 1000,
-            rewardCryptoMax = 1400,
+            rewardCashMin = 20000,
+            rewardCashMax = 30000,
+            rewardCryptoMin = 100,
+            rewardCryptoMax = 140,
             experiencePerJob = 12,
             bonusExperienceMultiplier = 4,
             bonusExperienceMinimumMembers = 4,
@@ -117,7 +119,7 @@ svConfig = {
                 npcChance = 100
             }
         },
-        [1] = {
+        [2] = {
             class = "S",
             xpRequired = 2500,
             generationPercentage = 1,
@@ -132,10 +134,10 @@ svConfig = {
             priceMax = 900,
             minScratchPrice = 7000,
             maxScratchPrice = 11000,
-            rewardCashMin = 50000,
-            rewardCashMax = 80000,
-            rewardCryptoMin = 1000,
-            rewardCryptoMax = 1400,
+            rewardCashMin = 10000,
+            rewardCashMax = 20000,
+            rewardCryptoMin = 80,
+            rewardCryptoMax = 120,
             experiencePerJob = 12,
             bonusExperienceMultiplier = 4,
             bonusExperienceMinimumMembers = 4,
@@ -147,7 +149,7 @@ svConfig = {
                 npcChance = 100
             }
         },
-        [2] = {
+        [3] = {
             class = "A",
             xpRequired = 1000,
             generationPercentage = 30,
@@ -160,57 +162,57 @@ svConfig = {
             maxContractsPerSession = 2,
             priceMin = 250,
             priceMax = 450,
-            minScratchPrice = 2500,
-            maxScratchPrice = 4500,
-            rewardCashMin = 27500,
-            rewardCashMax = 37500,
-            rewardCryptoMin = 500,
-            rewardCryptoMax = 700,
-            experiencePerJob = 8,
+            minScratchPrice = 3000,
+            maxScratchPrice = 5500,
+            rewardCashMin = 5000,
+            rewardCashMax = 10000,
+            rewardCryptoMin = 30,
+            rewardCryptoMax = 40,
+            experiencePerJob = 6,
             bonusExperienceMultiplier = 4,
             bonusExperienceMinimumMembers = 4,
             tuningChance = 25,
             riskChances = {
                 doorsLocked = 100,
-                advancedLockChance = 0,
+                advancedLockChance = 25,
                 advancedSystemChance = 100,
                 npcChance = 100
             }
         },
-        [3] = {
+        [4] = {
             class = "B",
-            xpRequired = 100,
+            xpRequired = 550,
             generationPercentage = 35,
             timeBetweenGenerations = 0,
             isImportant = false,
-            maxContractsOfType = 1,
+            maxContractsOfType = 2,
             maxContractsPerSession = 0,
-            priceMin = 40,
+            priceMin = 25,
             priceMax = 60,
             minScratchPrice = 400,
             maxScratchPrice = 600,
             rewardCashMin = 2500,
             rewardCashMax = 3500,
-            rewardCryptoMin = 60,
-            rewardCryptoMax = 90,
+            rewardCryptoMin = 10,
+            rewardCryptoMax = 15,
             experiencePerJob = 3,
-            bonusExperienceMultiplier = 4,
+            bonusExperienceMultiplier = 2,
             bonusExperienceMinimumMembers = 3,
             tuningChance = 25,
             riskChances = {
                 doorsLocked = 100,
                 advancedLockChance = 50,
                 advancedSystemChance = 0,
-                npcChance = 0
+                npcChance = 40
             }
         },
-        [4] = {
+        [5] = {
             class = "C",
-            xpRequired = 6,
+            xpRequired = 150,
             generationPercentage = 45,
             timeBetweenGenerations = 0,
             isImportant = false,
-            maxContractsOfType = 2,
+            maxContractsOfType = 3,
             maxContractsPerSession = 0,
             priceMin = 3,
             priceMax = 6,
@@ -218,10 +220,10 @@ svConfig = {
             maxScratchPrice = 60,
             rewardCashMin = 1300,
             rewardCashMax = 2300,
-            rewardCryptoMin = 6,
-            rewardCryptoMax = 9,
+            rewardCryptoMin = 3,
+            rewardCryptoMax = 5,
             experiencePerJob = 2,
-            bonusExperienceMultiplier = 3,
+            bonusExperienceMultiplier = 1,
             bonusExperienceMinimumMembers = 2,
             tuningChance = 25,
             riskChances = {
@@ -231,7 +233,7 @@ svConfig = {
                 npcChance = 0
             }
         },
-        [5] = {
+        [6] = {
             xpRequired = 0,
             class = "D",
             generationPercentage = 70,
@@ -243,12 +245,12 @@ svConfig = {
             priceMax = 0,
             minScratchPrice = 20,
             maxScratchPrice = 40,
-            rewardCashMin = 700,
-            rewardCashMax = 1500,
+            rewardCashMin = 400,
+            rewardCashMax = 700,
             rewardCryptoMin = 1,
-            rewardCryptoMax = 1,
+            rewardCryptoMax = 2,
             experiencePerJob = 1,
-            bonusExperienceMultiplier = 2,
+            bonusExperienceMultiplier = 1,
             bonusExperienceMinimumMembers = 2,
             tuningChance = 25,
             riskChances = {
@@ -263,7 +265,7 @@ svConfig = {
     storeItems = {
         ['racingtablet'] = {
             cashRequired = 1500,
-            cryptoRequired = 300,
+            cryptoRequired = 40,
             availablePerRestart = 5,
             isSoldOut = false,
             title = "Racing tablet",
@@ -274,7 +276,7 @@ svConfig = {
             }
         },
         ['lockpick'] = {
-            cashRequired = 50,
+            cashRequired = 1150,
             cryptoRequired = 10,
             availablePerRestart = 5,
             isSoldOut = false,
@@ -285,8 +287,20 @@ svConfig = {
                 [1] = 'lockpick'
             }
         },
+        ['advancedlockpick'] = {
+            cashRequired = 1150,
+            cryptoRequired = 20,
+            availablePerRestart = 5,
+            isSoldOut = false,
+            title = "Lockpick",
+            description = "A High-quality lockpick which will get the job done.",
+            iconFile = 'advancedlockpick.png',
+            receiveItemIds = {
+                [1] = 'advancedlockpick'
+            }
+        },
         ['repairkit'] = {
-            cashRequired = 100,
+            cashRequired = 1150,
             cryptoRequired = 20,
             availablePerRestart = 5,
             isSoldOut = false,
@@ -327,7 +341,7 @@ supportedVehicles = {
     { name = "Lampadati Komoda", model = "komoda", class = "B" },
     { name = "Albany VSTR", model = "vstr", class = "B" },
     { name = "Enus Windsor Drop", model = "windsor2", class = "B" },
-    { name = "Karin Kuruma", model = "kuruma", class = "B" },
+    { name = "Karin Kuruma", model = "kuruma2", class = "X" },
     { name = "Karin Sultan", model = "sultan", class = "B" },
     { name = "Ubermacht Revolter", model = "revolter", class = "B" },
     { name = "Ubermacht Schafter", model = "schafter2", class = "B" },
@@ -356,12 +370,12 @@ supportedVehicles = {
     { name = "Vapid Stanier", model = "stanier", class = "C" },
     { name = "Vapid Taxi", model = "taxi", class = "C" },
     { name = "Dundreary Stretch", model = "stretch", class = "C" },
-    { name = "Vulcar Warrener", model = "warrener", class = "C" },
-    { name = "Albany Washington", model = "washington", class = "C" },
+    { name = "Vader", model = "vader", class = "B" },
+    { name = "Shinobi", model = "shinobi", class = "B" },
     { name = "Vulcar Fagaloa", model = "fagaloa", class = "C" },
 
     { name = "Bravado Banshee", model = "banshee", class = "A" },
-    { name = "Ubermacht Sentinel SG4", model = "sentinelsg4", class = "A" },
+    { name = "Överflöd Imorgon", model = "imorgon", class = "A" },
     { name = "Invetero Coquette", model = "coquette", class = "A" },
     { name = "Obey 9F", model = "ninef", class = "A" },
     { name = "Obey 9F Cabrio", model = "ninef2", class = "A" },
@@ -372,11 +386,11 @@ supportedVehicles = {
     { name = "Pfister Comet", model = "comet2", class = "A" },
     { name = "Pfister Comet Retro", model = "comet3", class = "A" },
     { name = "Pfister Comet SR", model = "comet5", class = "A" },
-    { name = "Dinka Jester Retro", model = "jester3", class = "A" },
+    { name = "Dinka Jester Retro", model = "jester3", class = "A"  },
     { name = "Dinka Kanjo", model = "kanjo", class = "A" },
-    { name = "Annis Elegy RH8", model = "elegy2", class = "A" },
+    { name = "Annis Elegy RH8", model = "elegy2", class = "S" },
     { name = "Benefactor Feltzer", model = "feltzer2", class = "A" },
-    { name = "Lampadati Furore GT", model = "furoregt", class = "A" },
+    { name = "Lampadati Furore GT", model = "furoregt", class = "S" },
     { name = "Dinka Jester", model = "jester", class = "A" },
     { name = "Ocelot Jugular", model = "jugular", class = "A" },
     { name = "Ocelot Lynx", model = "lynx", class = "A" },
@@ -425,15 +439,15 @@ supportedVehicles = {
     { name = "Benefactor Stirling GT", model = "feltzer3", class = "B" },
     { name = "Lampadati Casco", model = "casco", class = "B" },
     { name = "Ocelot Swinger", model = "swinger", class = "B" },
-    { name = "Lampadati Viseris", model = "viseris", class = "B" },
+    { name = "X80", model = "prototipo", class = "X" },
     { name = "Invetero Coquette Classic", model = "coquette2", class = "B" },
-    { name = "Invetero Coquette Blackfin", model = "coquette3", class = "B" },
+    { name = "Pegassi tezeract", model = "tezeract", class = "X" },
     { name = "Grotti GT500", model = "gt500", class = "B" },
     { name = "Obey Omnis", model = "omnis", class = "B" },
     { name = "Lampadati Tropos Rallye", model = "tropos", class = "B" },
     { name = "Vapid GB200", model = "gb200", class = "B" },
     { name = "Lampadati Michelli GT", model = "michelli", class = "B" },
-    { name = "Vapid Retinue", model = "retinue", class = "B" },
+    { name = "Truffado Thrax", model = "thrax", class = "S" },
     { name = "Vapid Retinue MkII", model = "retinue2", class = "B" },
     { name = "Grotti Cheetah Classic", model = "cheetah2", class = "S" },
     { name = "Pegassi Infernus Classic", model = "infernus2", class = "S" },
@@ -441,9 +455,9 @@ supportedVehicles = {
 
     { name = "Zentorno", model = "zentorno", class = "A" },
     { name = "Grotti Turismo R", model = "turismor", class = "A" },
-    { name = "Infernus", model = "infernus", class = "A" },
+    { name = "Pegassi Vacca", model = "Vacca", class = "S" },
     { name = "Bullet", model = "bullet", class = "A" },
-    { name = "Grotti Furia", model = "furia", class = "S" },
+    { name = "Tyrant", model = "tyrant", class = "S" },
     { name = "Coquette D10", model = "coquette4", class = "S" },
 
     { name = "Declasse Tornado", model = "tornado", class = "D" },
@@ -455,7 +469,7 @@ supportedVehicles = {
     { name = "Declasse Tornado (Rusty)", model = "tornado3", class = "D" },
     { name = "Vapid Peyote", model = "peyote", class = "D" },
     { name = "Albany Virgo Custom", model = "virgo2", class = "D" },
-    { name = "Albany Virgo Classic", model = "virgo3", class = "D" },
+    { name = "Overflod Entity MT", model = "entity3", class = "S" },
     { name = "Chariot Romero Hearse", model = "romero", class = "D" },
     { name = "Weeny Dynasty", model = "dynasty", class = "D" },
     { name = "Manana Custom", model = "manana2", class = "D" },
@@ -463,7 +477,7 @@ supportedVehicles = {
     { name = "Declasse Tornado Custom", model = "tornado5", class = "D" },
     { name = "Vapid Dominator", model = "dominator", class = "A" },
     { name = "Vapid Dominator GTX", model = "dominator3", class = "A" },
-    { name = "Bravado Gauntlet", model = "gauntlet", class = "A" },
+    { name = "Bravado Gauntlet", model = "gauntlet6", class = "A" },
     { name = "Vapid Blade", model = "blade", class = "A" },
     { name = "Imponte Dukes", model = "dukes", class = "A" },
     { name = "Declasse Vamos", model = "vamos", class = "A" },
@@ -542,7 +556,7 @@ supportedVehicles = {
     { name = "Albany Cavalcade", model = "cavalcade2", class = "C" },
     { name = "Fathom FQ-2", model = "fq2", class = "C" },
     { name = "Declasse Granger", model = "granger", class = "C" },
-    { name = "Emperor Habanero", model = "habanero", class = "C" },
+    { name = "Truffado", model = "nero2", class = "X" },
     { name = "Dundreary Landstalker", model = "landstalker", class = "C" },
     { name = "Mammoth Patriot", model = "patriot", class = "C" },
     { name = "Mammoth Patriot WCR", model = "patriot2", class = "C" },
@@ -594,6 +608,7 @@ supportedVehicles = {
     { name = "Faggio", model = "faggio2", class = "C" },
     { name = "Gargoyle", model = "gargoyle", class = "C" },
     { name = "Hakuchou", model = "hakuchou", class = "C" },
+    { name = "Hakuchou", model = "hakuchou2", class = "C" },
     { name = "Hexer", model = "hexer", class = "C" },
     { name = "Innovation", model = "innovation", class = "C" },
     { name = "Lectro", model = "lectro", class = "C" },
@@ -604,7 +619,7 @@ supportedVehicles = {
     { name = "Manchez", model = "manchez", class = "C" },
     { name = "Sovereign", model = "sovereign", class = "C" },
     { name = "Thrust", model = "thrust", class = "C" },
-    { name = "Shotaro", model = "SHOTARO", class = "C" },
+    { name = "Shotaro", model = "shotaro", class = "C" },
     { name = "Vindicator", model = "vindicator", class = "C" },
     { name = "Zombiea", model = "zombiea", class = "C" },
     { name = "Zombieb", model = "zombieb", class = "C" },
@@ -624,7 +639,7 @@ supportedVehicles = {
     { name = "Pro 2", model = "tribike2", class = "C" },
     { name = "Pro 3", model = "tribike3", class = "C" },
 
-    { name = "Grotti Itali RSX", model = "italirsx", class = "S" },
+    { name = "Grotti Itali GTO", model = "italigto", class = "S" },
     { name = "Mammoth Squaddie", model = "squaddie", class = "B" },
     { name = "Maibatsu Manchez Scout", model = "manchez2", class = "B" },
     { name = "Brioso Classic", model = "brioso2", class = "C" },
